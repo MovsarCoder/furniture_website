@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path("client_service/", include("client_service.urls")),
-    path("admin_service/", include("admin_service.urls"))
 ]
 
 # Раздача медиа в режиме DEBUG
