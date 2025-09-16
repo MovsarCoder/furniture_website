@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %}{{ work.title }}{% endblock %}
+{% block title %}{{ work.title }} - Tz Mebel{% endblock %}
 
 {% block content %}
 
@@ -10,10 +10,10 @@
             <div>
                 <h1 class="section-title">{{ work.title }}</h1>
                 <div class="work-meta">
-                    <span>📅 {{ work.created_at|date:"d.m.Y" }}</span>
-                    {% if work.language %}<span>🌐 {{ work.language }}</span>{% endif %}
-                    {% if work.country %}<span>🏠 {{ work.country }}</span>{% endif %}
-                    {% if work.status %}<span>📊 {{ work.status }}</span>{% endif %}
+                    <span>📅 {{ work.date|date:"d.m.Y" }}</span>
+                    {% if work.language %}<span>🌐 {{ work.get_language_display }}</span>{% endif %}
+                    {% if work.country %}<span>🏠 {{ work.get_country_display }}</span>{% endif %}
+                    {% if work.status %}<span>📊 {{ work.get_status_display }}</span>{% endif %}
                 </div>
             </div>
             <a href="{% url 'client_service:portfolio' %}" class="btn btn-outline">← Назад к работам</a>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="work-meta">
-                    <p>📅 Создано: {{ work.created_at|date:"d.m.Y" }}</p>
+                    <p>📅 Создано: {{ work.date|date:"d.m.Y" }}</p>
                 </div>
 
                 <div class="work-description">
@@ -51,22 +51,12 @@
                         </div>
                         {% endif %}
 
-                        {% if work.size %}
-                        <div class="feature">
-                            <div class="feature-icon">📏</div>
-                            <div class="feature-content">
-                                <div class="feature-title">Размеры</div>
-                                <div class="feature-value">{{ work.size }}</div>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if work.type %}
+                        {% if work.work_type %}
                         <div class="feature">
                             <div class="feature-icon">🏷️</div>
                             <div class="feature-content">
                                 <div class="feature-title">Тип</div>
-                                <div class="feature-value">{{ work.type }}</div>
+                                <div class="feature-value">{{ work.get_work_type_display }}</div>
                             </div>
                         </div>
                         {% endif %}
@@ -76,7 +66,7 @@
                             <div class="feature-icon">📊</div>
                             <div class="feature-content">
                                 <div class="feature-title">Статус</div>
-                                <div class="feature-value">{{ work.status }}</div>
+                                <div class="feature-value">{{ work.get_status_display }}</div>
                             </div>
                         </div>
                         {% endif %}
@@ -92,7 +82,7 @@
                 </div>
 
                 <div class="contact-block">
-                    <a href="{% url 'client_service:index' %}#contacts" class="btn btn-primary">Связаться с нами</a>
+                    <a href="#contacts" class="btn btn-primary">Связаться с нами</a>
                 </div>
             </div>
         </div>

@@ -20,16 +20,15 @@
                 <h3 class="card-title">{{ work.title }}</h3>
                 <div class="card-bar">
                     <div class="badge badge-price">{{ work.price }} ₽</div>
-                    <div class="card-meta">📅 {{ work.created_at|date:"d.m.Y" }}</div>
+                    <div class="card-meta">📅 {{ work.date|date:"d.m.Y" }}</div>
                 </div>
-                <div class="card-tags">
-                    {% if work.type %}
-                    <span class="badge">{{ work.type }}</span>
-                    {% endif %}
-                    <!-- Удалено отображение статуса "В производстве" -->
+                <div class="card-tags" style="position:absolute; top:10px; right:10px; display:flex; gap:4px;">
+                    <span class="badge" style="background:rgba(0,0,0,.5); backdrop-filter:blur(5px);">
+                        {{ work.get_work_type_display }}
+                    </span>
                 </div>
                 <div class="hover-panel">
-                    <div class="hover-desc">{{ work.description|truncatechars:100 }}</div>
+                    <div class="hover-desc">{{ work.description|truncatewords:5 }}</div>
                     {% if work.material %}
                     <div class="hover-material">🪵 Материал: {{ work.material }}</div>
                     {% endif %}

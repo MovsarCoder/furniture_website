@@ -145,11 +145,10 @@
                 <span class="badge" style="background:rgba(0,0,0,.5); backdrop-filter:blur(5px);">
                     {{ work.get_work_type_display }}
                 </span>
-                <!-- Удалено отображение статуса "В производстве" -->
             </div>
 
             <div class="hover-panel">
-                <div class="hover-desc">{{ work.description|default:"Описание появится позже"|truncatewords:24 }}</div>
+                <div class="hover-desc">{{ work.description|default:"Описание появится позже"|truncatewords:3 }}</div>
                 {% if work.material %}
                 <div class="hover-meta" style="margin-top:8px; font-size:0.9em; opacity:0.8;">
                     🪵 Материал: {{ work.material }}
