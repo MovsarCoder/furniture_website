@@ -99,4 +99,6 @@ class Contact(models.Model):
     def __str__(self):
         return f"{self.branch_name} | {self.address} | {self.country}"
 
+
+
 # Create your models here.
