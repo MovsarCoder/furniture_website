@@ -55,7 +55,7 @@ class Work(models.Model):
     width = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Ширина (см)")
     height = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Высота (см)")
     depth = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Глубина (см)")
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, verbose_name='Дата добавления')
 
     class Meta:
         verbose_name = "Работа"
@@ -98,7 +98,5 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.branch_name} | {self.address} | {self.country}"
-
-
 
 # Create your models here.
