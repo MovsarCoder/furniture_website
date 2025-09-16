@@ -1,0 +1,381 @@
+{% extends "base/base.html" %}
+
+{% block title %}Страница не найдена — TZ Mebel{% endblock %}
+
+{% block content %}
+
+<section class="error-hero container section">
+    <div class="error-card">
+        <div class="error-illustration">
+            <div class="error-code">404</div>
+            <div class="error-icon">
+                <div class="hammer-icon"></div>
+            </div>
+        </div>
+        <h1 class="error-title">Страница не найдена</h1>
+        <p class="error-sub">К сожалению, запрашиваемая страница не существует. Возможно, она была перемещена или удалена.</p>
+        <div class="error-actions">
+            <a href="{% url 'client_service:index' %}" class="btn-primary">← Вернуться на главную</a>
+            <a href="{% url 'client_service:portfolio' %}" class="btn-ghost">Посмотреть работы</a>
+            <a href="#contacts" class="btn-contact">Связаться с нами</a>
+        </div>
+
+        <div class="error-help">
+            <div class="error-help-title">Что можно сделать:</div>
+            <ul>
+                <li>Проверьте правильность адреса</li>
+                <li>Вернитесь на <a href="{% url 'client_service:index' %}">главную страницу</a></li>
+                <li>Используйте меню навигации</li>
+                <li><a href="#contacts">Связаться с нами</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="contacts" class="section container">
+    <div class="section-header">
+        <div>
+            <div class="section-title">📞 Контакты</div>
+            <div class="section-sub">📍 Выберите удобный для вас филиал</div>
+        </div>
+    </div>
+    <div class="branches">
+        {% if contacts %}
+        {% for contact in contacts %}
+        <div class="branch">
+            <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
+            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }}</div>
+            <div class="contact-row">📞 {{ contact.phone }}</div>
+            <div class="contact-row">📧 {{ contact.email }}</div>
+            <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h1>Не контактов!</h1>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    .error-hero { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 80vh; 
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .error-hero::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 30% 50%, rgba(6, 182, 212, 0.1), transparent 40%),
+                  radial-gradient(circle at 70% 20%, rgba(14, 165, 233, 0.1), transparent 30%);
+        z-index: -1;
+        opacity: 0.8;
+    }
+    
+    .error-card { 
+        text-align: center; 
+        background: var(--gradient-panel); 
+        border: 1px solid rgba(255,255,255,.1); 
+        padding: 40px; 
+        border-radius: var(--radius-lg); 
+        box-shadow: var(--shadow-lg); 
+        max-width: 760px; 
+        width: 100%; 
+        position: relative; 
+        overflow: hidden; 
+        animation: fadeIn 0.6s ease-out;
+    }
+    
+    .error-card::before { 
+        content: ''; 
+        position: absolute; 
+        inset: 0; 
+        background: radial-gradient(600px 200px at 10% -10%, rgba(6,182,212,.15), transparent), 
+                  radial-gradient(400px 160px at 110% 110%, rgba(14,165,233,.15), transparent); 
+        pointer-events: none; 
+    }
+    
+    .error-illustration {
+        position: relative;
+        height: 180px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .error-code { 
+        font-size: 140px; 
+        font-weight: 900; 
+        letter-spacing: 4px; 
+        background: linear-gradient(90deg, #06b6d4, #0ea5e9, #38bdf8); 
+        -webkit-background-clip: text; 
+        background-clip: text; 
+        color: transparent; 
+        margin-bottom: 8px; 
+        text-shadow: 0 8px 40px rgba(6,182,212,.35);
+        position: relative;
+        z-index: 2;
+        animation: pulseGlow 3s infinite alternate;
+    }
+    
+    .error-icon {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: 1;
+        animation: pulse 3s infinite;
+    }
+    
+    .hammer-icon {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        z-index: 3;
+    }
+    
+    .hammer-icon::before {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 20px;
+        background: #38bdf8;
+        border-radius: 5px;
+        top: 0;
+        left: 15px;
+        box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+    }
+    
+    .hammer-icon::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 60px;
+        background: #0ea5e9;
+        border-radius: 5px;
+        top: 15px;
+        left: 34px;
+        box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    }
+    
+    .error-icon::before, .error-icon::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+        filter: blur(2px);
+        opacity: 0.5;
+    }
+    
+    .error-icon::before {
+        width: 30px;
+        height: 30px;
+        top: 30px;
+        right: 40px;
+        animation: float 6s infinite ease-in-out;
+    }
+    
+    .error-icon::after {
+        width: 20px;
+        height: 20px;
+        bottom: 40px;
+        left: 50px;
+        animation: float 8s infinite ease-in-out reverse;
+    }
+    
+    .error-title { 
+        font-size: 32px; 
+        margin: 0 0 16px; 
+        background: linear-gradient(90deg, var(--text), var(--text-muted));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .error-sub { 
+        color: var(--muted); 
+        margin: 0 0 28px; 
+        font-size: 18px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .error-actions { 
+        display: flex; 
+        gap: 16px; 
+        justify-content: center; 
+        flex-wrap: wrap; 
+        margin-bottom: 32px; 
+    }
+    
+    .btn-primary { 
+        background: var(--gradient-brand); 
+        color: #fff; 
+        font-weight: 700; 
+        padding: 14px 24px; 
+        border-radius: 14px; 
+        box-shadow: var(--shadow-brand); 
+        border: 1px solid rgba(255,255,255,.1); 
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover { 
+        transform: translateY(-3px); 
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-ghost { 
+        padding: 14px 24px; 
+        border-radius: 14px; 
+        border: 1px solid rgba(255,255,255,.2); 
+        color: var(--text); 
+        transition: all 0.3s ease;
+        background: rgba(255,255,255,0.05);
+    }
+    
+    .btn-ghost:hover { 
+        border-color: rgba(255,255,255,.4); 
+        transform: translateY(-3px); 
+        background: rgba(255,255,255,0.1);
+    }
+    
+    .btn-contact { 
+        padding: 14px 24px; 
+        border-radius: 14px; 
+        border: 1px solid rgba(6, 182, 212, 0.3); 
+        color: #06b6d4; 
+        transition: all 0.3s ease;
+        background: rgba(6, 182, 212, 0.05);
+        font-weight: 600;
+    }
+    
+    .btn-contact:hover { 
+        border-color: rgba(6, 182, 212, 0.6); 
+        transform: translateY(-3px); 
+        background: rgba(6, 182, 212, 0.1);
+        box-shadow: 0 5px 15px rgba(6, 182, 212, 0.2);
+    }
+    
+    .error-help { 
+        margin-top: 16px; 
+        text-align: center; 
+        background: rgba(0,0,0,.15); 
+        border: 1px solid rgba(255,255,255,.08); 
+        border-radius: 16px; 
+        padding: 20px 24px; 
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .error-help::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.08), transparent);
+        transform: translateX(-100%);
+        animation: shimmer 3s infinite;
+    }
+    
+    .error-help-title { 
+        font-weight: 700; 
+        margin-bottom: 12px; 
+        font-size: 18px;
+        color: var(--text);
+    }
+    
+    .error-help ul { 
+        margin: 0 auto; 
+        padding-left: 0; 
+        list-style-position: inside;
+        color: var(--muted); 
+        max-width: 400px;
+    }
+    
+    .error-help li {
+        margin-bottom: 8px;
+    }
+    
+    .error-help li:last-child {
+        margin-bottom: 0;
+    }
+    
+    .error-help a { 
+        color: #0ea5e9; 
+        position: relative;
+        font-weight: 500;
+    }
+    
+    .error-help a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #0ea5e9;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+    }
+    
+    .error-help a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+        0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+        50% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+        100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    }
+    
+    @keyframes pulseGlow {
+        0% { text-shadow: 0 8px 40px rgba(6,182,212,.2); }
+        100% { text-shadow: 0 8px 40px rgba(6,182,212,.5); }
+    }
+    
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0); }
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    
+    @media (max-width: 768px) {
+        .error-code { font-size: 100px; }
+        .error-illustration { height: 140px; }
+        .error-title { font-size: 26px; }
+        .error-sub { font-size: 16px; }
+        .error-card { padding: 30px 20px; }
+    }
+</style>
+
+{% endblock %}

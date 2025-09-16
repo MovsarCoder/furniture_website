@@ -1,0 +1,127 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ work.title }}{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h1 class="section-title">{{ work.title }}</h1>
+                <div class="work-meta">
+                    <span>📅 {{ work.created_at|date:"d.m.Y" }}</span>
+                    {% if work.language %}<span>🌐 {{ work.language }}</span>{% endif %}
+                    {% if work.country %}<span>🏠 {{ work.country }}</span>{% endif %}
+                    {% if work.status %}<span>📊 {{ work.status }}</span>{% endif %}
+                </div>
+            </div>
+            <a href="{% url 'client_service:portfolio' %}" class="btn btn-outline">← Назад к работам</a>
+        </div>
+
+        <div class="work-detail">
+            <div class="work-media">
+                <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image">
+            </div>
+
+            <div class="work-info">
+                <div class="price-block">
+                    <div class="badge badge-price">{{ work.price }} ₽</div>
+                </div>
+
+                <div class="work-meta">
+                    <p>📅 Создано: {{ work.created_at|date:"d.m.Y" }}</p>
+                </div>
+
+                <div class="work-description">
+                    <h3>Описание</h3>
+                    <p>{{ work.description }}</p>
+                </div>
+
+                <div class="work-features">
+                    <h3>Характеристики</h3>
+                    <div class="features-grid">
+                        {% if work.material %}
+                        <div class="feature">
+                            <div class="feature-icon">🪵</div>
+                            <div class="feature-content">
+                                <div class="feature-title">Материал</div>
+                                <div class="feature-value">{{ work.material }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if work.size %}
+                        <div class="feature">
+                            <div class="feature-icon">📏</div>
+                            <div class="feature-content">
+                                <div class="feature-title">Размеры</div>
+                                <div class="feature-value">{{ work.size }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if work.type %}
+                        <div class="feature">
+                            <div class="feature-icon">🏷️</div>
+                            <div class="feature-content">
+                                <div class="feature-title">Тип</div>
+                                <div class="feature-value">{{ work.type }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if work.status %}
+                        <div class="feature">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-content">
+                                <div class="feature-title">Статус</div>
+                                <div class="feature-value">{{ work.status }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="delivery-payment">
+                    <h3>Доставка и оплата</h3>
+                    <div class="delivery-info">
+                        <p>🚚 Доставка по всей России</p>
+                        <p>💳 Оплата при получении или онлайн</p>
+                    </div>
+                </div>
+
+                <div class="contact-block">
+                    <a href="{% url 'client_service:index' %}#contacts" class="btn btn-primary">Связаться с нами</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacts" class="section container">
+    <div class="section-header">
+        <div>
+            <div class="section-title">📞 Контакты</div>
+            <div class="section-sub">📍 Выберите удобный для вас филиал</div>
+        </div>
+    </div>
+    <div class="branches">
+        {% if contacts %}
+        {% for contact in contacts %}
+        <div class="branch">
+            <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
+            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }}</div>
+            <div class="contact-row">📞 {{ contact.phone }}</div>
+            <div class="contact-row">📧 {{ contact.email }}</div>
+            <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h1>Не контактов!</h1>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

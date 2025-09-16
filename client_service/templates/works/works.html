@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Наши работы{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Наши работы</h2>
+                <p class="section-subtitle">Уникальные предметы мебели ручной работы</p>
+            </div>
+        </div>
+
+        <div class="portfolio-all-grid">
+            {% for work in works %}
+            <div class="portfolio-item">
+                <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image">
+                <h3 class="card-title">{{ work.title }}</h3>
+                <div class="card-bar">
+                    <div class="badge badge-price">{{ work.price }} ₽</div>
+                    <div class="card-meta">📅 {{ work.created_at|date:"d.m.Y" }}</div>
+                </div>
+                <div class="card-tags">
+                    {% if work.type %}
+                    <span class="badge">{{ work.type }}</span>
+                    {% endif %}
+                    <!-- Удалено отображение статуса "В производстве" -->
+                </div>
+                <div class="hover-panel">
+                    <div class="hover-desc">{{ work.description|truncatechars:100 }}</div>
+                    {% if work.material %}
+                    <div class="hover-material">🪵 Материал: {{ work.material }}</div>
+                    {% endif %}
+                </div>
+                <a href="{% url 'client_service:work_detail' work.id %}" class="card-link"></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="contacts" class="section container">
+    <div class="section-header">
+        <div>
+            <div class="section-title">📞 Контакты</div>
+            <div class="section-sub">📍 Выберите удобный для вас филиал</div>
+        </div>
+    </div>
+    <div class="branches">
+        {% if contacts %}
+        {% for contact in contacts %}
+        <div class="branch">
+            <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
+            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }}</div>
+            <div class="contact-row">📞 {{ contact.phone }}</div>
+            <div class="contact-row">📧 {{ contact.email }}</div>
+            <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h1>Не контактов!</h1>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

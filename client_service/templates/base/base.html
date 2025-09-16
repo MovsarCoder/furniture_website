@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}TZ Mebel{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+
+</head>
+<body>
+
+
+<header class="navbar" role="banner">
+    <div class="container nav-inner">
+        <a href="{% url 'client_service:index' %}">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>TZ Mebel</div>
+            </div>
+        </a>
+        <nav id="primary-nav" class="nav" role="navigation" aria-label="Основная навигация">
+            <a href="{% url 'client_service:index' %}">Главная</a>
+            <a href="{% url 'client_service:index' %}#portfolio">Наши работы</a>
+            <a href="{% url 'client_service:index' %}#reviews">Отзывы</a>
+            <a href="{% url 'client_service:index' %}#features">О компании</a>
+            <a href="{% url 'client_service:index' %}#contacts">Контакты</a>
+        </nav>
+        <a class="nav-cta" href="{% url 'client_service:index' %}#contacts" aria-label="Заказать консультацию">Заказать консультацию</a>
+    </div>
+</header>
+
+{% block content %}
+{% endblock %}
+
+<footer class="footer" role="contentinfo">
+    <div class="container foot-grid">
+        <div class="foot-col">
+            <div class="brand" style="margin-bottom:10px;">
+                <div class="logo"></div>
+                <div>TZ Mebel</div>
+            </div>
+            <div class="section-sub">Современная мебель под ваш интерьер — производим, доставляем и монтируем в срок.</div>
+        </div>
+        <div class="foot-col">
+            <h5>Навигация</h5>
+            <a href="#home">Главная</a>
+            <a href="#portfolio">Наши работы</a>
+            <a href="#reviews">Отзывы</a>
+            <a href="#features">О компании</a>
+            <a href="#contacts">Контакты</a>
+        </div>
+        <div class="foot-col">
+            <h5>Помощь</h5>
+            <a href="#">FAQ</a>
+            <a href="#">Гарантия</a>
+            <a href="#">Доставка</a>
+            <a href="#">Политика конфиденциальности</a>
+        </div>
+        <div class="foot-col">
+            <h5>Связаться</h5>
+            <a href="#contacts">WhatsApp</a>
+            <a href="#contacts">Instagram</a>
+            <a href="#contacts">hello@tz-mebel.com</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">© <span id="year"></span> TZ Mebel. Все права защищены.</div>
+    </div>
+</footer>
+
+<script src="{% static 'js/app.js' %}"></script>
+<script>
+    var y=document.getElementById('year');
+    if(y){ y.textContent=new Date().getFullYear(); }
+</script>
+
+</body>
+</html>
