@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import IntegerField
 
 # Create your models here.
 
@@ -64,6 +65,25 @@ class Work(models.Model):
 
     def __str__(self):
         return f"{self.title} | {self.price} {self.currency}"
+
+
+class Stats(models.Model):
+    clients_count = IntegerField(default=0, null=True, blank=True, verbose_name='Количество довольных клиентов')
+    projects_count = IntegerField(default=0, null=True, blank=True, verbose_name='Колисество выполненных работ')
+    years_experience = IntegerField(default=0, null=True, blank=True, verbose_name='Опыт работы')
+    delivery_weeks = IntegerField(default=0, null=True, blank=True, verbose_name='время доставки', help_text='Указывайте количество недель')
+
+    class Meta:
+        verbose_name = "Статистика"
+        verbose_name_plural = "Статистика"
+
+    def save(self, *args, **kwargs):
+        if not self.pk and Stats.objects.exists():
+            raise ValueError("Можно создать только одну запись Stats!")
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return "Статистика компании (Singleton)"
 
 
 class Review(models.Model):
