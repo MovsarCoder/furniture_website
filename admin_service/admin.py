@@ -5,8 +5,8 @@ from .models import Review, Contact, Work, Stats
 
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
-    list_display = ('id', 'title', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
-    list_editable = ('price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
+    list_display = ('id', 'title', 'description', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
+    list_editable = ('description', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
     list_filter = ('work_type', 'status', 'country', 'date', 'created_at', 'language',)
     search_fields = ('title', 'description', "date", "created_at", "status", "work_type", "language", 'country')
 
