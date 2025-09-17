@@ -50,7 +50,7 @@
 
     setTimeout(() => {
       isTransitioning = false;
-    }, 800);
+    }, 100);
 
     restart();
   }
@@ -60,7 +60,8 @@
   }
 
   function start(){
-    timer = setInterval(()=>step(1), 5000);
+    //  Скорость автопролистывания слайдов
+    timer = setInterval(()=>step(1), 3000);
   }
 
   function stop(){
