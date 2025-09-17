@@ -111,6 +111,8 @@ class Contact(models.Model):
     instagram = models.URLField(blank=True, null=True, verbose_name="Страница филлиала в Instagram", help_text='https://www.instagram.com/Nickname"')
     country = models.CharField(max_length=15, choices=country, default='am', verbose_name="Страна филлиала")
     language = models.CharField(max_length=5, choices=languages, default="en", verbose_name="Основной язык филлиала")
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name="Широта")
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name="Долгота")
 
     class Meta:
         verbose_name = "Контакты"

@@ -14,7 +14,7 @@ class WorkAdmin(ModelAdmin):
 @admin.register(Stats)
 class StatAdmin(ModelAdmin):
     list_display = ("id", "clients_count", "projects_count", "years_experience", "delivery_weeks")
-    list_editable = ("projects_count", "years_experience", "delivery_weeks")
+    list_editable = ("clients_count", "projects_count", "years_experience", "delivery_weeks")
 
 
 @admin.register(Review)
@@ -27,7 +27,7 @@ class ReviewAdmin(ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(ModelAdmin):
-    list_display = ('id', 'branch_name', 'phone', 'email', 'address', "start_time", "end_time", 'country', 'language')
-    list_editable = ("phone", "email", "address", "start_time", "end_time", "country", "language")
+    list_display = ('id', 'branch_name', 'phone', 'email', 'address', 'latitude', 'longitude', "start_time", "end_time", 'country', 'language')
+    list_editable = ("phone", "email", "address", 'latitude', 'longitude', "start_time", "end_time", "country", "language")
     list_filter = ('country', 'language', "start_time", "end_time")
     search_fields = ('branch_name', 'address')
