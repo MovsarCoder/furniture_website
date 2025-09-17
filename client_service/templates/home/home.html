@@ -52,36 +52,38 @@
             <div class="section-sub">Факты, которым доверяют клиенты</div>
         </div>
     </div>
+    {% if stats %}
     <div class="stats">
         <div class="stat">
-            <div class="num" data-count="1000">0</div>
+            <div class="num" data-count="{{ stats.clients_count }}">0</div>
             <div class="label">Довольных клиентов</div>
             <div class="progress">
                 <div class="bar"></div>
             </div>
         </div>
         <div class="stat">
-            <div class="num" data-count="100">0</div>
+            <div class="num" data-count="{{ stats.projects_count }}">0</div>
             <div class="label">Проектов</div>
             <div class="progress">
                 <div class="bar"></div>
             </div>
         </div>
         <div class="stat">
-            <div class="num" data-count="11">0</div>
+            <div class="num" data-count="{{ stats.years_experience }}">0</div>
             <div class="label">Лет опыта</div>
             <div class="progress">
                 <div class="bar"></div>
             </div>
         </div>
         <div class="stat">
-            <div class="num" data-count="2">0</div>
+            <div class="num" data-count="{{ stats.delivery_weeks }}">0</div>
             <div class="label">Недели — отгрузка</div>
             <div class="progress">
                 <div class="bar"></div>
             </div>
         </div>
     </div>
+    {% endif %}
 </section>
 
 <section id="delivery" class="section container">
