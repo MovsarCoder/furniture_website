@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from pkg_resources import working_set
 
 from admin_service.models import *
 
@@ -11,11 +10,13 @@ def index(request):
     works = Work.objects.order_by("?")[:4]
     reviews = Review.objects.all()
     contacts = Contact.objects.all()
+    stats = Stats.objects.first()
 
     return render(request, "home/home.html", context={
         "works": works,
         "reviews": reviews,
         "contacts": contacts,
+        "stats": stats,
     })
 
 
