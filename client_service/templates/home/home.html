@@ -7,89 +7,135 @@
 {% block content %}
 
 <main id="home" class="hero container section">
-    <div class="slider" id="bannerSlider" aria-label="Баннеры">
-        <div class="slides">
-            <div class="slide">
-                <div class="image" style="background: linear-gradient(135deg, #0f172a, #1f2937);"></div>
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Качественная мебель с доставкой</h1>
-                    <p class="slide-sub">Проектирование, изготовление и аккуратная установка — под ваш интерьер и сроки</p>
-                    <a href="#portfolio" class="slide-cta">Посмотреть портфолио →</a>
-                </div>
+    <div class="hero-content">
+        <div class="hero-text">
+            <div class="hero-badge">
+                <span class="badge-icon">✨</span>
+                <span>Индвидуальная мебель под заказ</span>
             </div>
-            <div class="slide">
-                <div class="image" style="background: linear-gradient(135deg, #0f172a, #1f2937);"></div>
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h2 class="slide-title">Доставка от 2 до 4 недель</h2>
-                    <p class="slide-sub">От проработки идеи до готового результата — быстро и прозрачно</p>
-                    <a href="#contacts" class="slide-cta">Связаться →</a>
-                </div>
+            <h1 class="hero-title">
+                Создаем мебель <br>
+                <span class="gradient-text">мечты</span> для вашего дома
+            </h1>
+            <p class="hero-description">
+                Проектирование, изготовление уникальной мебели под ваш интерьер.
+                От идеи до воплощения — 100% качества и внимания к деталям.
+            </p>
+            <div class="hero-actions">
+                <button class="btn btn-primary" onclick="openConsultationModal()">Получить консультацию</button>
+                <a href="#portfolio" class="btn btn-outline">Посмотреть работы</a>
             </div>
-            <div class="slide">
-                <div class="image" style="background: linear-gradient(135deg, #0f172a, #1f2937);"></div>
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h2 class="slide-title">Опыт и доверие</h2>
-                    <p class="slide-sub">1000+ довольных клиентов и десятки реализованных проектов</p>
-                    <a href="#features" class="slide-cta">О нас →</a>
+            <div class="hero-features">
+                <div class="feature-item">
+                    <span class="feature-icon">🚚</span>
+                    <span>Доставка 2-4 недели</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🛡️</span>
+                    <span>Гарантия качества</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⭐</span>
+                    <span>1000+ клиентов</span>
                 </div>
             </div>
         </div>
-        <div class="slider-controls">
-            <button class="slider-btn" data-dir="-1" aria-label="Предыдущий">‹</button>
-            <button class="slider-btn" data-dir="1" aria-label="Следующий">›</button>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <div class="hero-image"></div>
+                <div class="floating-elements">
+                    <div class="floating-element element-1">🪑</div>
+                    <div class="floating-element element-2">🛏️</div>
+                    <div class="floating-element element-3">🚪</div>
+                </div>
+            </div>
         </div>
-        <div class="dots" aria-hidden="true"></div>
     </div>
 </main>
 
-<section id="stats" class="section container">
-    <div class="section-header">
-        <div>
-            <div class="section-title">О нас в цифрах</div>
-            <div class="section-sub">Факты, которым доверяют клиенты</div>
+<section id="delivery" class="section container">
+    <div class="delivery-hero">
+        <div class="delivery-content">
+            <div class="section-title">Процесс создания мебели</div>
+            <div class="section-sub">От идеи до готового изделия — каждый этап под контролем</div>
+        </div>
+        <div class="process-timeline">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Консультация</h4>
+                    <p>Обсуждаем ваши идеи и требования</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Проектирование</h4>
+                    <p>Создаем 3D-модель и чертежи</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Производство</h4>
+                    <p>Изготавливаем с контролем качества</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Доставка</h4>
+                    <p>Аккуратно доставляем и устанавливаем</p>
+                </div>
+            </div>
         </div>
     </div>
-    {% if stats %}
-    <div class="stats">
-        <div class="stat">
-            <div class="num" data-count="{{ stats.clients_count }}">0</div>
-            <div class="label">Довольных клиентов</div>
-            <div class="progress">
-                <div class="bar"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="num" data-count="{{ stats.projects_count }}">0</div>
-            <div class="label">Проектов</div>
-            <div class="progress">
-                <div class="bar"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="num" data-count="{{ stats.years_experience }}">0</div>
-            <div class="label">Лет опыта</div>
-            <div class="progress">
-                <div class="bar"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="num" data-count="{{ stats.delivery_weeks }}">0</div>
-            <div class="label">Недели — отгрузка</div>
-            <div class="progress">
-                <div class="bar"></div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </section>
 
-<section id="delivery" class="section container">
-    <div class="delivery">
-        <div class="section-title">Доставка и продажа мебели</div>
-        <div class="section-sub">Производим и доставляем в среднем от 2 до 4 недель. Все этапы и сроки согласуем заранее.</div>
+<section id="stats" class="section container">
+    <div class="stats-hero">
+        <div class="section-header">
+            <div>
+                <div class="section-title">О нас в цифрах</div>
+                <div class="section-sub">Факты, которым доверяют клиенты</div>
+            </div>
+        </div>
+        {% if stats %}
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-icon">👥</div>
+                <div class="num" data-count="{{ stats.clients_count }}">0</div>
+                <div class="label">Довольных клиентов</div>
+                <div class="progress">
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">🏠</div>
+                <div class="num" data-count="{{ stats.projects_count }}">0</div>
+                <div class="label">Проектов</div>
+                <div class="progress">
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">📅</div>
+                <div class="num" data-count="{{ stats.years_experience }}">0</div>
+                <div class="label">Лет опыта</div>
+                <div class="progress">
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">⚡</div>
+                <div class="num" data-count="{{ stats.delivery_weeks }}">0</div>
+                <div class="label">Недели — отгрузка</div>
+                <div class="progress">
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -124,45 +170,81 @@
 </div>
 
 <section id="portfolio" class="section container">
-    <div class="section-header">
-        <div>
-            <h2 class="section-title">Наши работы</h2>
-            <p class="section-subtitle">Уникальные предметы мебели ручной работы</p>
+    <div class="portfolio-hero">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Наши работы</h2>
+                <p class="section-subtitle">Портфолио уникальной мебели ручной работы</p>
+            </div>
+            <a href="{% url 'client_service:portfolio' %}" class="portfolio-view-all">
+                <span>Смотреть всё</span>
+                <span class="arrow">→</span>
+            </a>
         </div>
-        <a href="{% url 'client_service:portfolio' %}" class="slide-cta">Смотреть всё</a>
-    </div>
-    <div class="portfolio">
-        {% if works %}
 
-        {% for work in works %}
-        <article class="portfolio-item">
-            <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image" loading="lazy">
-            <div class="card-title">{{ work.title }}</div>
-            <div class="card-bar">
-                <span class="badge badge-price">{{ work.price }}</span>
-                <span class="card-meta">📅 {{ work.date|date:"d.m.Y" }}</span>
-            </div>
-
-            <div class="card-tags" style="position:absolute; top:10px; right:10px; display:flex; gap:4px;">
-                <span class="badge" style="background:rgba(0,0,0,.5); backdrop-filter:blur(5px);">
-                    {{ work.get_work_type_display }}
-                </span>
-            </div>
-
-            <div class="hover-panel">
-                <div class="hover-desc">{{ work.description|default:"Описание появится позже"|truncatewords:3 }}</div>
-                {% if work.material %}
-                <div class="hover-meta" style="margin-top:8px; font-size:0.9em; opacity:0.8;">
-                    🪵 Материал: {{ work.material }}
+        <div class="portfolio-showcase">
+            {% if works %}
+            {% for work in works %}
+            <article class="showcase-card" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter|add:-1 1 100 %}">
+                <div class="card-image-wrapper">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="showcase-image" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <button class="quick-preview" onclick="quickView('{{ work.id }}')">
+                                <span class="preview-icon">👁️</span>
+                                <span>Быстрый просмотр</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-category">
+                        <span class="category-badge">{{ work.get_work_type_display }}</span>
+                    </div>
                 </div>
-                {% endif %}
+
+                <div class="card-content">
+                    <div class="card-content-wrapper">
+                        <div class="card-main-content">
+                            <div class="card-header">
+                                <div class="card-meta">
+                                    <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
+                                </div>
+                            </div>
+                            <p class="card-description">{{ work.description|default:"Описание появится в ближайшее время"|truncatewords:15 }}</p>
+                            <p class="meta-date" style="color: #cbd5e1; font-size: 14px;">📅 {{ work.date|date:"M Y" }}</p>
+                            <!--                            {% if work.material %}-->
+                            <!--                            <p class="meta-material" style="color: #cbd5e1; font-size: 14px;">🪵 {{ work.material }}</p>-->
+                            <!--                            {% endif %}-->
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="price-info">
+                                <span class="price-label">Стоимость</span>
+                                <span class="price-value">{{ work.price }}</span>
+                                <span class="price-unit">{{ work.currency|upper }}</span>
+                            </div>
+                            <!--                            <a href="{% url 'client_service:work_detail' work.pk %}" class="details-btn">-->
+                            <!--                                <span>Подробнее</span>-->
+                            <!--                                <span class="btn-arrow">→</span>-->
+                            <!--                            </a>-->
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+            {% else %}
+            <div class="no-works">
+                <h3>Нет никаких работ в базе!</h3>
             </div>
-            <a class="card-link" href="{% url 'client_service:work_detail' work.pk %}" aria-label="Открыть: {{ work.title }}"></a>
-        </article>
-        {% endfor %}
-        {% else %}
-        <h1>Нет никаких работ в базе!</h1>
-        {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="portfolio-cta">
+            <p class="cta-text">Не нашли то, что искали?</p>
+            <button class="btn btn-primary" onclick="openConsultationModal()">
+                <span class="btn-icon">💬</span>
+                <span>Обсудить индивидуальный проект</span>
+            </button>
+        </div>
     </div>
 </section>
 
@@ -199,8 +281,8 @@
 <section id="contacts" class="section container">
     <div class="section-header">
         <div>
-            <div class="section-title">📞 Контакты</div>
-            <div class="section-sub">📍 Выберите удобный для вас филиал</div>
+            <div class="section-title">Контакты</div>
+            <div class="section-sub">Выберите удобный для вас филиал</div>
         </div>
     </div>
     <div class="branches">
@@ -208,7 +290,7 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }}</div>
+            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }} PM</div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>

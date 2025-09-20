@@ -26,7 +26,7 @@
             <a href="{% url 'client_service:index' %}#features">О компании</a>
             <a href="{% url 'client_service:index' %}#contacts">Контакты</a>
         </nav>
-        <a class="nav-cta" href="{% url 'client_service:index' %}#contacts" aria-label="Заказать консультацию">Заказать консультацию</a>
+        <button class="nav-cta" id="consultationBtn" aria-label="Заказать консультацию">Заказать консультацию</button>
     </div>
 </header>
 
@@ -68,6 +68,89 @@
         <div class="copyright">© <span id="year"></span> TZ Mebel. Все права защищены.</div>
     </div>
 </footer>
+
+<!-- Модальное окно консультации -->
+<div id="consultationModal" class="modal" aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle" class="modal-title">
+                📅 Заказать консультацию
+            </h2>
+            <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть окно">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <p class="modal-subtitle">
+                Оставьте свои контакты и мы свяжемся с вами в течение 30 минут
+            </p>
+            
+            <form id="consultationForm" class="consultation-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Ваше имя *</label>
+                        <input type="text" id="name" name="name" required 
+                               placeholder="Например: Александр">
+                        <span class="field-error" id="nameError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон *</label>
+                        <input type="tel" id="phone" name="phone" required 
+                               placeholder="+7 (999) 123-45-67">
+                        <span class="field-error" id="phoneError"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email (необязательно)</label>
+                    <input type="email" id="email" name="email" 
+                           placeholder="your.email@example.com">
+                    <span class="field-error" id="emailError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="consultationType">Тип консультации</label>
+                    <select id="consultationType" name="consultation_type">
+                        <option value="general">Общая консультация</option>
+                        <option value="design">Дизайн-проект</option>
+                        <option value="custom">Мебель на заказ</option>
+                        <option value="repair">Ремонт/Реставрация</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferredTime">Предпочтительное время</label>
+                    <input type="text" id="preferredTime" name="preferred_time" 
+                           placeholder="Например: утром, вечером, в выходные">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Сообщение</label>
+                    <textarea id="message" name="message" rows="3" 
+                              placeholder="Опишите свои пожелания или вопросы..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelBtn">
+                        Отмена
+                    </button>
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">📩 Отправить заявку</span>
+                        <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Отправляем...
+                        </span>
+                    </button>
+                </div>
+                
+                <div class="form-result" id="formResult" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="{% static 'js/app.js' %}"></script>
 <script>

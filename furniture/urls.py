@@ -23,8 +23,7 @@ handler404 = 'client_service.views.custom_page_not_found'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path("client_service/", include("client_service.urls")),
+    path("", include("client_service.urls")),  # Переносим на корень сайта
 ]
 
 # Раздача медиа в режиме DEBUG

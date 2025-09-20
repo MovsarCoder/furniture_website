@@ -44,7 +44,7 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }}</div>
+            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }} PM</div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>

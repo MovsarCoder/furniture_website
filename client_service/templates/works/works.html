@@ -6,36 +6,111 @@
 
 <section class="section">
     <div class="container">
-        <div class="section-header">
-            <div>
-                <h2 class="section-title">Наши работы</h2>
-                <p class="section-subtitle">Уникальные предметы мебели ручной работы</p>
+        <!-- Enhanced Header with Statistics -->
+        <div class="works-hero">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title">Наши работы</h1>
+                    <p class="section-subtitle">Портфолио уникальной мебели ручной работы</p>
+                </div>
+                <div class="works-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ works|length }}+</span>
+                        <span class="stat-label">проектов</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">
+                    <span class="tab-icon">🏠</span>
+                    <span>Все работы</span>
+                </button>
+                <button class="filter-tab" data-filter="kitchen">
+                    <span class="tab-icon">🍳</span>
+                    <span>Кухни</span>
+                </button>
+                <button class="filter-tab" data-filter="wardrobe">
+                    <span class="tab-icon">👔</span>
+                    <span>Шкафы</span>
+                </button>
+                <button class="filter-tab" data-filter="table">
+                    <span class="tab-icon">🪑</span>
+                    <span>Столы</span>
+                </button>
+                <button class="filter-tab" data-filter="cabinet">
+                    <span class="tab-icon">📚</span>
+                    <span>Тумбы</span>
+                </button>
             </div>
         </div>
 
-        <div class="portfolio-all-grid">
+        <!-- Enhanced Portfolio Grid -->
+        <div class="portfolio-enhanced-grid" id="portfolioGrid">
             {% for work in works %}
-            <div class="portfolio-item">
-                <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image">
-                <h3 class="card-title">{{ work.title }}</h3>
-                <div class="card-bar">
-                    <div class="badge badge-price">{{ work.price }} ₽</div>
-                    <div class="card-meta">📅 {{ work.date|date:"d.m.Y" }}</div>
+            <article class="portfolio-card" data-category="{{ work.work_type }}">
+                <div class="card-image-container">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image" loading="lazy">
+                    <div class="image-overlay">
+                        <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
+                            <span class="btn-icon">👁️</span>
+                            <span>Быстрый просмотр</span>
+                        </button>
+                    </div>
+                    <div class="card-badges">
+                        <span class="badge badge-category">{{ work.get_work_type_display }}</span>
+                        {% if work.is_featured %}
+                        <span class="badge badge-featured">⭐ Рекомендуем</span>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="card-tags" style="position:absolute; top:10px; right:10px; display:flex; gap:4px;">
-                    <span class="badge" style="background:rgba(0,0,0,.5); backdrop-filter:blur(5px);">
-                        {{ work.get_work_type_display }}
-                    </span>
+
+                <div class="card-content">
+                    <div class="card-main-content">
+                        <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
+                        <p class="card-description">{{ work.description|truncatewords:16|default:"Описание появится в ближайшее время" }}</p>
+
+                        <div class="card-details">
+                            {% if work.material %}
+                            <div class="detail-item">
+                                <span class="detail-icon">🪵</span>
+                                <span class="detail-text">{{ work.material }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="detail-item">
+                                <span class="detail-icon">📅</span>
+                                <span class="detail-text">{{ work.date|date:"M Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="price-section">
+                            <span class="price-label">Стоимость:</span>
+                            <span class="price-value">{{ work.price }}</span>
+                            <span class="price-unit">{{ work.currency|upper }}</span>
+                        </div>
+                        <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
+                            <span>Подробнее</span>
+                            <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="hover-panel">
-                    <div class="hover-desc">{{ work.description|truncatewords:5 }}</div>
-                    {% if work.material %}
-                    <div class="hover-material">🪵 Материал: {{ work.material }}</div>
-                    {% endif %}
-                </div>
-                <a href="{% url 'client_service:work_detail' work.id %}" class="card-link"></a>
-            </div>
+            </article>
             {% endfor %}
+        </div>
+
+        <!-- Call to Action Section -->
+        <div class="works-cta">
+            <div class="cta-content">
+                <h3>Хотите заказать похожую мебель?</h3>
+                <p>Наши мастера создадут уникальное изделие специально для вас</p>
+                <button class="btn btn-primary" onclick="openConsultationModal()">
+                    <span class="btn-icon">💬</span>
+                    <span>Получить консультацию</span>
+                </button>
+            </div>
         </div>
     </div>
 </section>
@@ -43,8 +118,8 @@
 <section id="contacts" class="section container">
     <div class="section-header">
         <div>
-            <div class="section-title">📞 Контакты</div>
-            <div class="section-sub">📍 Выберите удобный для вас филиал</div>
+            <div class="section-title">Контакты</div>
+            <div class="section-sub">Выберите удобный для вас филиал</div>
         </div>
     </div>
     <div class="branches">
@@ -52,7 +127,7 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }}</div>
+            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }} PM</div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>

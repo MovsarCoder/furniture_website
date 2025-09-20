@@ -3,6 +3,53 @@ from django.db.models import IntegerField
 
 # Create your models here.
 
+class ConsultationRequest(models.Model):
+    CONSULTATION_TYPES = [
+        ("design", "Дизайн-проект"),
+        ("custom", "На заказ"),
+        ("repair", "Ремонт/Реставрация"),
+        ("general", "Общая консультация"),
+    ]
+    
+    STATUS_CHOICES = [
+        ("new", "Новая"),
+        ("in_progress", "В обработке"),
+        ("completed", "Завершена"),
+        ("cancelled", "Отменена"),
+    ]
+    
+    name = models.CharField(max_length=100, verbose_name="Имя клиента")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    email = models.EmailField(blank=True, verbose_name="Email")
+    consultation_type = models.CharField(
+        max_length=20, 
+        choices=CONSULTATION_TYPES, 
+        default="general",
+        verbose_name="Тип консультации"
+    )
+    message = models.TextField(blank=True, verbose_name="Сообщение")
+    preferred_time = models.CharField(
+        max_length=50, 
+        blank=True, 
+        verbose_name="Предпочтительное время"
+    )
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default="new",
+        verbose_name="Статус"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+    
+    class Meta:
+        verbose_name = "Заявка на консультацию"
+        verbose_name_plural = "Заявки на консультацию"
+        ordering = ["-created_at"]
+    
+    def __str__(self):
+        return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
+
 languages = [
     ("en", "English"),
     ("fr", "Français"),

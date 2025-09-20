@@ -1,117 +1,4 @@
-// Banner slider with enhanced animations
-(function(){
-  const slider = document.getElementById('bannerSlider');
-  if(!slider) return;
-  const track = slider.querySelector('.slides');
-  const slides = Array.from(slider.querySelectorAll('.slide'));
-  const dotsWrap = slider.querySelector('.dots');
-  const prev = slider.querySelector('[data-dir="-1"]');
-  const next = slider.querySelector('[data-dir="1"]');
-  let idx = 0;
-  let timer;
-  let isTransitioning = false;
-
-  // Create dots with enhanced styling
-  const dots = slides.map((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i===0?' active':'');
-    dotsWrap.appendChild(d);
-    d.addEventListener('click', ()=>go(i));
-    return d;
-  });
-
-  function go(i){
-    if(isTransitioning) return;
-    isTransitioning = true;
-
-    idx = (i + slides.length) % slides.length;
-    track.style.transform = `translateX(-${idx*100}%)`;
-
-    // Update dots with smooth transition
-    dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
-
-    // Add slide content animation
-    slides.forEach((slide, slideIdx) => {
-      const content = slide.querySelector('.slide-content');
-      if(content) {
-        if(slideIdx === idx) {
-          content.style.opacity = '0';
-          content.style.transform = 'translateY(30px)';
-          setTimeout(() => {
-            content.style.opacity = '1';
-            content.style.transform = 'translateY(0)';
-            content.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-          }, 50);
-        } else {
-          content.style.opacity = '0.7';
-        }
-      }
-    });
-
-    setTimeout(() => {
-      isTransitioning = false;
-    }, 100);
-
-    restart();
-  }
-
-  function step(dir){
-    if(!isTransitioning) go(idx + dir);
-  }
-
-  function start(){
-    //  Скорость автопролистывания слайдов
-    timer = setInterval(()=>step(1), 3000);
-  }
-
-  function stop(){
-    clearInterval(timer);
-  }
-
-  function restart(){
-    stop();
-    start();
-  }
-
-  // Enhanced event listeners
-  prev?.addEventListener('click', ()=>step(-1));
-  next?.addEventListener('click', ()=>step(1));
-
-  slider.addEventListener('mouseenter', stop);
-  slider.addEventListener('mouseleave', start);
-
-  // Touch/swipe support
-  let startX = 0;
-  let startY = 0;
-
-  slider.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-  });
-
-  slider.addEventListener('touchend', (e) => {
-    if(!startX || !startY) return;
-
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const diffX = startX - endX;
-    const diffY = startY - endY;
-
-    if(Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-      if(diffX > 0) {
-        step(1); // Swipe left - next
-      } else {
-        step(-1); // Swipe right - previous
-      }
-    }
-
-    startX = 0;
-    startY = 0;
-  });
-
-  start();
-})();
-
+// ===== CORE FUNCTIONALITY =====
 // Stats count-up + progress bars + pop effect
 (function(){
   const nums = document.querySelectorAll('.num[data-count]');
@@ -376,6 +263,299 @@
       return nativeSetInterval(wrapped, timeout);
     }
     return nativeSetInterval(handler, timeout);
+  }
+})();
+
+// ===== ГЛОБАЛЬНАЯ ФУНКЦИЯ ДЛЯ МОДАЛЬНОГО ОКНА =====
+// Глобальная функция для открытия модального окна консультации
+window.openConsultationModal = function() {
+  const modal = document.getElementById('consultationModal');
+  const form = document.getElementById('consultationForm');
+  
+  if (!modal || !form) {
+    console.error('Модальное окно консультации не найдено');
+    return;
+  }
+  
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Фокус на первое поле
+  const firstInput = form.querySelector('input[name="name"]');
+  if (firstInput) {
+    setTimeout(() => firstInput.focus(), 100);
+  }
+  
+  console.log('Модальное окно консультации открыто');
+};
+
+// Функция быстрого просмотра работы
+window.quickView = function(workId) {
+  // Переход к детальной странице работы
+  window.location.href = `/portfolio/${workId}/`;
+};
+
+// ===== МОДАЛЬНОЕ ОКНО КОНСУЛЬТАЦИИ =====
+(function(){
+  const modal = document.getElementById('consultationModal');
+  const openBtn = document.getElementById('consultationBtn');
+  const closeBtn = document.getElementById('modalClose');
+  const backdrop = document.getElementById('modalBackdrop');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const form = document.getElementById('consultationForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formResult = document.getElementById('formResult');
+  
+  if (!modal || !openBtn || !form) return;
+  
+  // Функции управления модальным окном
+  function openModal() {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Фокус на первое поле
+    const firstInput = form.querySelector('input[name="name"]');
+    if (firstInput) {
+      setTimeout(() => firstInput.focus(), 100);
+    }
+  }
+  
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    clearForm();
+  }
+  
+  function clearForm() {
+    form.reset();
+    hideResult();
+    clearErrors();
+    resetSubmitButton();
+  }
+  
+  function showResult(message, isSuccess = true) {
+    formResult.textContent = message;
+    formResult.className = `form-result ${isSuccess ? 'success' : 'error'}`;
+    formResult.style.display = 'block';
+  }
+  
+  function hideResult() {
+    formResult.style.display = 'none';
+  }
+  
+  function showError(fieldName, message) {
+    const errorElement = document.getElementById(fieldName + 'Error');
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.classList.add('visible');
+    }
+  }
+  
+  function clearErrors() {
+    const errors = form.querySelectorAll('.field-error');
+    errors.forEach(error => {
+      error.classList.remove('visible');
+      error.textContent = '';
+    });
+  }
+  
+  function setLoadingState(isLoading) {
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    if (isLoading) {
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'flex';
+      submitBtn.disabled = true;
+    } else {
+      btnText.style.display = 'flex';
+      btnLoading.style.display = 'none';
+      submitBtn.disabled = false;
+    }
+  }
+  
+  function resetSubmitButton() {
+    setLoadingState(false);
+  }
+  
+  // Validation functions
+  function validateField(name, value) {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) {
+          showError('name', 'Пожалуйста, введите ваше имя');
+          return false;
+        }
+        if (value.trim().length < 2) {
+          showError('name', 'Имя должно содержать минимум 2 символа');
+          return false;
+        }
+        break;
+        
+      case 'phone':
+        if (!value.trim()) {
+          showError('phone', 'Пожалуйста, введите номер телефона');
+          return false;
+        }
+        // More flexible phone validation for international numbers
+        const cleanPhone = value.replace(/[\s\(\)\-\+\.]/g, '');
+        if (cleanPhone.length < 8 || cleanPhone.length > 15) {
+          showError('phone', 'Пожалуйста, введите корректный номер телефона (8-15 цифр)');
+          return false;
+        }
+        if (!/^[0-9]+$/.test(cleanPhone)) {
+          showError('phone', 'Номер телефона должен содержать только цифры');
+          return false;
+        }
+        break;
+        
+      case 'email':
+        if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          showError('email', 'Пожалуйста, введите корректный email адрес');
+          return false;
+        }
+        break;
+    }
+    return true;
+  }
+  
+  function validateForm(formData) {
+    clearErrors();
+    hideResult();
+    
+    let isValid = true;
+    
+    // Проверяем обязательные поля
+    if (!validateField('name', formData.get('name'))) isValid = false;
+    if (!validateField('phone', formData.get('phone'))) isValid = false;
+    if (!validateField('email', formData.get('email'))) isValid = false;
+    
+    return isValid;
+  }
+  
+  // Обработчики событий
+  openBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal();
+  });
+  
+  [closeBtn, backdrop, cancelBtn].forEach(element => {
+    if (element) {
+      element.addEventListener('click', closeModal);
+    }
+  });
+  
+  // Закрытие по Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+  
+  // Валидация в реальном времени
+  ['name', 'phone', 'email'].forEach(fieldName => {
+    const field = form.querySelector(`[name="${fieldName}"]`);
+    if (field) {
+      field.addEventListener('blur', () => {
+        validateField(fieldName, field.value);
+      });
+      
+      field.addEventListener('input', () => {
+        // Убираем ошибку при вводе
+        const errorElement = document.getElementById(fieldName + 'Error');
+        if (errorElement && errorElement.classList.contains('visible')) {
+          errorElement.classList.remove('visible');
+        }
+      });
+    }
+  });
+  
+  // Отправка формы
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    
+    if (!validateForm(formData)) {
+      return;
+    }
+    
+    setLoadingState(true);
+    
+    try {
+      const response = await fetch('/consultation-request/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          phone: formData.get('phone'),
+          email: formData.get('email'),
+          consultation_type: formData.get('consultation_type'),
+          message: formData.get('message'),
+          preferred_time: formData.get('preferred_time')
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        showResult(data.message, true);
+        form.reset();
+        
+        // Автоматически закрываем модальное окно через 3 секунды
+        setTimeout(() => {
+          closeModal();
+        }, 3000);
+        
+      } else {
+        showResult(data.error || 'Произошла ошибка при отправке заявки', false);
+      }
+      
+    } catch (error) {
+      console.error('Ошибка отправки формы:', error);
+      showResult('Произошла ошибка при отправке заявки. Проверьте подключение к интернету и попробуйте снова.', false);
+    } finally {
+      setLoadingState(false);
+    }
+  });
+  
+  // Функция получения CSRF токена
+  function getCsrfToken() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+    if (csrfToken) {
+      return csrfToken.value;
+    }
+    
+    // Альтернативный способ получения из cookie
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      const [name, value] = cookie.trim().split('=');
+      if (name === 'csrftoken') {
+        return value;
+      }
+    }
+    
+    return '';
+  }
+  
+  // Simple phone input without auto-formatting for international support
+  const phoneInput = form.querySelector('[name="phone"]');
+  if (phoneInput) {
+    // Just allow international phone characters, no auto-formatting
+    phoneInput.addEventListener('input', (e) => {
+      // Allow digits, spaces, parentheses, dashes, plus sign, and dots
+      const value = e.target.value;
+      const cleanValue = value.replace(/[^0-9\s\(\)\-\+\.]/g, '');
+      if (value !== cleanValue) {
+        e.target.value = cleanValue;
+      }
+    });
+    
+    // Add placeholder for better UX
+    phoneInput.placeholder = '+7 123 456 78 90, +33 1 23 45 67 89, +49 30 12345678, +44 20 1234 5678';
   }
 })();
 
