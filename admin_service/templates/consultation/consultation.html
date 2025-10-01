@@ -1,0 +1,425 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Управление заявками на консультацию - Tz Mebel
+{% endblock %}
+
+{% block content %}
+<section class="admin-consultation-page section container">
+    <div class="admin-header">
+        <div class="section-header">
+            <h1 class="section-title">📋 Управление заявками на консультацию</h1>
+            <p class="section-sub">Все поступившие заявки от клиентов</p>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon">🇺🇸</div>
+                <div class="stat-info">
+                    <div class="stat-number">{{ total_count }}</div>
+                    <div class="stat-label">Всего заявок</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-info">
+                    <div class="stat-number">{{ new_count }}</div>
+                    <div class="stat-label">Новые</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <div class="stat-number">{{ completed_count }}</div>
+                    <div class="stat-label">Завершено</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="requests-container">
+        {% if consultation_requests %}
+        <div class="requests-grid">
+            {% for request in consultation_requests %}
+            <div class="request-card" data-status="{{ request.status }}">
+                <div class="request-header">
+                    <div class="request-info">
+                        <h3 class="request-name">👤 {{ request.name }}</h3>
+                        <div class="request-meta">
+                            <span class="request-id">#{{ request.id }}</span>
+                            <span class="request-date">📅 {{ request.created_at|date:"d.m.Y H:i" }}</span>
+                        </div>
+                    </div>
+                    <div class="status-badge status-{{ request.status }}">
+                        {% if request.status == 'new' %}🆕 Новая
+                        {% elif request.status == 'in_progress' %}⏳ В работе
+                        {% elif request.status == 'completed' %}✅ Завершена
+                        {% elif request.status == 'cancelled' %}❌ Отменена
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="request-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📞</span>
+                        <span class="detail-label">Телефон:</span>
+                        <a href="tel:{{ request.phone }}" class="detail-value contact-link">{{ request.phone }}</a>
+                    </div>
+
+                    {% if request.email %}
+                    <div class="detail-item">
+                        <span class="detail-icon">✉️</span>
+                        <span class="detail-label">Email:</span>
+                        <a href="mailto:{{ request.email }}" class="detail-value contact-link">{{ request.email }}</a>
+                    </div>
+                    {% endif %}
+
+                    <div class="detail-item">
+                        <span class="detail-icon">🎯</span>
+                        <span class="detail-label">Тип:</span>
+                        <span class="detail-value">{{ request.get_consultation_type_display }}</span>
+                    </div>
+
+                    {% if request.preferred_time %}
+                    <div class="detail-item">
+                        <span class="detail-icon">⏰</span>
+                        <span class="detail-label">Предпочтительное время:</span>
+                        <span class="detail-value">{{ request.preferred_time }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if request.message %}
+                    <div class="detail-item message-item">
+                        <span class="detail-icon">💬</span>
+                        <span class="detail-label">Сообщение:</span>
+                        <div class="detail-value message-text">{{ request.message }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="request-actions">
+                    {% if request.status == 'new' %}
+                    <button class="btn btn-primary" onclick="updateStatus({{ request.id }}, 'in_progress')">
+                        🚀 Взять в работу
+                    </button>
+                    <button class="btn btn-success" onclick="updateStatus({{ request.id }}, 'completed')">
+                        ✅ Связался
+                    </button>
+                    {% elif request.status == 'in_progress' %}
+                    <button class="btn btn-success" onclick="updateStatus({{ request.id }}, 'completed')">
+                        ✅ Связался
+                    </button>
+                    <button class="btn btn-secondary" onclick="updateStatus({{ request.id }}, 'new')">
+                        ↩️ Вернуть в новые
+                    </button>
+                    {% elif request.status == 'completed' %}
+                    <button class="btn btn-secondary" onclick="updateStatus({{ request.id }}, 'in_progress')">
+                        🔄 Вернуть в работу
+                    </button>
+                    {% endif %}
+
+                    {% if request.status != 'cancelled' %}
+                    <button class="btn btn-danger" onclick="updateStatus({{ request.id }}, 'cancelled')">
+                        ❌ Отменить
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-requests">
+            <div class="no-requests-icon">📭</div>
+            <h3>Пока нет заявок</h3>
+            <p>Заявки от клиентов будут отображаться здесь</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    .admin-consultation-page {
+        padding: 40px 0 80px;
+    }
+
+    .admin-header {
+        margin-bottom: 40px;
+    }
+
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .stat-card {
+        background: var(--gradient-panel);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: var(--transition);
+    }
+
+    .stat-card:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .stat-icon {
+        font-size: 32px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius);
+    }
+
+    .stat-number {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .requests-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 24px;
+    }
+
+    .request-card {
+        background: var(--gradient-panel);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .request-card:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .request-header {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .request-name {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        color: var(--text);
+    }
+
+    .request-meta {
+        display: flex;
+        gap: 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: var(--radius);
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid;
+    }
+
+    .status-new {
+        background: rgba(59, 130, 246, 0.1);
+        border-color: rgba(59, 130, 246, 0.3);
+        color: #60a5fa;
+    }
+
+    .status-in_progress {
+        background: rgba(251, 191, 36, 0.1);
+        border-color: rgba(251, 191, 36, 0.3);
+        color: #fbbf24;
+    }
+
+    .status-completed {
+        background: rgba(16, 185, 129, 0.1);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #10b981;
+    }
+
+    .status-cancelled {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+    }
+
+    .request-details {
+        padding: 20px 24px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .detail-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .detail-icon {
+        font-size: 16px;
+        width: 20px;
+        flex-shrink: 0;
+    }
+
+    .detail-label {
+        font-size: 14px;
+        color: var(--text-muted);
+        font-weight: 500;
+        min-width: 80px;
+    }
+
+    .detail-value {
+        color: var(--text);
+        font-size: 14px;
+    }
+
+    .contact-link {
+        color: var(--primary);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .contact-link:hover {
+        color: var(--primary-light);
+        text-decoration: underline;
+    }
+
+    .message-item {
+        align-items: flex-start;
+    }
+
+    .message-text {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        line-height: 1.5;
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+
+    .request-actions {
+        padding: 16px 24px 20px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .request-actions .btn {
+        flex: 1;
+        min-width: 120px;
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+
+    .no-requests {
+        text-align: center;
+        padding: 80px 20px;
+        color: var(--text-muted);
+    }
+
+    .no-requests-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+    }
+
+    .no-requests h3 {
+        margin: 0 0 12px 0;
+        color: var(--text);
+    }
+
+    .no-requests p {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .requests-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .request-header {
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .request-actions {
+            flex-direction: column;
+        }
+
+        .request-actions .btn {
+            flex: none;
+        }
+    }
+</style>
+
+<script>
+    async function updateStatus(requestId, newStatus) {
+        try {
+            const response = await fetch(`/admin_service/consultation-request/${requestId}/update-status/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                },
+                body: JSON.stringify({
+                    status: newStatus
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Reload page to show updated status
+                location.reload();
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('Произошла ошибка при обновлении статуса');
+        }
+    }
+
+    function getCsrfToken() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'csrftoken') {
+                return value;
+            }
+        }
+        return '';
+    }
+</script>
+
+{% endblock %}

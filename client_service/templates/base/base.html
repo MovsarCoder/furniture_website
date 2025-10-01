@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-    {% load static %}
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}TZ Mebel{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
-
 </head>
 <body>
 
@@ -19,14 +20,52 @@
                 <div>TZ Mebel</div>
             </div>
         </a>
-        <nav id="primary-nav" class="nav" role="navigation" aria-label="Основная навигация">
-            <a href="{% url 'client_service:index' %}">Главная</a>
-            <a href="{% url 'client_service:index' %}#portfolio">Наши работы</a>
-            <a href="{% url 'client_service:index' %}#reviews">Отзывы</a>
-            <a href="{% url 'client_service:index' %}#features">О компании</a>
-            <a href="{% url 'client_service:index' %}#contacts">Контакты</a>
+        <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
+            <a href="{% url 'client_service:index' %}">{% trans 'Home' %}</a>
+            <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
+            <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
+            <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
+            <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
         </nav>
-        <button class="nav-cta" id="consultationBtn" aria-label="Заказать консультацию">Заказать консультацию</button>
+        
+        <div class="nav-right">
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <div class="lang-current" id="langCurrent">
+                    {% if LANGUAGE_CODE == 'en' %}
+                        <span class="lang-flag">🇺🇸</span>
+                        <span class="lang-text">EN</span>
+                    {% elif LANGUAGE_CODE == 'fr' %}
+                        <span class="lang-flag">🇫🇷</span>
+                        <span class="lang-text">FR</span>
+                    {% elif LANGUAGE_CODE == 'de' %}
+                        <span class="lang-flag">🇩🇪</span>
+                        <span class="lang-text">DE</span>
+                    {% endif %}
+                    <span class="lang-arrow">▼</span>
+                </div>
+                <div class="lang-dropdown" id="langDropdown">
+                    <form id="languageForm" method="post" action="{% url 'set_language' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <div class="lang-option{% if LANGUAGE_CODE == 'en' %} active{% endif %}" data-lang="en">
+                            <span class="lang-flag">🇺🇸</span>
+                            <span class="lang-name">English</span>
+                        </div>
+                        <div class="lang-option{% if LANGUAGE_CODE == 'fr' %} active{% endif %}" data-lang="fr">
+                            <span class="lang-flag">🇫🇷</span>
+                            <span class="lang-name">Français</span>
+                        </div>
+                        <div class="lang-option{% if LANGUAGE_CODE == 'de' %} active{% endif %}" data-lang="de">
+                            <span class="lang-flag">🇩🇪</span>
+                            <span class="lang-name">Deutsch</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <button class="nav-cta" id="consultationBtn" aria-label="{% trans 'Order consultation' %}">{% trans 'Order Consultation' %}</button>
+        </div>
     </div>
 </header>
 
@@ -40,32 +79,32 @@
                 <div class="logo"></div>
                 <div>TZ Mebel</div>
             </div>
-            <div class="section-sub">Современная мебель под ваш интерьер — производим, доставляем и монтируем в срок.</div>
+            <div class="section-sub">{% trans 'Modern furniture for your interior — we manufacture, deliver and install on time.' %}</div>
         </div>
         <div class="foot-col">
-            <h5>Навигация</h5>
-            <a href="{% url 'client_service:index' %}">Главная</a>
-            <a href="{% url 'client_service:index' %}#portfolio">Наши работы</a>
-            <a href="{% url 'client_service:index' %}#reviews">Отзывы</a>
-            <a href="{% url 'client_service:index' %}#features">О компании</a>
-            <a href="#contacts">Контакты</a>
+            <h5>{% trans 'Navigation' %}</h5>
+            <a href="{% url 'client_service:index' %}">{% trans 'Home' %}</a>
+            <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
+            <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
+            <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
+            <a href="#contacts">{% trans 'Contacts' %}</a>
         </div>
         <div class="foot-col">
-            <h5>Помощь</h5>
-            <a href="#">FAQ</a>
-            <a href="#">Гарантия</a>
-            <a href="#">Доставка</a>
-            <a href="#">Политика конфиденциальности</a>
+            <h5>{% trans 'Help' %}</h5>
+            <a href="#">{% trans 'FAQ' %}</a>
+            <a href="#">{% trans 'Warranty' %}</a>
+            <a href="#">{% trans 'Delivery' %}</a>
+            <a href="#">{% trans 'Privacy Policy' %}</a>
         </div>
         <div class="foot-col">
-            <h5>Связаться</h5>
+            <h5>{% trans 'Contact' %}</h5>
             <a href="#contacts">WhatsApp</a>
             <a href="#contacts">Instagram</a>
             <a href="#contacts">hello@tz-mebel.com</a>
         </div>
     </div>
     <div class="container">
-        <div class="copyright">© <span id="year"></span> TZ Mebel. Все права защищены.</div>
+        <div class="copyright">© <span id="year"></span> TZ Mebel. {% trans 'All rights reserved.' %}</div>
     </div>
 </footer>
 
@@ -75,30 +114,30 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2 id="modalTitle" class="modal-title">
-                📅 Заказать консультацию
+                📅 {% trans 'Order Consultation' %}
             </h2>
-            <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть окно">
+            <button type="button" class="modal-close" id="modalClose" aria-label="{% trans 'Close window' %}">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         
         <div class="modal-body">
             <p class="modal-subtitle">
-                Оставьте свои контакты и мы свяжемся с вами в течение 30 минут
+                {% trans 'Leave your contacts and we will contact you within 30 minutes' %}
             </p>
             
             <form id="consultationForm" class="consultation-form">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name">Ваше имя *</label>
+                        <label for="name">{% trans 'Your name' %} *</label>
                         <input type="text" id="name" name="name" required 
-                               placeholder="Например: Александр">
+                               placeholder="{% trans 'For example: Alexander' %}">
                         <span class="field-error" id="nameError"></span>
                     </div>
                     
                     <div class="form-group">
-                        <label for="phone">Телефон *</label>
+                        <label for="phone">{% trans 'Phone' %} *</label>
                         <input type="tel" id="phone" name="phone" required 
                                placeholder="+7 (999) 123-45-67">
                         <span class="field-error" id="phoneError"></span>
@@ -106,42 +145,42 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="email">Email (необязательно)</label>
+                    <label for="email">{% trans 'Email (optional)' %}</label>
                     <input type="email" id="email" name="email" 
                            placeholder="your.email@example.com">
                     <span class="field-error" id="emailError"></span>
                 </div>
                 
                 <div class="form-group">
-                    <label for="consultationType">Тип консультации</label>
+                    <label for="consultationType">{% trans 'Consultation type' %}</label>
                     <select id="consultationType" name="consultation_type">
-                        <option value="general">Общая консультация</option>
-                        <option value="design">Дизайн-проект</option>
-                        <option value="custom">Мебель на заказ</option>
-                        <option value="repair">Ремонт/Реставрация</option>
+                        <option value="general">{% trans 'General consultation' %}</option>
+                        <option value="design">{% trans 'Design project' %}</option>
+                        <option value="custom">{% trans 'Custom furniture' %}</option>
+                        <option value="repair">{% trans 'Repair/Restoration' %}</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label for="preferredTime">Предпочтительное время</label>
+                    <label for="preferredTime">{% trans 'Preferred time' %}</label>
                     <input type="text" id="preferredTime" name="preferred_time" 
-                           placeholder="Например: утром, вечером, в выходные">
+                           placeholder="{% trans 'For example: morning, evening, weekends' %}">
                 </div>
                 
                 <div class="form-group">
-                    <label for="message">Сообщение</label>
+                    <label for="message">{% trans 'Message' %}</label>
                     <textarea id="message" name="message" rows="3" 
-                              placeholder="Опишите свои пожелания или вопросы..."></textarea>
+                              placeholder="{% trans 'Describe your wishes or questions...' %}"></textarea>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancelBtn">
-                        Отмена
+                        {% trans 'Cancel' %}
                     </button>
                     <button type="submit" class="btn-primary" id="submitBtn">
-                        <span class="btn-text">📩 Отправить заявку</span>
+                        <span class="btn-text">📩 {% trans 'Send request' %}</span>
                         <span class="btn-loading" style="display: none;">
-                            <span class="spinner"></span> Отправляем...
+                            <span class="spinner"></span> {% trans 'Sending...' %}
                         </span>
                     </button>
                 </div>

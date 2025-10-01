@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
+{% load i18n %}
 
-{% block title %}Наши работы{% endblock %}
+{% block title %}{% trans 'Our Works' %}{% endblock %}
 
 {% block content %}
 
@@ -10,13 +11,13 @@
         <div class="works-hero">
             <div class="section-header">
                 <div>
-                    <h1 class="section-title">Наши работы</h1>
-                    <p class="section-subtitle">Портфолио уникальной мебели ручной работы</p>
+                    <h1 class="section-title">{% trans 'Our Works' %}</h1>
+                    <p class="section-subtitle">{% trans 'Portfolio of unique handmade furniture' %}</p>
                 </div>
                 <div class="works-stats">
                     <div class="stat-item">
                         <span class="stat-number">{{ works|length }}+</span>
-                        <span class="stat-label">проектов</span>
+                        <span class="stat-label">{% trans 'projects' %}</span>
                     </div>
                 </div>
             </div>
@@ -25,23 +26,23 @@
             <div class="filter-tabs">
                 <button class="filter-tab active" data-filter="all">
                     <span class="tab-icon">🏠</span>
-                    <span>Все работы</span>
+                    <span>{% trans 'All Works' %}</span>
                 </button>
                 <button class="filter-tab" data-filter="kitchen">
                     <span class="tab-icon">🍳</span>
-                    <span>Кухни</span>
+                    <span>{% trans 'Kitchens' %}</span>
                 </button>
                 <button class="filter-tab" data-filter="wardrobe">
                     <span class="tab-icon">👔</span>
-                    <span>Шкафы</span>
+                    <span>{% trans 'Wardrobes' %}</span>
                 </button>
                 <button class="filter-tab" data-filter="table">
                     <span class="tab-icon">🪑</span>
-                    <span>Столы</span>
+                    <span>{% trans 'Tables' %}</span>
                 </button>
                 <button class="filter-tab" data-filter="cabinet">
                     <span class="tab-icon">📚</span>
-                    <span>Тумбы</span>
+                    <span>{% trans 'Cabinets' %}</span>
                 </button>
             </div>
         </div>
@@ -55,13 +56,13 @@
                     <div class="image-overlay">
                         <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
                             <span class="btn-icon">👁️</span>
-                            <span>Быстрый просмотр</span>
+                            <span>{% trans 'Quick View' %}</span>
                         </button>
                     </div>
                     <div class="card-badges">
                         <span class="badge badge-category">{{ work.get_work_type_display }}</span>
                         {% if work.is_featured %}
-                        <span class="badge badge-featured">⭐ Рекомендуем</span>
+                        <span class="badge badge-featured">⭐ {% trans 'Recommended' %}</span>
                         {% endif %}
                     </div>
                 </div>
@@ -87,12 +88,12 @@
 
                     <div class="card-footer">
                         <div class="price-section">
-                            <span class="price-label">Стоимость:</span>
+                            <span class="price-label">{% trans 'Cost:' %}</span>
                             <span class="price-value">{{ work.price }}</span>
                             <span class="price-unit">{{ work.currency|upper }}</span>
                         </div>
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
-                            <span>Подробнее</span>
+                            <span>{% trans 'More details' %}</span>
                             <span class="btn-arrow">→</span>
                         </a>
                     </div>
@@ -104,11 +105,11 @@
         <!-- Call to Action Section -->
         <div class="works-cta">
             <div class="cta-content">
-                <h3>Хотите заказать похожую мебель?</h3>
-                <p>Наши мастера создадут уникальное изделие специально для вас</p>
+                <h3>{% trans 'Want to order similar furniture?' %}</h3>
+                <p>{% trans 'Our masters will create a unique piece specially for you' %}</p>
                 <button class="btn btn-primary" onclick="openConsultationModal()">
                     <span class="btn-icon">💬</span>
-                    <span>Получить консультацию</span>
+                    <span>{% trans 'Get consultation' %}</span>
                 </button>
             </div>
         </div>
@@ -118,8 +119,8 @@
 <section id="contacts" class="section container">
     <div class="section-header">
         <div>
-            <div class="section-title">Контакты</div>
-            <div class="section-sub">Выберите удобный для вас филиал</div>
+            <div class="section-title">{% trans 'Contacts' %}</div>
+            <div class="section-sub">{% trans 'Choose a convenient branch for you' %}</div>
         </div>
     </div>
     <div class="branches">
@@ -135,7 +136,7 @@
         </div>
         {% endfor %}
         {% else %}
-        <h1>Не контактов!</h1>
+        <h1>{% trans 'No contacts!' %}</h1>
         {% endif %}
     </div>
 </section>

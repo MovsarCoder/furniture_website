@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ work.title }} - TZ Mebel{% endblock %}
 
@@ -8,9 +9,9 @@
     <div class="container">
         <!-- Breadcrumb Navigation -->
         <nav class="breadcrumb" aria-label="breadcrumb">
-            <a href="{% url 'client_service:index' %}" class="breadcrumb-link">🏠 Главная</a>
+            <a href="{% url 'client_service:index' %}" class="breadcrumb-link">🏠 {% trans 'Home' %}</a>
             <span class="breadcrumb-separator">›</span>
-            <a href="{% url 'client_service:portfolio' %}" class="breadcrumb-link">💼 Портфолио</a>
+            <a href="{% url 'client_service:portfolio' %}" class="breadcrumb-link">💼 {% trans 'Portfolio' %}</a>
             <span class="breadcrumb-separator">›</span>
             <span class="breadcrumb-current">{{ work.title }}</span>
         </nav>
@@ -20,7 +21,7 @@
                 <div class="image-container">
                     <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image" loading="lazy">
                     <div class="image-overlay">
-                        <button class="image-zoom-btn" aria-label="Увеличить изображение">🔍</button>
+                        <button class="image-zoom-btn" aria-label="{% trans 'Zoom image' %}">🔍</button>
                     </div>
                 </div>
 
@@ -63,13 +64,13 @@
                         <span class="price-value">{{ work.price }}</span>
                         <span class="price-unit">{{ work.currency|upper }}</span>
                     </div>
-                    <div class="price-note">Окончательная стоимость рассчитывается индивидуально</div>
+                    <div class="price-note">{% trans 'Final cost is calculated individually' %}</div>
                 </div>
 
                 <!-- Description -->
                 {% if work.description %}
                 <div class="work-description">
-                    <h3>📝 Описание</h3>
+                    <h3>📝 {% trans 'Description' %}</h3>
                     <p>{{ work.description }}</p>
                 </div>
                 {% endif %}
@@ -77,24 +78,24 @@
                 <!-- Specifications -->
                 {% if work.width or work.height or work.depth %}
                 <div class="specifications">
-                    <h3>📏 Размеры</h3>
+                    <h3>📏 {% trans 'Dimensions' %}</h3>
                     <div class="specs-grid">
                         {% if work.width %}
                         <div class="spec-item">
                             <div class="spec-value">{{ work.width }}</div>
-                            <div class="spec-label">Ширина (см)</div>
+                            <div class="spec-label">{% trans 'Width (cm)' %}</div>
                         </div>
                         {% endif %}
                         {% if work.height %}
                         <div class="spec-item">
                             <div class="spec-value">{{ work.height }}</div>
-                            <div class="spec-label">Высота (см)</div>
+                            <div class="spec-label">{% trans 'Height (cm)' %}</div>
                         </div>
                         {% endif %}
                         {% if work.depth %}
                         <div class="spec-item">
                             <div class="spec-value">{{ work.depth }}</div>
-                            <div class="spec-label">Глубина (см)</div>
+                            <div class="spec-label">{% trans 'Depth (cm)' %}</div>
                         </div>
                         {% endif %}
                     </div>
@@ -103,34 +104,34 @@
 
                 <!-- Features Grid -->
                 <div class="work-features">
-                    <h3>✨ Особенности</h3>
+                    <h3>✨ {% trans 'Features' %}</h3>
                     <div class="features-grid">
                         <div class="feature-card">
                             <div class="feature-icon">🚚</div>
                             <div class="feature-content">
-                                <div class="feature-title">Быстрая доставка</div>
-                                <div class="feature-desc">От 2 до 4 недель по всей стране</div>
+                                <div class="feature-title">{% trans 'Fast delivery' %}</div>
+                                <div class="feature-desc">{% trans 'From 2 to 4 weeks throughout the country' %}</div>
                             </div>
                         </div>
                         <div class="feature-card">
                             <div class="feature-icon">🛡️</div>
                             <div class="feature-content">
-                                <div class="feature-title">Гарантия качества</div>
-                                <div class="feature-desc">Официальная гарантия 2 года</div>
+                                <div class="feature-title">{% trans 'Quality guarantee' %}</div>
+                                <div class="feature-desc">{% trans 'Official 2-year warranty' %}</div>
                             </div>
                         </div>
                         <div class="feature-card">
                             <div class="feature-icon">💳</div>
                             <div class="feature-content">
-                                <div class="feature-title">Удобная оплата</div>
-                                <div class="feature-desc">Наличными или картой при получении</div>
+                                <div class="feature-title">{% trans 'Convenient payment' %}</div>
+                                <div class="feature-desc">{% trans 'Cash or card upon receipt' %}</div>
                             </div>
                         </div>
                         <div class="feature-card">
                             <div class="feature-icon">🤝</div>
                             <div class="feature-content">
-                                <div class="feature-title">Профессиональная сборка</div>
-                                <div class="feature-desc">Опытные мастера с многолетним опытом</div>
+                                <div class="feature-title">{% trans 'Professional assembly' %}</div>
+                                <div class="feature-desc">{% trans 'Experienced masters with years of experience' %}</div>
                             </div>
                         </div>
                     </div>
@@ -139,43 +140,43 @@
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button class="btn-primary" onclick="openConsultationModal()">
-                        <span>📩 Заказать консультацию</span>
+                        <span>📩 {% trans 'Order consultation' %}</span>
                     </button>
                     <a href="{% url 'client_service:portfolio' %}" class="btn-secondary">
-                        <span>← К всем работам</span>
+                        <span>← {% trans 'Back to all works' %}</span>
                     </a>
                 </div>
 
                 <!-- Timeline/Process -->
                 <div class="work-timeline">
-                    <h3>📈 Процесс создания</h3>
+                    <h3>📈 {% trans 'Creation process' %}</h3>
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-icon">📝</div>
                             <div class="timeline-content">
-                                <div class="timeline-title">Консультация</div>
-                                <div class="timeline-desc">Обсуждаем ваши пожелания и снимаем замеры</div>
+                                <div class="timeline-title">{% trans 'Consultation' %}</div>
+                                <div class="timeline-desc">{% trans 'We discuss your wishes and take measurements' %}</div>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-icon">🎨</div>
                             <div class="timeline-content">
-                                <div class="timeline-title">Дизайн</div>
-                                <div class="timeline-desc">Создаем 3D-визуализацию и чертежи</div>
+                                <div class="timeline-title">{% trans 'Design' %}</div>
+                                <div class="timeline-desc">{% trans 'We create 3D visualization and drawings' %}</div>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-icon">🔨</div>
                             <div class="timeline-content">
-                                <div class="timeline-title">Производство</div>
-                                <div class="timeline-desc">Изготавливаем мебель на современном оборудовании</div>
+                                <div class="timeline-title">{% trans 'Production' %}</div>
+                                <div class="timeline-desc">{% trans 'We manufacture furniture on modern equipment' %}</div>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-icon">🚚</div>
                             <div class="timeline-content">
-                                <div class="timeline-title">Доставка и сборка</div>
-                                <div class="timeline-desc">Бережно доставляем и собираем на месте</div>
+                                <div class="timeline-title">{% trans 'Delivery and assembly' %}</div>
+                                <div class="timeline-desc">{% trans 'We carefully deliver and assemble on site' %}</div>
                             </div>
                         </div>
                     </div>

@@ -3,52 +3,6 @@ from django.db.models import IntegerField
 
 # Create your models here.
 
-class ConsultationRequest(models.Model):
-    CONSULTATION_TYPES = [
-        ("design", "Дизайн-проект"),
-        ("custom", "На заказ"),
-        ("repair", "Ремонт/Реставрация"),
-        ("general", "Общая консультация"),
-    ]
-    
-    STATUS_CHOICES = [
-        ("new", "Новая"),
-        ("in_progress", "В обработке"),
-        ("completed", "Завершена"),
-        ("cancelled", "Отменена"),
-    ]
-    
-    name = models.CharField(max_length=100, verbose_name="Имя клиента")
-    phone = models.CharField(max_length=20, verbose_name="Телефон")
-    email = models.EmailField(blank=True, verbose_name="Email")
-    consultation_type = models.CharField(
-        max_length=20, 
-        choices=CONSULTATION_TYPES, 
-        default="general",
-        verbose_name="Тип консультации"
-    )
-    message = models.TextField(blank=True, verbose_name="Сообщение")
-    preferred_time = models.CharField(
-        max_length=50, 
-        blank=True, 
-        verbose_name="Предпочтительное время"
-    )
-    status = models.CharField(
-        max_length=20, 
-        choices=STATUS_CHOICES, 
-        default="new",
-        verbose_name="Статус"
-    )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    
-    class Meta:
-        verbose_name = "Заявка на консультацию"
-        verbose_name_plural = "Заявки на консультацию"
-        ordering = ["-created_at"]
-    
-    def __str__(self):
-        return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
 
 languages = [
     ("en", "English"),
@@ -134,17 +88,40 @@ class Stats(models.Model):
 
 
 class Review(models.Model):
+    RATING_CHOICES = [
+        (1, '1 звезда'),
+        (2, '2 звезды'),
+        (3, '3 звезды'),
+        (4, '4 звезды'),
+        (5, '5 звезд'),
+    ]
+
     author_name = models.CharField(max_length=100, verbose_name="Автор отзыва", blank=True)
     text = models.TextField(blank=True, verbose_name="Текст отзыва")
+    rating = models.IntegerField(choices=RATING_CHOICES, default=5, verbose_name="Рейтинг")
+    project_name = models.CharField(max_length=200, verbose_name="Название проекта", blank=True, default="Мебель на заказ")
+    is_verified = models.BooleanField(default=True, verbose_name="Проверенный клиент")
+    helpful_count = models.IntegerField(default=0, verbose_name="Количество полезных голосов")
     date = models.DateField(auto_now_add=True, verbose_name="Дата добавления отзыва", blank=True)
     language = models.CharField(max_length=5, choices=languages, verbose_name="Выбор языка на отзыве")
 
     class Meta:
         verbose_name = "Отзывы"
         verbose_name_plural = "Отзывы"
+        ordering = ['-date']
 
     def __str__(self):
-        return f"{self.author_name} | {self.text}"
+        return f"{self.author_name} | {self.rating} звезд | {self.text[:50]}..."
+
+    def get_stars_display(self):
+        """Возвращает HTML для отображения звезд"""
+        stars = ''
+        for i in range(1, 6):
+            if i <= self.rating:
+                stars += '<span class="star filled">★</span>'
+            else:
+                stars += '<span class="star">☆</span>'
+        return stars
 
 
 class Contact(models.Model):
@@ -167,5 +144,53 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.branch_name} | {self.address} | {self.country}"
+
+
+class ConsultationRequest(models.Model):
+    CONSULTATION_TYPES = [
+        ("design", "Дизайн-проект"),
+        ("custom", "На заказ"),
+        ("repair", "Ремонт/Реставрация"),
+        ("general", "Общая консультация"),
+    ]
+
+    STATUS_CHOICES = [
+        ("new", "Новая"),
+        ("in_progress", "В обработке"),
+        ("completed", "Завершена"),
+        ("cancelled", "Отменена"),
+    ]
+
+    name = models.CharField(max_length=100, verbose_name="Имя клиента")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    email = models.EmailField(blank=True, verbose_name="Email")
+    consultation_type = models.CharField(
+        max_length=20,
+        choices=CONSULTATION_TYPES,
+        default="general",
+        verbose_name="Тип консультации"
+    )
+    message = models.TextField(blank=True, verbose_name="Сообщение")
+    preferred_time = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name="Предпочтительное время"
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="new",
+        verbose_name="Статус"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+
+    class Meta:
+        verbose_name = "Заявка на консультацию"
+        verbose_name_plural = "Заявки на консультацию"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
 
 # Create your models here.

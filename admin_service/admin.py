@@ -20,9 +20,9 @@ class StatAdmin(ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(ModelAdmin):
-    list_display = ('id', 'author_name', 'text', 'date', 'language')
-    list_editable = ("text", "language")
-    list_filter = ('language', 'date')
+    list_display = ('id', 'author_name', 'text', 'rating', 'project_name', 'is_verified', 'helpful_count', 'date', 'language')
+    list_editable = ("text", "language", 'rating', 'project_name', 'is_verified')
+    list_filter = ('language', 'date', 'rating', 'is_verified')
     search_fields = ('author_name', 'text', 'language')
     date_hierarchy = 'date'
 
@@ -43,7 +43,7 @@ class ConsultationRequestAdmin(ModelAdmin):
     search_fields = ('name', 'phone', 'email')
     readonly_fields = ('created_at', 'updated_at')
     date_hierarchy = 'created_at'
-    
+
     fieldsets = (
         ('Информация о клиенте', {
             'fields': ('name', 'phone', 'email')

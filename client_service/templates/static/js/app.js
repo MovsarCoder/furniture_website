@@ -1,53 +1,75 @@
-// ===== CORE FUNCTIONALITY =====
-// Stats count-up + progress bars + pop effect
+// ===== ENHANCED STATISTICS ANIMATION =====
+// Улучшенная анимация статистики с плавными эффектами
 (function(){
   const nums = document.querySelectorAll('.num[data-count]');
-  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+  const easeOutQuart = t => 1 - (--t) * t * t * t;
   const formatNum = n => n.toLocaleString('ru-RU');
 
-  function animate(el, to, duration = 2000){
+  function animate(el, to, duration = 3000){
     let start = null;
-    const bar = el.closest('.stat').querySelector('.bar');
+    const progressBar = el.closest('.stat-card').querySelector('.progress-bar');
+    const iconWrapper = el.closest('.stat-card').querySelector('.stat-icon-wrapper');
+    const sparkles = el.closest('.stat-card').querySelectorAll('.sparkle');
+    const icon = el.closest('.stat-card').querySelector('.stat-icon');
 
     function step(ts){
       if(!start) start = ts;
       let progress = (ts - start) / duration;
       if(progress > 1) progress = 1;
 
-      const eased = easeOutCubic(progress);
+      // Используем более плавную easing функцию
+      const eased = easeOutQuart(progress);
       const value = Math.floor(to * eased);
 
       el.textContent = formatNum(value);
 
-      if(bar){
-        bar.style.width = (value / to * 100) + '%';
+      // Анимация прогресс-бара с задержкой
+      if(progressBar && progress > 0.3){
+        const targetWidth = progressBar.getAttribute('data-width') || '100';
+        const barProgress = Math.min((progress - 0.3) / 0.7, 1);
+        progressBar.style.width = (barProgress * parseFloat(targetWidth)) + '%';
+      }
+
+      // Пульсация иконки во время анимации
+      if(icon && progress < 1) {
+        const pulseScale = 1 + Math.sin(progress * Math.PI * 4) * 0.1;
+        icon.style.transform = `scale(${pulseScale})`;
+      }
+
+      // Активация искр в процессе анимации
+      sparkles.forEach((sparkle, index) => {
+        if(progress > (index + 1) * 0.25) {
+          sparkle.style.animationPlayState = 'running';
+        }
+      });
+
+      // Добавляем свечение при завершении
+      if(progress >= 1) {
+        el.style.textShadow = '0 0 20px rgba(59, 130, 246, 0.6)';
+        if(icon) {
+          icon.style.transform = 'scale(1)';
+          icon.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.4)';
+        }
       }
 
       if(progress < 1){
         requestAnimationFrame(step);
-      } else {
-        // Pop effect
-        el.style.transform = 'scale(1.15)';
-        el.style.transition = 'transform 0.3s ease, text-shadow 0.3s ease';
-        el.style.textShadow = '0 0 15px rgba(59,130,246,0.7)';
-        setTimeout(() => {
-          el.style.transform = 'scale(1)';
-          el.style.textShadow = 'none';
-        }, 300);
       }
     }
+
     requestAnimationFrame(step);
   }
 
   const io = new IntersectionObserver(entries=>{
-    entries.forEach((e, idx)=>{
-      if(e.isIntersecting){
-        const el = e.target;
+    entries.forEach((entry, idx)=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
         const max = +el.dataset.count;
-
+        
+        // Увеличенная задержка для лучшего эффекта
         setTimeout(() => {
-          animate(el, max, 2200);
-        }, idx * 300);
+          animate(el, max, 2800);
+        }, idx * 500);
 
         io.unobserve(el);
       }
@@ -55,6 +77,50 @@
   }, { threshold: 0.3 });
 
   nums.forEach(n=>io.observe(n));
+
+  // Добавляем эффекты при наведении на карточки статистики
+  const statCards = document.querySelectorAll('.stat-card');
+  statCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const icon = card.querySelector('.stat-icon');
+      const progressGlow = card.querySelector('.progress-glow');
+      const sparkles = card.querySelectorAll('.sparkle');
+      
+      if(icon) {
+        icon.style.transform = 'scale(1.1) rotate(6deg)';
+        icon.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      }
+      
+      if(progressGlow) {
+        progressGlow.style.opacity = '0.6';
+      }
+      
+      sparkles.forEach((sparkle, idx) => {
+        setTimeout(() => {
+          sparkle.style.animation = 'sparkleFloat 2s ease-in-out infinite';
+        }, idx * 120);
+      });
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      const icon = card.querySelector('.stat-icon');
+      const progressGlow = card.querySelector('.progress-glow');
+      const sparkles = card.querySelectorAll('.sparkle');
+      
+      if(icon) {
+        icon.style.transform = 'scale(1) rotate(0deg)';
+        icon.style.transition = 'transform 0.4s ease';
+      }
+      
+      if(progressGlow) {
+        progressGlow.style.opacity = '0';
+      }
+      
+      sparkles.forEach(sparkle => {
+        sparkle.style.animation = 'sparkleFloat 3s ease-in-out infinite';
+      });
+    });
+  });
 })();
 
 // Smooth scroll for navigation links
@@ -140,60 +206,252 @@
   updateNavbar(); // Initialize on load
 })();
 
-// Reviews carousel functionality
+// Enhanced Reviews carousel functionality with modern features
 (function(){
   const reviewsTrack = document.querySelector('.reviews-track');
-  const reviews = document.querySelectorAll('.review');
-  const prevBtn = document.getElementById('revPrev');
-  const nextBtn = document.getElementById('revNext');
+  const reviews = document.querySelectorAll('.review-card');
+  const prevBtn = document.getElementById('reviewsPrev');
+  const nextBtn = document.getElementById('reviewsNext');
+  const dotsContainer = document.getElementById('reviewsDots');
 
   if(!reviewsTrack || !reviews.length) return;
 
   let currentIndex = 0;
-  const reviewsPerView = window.innerWidth > 1024 ? 3 : window.innerWidth > 640 ? 2 : 1;
-  const maxIndex = Math.max(0, reviews.length - reviewsPerView);
+  let reviewsPerView = getReviewsPerView();
+  let maxIndex = Math.max(0, reviews.length - reviewsPerView);
+  let autoplayInterval = null;
+  let isHovered = false;
+  let isDragging = false;
+  let startX = 0;
+  let currentX = 0;
+  let initialTransform = 0;
+
+  function getReviewsPerView() {
+    const width = window.innerWidth;
+    if (width > 1200) return Math.min(3, reviews.length);
+    if (width > 768) return Math.min(2, reviews.length);
+    return 1;
+  }
+
+  function createDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    const dotsCount = Math.ceil(reviews.length / reviewsPerView);
+    
+    for (let i = 0; i < dotsCount; i++) {
+      const dot = document.createElement('div');
+      dot.className = `dot ${i === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('.dot');
+    const currentDot = Math.floor(currentIndex / reviewsPerView);
+    
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentDot);
+    });
+  }
 
   function updateCarousel() {
     const translateX = -currentIndex * (100 / reviewsPerView);
     reviewsTrack.style.transform = `translateX(${translateX}%)`;
+    
+    // Update navigation buttons
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex;
+    
+    updateDots();
+  }
+
+  function goToSlide(slideIndex) {
+    currentIndex = Math.max(0, Math.min(slideIndex * reviewsPerView, maxIndex));
+    updateCarousel();
+    resetAutoplay();
   }
 
   function next() {
     if(currentIndex < maxIndex) {
       currentIndex++;
-      updateCarousel();
+    } else {
+      currentIndex = 0; // Loop back to start
     }
+    updateCarousel();
   }
 
   function prev() {
     if(currentIndex > 0) {
       currentIndex--;
-      updateCarousel();
+    } else {
+      currentIndex = maxIndex; // Loop to end
+    }
+    updateCarousel();
+  }
+
+  function startAutoplay() {
+    // Clear any existing interval first
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+    
+    // Only start autoplay if not hovered and there are multiple slides
+    if (!isHovered && reviews.length > reviewsPerView) {
+      autoplayInterval = setInterval(() => {
+        if (!isHovered && !isDragging) {
+          next();
+        }
+      }, 4000); // Fixed interval - no acceleration
     }
   }
 
-  prevBtn?.addEventListener('click', prev);
-  nextBtn?.addEventListener('click', next);
-
-  // Auto-play reviews
-  setInterval(() => {
-    if(currentIndex >= maxIndex) {
-      currentIndex = 0;
-    } else {
-      currentIndex++;
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
     }
-    updateCarousel();
-  }, 4000);
+  }
+
+  function resetAutoplay() {
+    stopAutoplay();
+    // Small delay before restarting to prevent immediate restart
+    setTimeout(() => {
+      if (!isHovered) {
+        startAutoplay();
+      }
+    }, 100);
+  }
+
+  // Touch/Mouse drag functionality
+  function handleStart(e) {
+    isDragging = true;
+    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    currentX = startX;
+    initialTransform = currentIndex * (100 / reviewsPerView);
+    reviewsTrack.style.transition = 'none';
+    stopAutoplay();
+  }
+
+  function handleMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const diffX = currentX - startX;
+    const percentage = (diffX / reviewsTrack.offsetWidth) * 100;
+    const newTransform = -initialTransform - percentage;
+    
+    reviewsTrack.style.transform = `translateX(${newTransform}%)`;
+  }
+
+  function handleEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const diffX = currentX - startX;
+    const threshold = 50; // Minimum drag distance to trigger slide change
+    
+    reviewsTrack.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    
+    if (Math.abs(diffX) > threshold) {
+      if (diffX > 0 && currentIndex > 0) {
+        prev();
+      } else if (diffX < 0 && currentIndex < maxIndex) {
+        next();
+      } else {
+        updateCarousel(); // Snap back
+      }
+    } else {
+      updateCarousel(); // Snap back
+    }
+    
+    startAutoplay();
+  }
+
+  // Event listeners
+  prevBtn?.addEventListener('click', () => { prev(); resetAutoplay(); });
+  nextBtn?.addEventListener('click', () => { next(); resetAutoplay(); });
+
+  // Touch events
+  reviewsTrack.addEventListener('touchstart', handleStart, { passive: false });
+  reviewsTrack.addEventListener('touchmove', handleMove, { passive: false });
+  reviewsTrack.addEventListener('touchend', handleEnd);
+
+  // Mouse events
+  reviewsTrack.addEventListener('mousedown', handleStart);
+  document.addEventListener('mousemove', handleMove);
+  document.addEventListener('mouseup', handleEnd);
+
+  // Prevent context menu on long press
+  reviewsTrack.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Proper hover handling - stop autoplay when hovering over the entire reviews section
+  const reviewsSection = reviewsTrack.closest('.reviews');
+  if (reviewsSection) {
+    reviewsSection.addEventListener('mouseenter', () => {
+      isHovered = true;
+      stopAutoplay();
+    });
+    
+    reviewsSection.addEventListener('mouseleave', () => {
+      isHovered = false;
+      resetAutoplay();
+    });
+  }
+
+  // Handle helpful button clicks
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.helpful-btn')) {
+      const btn = e.target.closest('.helpful-btn');
+      const countEl = btn.querySelector('.helpful-count');
+      if (countEl) {
+        const currentCount = parseInt(countEl.textContent.match(/\d+/)[0]);
+        countEl.textContent = `(${currentCount + 1})`;
+        btn.style.color = 'var(--brand)';
+        btn.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          btn.style.transform = 'scale(1)';
+        }, 200);
+      }
+    }
+  });
 
   // Handle window resize
+  let resizeTimeout;
   window.addEventListener('resize', () => {
-    const newReviewsPerView = window.innerWidth > 1024 ? 3 : window.innerWidth > 640 ? 2 : 1;
-    const newMaxIndex = Math.max(0, reviews.length - newReviewsPerView);
-    if(currentIndex > newMaxIndex) {
-      currentIndex = newMaxIndex;
-    }
-    updateCarousel();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      const newReviewsPerView = getReviewsPerView();
+      if (newReviewsPerView !== reviewsPerView) {
+        reviewsPerView = newReviewsPerView;
+        maxIndex = Math.max(0, reviews.length - reviewsPerView);
+        currentIndex = Math.min(currentIndex, maxIndex);
+        createDots();
+        updateCarousel();
+      }
+    }, 250);
   });
+
+  // Initialize
+  createDots();
+  updateCarousel();
+  startAutoplay();
+
+  // Intersection Observer for performance
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startAutoplay();
+      } else {
+        stopAutoplay();
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  observer.observe(reviewsTrack);
 })();
 
 // Mobile burger menu toggle with a11y
@@ -231,42 +489,64 @@
   });
 })();
 
-// Improve reviews autoplay and a11y controls
+// Enhanced accessibility and keyboard navigation for reviews
 (function(){
   const track = document.getElementById('reviewsTrack');
-  const prev = document.getElementById('revPrev');
-  const next = document.getElementById('revNext');
+  const prev = document.getElementById('reviewsPrev');
+  const next = document.getElementById('reviewsNext');
+  
   if(!track) return;
-
-  let hover = false;
-
-  function setHover(v){ hover = v; }
-
-  prev && prev.setAttribute('aria-controls', 'reviewsTrack');
-  next && next.setAttribute('aria-controls', 'reviewsTrack');
-
-  prev && prev.addEventListener('mouseenter', ()=>setHover(true));
-  next && next.addEventListener('mouseenter', ()=>setHover(true));
-  prev && prev.addEventListener('mouseleave', ()=>setHover(false));
-  next && next.addEventListener('mouseleave', ()=>setHover(false));
-  track.addEventListener('mouseenter', ()=>setHover(true));
-  track.addEventListener('mouseleave', ()=>setHover(false));
-
-  let windowFocused = true;
-  window.addEventListener('focus', ()=>windowFocused = true);
-  window.addEventListener('blur', ()=>windowFocused = false);
-
-  const nativeSetInterval = window.setInterval;
-  window.setInterval = function(handler, timeout){
-    if(typeof handler === 'function' && timeout === 4000){
-      const wrapped = () => { if(!hover && windowFocused) handler(); };
-      return nativeSetInterval(wrapped, timeout);
+  
+  // Add keyboard navigation support
+  document.addEventListener('keydown', (e) => {
+    if (e.target.closest('.reviews')) {
+      if (e.key === 'ArrowLeft' && prev && !prev.disabled) {
+        prev.click();
+        e.preventDefault();
+      } else if (e.key === 'ArrowRight' && next && !next.disabled) {
+        next.click();
+        e.preventDefault();
+      }
     }
-    return nativeSetInterval(handler, timeout);
+  });
+  
+  // Enhanced accessibility attributes
+  if (prev) {
+    prev.setAttribute('aria-controls', 'reviewsTrack');
+    prev.setAttribute('aria-label', 'Предыдущий отзыв');
   }
+  if (next) {
+    next.setAttribute('aria-controls', 'reviewsTrack');
+    next.setAttribute('aria-label', 'Следующий отзыв');
+  }
+  
+  track.setAttribute('role', 'region');
+  track.setAttribute('aria-label', 'Отзывы клиентов');
 })();
 
 // ===== ГЛОБАЛЬНАЯ ФУНКЦИЯ ДЛЯ МОДАЛЬНОГО ОКНА =====
+
+// Add scroll-triggered animations
+(function() {
+  const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  animatedElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(40px)';
+    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    observer.observe(el);
+  });
+})();
 // Глобальная функция для открытия модального окна консультации
 window.openConsultationModal = function() {
   const modal = document.getElementById('consultationModal');
@@ -483,7 +763,7 @@ window.quickView = function(workId) {
     setLoadingState(true);
     
     try {
-      const response = await fetch('/consultation-request/', {
+      const response = await fetch('/admin_service/consultation-request/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -556,6 +836,173 @@ window.quickView = function(workId) {
     
     // Add placeholder for better UX
     phoneInput.placeholder = '+7 123 456 78 90, +33 1 23 45 67 89, +49 30 12345678, +44 20 1234 5678';
+  }
+})();
+
+// ===== DJANGO LANGUAGE SELECTOR =====
+(function(){
+  const languageSelector = document.querySelector('.language-selector');
+  const langCurrent = document.getElementById('langCurrent');
+  const langDropdown = document.getElementById('langDropdown');
+  const langOptions = document.querySelectorAll('.lang-option');
+  const languageForm = document.getElementById('languageForm');
+  
+  if (!languageSelector || !langCurrent || !langDropdown) return;
+  
+  let isOpen = false;
+  
+  function toggleDropdown(force = null) {
+    isOpen = force !== null ? force : !isOpen;
+    languageSelector.classList.toggle('open', isOpen);
+    
+    // Update aria attributes for accessibility
+    langCurrent.setAttribute('aria-expanded', isOpen.toString());
+    
+    if (isOpen) {
+      // Focus on current language option when opened
+      const activeOption = langDropdown.querySelector('.lang-option.active');
+      if (activeOption) {
+        activeOption.focus();
+      }
+    }
+  }
+  
+  function closeDropdown() {
+    toggleDropdown(false);
+  }
+  
+  function selectLanguage(langCode) {
+    // Create hidden input for language selection
+    const languageInput = document.createElement('input');
+    languageInput.type = 'hidden';
+    languageInput.name = 'language';
+    languageInput.value = langCode;
+    
+    // Add to form and submit
+    languageForm.appendChild(languageInput);
+    languageForm.submit();
+  }
+  
+  // Event listeners
+  langCurrent.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+  
+  langOptions.forEach(option => {
+    option.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const langCode = option.dataset.lang;
+      selectLanguage(langCode);
+    });
+    
+    // Keyboard navigation
+    option.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const langCode = option.dataset.lang;
+        selectLanguage(langCode);
+      } else if (e.key === 'Escape') {
+        closeDropdown();
+        langCurrent.focus();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextOption = option.nextElementSibling;
+        if (nextOption) nextOption.focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevOption = option.previousElementSibling;
+        if (prevOption) prevOption.focus();
+      }
+    });
+    
+    // Make options focusable
+    option.setAttribute('tabindex', '0');
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!languageSelector.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+  
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeDropdown();
+      langCurrent.focus();
+    }
+  });
+  
+  // Set up accessibility attributes
+  langCurrent.setAttribute('role', 'button');
+  langCurrent.setAttribute('aria-haspopup', 'listbox');
+  langCurrent.setAttribute('aria-expanded', 'false');
+  langCurrent.setAttribute('aria-label', 'Select language');
+  
+  langDropdown.setAttribute('role', 'listbox');
+  langDropdown.setAttribute('aria-label', 'Choose language');
+  
+  langOptions.forEach(option => {
+    option.setAttribute('role', 'option');
+    const langName = option.querySelector('.lang-name').textContent;
+    option.setAttribute('aria-label', `Switch to ${langName}`);
+  });
+  
+  // Smooth hover effects
+  langOptions.forEach(option => {
+    option.addEventListener('mouseenter', () => {
+      if (!option.classList.contains('active')) {
+        option.style.transform = 'translateX(8px)';
+      }
+    });
+    
+    option.addEventListener('mouseleave', () => {
+      if (!option.classList.contains('active')) {
+        option.style.transform = 'translateX(0)';
+      }
+    });
+  });
+  
+  // Add ripple effect on click
+  langOptions.forEach(option => {
+    option.addEventListener('click', function(e) {
+      const ripple = document.createElement('div');
+      ripple.style.position = 'absolute';
+      ripple.style.borderRadius = '50%';
+      ripple.style.background = 'rgba(59, 130, 246, 0.3)';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.animation = 'ripple 0.6s linear';
+      ripple.style.left = (e.clientX - this.getBoundingClientRect().left - 10) + 'px';
+      ripple.style.top = (e.clientY - this.getBoundingClientRect().top - 10) + 'px';
+      ripple.style.width = '20px';
+      ripple.style.height = '20px';
+      ripple.style.pointerEvents = 'none';
+      ripple.style.zIndex = '1000';
+      
+      this.style.position = 'relative';
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+  
+  // CSS for ripple animation
+  if (!document.querySelector('#ripple-style')) {
+    const style = document.createElement('style');
+    style.id = 'ripple-style';
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 })();
 

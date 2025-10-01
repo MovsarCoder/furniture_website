@@ -18,14 +18,30 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import set_language
 
 handler404 = 'client_service.views.custom_page_not_found'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("client_service.urls")),  # Переносим на корень сайта
+    # Language switching endpoint
+    path('i18n/setlang/', set_language, name='set_language'),
+    
+    # Auto documentation drf_spectacular
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 ]
 
-# Раздача медиа в режиме DEBUG
+# Static media serving in DEBUG mode
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Internationalized URLs
+urlpatterns += i18n_patterns(
+    path("i18n/", include("django.conf.urls.i18n")),
+    path("admin_service/", include("admin_service.urls")),
+    path("", include("client_service.urls")),  # Root website
+    prefix_default_language=False,
+)
