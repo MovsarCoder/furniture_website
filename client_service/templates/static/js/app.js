@@ -129,13 +129,15 @@
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const targetId = link.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
+      const targetId = link.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
 
       if(targetElement) {
         const navbar = document.querySelector('.navbar');
         const navH = navbar ? navbar.offsetHeight : 84;
         const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - navH;
+        
+        // Плавная прокрутка
         window.scrollTo({
           top: offsetTop,
           behavior: 'smooth'
@@ -522,6 +524,84 @@
   
   track.setAttribute('role', 'region');
   track.setAttribute('aria-label', 'Отзывы клиентов');
+})();
+
+// ===== АКТИВНЫЕ ПУНКТЫ МЕНЮ ПРИ ПРОКРУТКЕ =====
+(function(){
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  
+  // Функция для определения активного раздела при прокрутке
+  function setActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav a');
+    const homeLink = document.querySelector('.nav a[href="/"]');
+    const scrollPos = window.scrollY + 100;
+    
+    // Убираем класс active у всех ссылок
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+    
+    // Если мы в самом верху страницы, активируем ссылку "Главная"
+    if (window.scrollY < 100) {
+      if (homeLink) {
+        homeLink.classList.add('active');
+      }
+      return;
+    }
+    
+    // Определяем текущий активный раздел
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = sections[i];
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        const sectionId = section.getAttribute('id');
+        // Ищем ссылку, которая ведет к этому разделу
+        const activeLink = document.querySelector(`.nav a[href="#${sectionId}"], .nav a[href="/#${sectionId}"]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+        }
+        break;
+      }
+    }
+    
+    lastScrollY = window.scrollY;
+    ticking = false;
+  }
+  
+  // Оптимизированная функция для обработки прокрутки
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(setActiveNavLink);
+      ticking = true;
+    }
+  }
+  
+  // Добавляем обработчик события прокрутки
+  window.addEventListener('scroll', onScroll, { passive: true });
+  
+  // Вызываем функцию при загрузке страницы
+  document.addEventListener('DOMContentLoaded', function() {
+    // Немного задержим вызов, чтобы страница успела загрузиться
+    setTimeout(setActiveNavLink, 100);
+  });
+  
+  // Обработка кликов по навигационным ссылкам
+  document.addEventListener('click', function(e) {
+    const navLink = e.target.closest('.nav a');
+    if (navLink) {
+      // Убираем класс active у всех ссылок
+      document.querySelectorAll('.nav a').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Добавляем класс active к кликнутой ссылке
+      navLink.classList.add('active');
+    }
+  });
 })();
 
 // ===== ГЛОБАЛЬНАЯ ФУНКЦИЯ ДЛЯ МОДАЛЬНОГО ОКНА =====

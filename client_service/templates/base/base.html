@@ -7,7 +7,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}TZ Mebel{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new_style.css' %}">
 </head>
 <body>
 
@@ -21,11 +21,11 @@
             </div>
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
-            <a href="{% url 'client_service:index' %}">{% trans 'Home' %}</a>
-            <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
-            <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
-            <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
-            <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
+            <a href="{% url 'client_service:index' %}" class="active">{% trans 'Home' %}</a>
+            <a href="#portfolio">{% trans 'Our Works' %}</a>
+            <a href="#reviews">{% trans 'Reviews' %}</a>
+            <a href="#features">{% trans 'About Company' %}</a>
+            <a href="#contacts">{% trans 'Contacts' %}</a>
         </nav>
         
         <div class="nav-right">

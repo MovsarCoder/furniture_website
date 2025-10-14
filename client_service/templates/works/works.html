@@ -70,7 +70,7 @@
                 <div class="card-content">
                     <div class="card-main-content">
                         <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
-                        <p class="card-description">{{ work.description|truncatewords:16|default:"Описание появится в ближайшее время" }}</p>
+                        <p class="card-description">{{ work.description|truncatewords:16|default:"{% trans 'Description will appear soon' %}" }}</p>
 
                         <div class="card-details">
                             {% if work.material %}

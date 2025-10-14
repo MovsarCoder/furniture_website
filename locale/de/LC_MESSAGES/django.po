@@ -180,14 +180,10 @@ msgid "Sending..."
 msgstr "Wird gesendet..."
 
 #: client_service/templates/home/home.html:15
-#, fuzzy
-#| msgid "Custom furniture"
 msgid "Custom furniture to order"
 msgstr "Maßgeschneiderte Möbel"
 
 #: client_service/templates/home/home.html:18
-#, fuzzy
-#| msgid "Custom furniture"
 msgid "We create furniture"
 msgstr "Wir schaffen Möbel"
 
@@ -211,8 +207,6 @@ msgstr ""
 #: client_service/templates/home/home.html:25
 #: client_service/templates/home/home.html:467
 #: client_service/templates/works/works.html:112
-#, fuzzy
-#| msgid "General consultation"
 msgid "Get consultation"
 msgstr "Beratung erhalten"
 

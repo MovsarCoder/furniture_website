@@ -336,13 +336,14 @@
 .btn:hover::before {
   left: 100%;
 }
+
 .hero {
-  min-height: 90vh; /* Further reduced height */
+  min-height: 90vh;
   display: flex;
   align-items: center;
   position: relative;
-  overflow: visible; /* Changed from hidden to visible to prevent clipping */
-  padding: 20px 0 20px; /* Reduced top padding to move hero higher */
+  overflow: visible;
+  padding: 20px 0 20px;
 }
 
 .hero::before {
@@ -531,19 +532,77 @@
 .hero-card {
   width: 400px;
   height: 500px;
-  background: var(--gradient-panel);
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  animation: glow-pulse 3s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 20px rgba(67, 97, 238, 0.5), 0 0 40px rgba(67, 97, 238, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(114, 9, 183, 0.7), 0 0 60px rgba(58, 12, 163, 0.5);
+  }
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translateX(-100%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100%);
+  }
 }
 
 .hero-image {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 100%);
   position: relative;
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 15%);
+  opacity: 0.3;
 }
 
 .floating-elements {
@@ -552,6 +611,51 @@
   pointer-events: none;
 }
 
+/* Добавим декоративные элементы */
+.hero-card::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: orbit 15s linear infinite;
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(150px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(150px) rotate(-360deg);
+  }
+}
+
+.hero-card .orbit-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  top: 20px;
+  right: 20px;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* Улучшенные анимации для плавающих элементов */
 .floating-element {
   position: absolute;
   animation: float 6s ease-in-out infinite;
@@ -579,53 +683,28 @@
   }
 }
 
-/* Улучшенные анимации для плавающих элементов */
-.floating-element {
-  position: absolute;
-  animation: float 6s ease-in-out infinite;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-  transition: all 0.3s ease;
-}
-
-.floating-element:hover {
-  animation-duration: 2s;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
-}
-
 /* Стили для SVG иконок */
 .furniture-icon {
   width: 48px;
   height: 48px;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
   transition: all 0.3s ease;
-  animation: icon-rotate 8s linear infinite;
-}
-
-@keyframes icon-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  /* Убираем бесконечную анимацию вращения, чтобы не было дублирования */
 }
 
 .chair-icon {
   color: #3b82f6; /* Синий цвет для стула */
   text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  animation-delay: 0s;
 }
 
 .bed-icon {
   color: #8b5cf6; /* Фиолетовый цвет для кровати */
   text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-  animation-delay: 1s;
 }
 
 .cabinet-icon {
   color: #f59e0b; /* Оранжевый цвет для шкафа */
   text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
-  animation-delay: 2s;
 }
 
 .floating-element:hover .furniture-icon {
@@ -945,8 +1024,6 @@
   background-clip: text;
   transition: all 0.4s ease;
   position: relative;
-}
-
   letter-spacing: -0.5px;
 }
 
@@ -1074,140 +1151,6 @@
   overflow: hidden;
 }
 
-/* Hero Visual */
-.hero-visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-card {
-  width: 400px;
-  height: 500px;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-  animation: glow-pulse 3s ease-in-out infinite alternate;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-@keyframes glow-pulse {
-  0% {
-    box-shadow: 0 0 20px rgba(67, 97, 238, 0.5), 0 0 40px rgba(67, 97, 238, 0.3);
-  }
-  100% {
-    box-shadow: 0 0 30px rgba(114, 9, 183, 0.7), 0 0 60px rgba(58, 12, 163, 0.5);
-  }
-}
-
-.hero-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
-  transform: rotate(45deg);
-  animation: shine 3s infinite;
-}
-
-@keyframes shine {
-  0% {
-    transform: rotate(45deg) translateX(-100%);
-  }
-  100% {
-    transform: rotate(45deg) translateX(100%);
-  }
-}
-
-.hero-image {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 100%);
-  position: relative;
-  border-radius: var(--radius-xl);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-image::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
-    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 15%);
-  opacity: 0.3;
-}
-
-.floating-elements {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-/* Добавим декоративные элементы */
-.hero-card::after {
-  content: '';
-  position: absolute;
-  top: 10%;
-  right: 10%;
-  width: 60px;
-  height: 60px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  animation: orbit 15s linear infinite;
-}
-
-@keyframes orbit {
-  0% {
-    transform: rotate(0deg) translateX(150px) rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg) translateX(150px) rotate(-360deg);
-  }
-}
-
-.hero-card .orbit-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  top: 20px;
-  right: 20px;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.5);
-    opacity: 1;
-  }
-}
-
 .sparkle {
   position: absolute;
   width: 4px;
@@ -1285,39 +1228,8 @@
 .stats-highlight {
   display: flex;
   justify-content: center;
-}
-
   gap: 40px;
   flex-wrap: wrap;
-}
-
-.highlight-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.highlight-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-4px);
-}
-
-.highlight-icon {
-  font-size: 20px;
-  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
-}
-
-.highlight-text {
-  font-size: 14px;
-  color: var(--text-muted);
-  font-weight: 500;
 }
 
 /* Улучшенная анимация появления карточек */
@@ -1376,53 +1288,6 @@
   animation: shimmer 2s ease-in-out infinite;
 }
 
-/* Enhanced stat card interaction */
-.stat-card {
-  background: linear-gradient(145deg, 
-    var(--panel) 0%, 
-    var(--panel-2) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  padding: 32px 24px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-
-/* Floating particles background */
-.stats-enhanced::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 1px, transparent 1px),
-    radial-gradient(circle at 40% 60%, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px, 60px 60px, 40px 40px;
-  background-position: 0 0, 30px 30px, 15px 15px;
-  animation: floatingParticles 20s linear infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes floatingParticles {
-  0% { transform: translateY(0px) translateX(0px); }
-  33% { transform: translateY(-20px) translateX(10px); }
-  66% { transform: translateY(-10px) translateX(-5px); }
-  100% { transform: translateY(0px) translateX(0px); }
-}
-
 /* Pulsing glow effect for numbers */
 .num {
   font-size: 48px;
@@ -1431,58 +1296,6 @@
   line-height: 1;
   background: var(--gradient-brand);
   -webkit-background-clip: text;
-.stats-footer {
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
-}
-
-.stats-highlight {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
-/* Interactive highlight items */
-.highlight-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.highlight-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(59, 130, 246, 0.1) 50%, 
-    transparent 100%);
-  transition: left 0.3s ease;
-}
-
-.highlight-item:hover::before {
-  left: 100%;
-}
-
-.highlight-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Glow effect */
-.num {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: all 0.4s ease;
@@ -1538,18 +1351,6 @@
     rgba(59, 130, 246, 0.1) 50%, 
     transparent 100%);
   transition: left 0.3s ease;
-}
-
-.highlight-item:hover::before {
-  left: 100%;
-}
-
-.highlight-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-    transparent 100%);
-  transition: left 0.5s ease;
 }
 
 .highlight-item:hover::before {
@@ -1862,7 +1663,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 520px; /* Ensure consistent height */
+  min-height: 520px;
 }
 
 .portfolio-card:hover {
@@ -1904,6 +1705,16 @@
   opacity: 1;
 }
 
+.overlay-content {
+  text-align: center;
+  transform: translateY(20px);
+  transition: var(--transition);
+}
+
+.portfolio-card:hover .overlay-content {
+  transform: translateY(0);
+}
+
 .quick-view-btn {
   display: flex;
   align-items: center;
@@ -1924,6 +1735,11 @@
   transform: scale(1.05);
 }
 
+.preview-icon {
+  font-size: 16px;
+}
+
+/* Category Badge */
 .card-badges {
   position: absolute;
   top: 16px;
@@ -2169,6 +1985,7 @@
     justify-content: center;
   }
 }
+
 * {
   box-sizing: border-box;
 }
@@ -2180,9 +1997,9 @@ html, body {
   color: var(--text);
   font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   scroll-behavior: smooth;
-  scroll-padding-top: 120px; /* Improved scroll offset for anchor links */
+  scroll-padding-top: 120px;
   overflow-x: hidden;
-  padding-top: 50px; /* Optimal padding - not too much, not too little */
+  padding-top: 50px;
 }
 
 a {
@@ -2328,7 +2145,6 @@ img {
 
 .nav a:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
 }
 
@@ -2371,40 +2187,11 @@ img {
   background: var(--gradient-brand);
   border-radius: 3px;
   box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
-  animation: indicator-grow 0.3s ease-out;
 }
 
-@keyframes indicator-grow {
-  from {
-    width: 0;
-  }
-  to {
-    width: 40%;
-  }
-}
-
-/* Улучшенный эффект при наведении */
-.nav a {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.nav a::before {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 3px;
-  background: var(--gradient-brand);
-  border-radius: 3px;
-  transition: width 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nav a:hover::before {
-  width: 40%;
-  box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
+/* Убираем анимацию при наведении на активный элемент */
+.nav a.active:hover::after {
+  animation: none;
 }
 
 /* Right side container for language selector and CTA */
@@ -2436,7 +2223,7 @@ img {
 
 .nav-cta:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 40px rgba(67, 97, 238, 0.4);
 }
 
 .nav-cta::before {
@@ -2466,6 +2253,8 @@ img {
   padding: 8px 12px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
   border-radius: 12px;
   cursor: pointer;
   transition: var(--transition);
@@ -2936,8 +2725,8 @@ img {
 
 /* ===== HERO SECTION ===== */
 .hero {
-  padding: 0; /* Removed all padding to move hero higher */
-  margin-top: -20px; /* Negative margin to pull hero up */
+  padding: 0;
+  margin-top: -20px;
 }
 
 /* ===== ENHANCED PORTFOLIO SHOWCASE ===== */
@@ -3013,7 +2802,7 @@ img {
   height: auto;
   display: flex;
   flex-direction: column;
-  min-height: 500px; /* Ensure minimum height for consistent layout */
+  min-height: 500px;
 }
 
 .showcase-card:hover {
@@ -3175,10 +2964,10 @@ img {
   color: var(--text-muted);
   line-height: 1.5;
   margin: 0 0 20px 0;
-  min-height: 42px; /* Use min-height instead of fixed height */
+  min-height: 42px;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Allow 3 lines */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
@@ -3330,6 +3119,7 @@ img {
     gap: 8px;
   }
 }
+
 .features {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -4045,6 +3835,27 @@ img {
   cursor: not-allowed;
 }
 
+.lang-current {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  min-width: 80px;
+  justify-content: space-between;
+}
+
+.lang-current:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
 .nav-icon {
   font-size: 20px;
   font-weight: 900;
@@ -4677,7 +4488,7 @@ img {
   .form-group select,
   .form-group textarea {
     padding: 12px 14px;
-    font-size: 16px; /* Предотвращает zoom на iOS */
+    font-size: 16px;
   }
 }
 
@@ -5223,13 +5034,6 @@ img {
   line-height: 1.5;
 }
 
-.stats-highlight {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
 .contact-actions {
   display: flex;
   gap: 12px;
@@ -5397,18 +5201,5 @@ img {
 
   .work-info {
     padding: 20px;
-  }
-
-  .work-image {
-    height: 250px;
-  }
-
-  .price-block .badge-price {
-    font-size: 20px;
-    padding: 12px 16px;
-  }
-
-  .specifications {
-    grid-template-columns: 1fr 1fr;
   }
 }
