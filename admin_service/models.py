@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import IntegerField
+import requests
+from django.conf import settings
 
 # Create your models here.
 
@@ -144,6 +146,38 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.branch_name} | {self.address} | {self.country}"
+
+    def save(self, *args, **kwargs):
+        # Если у нас есть адрес, но нет координат, попробуем получить их
+        if self.address and (not self.latitude or not self.longitude):
+            self.get_coordinates_from_address()
+        super().save(*args, **kwargs)
+
+    def get_coordinates_from_address(self):
+        """Получить координаты по адресу с помощью Google Geocoding API"""
+        try:
+            # Здесь нужно использовать ваш API ключ Google Maps
+            api_key = getattr(settings, 'GOOGLE_MAPS_API_KEY', None)
+            if not api_key:
+                return
+
+            address = f"{self.address}, {self.get_country_display()}"
+            url = f"https://maps.googleapis.com/maps/api/geocode/json"
+            params = {
+                'address': address,
+                'key': api_key
+            }
+
+            response = requests.get(url, params=params)
+            data = response.json()
+
+            if data['status'] == 'OK' and data['results']:
+                location = data['results'][0]['geometry']['location']
+                self.latitude = location['lat']
+                self.longitude = location['lng']
+        except Exception as e:
+            # В случае ошибки просто оставляем координаты пустыми
+            pass
 
 
 class ConsultationRequest(models.Model):

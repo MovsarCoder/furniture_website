@@ -112,6 +112,9 @@ LANGUAGES = [
     ('de', _('Deutsch')),
 ]
 
+# Google Maps API Key
+GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY', default='AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I')
+
 # Локаль директории для переводов
 LOCALE_PATHS = [
     BASE_DIR / 'locale',

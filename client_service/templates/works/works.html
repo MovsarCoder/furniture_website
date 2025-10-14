@@ -128,10 +128,23 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }} PM</div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            {% if contact.address %}
+            <div class="contact-map">
+                <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
+                    <div class="mini-map" 
+                         style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
+                        <div class="map-marker">📍</div>
+                    </div>
+                    <div class="map-overlay">
+                        <span class="map-text">{% trans 'View on Google Maps' %}</span>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
             <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
         </div>
         {% endfor %}
