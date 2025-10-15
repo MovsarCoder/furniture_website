@@ -445,7 +445,7 @@ msgstr "Utile"
 
 #: client_service/templates/home/home.html:441
 msgid "TZ Mebel"
-msgstr ""
+msgstr "B'Mass"
 
 #: client_service/templates/home/home.html:449
 msgid "Reviews will appear soon!"
