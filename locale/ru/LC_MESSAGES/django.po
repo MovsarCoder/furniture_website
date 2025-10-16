@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-15 01:39+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: client_service/templates/base/404.html:7
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+#: client_service/templates/base/404.html:14
+msgid "Unfortunately, the requested page does not exist. It may have been moved or deleted."
+msgstr "К сожалению, запрашиваемая страница не существует. Она могла быть перемещена или удалена."
+
+#: client_service/templates/base/404.html:16
+msgid "Return to main page"
+msgstr "Вернуться на главную страницу"
+
+#: client_service/templates/base/404.html:17
+msgid "View works"
+msgstr "Посмотреть работы"
+
+#: client_service/templates/base/404.html:18
+msgid "Contact us"
+msgstr "Связаться с нами"
+
+#: client_service/templates/base/404.html:22
+msgid "What you can do:"
+msgstr "Что вы можете сделать:"
+
+#: client_service/templates/base/404.html:24
+msgid "Check the address for correctness"
+msgstr "Проверьте адрес на правильность"
+
+#: client_service/templates/base/404.html:25
+msgid "Return to the"
+msgstr "Вернуться на"
+
+#: client_service/templates/base/404.html:25
+msgid "main page"
+msgstr "главную страницу"
+
+#: client_service/templates/base/404.html:26
+msgid "Use the navigation menu"
+msgstr "Используйте меню навигации"
+
+#: client_service/templates/base/404.html:41
+msgid "View on Google Maps"
+msgstr "Посмотреть на Google Maps"
+
+#: client_service/templates/base/404.html:42
+msgid "No contacts!"
+msgstr "Нет контактов!"

@@ -18,6 +18,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: client_service/templates/base/404.html:7
+msgid "Page not found"
+msgstr "Seite nicht gefunden"
+
+#: client_service/templates/base/404.html:14
+msgid "Unfortunately, the requested page does not exist. It may have been moved or deleted."
+msgstr "Leider existiert die angeforderte Seite nicht. Sie wurde möglicherweise verschoben oder gelöscht."
+
+#: client_service/templates/base/404.html:16
+msgid "Return to main page"
+msgstr "Zurück zur Hauptseite"
+
+#: client_service/templates/base/404.html:17
+#: client_service/templates/base/404.html:41
+msgid "View works"
+msgstr "Arbeiten ansehen"
+
+#: client_service/templates/base/404.html:18
+#: client_service/templates/base/404.html:31
+#: client_service/templates/base/404.html:42
+msgid "Contact us"
+msgstr "Kontaktieren Sie uns"
+
+#: client_service/templates/base/404.html:22
+msgid "What you can do:"
+msgstr "Was Sie tun können:"
+
+#: client_service/templates/base/404.html:24
+msgid "Check the address for correctness"
+msgstr "Überprüfen Sie die Adresse auf Richtigkeit"
+
+#: client_service/templates/base/404.html:25
+msgid "Return to the"
+msgstr "Zurück zur"
+
+#: client_service/templates/base/404.html:25
+msgid "main page"
+msgstr "Hauptseite"
+
+#: client_service/templates/base/404.html:26
+msgid "Use the navigation menu"
+msgstr "Verwenden Sie das Navigationsmenü"
+
+#: client_service/templates/base/404.html:41
+msgid "View on Google Maps"
+msgstr "Auf Google Maps anzeigen"
+
+#: client_service/templates/base/404.html:42
+msgid "No contacts!"
+msgstr "Keine Kontakte!"
+
 #: client_service/templates/base/base.html:23
 msgid "Main navigation"
 msgstr "Hauptnavigation"
@@ -210,9 +261,7 @@ msgstr ""
 msgid "Get consultation"
 msgstr "Beratung erhalten"
 
-#: client_service/templates/home/home.html:26
-msgid "View works"
-msgstr "Arbeiten ansehen"
+
 
 #: client_service/templates/home/home.html:31
 #, fuzzy
@@ -507,17 +556,9 @@ msgstr "Bewertung"
 msgid "Choose a convenient branch for you"
 msgstr "Wählen Sie eine für Sie geeignete Filiale"
 
-#: client_service/templates/home/home.html:532
-#: client_service/templates/works/works.html:143
-msgid "View on Google Maps"
-msgstr ""
 
-#: client_service/templates/home/home.html:541
-#: client_service/templates/works/works.html:152
-#, fuzzy
-#| msgid "Contacts"
-msgid "No contacts!"
-msgstr "Keine Kontakte!"
+
+
 
 #: client_service/templates/works/work_detail.html:14
 msgid "Portfolio"
@@ -649,32 +690,3 @@ msgstr "Schnellansicht"
 msgid "Recommended"
 msgstr "Empfohlen"
 
-#: client_service/templates/works/works.html:91
-#, fuzzy
-#| msgid "Cost"
-msgid "Cost:"
-msgstr "Kosten:"
-
-#: client_service/templates/works/works.html:96
-msgid "More details"
-msgstr "Mehr Details"
-
-#: client_service/templates/works/works.html:108
-msgid "Want to order similar furniture?"
-msgstr "Möchten Sie ähnliche Möbel bestellen?"
-
-#: client_service/templates/works/works.html:109
-msgid "Our masters will create a unique piece specially for you"
-msgstr "Unsere Meister erstellen ein einzigartiges Stück speziell für Sie"
-
-#: furniture/settings.py:110
-msgid "English"
-msgstr "Englisch"
-
-#: furniture/settings.py:111
-msgid "Français"
-msgstr "Französisch"
-
-#: furniture/settings.py:112
-msgid "Deutsch"
-msgstr "Deutsch"

@@ -952,20 +952,32 @@ window.quickView = function(workId) {
   }
   
   function selectLanguage(langCode) {
-    // Create hidden input for language selection
-    const languageInput = document.createElement('input');
-    languageInput.type = 'hidden';
-    languageInput.name = 'language';
-    languageInput.value = langCode;
+    console.log('Selecting language:', langCode);
     
-    // Add to form and submit
-    languageForm.appendChild(languageInput);
-    languageForm.submit();
+    // Check if form exists
+    if (languageForm) {
+      console.log('Using form submission');
+      // Create hidden input for language selection
+      const languageInput = document.createElement('input');
+      languageInput.type = 'hidden';
+      languageInput.name = 'language';
+      languageInput.value = langCode;
+      
+      // Add to form and submit
+      languageForm.appendChild(languageInput);
+      languageForm.submit();
+    } else {
+      console.log('Using fallback URL redirect');
+      // Fallback: redirect to language switch URL directly
+      const currentPath = window.location.pathname + window.location.search + window.location.hash;
+      window.location.href = `/i18n/setlang/?language=${langCode}&next=${encodeURIComponent(currentPath)}`;
+    }
   }
   
   // Event listeners
   langCurrent.addEventListener('click', (e) => {
     e.stopPropagation();
+    console.log('Language selector clicked');
     toggleDropdown();
   });
   
@@ -973,6 +985,7 @@ window.quickView = function(workId) {
     option.addEventListener('click', (e) => {
       e.stopPropagation();
       const langCode = option.dataset.lang;
+      console.log('Language option clicked:', langCode);
       selectLanguage(langCode);
     });
     
@@ -981,6 +994,7 @@ window.quickView = function(workId) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const langCode = option.dataset.lang;
+        console.log('Language option selected via keyboard:', langCode);
         selectLanguage(langCode);
       } else if (e.key === 'Escape') {
         closeDropdown();
@@ -1085,4 +1099,3 @@ window.quickView = function(workId) {
     document.head.appendChild(style);
   }
 })();
-

@@ -1,6 +1,7 @@
 {% extends "base/base.html" %}
+{% load static %}
 
-{% block title %}Страница не найдена — B'Mass{% endblock %}
+{% block title %}Page not found — B'Mass{% endblock %}
 
 {% block content %}
 
@@ -12,21 +13,21 @@
                 <div class="hammer-icon"></div>
             </div>
         </div>
-        <h1 class="error-title">Страница не найдена</h1>
-        <p class="error-sub">К сожалению, запрашиваемая страница не существует. Возможно, она была перемещена или удалена.</p>
+        <h1 class="error-title">Page not found</h1>
+        <p class="error-sub">Unfortunately, the requested page does not exist. It may have been moved or deleted.</p>
         <div class="error-actions">
-            <a href="{% url 'client_service:index' %}" class="btn-primary">← Вернуться на главную</a>
-            <a href="{% url 'client_service:portfolio' %}" class="btn-ghost">Посмотреть работы</a>
-            <a href="#contacts" class="btn-contact">Связаться с нами</a>
+            <a href="{% url 'client_service:index' %}" class="btn-primary hover-lift">← Return to main page</a>
+            <a href="{% url 'client_service:portfolio' %}" class="btn-ghost hover-lift">View works</a>
+            <a href="#contacts" class="btn-contact hover-lift">Contact us</a>
         </div>
 
         <div class="error-help">
-            <div class="error-help-title">Что можно сделать:</div>
+            <div class="error-help-title">What you can do:</div>
             <ul>
-                <li>Проверьте правильность адреса</li>
-                <li>Вернитесь на <a href="{% url 'client_service:index' %}">главную страницу</a></li>
-                <li>Используйте меню навигации</li>
-                <li><a href="#contacts">Связаться с нами</a></li>
+                <li>Check the address for correctness</li>
+                <li>Return to the <a href="{% url 'client_service:index' %}">main page</a></li>
+                <li>Use the navigation menu</li>
+                <li><a href="#contacts">Contact us</a></li>
             </ul>
         </div>
     </div>
@@ -35,8 +36,8 @@
 <section id="contacts" class="section container">
     <div class="section-header">
         <div>
-            <div class="section-title">📞 Контакты</div>
-            <div class="section-sub">📍 Выберите удобный для вас филиал</div>
+            <div class="section-title">Contacts</div>
+            <div class="section-sub">Choose a convenient branch for you</div>
         </div>
     </div>
     <div class="branches">
@@ -44,244 +45,291 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕑 {{ contact.start_time }} - {{ contact.end_time }} PM</div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            {% if contact.address %}
+            <div class="contact-map">
+                <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
+                    <div class="mini-map" 
+                         style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
+                        <div class="map-marker">📍</div>
+                    </div>
+                    <div class="map-overlay">
+                        <span class="map-text">View on Google Maps</span>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
             <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
         </div>
         {% endfor %}
         {% else %}
-        <h1>Не контактов!</h1>
+        <h1>No contacts!</h1>
         {% endif %}
     </div>
 </section>
 
 <style>
-    .error-hero { 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        min-height: 80vh; 
+    .error-hero {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
         position: relative;
         overflow: hidden;
+        padding: 40px 0;
     }
-    
+
     .error-hero::before {
         content: '';
         position: absolute;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at 30% 50%, rgba(6, 182, 212, 0.1), transparent 40%),
-                  radial-gradient(circle at 70% 20%, rgba(14, 165, 233, 0.1), transparent 30%);
+        background: radial-gradient(circle at 30% 50%, rgba(67, 97, 238, 0.15), transparent 40%),
+                  radial-gradient(circle at 70% 20%, rgba(58, 12, 163, 0.15), transparent 30%);
         z-index: -1;
         opacity: 0.8;
     }
-    
-    .error-card { 
-        text-align: center; 
-        background: var(--gradient-panel); 
-        border: 1px solid rgba(255,255,255,.1); 
-        padding: 40px; 
-        border-radius: var(--radius-lg); 
-        box-shadow: var(--shadow-lg); 
-        max-width: 760px; 
-        width: 100%; 
-        position: relative; 
-        overflow: hidden; 
-        animation: fadeIn 0.6s ease-out;
+
+    .error-card {
+        text-align: center;
+        background: linear-gradient(145deg, rgba(26, 29, 41, 0.9), rgba(21, 25, 34, 0.95));
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        padding: 50px 40px;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                   0 0 30px rgba(67, 97, 238, 0.2);
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+        backdrop-filter: blur(12px);
     }
-    
-    .error-card::before { 
-        content: ''; 
-        position: absolute; 
-        inset: 0; 
-        background: radial-gradient(600px 200px at 10% -10%, rgba(6,182,212,.15), transparent), 
-                  radial-gradient(400px 160px at 110% 110%, rgba(14,165,233,.15), transparent); 
-        pointer-events: none; 
+
+    .error-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(600px 200px at 10% -10%, rgba(67, 97, 238, 0.2), transparent),
+                  radial-gradient(400px 160px at 110% 110%, rgba(58, 12, 163, 0.2), transparent);
+        pointer-events: none;
+        z-index: -1;
     }
-    
+
     .error-illustration {
         position: relative;
-        height: 180px;
-        margin-bottom: 20px;
+        height: 200px;
+        margin-bottom: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    
-    .error-code { 
-        font-size: 140px; 
-        font-weight: 900; 
-        letter-spacing: 4px; 
-        background: linear-gradient(90deg, #06b6d4, #0ea5e9, #38bdf8); 
-        -webkit-background-clip: text; 
-        background-clip: text; 
-        color: transparent; 
-        margin-bottom: 8px; 
-        text-shadow: 0 8px 40px rgba(6,182,212,.35);
+
+    .error-code {
+        font-size: 160px;
+        font-weight: 900;
+        letter-spacing: 6px;
+        background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 8px;
+        text-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
         position: relative;
         z-index: 2;
-        animation: pulseGlow 3s infinite alternate;
+        animation: pulseGlow 4s infinite alternate;
     }
-    
+
     .error-icon {
         position: absolute;
-        width: 220px;
-        height: 220px;
+        width: 240px;
+        height: 240px;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(67, 97, 238, 0.2) 0%, transparent 70%);
         border-radius: 50%;
         z-index: 1;
-        animation: pulse 3s infinite;
+        animation: pulse 4s infinite cubic-bezier(0.4, 0, 0.6, 1);
     }
-    
+
     .hammer-icon {
         position: absolute;
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         top: 40%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(45deg);
         z-index: 3;
     }
-    
+
     .hammer-icon::before {
         content: '';
         position: absolute;
-        width: 50px;
-        height: 20px;
-        background: #38bdf8;
-        border-radius: 5px;
+        width: 55px;
+        height: 22px;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        border-radius: 8px;
         top: 0;
-        left: 15px;
-        box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+        left: 17px;
+        box-shadow: 0 0 20px rgba(67, 97, 238, 0.8);
     }
-    
+
     .hammer-icon::after {
         content: '';
         position: absolute;
-        width: 12px;
-        height: 60px;
-        background: #0ea5e9;
-        border-radius: 5px;
-        top: 15px;
-        left: 34px;
-        box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        width: 14px;
+        height: 65px;
+        background: linear-gradient(to bottom, var(--brand-2), var(--brand-3));
+        border-radius: 8px;
+        top: 17px;
+        left: 38px;
+        box-shadow: 0 0 15px rgba(67, 97, 238, 0.6);
     }
-    
+
     .error-icon::before, .error-icon::after {
         content: '';
         position: absolute;
         border-radius: 50%;
-        background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
-        filter: blur(2px);
-        opacity: 0.5;
+        background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+        filter: blur(3px);
+        opacity: 0.6;
     }
-    
+
     .error-icon::before {
-        width: 30px;
-        height: 30px;
-        top: 30px;
-        right: 40px;
+        width: 35px;
+        height: 35px;
+        top: 35px;
+        right: 45px;
         animation: float 6s infinite ease-in-out;
     }
-    
+
     .error-icon::after {
-        width: 20px;
-        height: 20px;
-        bottom: 40px;
-        left: 50px;
+        width: 25px;
+        height: 25px;
+        bottom: 45px;
+        left: 55px;
         animation: float 8s infinite ease-in-out reverse;
     }
-    
-    .error-title { 
-        font-size: 32px; 
-        margin: 0 0 16px; 
-        background: linear-gradient(90deg, var(--text), var(--text-muted));
+
+    .error-title {
+        font-size: 36px;
+        margin: 0 0 20px;
+        background: linear-gradient(90deg, #f8fafc, #e2e8f0);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+        font-weight: 800;
     }
-    
-    .error-sub { 
-        color: var(--muted); 
-        margin: 0 0 28px; 
-        font-size: 18px;
-        max-width: 600px;
+
+    .error-sub {
+        color: #cbd5e1;
+        margin: 0 0 32px;
+        font-size: 20px;
+        max-width: 650px;
         margin-left: auto;
         margin-right: auto;
+        line-height: 1.6;
     }
-    
-    .error-actions { 
-        display: flex; 
-        gap: 16px; 
-        justify-content: center; 
-        flex-wrap: wrap; 
-        margin-bottom: 32px; 
+
+    .error-actions {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
     }
-    
-    .btn-primary { 
-        background: var(--gradient-brand); 
-        color: #fff; 
-        font-weight: 700; 
-        padding: 14px 24px; 
-        border-radius: 14px; 
-        box-shadow: var(--shadow-brand); 
-        border: 1px solid rgba(255,255,255,.1); 
-        transition: all 0.3s ease;
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
+        color: #fff;
+        font-weight: 700;
+        padding: 16px 32px;
+        border-radius: 16px;
+        box-shadow: var(--shadow-brand);
+        border: none;
+        transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        font-size: 16px;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        display: inline-block;
     }
-    
-    .btn-primary:hover { 
-        transform: translateY(-3px); 
-        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+
+    .btn-primary:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(67, 97, 238, 0.6);
     }
-    
-    .btn-ghost { 
-        padding: 14px 24px; 
-        border-radius: 14px; 
-        border: 1px solid rgba(255,255,255,.2); 
-        color: var(--text); 
-        transition: all 0.3s ease;
-        background: rgba(255,255,255,0.05);
+
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
     }
-    
-    .btn-ghost:hover { 
-        border-color: rgba(255,255,255,.4); 
-        transform: translateY(-3px); 
-        background: rgba(255,255,255,0.1);
+
+    .btn-primary:hover::before {
+        left: 100%;
     }
-    
-    .btn-contact { 
-        padding: 14px 24px; 
-        border-radius: 14px; 
-        border: 1px solid rgba(6, 182, 212, 0.3); 
-        color: #06b6d4; 
-        transition: all 0.3s ease;
-        background: rgba(6, 182, 212, 0.05);
+
+    .btn-ghost {
+        padding: 16px 32px;
+        border-radius: 16px;
+        border: 2px solid rgba(59, 130, 246, 0.4);
+        color: #e2e8f0;
+        transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        background: transparent;
         font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        display: inline-block;
     }
-    
-    .btn-contact:hover { 
-        border-color: rgba(6, 182, 212, 0.6); 
-        transform: translateY(-3px); 
-        background: rgba(6, 182, 212, 0.1);
-        box-shadow: 0 5px 15px rgba(6, 182, 212, 0.2);
+
+    .btn-ghost:hover {
+        border-color: rgba(59, 130, 246, 0.8);
+        transform: translateY(-5px);
+        background: rgba(59, 130, 246, 0.1);
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
     }
-    
-    .error-help { 
-        margin-top: 16px; 
-        text-align: center; 
-        background: rgba(0,0,0,.15); 
-        border: 1px solid rgba(255,255,255,.08); 
-        border-radius: 16px; 
-        padding: 20px 24px; 
+
+    .btn-contact {
+        padding: 16px 32px;
+        border-radius: 16px;
+        border: 2px solid rgba(59, 130, 246, 0.3);
+        color: #c7d2fe;
+        transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        background: rgba(59, 130, 246, 0.08);
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-contact:hover {
+        border-color: rgba(59, 130, 246, 0.7);
+        transform: translateY(-5px);
+        background: rgba(59, 130, 246, 0.2);
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .error-help {
+        margin-top: 24px;
+        text-align: center;
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        border-radius: 20px;
+        padding: 28px 32px;
         position: relative;
         overflow: hidden;
     }
-    
+
     .error-help::before {
         content: '';
         position: absolute;
@@ -289,92 +337,227 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.08), transparent);
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.12), transparent);
         transform: translateX(-100%);
-        animation: shimmer 3s infinite;
+        animation: shimmer 4s infinite;
     }
-    
-    .error-help-title { 
-        font-weight: 700; 
-        margin-bottom: 12px; 
-        font-size: 18px;
-        color: var(--text);
+
+    .error-help-title {
+        font-weight: 700;
+        margin-bottom: 16px;
+        font-size: 20px;
+        color: #f1f5f9;
     }
-    
-    .error-help ul { 
-        margin: 0 auto; 
-        padding-left: 0; 
+
+    .error-help ul {
+        margin: 0 auto;
+        padding-left: 0;
         list-style-position: inside;
-        color: var(--muted); 
-        max-width: 400px;
+        color: #94a3b8;
+        max-width: 450px;
+        font-size: 17px;
     }
-    
+
     .error-help li {
-        margin-bottom: 8px;
+        margin-bottom: 12px;
+        padding: 8px 16px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
     }
-    
+
+    .error-help li:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transform: translateX(5px);
+    }
+
     .error-help li:last-child {
         margin-bottom: 0;
     }
-    
-    .error-help a { 
-        color: #0ea5e9; 
+
+    .error-help a {
+        color: #a5b4fc;
         position: relative;
         font-weight: 500;
+        text-decoration: none;
     }
-    
+
     .error-help a::after {
         content: '';
         position: absolute;
         bottom: -2px;
         left: 0;
         width: 100%;
-        height: 1px;
-        background: #0ea5e9;
+        height: 2px;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
         transform: scaleX(0);
         transform-origin: right;
-        transition: transform 0.3s ease;
+        transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        border-radius: 2px;
     }
-    
+
     .error-help a:hover::after {
         transform: scaleX(1);
         transform-origin: left;
     }
-    
+
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    
+
     @keyframes pulse {
-        0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-        50% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-        100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+        0% {
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0.4;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.1);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0.4;
+        }
     }
-    
+
     @keyframes pulseGlow {
-        0% { text-shadow: 0 8px 40px rgba(6,182,212,.2); }
-        100% { text-shadow: 0 8px 40px rgba(6,182,212,.5); }
+        0% {
+            text-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+            transform: scale(1);
+        }
+        100% {
+            text-shadow: 0 15px 40px rgba(67, 97, 238, 0.6);
+            transform: scale(1.02);
+        }
     }
-    
+
     @keyframes float {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-15px); }
-        100% { transform: translateY(0); }
+        0% {
+            transform: translateY(0) translateX(0);
+        }
+        33% {
+            transform: translateY(-20px) translateX(10px);
+        }
+        66% {
+            transform: translateY(10px) translateX(-15px);
+        }
+        100% {
+            transform: translateY(0) translateX(0);
+        }
     }
-    
+
     @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        50% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
+        0% {
+            transform: translateX(-100%);
+        }
+        50% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
     }
-    
+
+    @keyframes rotate {
+        from {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    @media (max-width: 992px) {
+        .error-card {
+            padding: 40px 30px;
+            margin: 20px;
+        }
+
+        .error-code {
+            font-size: 140px;
+        }
+
+        .error-title {
+            font-size: 32px;
+        }
+
+        .error-sub {
+            font-size: 18px;
+        }
+
+        .error-actions {
+            gap: 16px;
+        }
+
+        .btn-primary, .btn-ghost, .btn-contact {
+            padding: 14px 24px;
+            font-size: 15px;
+        }
+    }
+
     @media (max-width: 768px) {
-        .error-code { font-size: 100px; }
-        .error-illustration { height: 140px; }
-        .error-title { font-size: 26px; }
-        .error-sub { font-size: 16px; }
-        .error-card { padding: 30px 20px; }
+        .error-code {
+            font-size: 120px;
+        }
+
+        .error-illustration {
+            height: 160px;
+        }
+
+        .error-title {
+            font-size: 28px;
+        }
+
+        .error-sub {
+            font-size: 17px;
+            margin-bottom: 24px;
+        }
+
+        .error-card {
+            padding: 35px 25px;
+        }
+
+        .error-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-primary, .btn-ghost, .btn-contact {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .error-help ul {
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .error-code {
+            font-size: 100px;
+        }
+
+        .error-title {
+            font-size: 24px;
+        }
+
+        .error-sub {
+            font-size: 16px;
+        }
+
+        .error-card {
+            padding: 30px 20px;
+        }
+
+        .error-help {
+            padding: 24px 20px;
+        }
     }
 </style>
 

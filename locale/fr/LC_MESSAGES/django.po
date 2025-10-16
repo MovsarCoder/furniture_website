@@ -18,6 +18,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: client_service/templates/base/404.html:7
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+#: client_service/templates/base/404.html:14
+msgid "Unfortunately, the requested page does not exist. It may have been moved or deleted."
+msgstr "Malheureusement, la page demandée n'existe pas. Elle a peut-être été déplacée ou supprimée."
+
+#: client_service/templates/base/404.html:16
+msgid "Return to main page"
+msgstr "Retour à la page principale"
+
+#: client_service/templates/base/404.html:17
+#: client_service/templates/base/404.html:41
+msgid "View works"
+msgstr "Voir les réalisations"
+
+#: client_service/templates/base/404.html:18
+#: client_service/templates/base/404.html:31
+#: client_service/templates/base/404.html:42
+msgid "Contact us"
+msgstr "Contactez-nous"
+
+#: client_service/templates/base/404.html:22
+msgid "What you can do:"
+msgstr "Ce que vous pouvez faire :"
+
+#: client_service/templates/base/404.html:24
+msgid "Check the address for correctness"
+msgstr "Vérifiez l'adresse pour l'exactitude"
+
+#: client_service/templates/base/404.html:25
+msgid "Return to the"
+msgstr "Retour à la"
+
+#: client_service/templates/base/404.html:25
+msgid "main page"
+msgstr "page principale"
+
+#: client_service/templates/base/404.html:26
+msgid "Use the navigation menu"
+msgstr "Utilisez le menu de navigation"
+
+#: client_service/templates/base/404.html:41
+msgid "View on Google Maps"
+msgstr "Voir sur Google Maps"
+
+#: client_service/templates/base/404.html:42
+msgid "No contacts!"
+msgstr "Aucun contact !"
+
 #: client_service/templates/base/base.html:23
 msgid "Main navigation"
 msgstr "Navigation principale"
@@ -208,9 +259,7 @@ msgstr ""
 msgid "Get consultation"
 msgstr "Obtenir une consultation"
 
-#: client_service/templates/home/home.html:26
-msgid "View works"
-msgstr "Voir les réalisations"
+
 
 #: client_service/templates/home/home.html:31
 #, fuzzy
@@ -503,17 +552,9 @@ msgstr "note"
 msgid "Choose a convenient branch for you"
 msgstr "Choisissez une filiale qui vous convient"
 
-#: client_service/templates/home/home.html:532
-#: client_service/templates/works/works.html:143
-msgid "View on Google Maps"
-msgstr ""
 
-#: client_service/templates/home/home.html:541
-#: client_service/templates/works/works.html:152
-#, fuzzy
-#| msgid "Contacts"
-msgid "No contacts!"
-msgstr "Aucun contact !"
+
+
 
 #: client_service/templates/works/work_detail.html:14
 msgid "Portfolio"

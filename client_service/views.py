@@ -1,5 +1,8 @@
 from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404
+from django.utils import translation
+from django.conf import settings
+from django.urls import translate_url
 
 from admin_service.models import *
 
@@ -47,6 +50,6 @@ def work_detail(request, pk):
 def custom_page_not_found(request, exception=None):
     contacts = Contact.objects.all()
     """Кастомная 404 страница в едином стиле сайта."""
-    return render(request, "base/404.html", context={"contacts": contacts}, status=404)
-
-# Create your views here.
+    return render(request, "base/404.html", context={
+        "contacts": contacts
+    }, status=404)
