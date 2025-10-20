@@ -18,6 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "By request"
+msgstr "Auf Anfrage"
+
+msgid "The final cost is calculated individually after consultation"
+msgstr "Die endgültigen Kosten werden nach der Beratung individuell berechnet"
+
 #: client_service/templates/base/404.html:7
 msgid "Page not found"
 msgstr "Seite nicht gefunden"

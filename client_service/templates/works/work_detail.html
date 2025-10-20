@@ -19,7 +19,7 @@
         <div class="work-detail">
             <div class="work-media">
                 <div class="image-container">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image" loading="lazy">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
                     <div class="image-overlay">
                         <button class="image-zoom-btn" aria-label="{% trans 'Zoom image' %}">🔍</button>
                     </div>
@@ -59,12 +59,19 @@
 
                 <!-- Price Block -->
                 <div class="price-block">
-                    <div class="price-main">
-                        <span class="price-currency">💰</span>
-                        <span class="price-value">{{ work.price }}</span>
-                        <span class="price-unit">{{ work.currency|upper }}</span>
-                    </div>
-                    <div class="price-note">{% trans 'Final cost is calculated individually' %}</div>
+                    {% if work.price %}
+                        <div class="price-main">
+                            <span class="price-currency">💰</span>
+                            <span class="price-value">{{ work.price }}</span>
+                            <span class="price-unit">{{ work.currency|upper }}</span>
+                        </div>
+                        <div class="price-note">{% trans 'Final cost is calculated individually' %}</div>
+                    {% else %}
+                        <div class="price-main">
+                            <span class="price-value request">{% trans 'By request' %}</span>
+                        </div>
+                        <div class="price-note">{% trans 'The final cost is calculated individually after consultation' %}</div>
+                    {% endif %}
                 </div>
 
                 <!-- Description -->

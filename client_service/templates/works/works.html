@@ -52,7 +52,7 @@
             {% for work in works %}
             <article class="portfolio-card" data-category="{{ work.work_type }}">
                 <div class="card-image-container">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image" loading="lazy">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
                     <div class="image-overlay">
                         <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
                             <span class="btn-icon">👁️</span>
@@ -89,8 +89,12 @@
                     <div class="card-footer">
                         <div class="price-section">
                             <span class="price-label">{% trans 'Cost:' %}</span>
-                            <span class="price-value">{{ work.price }}</span>
-                            <span class="price-unit">{{ work.currency|upper }}</span>
+                            {% if work.price %}
+                                <span class="price-value">{{ work.price }}</span>
+                                <span class="price-unit">{{ work.currency|upper }}</span>
+                            {% else %}
+                                <span class="price-value request">{% trans 'By request' %}</span>
+                            {% endif %}
                         </div>
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
                             <span>{% trans 'More details' %}</span>

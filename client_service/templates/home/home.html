@@ -8,6 +8,12 @@
 {% block content %}
 
 <main id="home" class="hero container section animate-fade-in">
+    <!-- Move furniture background to the main hero section -->
+    <div class="furniture-background">
+        <div class="furniture-item chair-item"></div>
+        <div class="furniture-item sofa-item"></div>
+        <div class="furniture-item table-item"></div>
+    </div>
     <div class="hero-content">
         <div class="hero-text animate-slide-up">
             <div class="hero-badge">
@@ -43,6 +49,7 @@
         <div class="hero-visual animate-slide-up" style="animation-delay: 0.4s;">
             <div class="hero-card floating-card">
                 <div class="hero-image">
+                    <!-- Remove furniture background from here since it's now in the main hero section -->
                     <div class="orbit-dot"></div>
                 </div>
                 <div class="floating-elements">
@@ -303,7 +310,7 @@
             {% for work in works %}
             <article class="showcase-card hover-lift animate-slide-up">
                 <div class="card-image-wrapper">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="showcase-image" loading="lazy">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="showcase-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
                     <div class="image-overlay">
                         <div class="overlay-content">
                             <button class="quick-preview" onclick="quickView('{{ work.id }}')">
@@ -335,8 +342,12 @@
                         <div class="card-footer">
                             <div class="price-info">
                                 <span class="price-label">{% trans 'Cost' %}</span>
-                                <span class="price-value">{{ work.price }}</span>
-                                <span class="price-unit">{{ work.currency|upper }}</span>
+                                {% if work.price %}
+                                    <span class="price-value">{{ work.price }}</span>
+                                    <span class="price-unit">{{ work.currency|upper }}</span>
+                                {% else %}
+                                    <span class="price-value request">{% trans 'By request' %}</span>
+                                {% endif %}
                             </div>
                             <!--                            <a href="{% url 'client_service:work_detail' work.pk %}" class="details-btn">-->
                             <!--                                <span>Подробнее</span>-->

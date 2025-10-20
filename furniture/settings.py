@@ -15,9 +15,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+# Get ALLOWED_HOSTS from environment variable or use default
+allowed_hosts_str = config('ALLOWED_HOSTS', default='localhost,127.0.0.1')
+ALLOWED_HOSTS = allowed_hosts_str.split(',') if isinstance(allowed_hosts_str, str) else ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -132,6 +134,9 @@ STATICFILES_DIRS = [
 
 # Для деплоя: куда собирать статику
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Static files storage backend
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Медиа (изображения загружаемые через ImageField и т.п.)
 MEDIA_URL = "/media/"
