@@ -2562,7 +2562,8 @@
   font-size: 14px;
 }
 
-.card-footer {
+/* Card Footer */
+.showcase-card .card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2571,23 +2572,35 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.price-section {
+.price-info {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.price-label {
-  font-size: 12px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.details-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--brand);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.price-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--brand);
+.details-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  transform: translateX(4px);
+}
+
+.quick-view-btn:hover {
+  background: white;
+  transform: scale(1.05);
 }
 
 .view-btn {
@@ -2617,7 +2630,10 @@
   transform: translateX(4px);
 }
 
-/* Works CTA */
+.card-badges {
+}
+
+/* Portfolio CTA */
 .works-cta {
   background: var(--gradient-panel);
   border-radius: var(--radius-xl);
@@ -3770,6 +3786,14 @@ img {
   letter-spacing: -0.5px;
 }
 
+.showcase-card .price-unit {
+  color: white; /* Made currency white as requested */
+  font-weight: 600;
+  font-size: 16px;
+  align-self: center;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
 .details-btn {
   display: flex;
   align-items: center;
@@ -3885,6 +3909,18 @@ img {
   .card-meta {
     flex-direction: column;
     gap: 8px;
+  }
+  
+  /* Ensure our button styles are consistent on mobile */
+  .portfolio-card .card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .view-btn {
+    justify-content: center;
+    width: 100%;
   }
 }
 .features {
@@ -5528,8 +5564,8 @@ img {
 .price-unit {
   font-size: 24px;
   font-weight: 600;
-  color: var(--brand);
-  text-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+  color: white; /* Made currency white as requested */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .price-note {

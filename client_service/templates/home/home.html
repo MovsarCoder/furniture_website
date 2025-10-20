@@ -305,65 +305,65 @@
             </a>
         </div>
 
-        <div class="portfolio-showcase">
-            {% if works %}
+        <!-- Enhanced Portfolio Grid -->
+        <div class="portfolio-enhanced-grid" id="portfolioGrid">
             {% for work in works %}
-            <article class="showcase-card hover-lift animate-slide-up">
-                <div class="card-image-wrapper">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="showcase-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
+            <article class="portfolio-card" data-category="{{ work.work_type }}">
+                <div class="card-image-container">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
                     <div class="image-overlay">
-                        <div class="overlay-content">
-                            <button class="quick-preview" onclick="quickView('{{ work.id }}')">
-                                <span class="preview-icon">👁️</span>
-                                <span>{% trans 'Quick view' %}</span>
-                            </button>
-                        </div>
+                        <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
+                            <span class="btn-icon">👁️</span>
+                            <span>{% trans 'Quick View' %}</span>
+                        </button>
                     </div>
-                    <div class="card-category">
-                        <span class="category-badge">{{ work.get_work_type_display }}</span>
+                    <div class="card-badges">
+                        <span class="badge badge-category">{{ work.get_work_type_display }}</span>
+                        {% if work.is_featured %}
+                        <span class="badge badge-featured">⭐ {% trans 'Recommended' %}</span>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="card-content">
-                    <div class="card-content-wrapper">
-                        <div class="card-main-content">
-                            <div class="card-header">
-                                <div class="card-meta">
-                                    <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
-                                </div>
-                            </div>
-                            <p class="card-description">{{ work.description|default:"{% trans 'Description will appear soon' %}"|truncatewords:15 }}</p>
-                            <p class="meta-date" style="color: #cbd5e1; font-size: 14px;">📅 {{ work.date|date:"M Y" }}</p>
-                            <!--                            {% if work.material %}-->
-                            <!--                            <p class="meta-material" style="color: #cbd5e1; font-size: 14px;">🪵 {{ work.material }}</p>-->
-                            <!--                            {% endif %}-->
-                        </div>
+                    <div class="card-main-content">
+                        <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
+                        <p class="card-description">{{ work.description|truncatewords:16|default:"{% trans 'Description will appear soon' %}" }}</p>
 
-                        <div class="card-footer">
-                            <div class="price-info">
-                                <span class="price-label">{% trans 'Cost' %}</span>
-                                {% if work.price %}
-                                    <span class="price-value">{{ work.price }}</span>
-                                    <span class="price-unit">{{ work.currency|upper }}</span>
-                                {% else %}
-                                    <span class="price-value request">{% trans 'By request' %}</span>
-                                {% endif %}
+                        <div class="card-details">
+                            {% if work.material %}
+                            <div class="detail-item">
+                                <span class="detail-icon">🪵</span>
+                                <span class="detail-text">{{ work.material }}</span>
                             </div>
-                            <!--                            <a href="{% url 'client_service:work_detail' work.pk %}" class="details-btn">-->
-                            <!--                                <span>Подробнее</span>-->
-                            <!--                                <span class="btn-arrow">→</span>-->
-                            <!--                            </a>-->
+                            {% endif %}
+                            <div class="detail-item">
+                                <span class="detail-icon">📅</span>
+                                <span class="detail-text">{{ work.date|date:"M Y" }}</span>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="price-section">
+                            <span class="price-label">{% trans 'Cost:' %}</span>
+                            {% if work.price %}
+                                <span class="price-value">{{ work.price }}</span>
+                                <span class="price-unit">{{ work.currency|upper }}</span>
+                            {% else %}
+                                <span class="price-value request">{% trans 'By request' %}</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
+                            <span>{% trans 'More details' %}</span>
+                            <span class="btn-arrow">→</span>
+                        </a>
                     </div>
                 </div>
             </article>
             {% endfor %}
-            {% else %}
-            <div class="no-works">
-                <h3>{% trans 'No works in the database!' %}</h3>
-            </div>
-            {% endif %}
         </div>
+
 
         <div class="portfolio-cta">
             <p class="cta-text">{% trans 'Didn\'t find what you were looking for?' %}</p>
@@ -533,14 +533,17 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else
+                %}—{% endif %}
+            </div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
             {% if contact.address %}
             <div class="contact-map">
                 <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
-                    <div class="mini-map" 
+                    <div class="mini-map"
                          style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
                         <div class="map-marker">📍</div>
                     </div>
@@ -550,7 +553,6 @@
                 </a>
             </div>
             {% endif %}
-            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
         </div>
         {% endfor %}
         {% else %}

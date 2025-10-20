@@ -136,6 +136,7 @@
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
             {% if contact.address %}
             <div class="contact-map">
                 <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
@@ -148,9 +149,7 @@
                     </div>
                 </a>
             </div>
-            {% endif %}
-            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
-        </div>
+            {% endif %}</div>
         {% endfor %}
         {% else %}
         <h1>{% trans 'No contacts!' %}</h1>
