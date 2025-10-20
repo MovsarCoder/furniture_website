@@ -90,10 +90,10 @@
                         <div class="price-section">
                             <span class="price-label">{% trans 'Cost:' %}</span>
                             {% if work.price %}
-                                <span class="price-value">{{ work.price }}</span>
-                                <span class="price-unit">{{ work.currency|upper }}</span>
+                            <span class="price-value">{{ work.price }}</span>
+                            <span class="price-unit">{{ work.currency|upper }}</span>
                             {% else %}
-                                <span class="price-value request">{% trans 'By request' %}</span>
+                            <span class="price-value request">{% trans 'By request' %}</span>
                             {% endif %}
                         </div>
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
@@ -132,7 +132,9 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else
+                %}—{% endif %}
+            </div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
@@ -140,7 +142,7 @@
             {% if contact.address %}
             <div class="contact-map">
                 <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
-                    <div class="mini-map" 
+                    <div class="mini-map"
                          style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
                         <div class="map-marker">📍</div>
                     </div>
@@ -149,7 +151,8 @@
                     </div>
                 </a>
             </div>
-            {% endif %}</div>
+            {% endif %}
+        </div>
         {% endfor %}
         {% else %}
         <h1>{% trans 'No contacts!' %}</h1>
