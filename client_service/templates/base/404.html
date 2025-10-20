@@ -1,564 +1,611 @@
 {% extends "base/base.html" %}
 {% load static %}
 
-{% block title %}Page not found — B'Mass{% endblock %}
-
+{% block title %}Страница не найдена — B'Mass{% endblock %}
 {% block content %}
 
-<section class="error-hero container section">
-    <div class="error-card">
-        <div class="error-illustration">
-            <div class="error-code">404</div>
-            <div class="error-icon">
-                <div class="hammer-icon"></div>
-            </div>
-        </div>
-        <h1 class="error-title">Page not found</h1>
-        <p class="error-sub">Unfortunately, the requested page does not exist. It may have been moved or deleted.</p>
-        <div class="error-actions">
-            <a href="{% url 'client_service:index' %}" class="btn-primary hover-lift">← Return to main page</a>
-            <a href="{% url 'client_service:portfolio' %}" class="btn-ghost hover-lift">View works</a>
-            <a href="#contacts" class="btn-contact hover-lift">Contact us</a>
-        </div>
-
-        <div class="error-help">
-            <div class="error-help-title">What you can do:</div>
-            <ul>
-                <li>Check the address for correctness</li>
-                <li>Return to the <a href="{% url 'client_service:index' %}">main page</a></li>
-                <li>Use the navigation menu</li>
-                <li><a href="#contacts">Contact us</a></li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section id="contacts" class="section container">
-    <div class="section-header">
-        <div>
-            <div class="section-title">Contacts</div>
-            <div class="section-sub">Choose a convenient branch for you</div>
-        </div>
-    </div>
-    <div class="branches">
-        {% if contacts %}
-        {% for contact in contacts %}
-        <div class="branch">
-            <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
-            <div class="contact-row">📞 {{ contact.phone }}</div>
-            <div class="contact-row">📧 {{ contact.email }}</div>
-            <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
-            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
-            {% if contact.address %}
-            <div class="contact-map">
-                <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
-                    <div class="mini-map" 
-                         style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
-                        <div class="map-marker">📍</div>
-                    </div>
-                    <div class="map-overlay">
-                        <span class="map-text">View on Google Maps</span>
-                    </div>
-                </a>
-            </div>
-            {% endif %}
-        </div>
-        {% endfor %}
-        {% else %}
-        <h1>No contacts!</h1>
-        {% endif %}
-    </div>
-</section>
-
 <style>
-    .error-hero {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 80vh;
-        position: relative;
-        overflow: hidden;
-        padding: 40px 0;
+    /* ===== МЕБЕЛЬНАЯ 404 СТРАНИЦА ===== */
+    
+    /* ГЛАВНЫЙ КОНТЕЙНЕР */
+    .bm-404-space {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .error-hero::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 30% 50%, rgba(67, 97, 238, 0.15), transparent 40%),
-                  radial-gradient(circle at 70% 20%, rgba(58, 12, 163, 0.15), transparent 30%);
-        z-index: -1;
-        opacity: 0.8;
+    /* Декоративные элементы мебели */
+    .furniture-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .error-card {
-        text-align: center;
-        background: linear-gradient(145deg, rgba(26, 29, 41, 0.9), rgba(21, 25, 34, 0.95));
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        padding: 50px 40px;
-        border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                   0 0 30px rgba(67, 97, 238, 0.2);
-        max-width: 800px;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        animation: fadeIn 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-        backdrop-filter: blur(12px);
+    .furniture-icon {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      opacity: 0.1;
+      animation: floatFurniture 8s ease-in-out infinite;
     }
 
-    .error-card::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(600px 200px at 10% -10%, rgba(67, 97, 238, 0.2), transparent),
-                  radial-gradient(400px 160px at 110% 110%, rgba(58, 12, 163, 0.2), transparent);
-        pointer-events: none;
-        z-index: -1;
+    .furniture-icon:nth-child(1) { 
+      top: 15%; left: 10%; 
+      animation-delay: 0s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M3 6h18v2H3V6zm0 4h18v2H3v-2zm0 4h18v2H3v-2z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-icon:nth-child(2) { 
+      top: 25%; right: 15%; 
+      animation-delay: 1s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M4 6h16v12H4V6zm2 2v8h12V8H6z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-icon:nth-child(3) { 
+      bottom: 20%; left: 20%; 
+      animation-delay: 2s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M6 2h12v2H6V2zm0 4h12v14H6V6zm2 2v10h8V8H8z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-icon:nth-child(4) { 
+      top: 60%; right: 25%; 
+      animation-delay: 3s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M3 4h18v2H3V4zm0 4h18v2H3V8zm0 4h18v2H3v-2zm0 4h18v2H3v-2z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
     }
 
-    .error-illustration {
-        position: relative;
-        height: 200px;
-        margin-bottom: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    @keyframes floatFurniture {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+      50% { transform: translateY(-20px) rotate(5deg); opacity: 0.2; }
     }
 
-    .error-code {
-        font-size: 160px;
-        font-weight: 900;
-        letter-spacing: 6px;
-        background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        margin-bottom: 8px;
-        text-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
-        position: relative;
-        z-index: 2;
-        animation: pulseGlow 4s infinite alternate;
+    /* Основной контент без карточки */
+    .bm-404-content {
+      max-width: 800px;
+      width: 100%;
+      position: relative;
+      text-align: center;
+      z-index: 10;
+      animation: slideUp 0.8s ease-out;
     }
 
-    .error-icon {
-        position: absolute;
-        width: 240px;
-        height: 240px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(67, 97, 238, 0.2) 0%, transparent 70%);
-        border-radius: 50%;
-        z-index: 1;
-        animation: pulse 4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    /* Цифры 404 в стиле мебельного магазина */
+    .bm-404-code {
+      font-size: 140px;
+      font-weight: 900;
+      letter-spacing: 8px;
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 0;
+      text-shadow: 0 0 30px rgba(67, 97, 238, 0.3);
+      position: relative;
+      z-index: 2;
+      animation: textReveal 1s ease-out 0.3s both;
+      filter: drop-shadow(0 10px 20px rgba(67, 97, 238, 0.2));
     }
 
-    .hammer-icon {
-        position: absolute;
-        width: 90px;
-        height: 90px;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-        z-index: 3;
+    /* Декоративные элементы вокруг 404 */
+    .bm-404-decorations {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .hammer-icon::before {
-        content: '';
-        position: absolute;
-        width: 55px;
-        height: 22px;
-        background: linear-gradient(90deg, var(--brand), var(--brand-2));
-        border-radius: 8px;
-        top: 0;
-        left: 17px;
-        box-shadow: 0 0 20px rgba(67, 97, 238, 0.8);
+    .decoration-circle {
+      position: absolute;
+      border: 2px solid rgba(67, 97, 238, 0.1);
+      border-radius: 50%;
+      animation: rotate 20s linear infinite;
     }
 
-    .hammer-icon::after {
-        content: '';
-        position: absolute;
-        width: 14px;
-        height: 65px;
-        background: linear-gradient(to bottom, var(--brand-2), var(--brand-3));
-        border-radius: 8px;
-        top: 17px;
-        left: 38px;
-        box-shadow: 0 0 15px rgba(67, 97, 238, 0.6);
+    .decoration-circle:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 50px;
+      left: 50px;
+      animation-duration: 25s;
+      animation-direction: reverse;
     }
 
-    .error-icon::before, .error-icon::after {
-        content: '';
-        position: absolute;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
-        filter: blur(3px);
-        opacity: 0.6;
+    .decoration-circle:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      top: 100px;
+      left: 100px;
+      border-color: rgba(67, 97, 238, 0.15);
+      animation-duration: 15s;
     }
 
-    .error-icon::before {
-        width: 35px;
-        height: 35px;
-        top: 35px;
-        right: 45px;
-        animation: float 6s infinite ease-in-out;
+    .decoration-circle:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      top: 150px;
+      left: 150px;
+      border-color: rgba(67, 97, 238, 0.2);
+      animation-duration: 10s;
+      animation-direction: reverse;
     }
 
-    .error-icon::after {
-        width: 25px;
-        height: 25px;
-        bottom: 45px;
-        left: 55px;
-        animation: float 8s infinite ease-in-out reverse;
+    /* Точки на кругах */
+    .decoration-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--brand);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
     }
 
-    .error-title {
-        font-size: 36px;
-        margin: 0 0 20px;
-        background: linear-gradient(90deg, #f8fafc, #e2e8f0);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        font-weight: 800;
+    .decoration-dot:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+    .decoration-dot:nth-child(2) { top: 50%; right: 0; transform: translateY(-50%); }
+    .decoration-dot:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .decoration-dot:nth-child(4) { top: 50%; left: 0; transform: translateY(-50%); }
+
+    /* Молоток для починки страницы */
+    .hammer-tool {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      animation: hammerFix 3s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
     }
 
-    .error-sub {
-        color: #cbd5e1;
-        margin: 0 0 32px;
-        font-size: 20px;
-        max-width: 650px;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.6;
+    .hammer-tool::before {
+      content: '';
+      width: 30px;
+      height: 30px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41zM7 14a3 3 0 0 0-3 3c0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2a4 4 0 0 0 4-4 3 3 0 0 0-3-3z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+      animation: hammerSwing 2s ease-in-out infinite;
     }
 
-    .error-actions {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 40px;
+    @keyframes hammerFix {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+      }
+      25% { 
+        transform: translateY(-5px) rotate(-5deg); 
+        box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+      }
+      50% { 
+        transform: translateY(-10px) rotate(0deg); 
+        box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
+      }
+      75% { 
+        transform: translateY(-5px) rotate(5deg); 
+        box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+      }
+    }
+
+    @keyframes hammerSwing {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-15deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(15deg); }
+    }
+
+    /* Иконка мебели справа от заголовка */
+    .furniture-main {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background: var(--gradient-brand);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .furniture-main::before {
+      content: '';
+      width: 40px;
+      height: 40px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M3 6h18v2H3V6zm0 4h18v2H3v-2zm0 4h18v2H3v-2zm0 4h18v2H3v-2z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+      animation: rotate 10s linear infinite;
+    }
+
+    /* Дополнительные мебельные элементы */
+    .furniture-decorations {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .furniture-item {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      opacity: 0.15;
+      animation: floatFurniture 6s ease-in-out infinite;
+    }
+
+    .furniture-item:nth-child(1) { 
+      top: 20%; left: 5%; 
+      animation-delay: 0s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M4 2h16v2H4V2zm0 4h16v12H4V6zm2 2v8h12V8H6z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-item:nth-child(2) { 
+      top: 40%; right: 8%; 
+      animation-delay: 1.5s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M6 2h12v2H6V2zm0 4h12v14H6V6zm2 2v10h8V8H8z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-item:nth-child(3) { 
+      bottom: 30%; left: 8%; 
+      animation-delay: 3s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M2 4h20v2H2V4zm0 4h20v2H2V8zm0 4h20v2H2v-2zm0 4h20v2H2v-2z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-item:nth-child(4) { 
+      top: 70%; right: 12%; 
+      animation-delay: 4.5s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M3 4h18v2H3V4zm0 4h18v2H3V8zm0 4h18v2H3v-2zm0 4h18v2H3v-2z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-item:nth-child(5) { 
+      top: 10%; left: 15%; 
+      animation-delay: 2s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M4 6h16v12H4V6zm2 2v8h12V8H6z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .furniture-item:nth-child(6) { 
+      bottom: 15%; right: 20%; 
+      animation-delay: 5s; 
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M6 2h12v2H6V2zm0 4h12v14H6V6zm2 2v10h8V8H8z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+
+    /* Текстовое содержимое */
+    .bm-404-title {
+      font-size: 36px;
+      font-weight: 800;
+      margin: 30px 0 15px;
+      color: var(--text);
+      animation: textReveal 1s ease-out 0.5s both;
+    }
+
+    .bm-404-subtitle {
+      color: var(--text-muted);
+      margin: 0 0 40px;
+      font-size: 18px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      animation: textReveal 1s ease-out 0.7s both;
+    }
+
+    /* Кнопки в стиле мебельного магазина */
+    .bm-404-actions {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      animation: textReveal 1s ease-out 0.9s both;
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
-        color: #fff;
-        font-weight: 700;
-        padding: 16px 32px;
-        border-radius: 16px;
-        box-shadow: var(--shadow-brand);
-        border: none;
-        transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-        font-size: 16px;
-        position: relative;
-        overflow: hidden;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(67, 97, 238, 0.6);
+      background: var(--gradient-brand);
+      color: white;
+      font-weight: 700;
+      padding: 18px 36px;
+      border-radius: 50px;
+      border: none;
+      box-shadow: 0 8px 32px rgba(67, 97, 238, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
     }
 
     .btn-primary::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: 0.5s;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
     }
 
     .btn-primary:hover::before {
-        left: 100%;
+      left: 100%;
     }
 
-    .btn-ghost {
-        padding: 16px 32px;
-        border-radius: 16px;
-        border: 2px solid rgba(59, 130, 246, 0.4);
-        color: #e2e8f0;
-        transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-        background: transparent;
-        font-weight: 600;
-        font-size: 16px;
-        text-decoration: none;
-        display: inline-block;
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(67, 97, 238, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 
-    .btn-ghost:hover {
-        border-color: rgba(59, 130, 246, 0.8);
-        transform: translateY(-5px);
-        background: rgba(59, 130, 246, 0.1);
-        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 2px solid rgba(67, 97, 238, 0.3);
+      backdrop-filter: blur(20px);
+      font-weight: 600;
+      padding: 18px 36px;
+      border-radius: 50px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-contact {
-        padding: 16px 32px;
-        border-radius: 16px;
-        border: 2px solid rgba(59, 130, 246, 0.3);
-        color: #c7d2fe;
-        transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-        background: rgba(59, 130, 246, 0.08);
-        font-weight: 600;
-        font-size: 16px;
-        text-decoration: none;
-        display: inline-block;
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-brand);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
     }
 
-    .btn-contact:hover {
-        border-color: rgba(59, 130, 246, 0.7);
-        transform: translateY(-5px);
-        background: rgba(59, 130, 246, 0.2);
-        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    .btn-outline:hover::before {
+      opacity: 0.1;
     }
 
-    .error-help {
-        margin-top: 24px;
-        text-align: center;
-        background: rgba(30, 41, 59, 0.6);
-        border: 1px solid rgba(59, 130, 246, 0.15);
-        border-radius: 20px;
-        padding: 28px 32px;
-        position: relative;
-        overflow: hidden;
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(67, 97, 238, 0.5);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(67, 97, 238, 0.2);
     }
 
-    .error-help::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.12), transparent);
-        transform: translateX(-100%);
-        animation: shimmer 4s infinite;
+    /* Геометрические декоративные элементы */
+    .geometric-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .error-help-title {
-        font-weight: 700;
-        margin-bottom: 16px;
-        font-size: 20px;
-        color: #f1f5f9;
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: floatShape 8s ease-in-out infinite;
     }
 
-    .error-help ul {
-        margin: 0 auto;
-        padding-left: 0;
-        list-style-position: inside;
-        color: #94a3b8;
-        max-width: 450px;
-        font-size: 17px;
+    .shape-triangle {
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 25px solid var(--brand);
+      top: 20%;
+      left: 15%;
+      animation-delay: 0s;
     }
 
-    .error-help li {
-        margin-bottom: 12px;
-        padding: 8px 16px;
-        border-radius: 12px;
-        transition: all 0.3s ease;
+    .shape-square {
+      width: 20px;
+      height: 20px;
+      background: var(--brand);
+      transform: rotate(45deg);
+      top: 30%;
+      right: 20%;
+      animation-delay: 2s;
     }
 
-    .error-help li:hover {
-        background: rgba(59, 130, 246, 0.1);
-        transform: translateX(5px);
+    .shape-diamond {
+      width: 16px;
+      height: 16px;
+      background: var(--brand);
+      transform: rotate(45deg);
+      bottom: 25%;
+      left: 25%;
+      animation-delay: 4s;
     }
 
-    .error-help li:last-child {
-        margin-bottom: 0;
+    .shape-hexagon {
+      width: 24px;
+      height: 24px;
+      background: var(--brand);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      top: 60%;
+      right: 30%;
+      animation-delay: 6s;
     }
 
-    .error-help a {
-        color: #a5b4fc;
-        position: relative;
-        font-weight: 500;
-        text-decoration: none;
+    @keyframes floatShape {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+      50% { transform: translateY(-15px) rotate(180deg); opacity: 0.2; }
     }
 
-    .error-help a::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, var(--brand), var(--brand-2));
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-        border-radius: 2px;
+    /* Дополнительные элементы */
+    .bm-404-content:hover .furniture-main {
+      animation-duration: 1s;
     }
 
-    .error-help a:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
+    /* Адаптивность */
+    @media (max-width: 1200px) {
+      .bm-404-code { font-size: 120px; letter-spacing: 6px; }
+      .bm-404-title { font-size: 32px; }
+      .bm-404-subtitle { font-size: 17px; }
+      .furniture-main { width: 70px; height: 70px; }
+      .hammer-tool { width: 55px; height: 55px; }
+      .bm-404-decorations { width: 350px; height: 350px; }
+      .decoration-circle:nth-child(1) { width: 250px; height: 250px; }
+      .decoration-circle:nth-child(2) { width: 170px; height: 170px; }
+      .decoration-circle:nth-child(3) { width: 90px; height: 90px; }
     }
 
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes pulse {
-        0% {
-            transform: translate(-50%, -50%) scale(0.8);
-            opacity: 0.4;
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1.1);
-            opacity: 0.7;
-        }
-        100% {
-            transform: translate(-50%, -50%) scale(0.8);
-            opacity: 0.4;
-        }
-    }
-
-    @keyframes pulseGlow {
-        0% {
-            text-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
-            transform: scale(1);
-        }
-        100% {
-            text-shadow: 0 15px 40px rgba(67, 97, 238, 0.6);
-            transform: scale(1.02);
-        }
-    }
-
-    @keyframes float {
-        0% {
-            transform: translateY(0) translateX(0);
-        }
-        33% {
-            transform: translateY(-20px) translateX(10px);
-        }
-        66% {
-            transform: translateY(10px) translateX(-15px);
-        }
-        100% {
-            transform: translateY(0) translateX(0);
-        }
-    }
-
-    @keyframes shimmer {
-        0% {
-            transform: translateX(-100%);
-        }
-        50% {
-            transform: translateX(100%);
-        }
-        100% {
-            transform: translateX(-100%);
-        }
-    }
-
-    @keyframes rotate {
-        from {
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-        to {
-            transform: translate(-50%, -50%) rotate(360deg);
-        }
-    }
-
-    @media (max-width: 992px) {
-        .error-card {
-            padding: 40px 30px;
-            margin: 20px;
-        }
-
-        .error-code {
-            font-size: 140px;
-        }
-
-        .error-title {
-            font-size: 32px;
-        }
-
-        .error-sub {
-            font-size: 18px;
-        }
-
-        .error-actions {
-            gap: 16px;
-        }
-
-        .btn-primary, .btn-ghost, .btn-contact {
-            padding: 14px 24px;
-            font-size: 15px;
-        }
+    @media (max-width: 1024px) {
+      .bm-404-code { font-size: 100px; letter-spacing: 4px; }
+      .bm-404-title { font-size: 28px; }
+      .bm-404-subtitle { font-size: 16px; }
+      .furniture-main { width: 60px; height: 60px; }
+      .hammer-tool { width: 50px; height: 50px; }
+      .bm-404-decorations { width: 300px; height: 300px; }
+      .decoration-circle:nth-child(1) { width: 220px; height: 220px; }
+      .decoration-circle:nth-child(2) { width: 150px; height: 150px; }
+      .decoration-circle:nth-child(3) { width: 80px; height: 80px; }
     }
 
     @media (max-width: 768px) {
-        .error-code {
-            font-size: 120px;
-        }
-
-        .error-illustration {
-            height: 160px;
-        }
-
-        .error-title {
-            font-size: 28px;
-        }
-
-        .error-sub {
-            font-size: 17px;
-            margin-bottom: 24px;
-        }
-
-        .error-card {
-            padding: 35px 25px;
-        }
-
-        .error-actions {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .btn-primary, .btn-ghost, .btn-contact {
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .error-help ul {
-            max-width: 100%;
-        }
+      .bm-404-code { font-size: 80px; letter-spacing: 2px; }
+      .bm-404-title { font-size: 24px; }
+      .bm-404-subtitle { font-size: 15px; }
+      .furniture-main { width: 50px; height: 50px; top: 10px; right: 10px; }
+      .hammer-tool { width: 45px; height: 45px; top: 10px; left: 10px; }
+      .bm-404-decorations { width: 250px; height: 250px; }
+      .decoration-circle:nth-child(1) { width: 180px; height: 180px; }
+      .decoration-circle:nth-child(2) { width: 120px; height: 120px; }
+      .decoration-circle:nth-child(3) { width: 60px; height: 60px; }
+      .bm-404-actions { flex-direction: column; align-items: center; gap: 16px; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 300px; }
+      .geometric-shapes { display: none; }
     }
 
     @media (max-width: 480px) {
-        .error-code {
-            font-size: 100px;
-        }
-
-        .error-title {
-            font-size: 24px;
-        }
-
-        .error-sub {
-            font-size: 16px;
-        }
-
-        .error-card {
-            padding: 30px 20px;
-        }
-
-        .error-help {
-            padding: 24px 20px;
-        }
+      .bm-404-code { font-size: 60px; letter-spacing: 1px; }
+      .bm-404-title { font-size: 20px; }
+      .bm-404-subtitle { font-size: 14px; }
+      .furniture-main { width: 40px; height: 40px; top: 5px; right: 5px; }
+      .hammer-tool { width: 35px; height: 35px; top: 5px; left: 5px; }
+      .bm-404-decorations { width: 200px; height: 200px; }
+      .decoration-circle:nth-child(1) { width: 150px; height: 150px; }
+      .decoration-circle:nth-child(2) { width: 100px; height: 100px; }
+      .decoration-circle:nth-child(3) { width: 50px; height: 50px; }
+      .btn-primary, .btn-outline { padding: 14px 28px; font-size: 15px; }
     }
 </style>
+
+<section class="bm-404-space">
+    <!-- Декоративные элементы мебели -->
+    <div class="furniture-elements">
+        <div class="furniture-icon"></div>
+        <div class="furniture-icon"></div>
+        <div class="furniture-icon"></div>
+        <div class="furniture-icon"></div>
+    </div>
+
+    <!-- Дополнительные мебельные элементы -->
+    <div class="furniture-decorations">
+        <div class="furniture-item"></div>
+        <div class="furniture-item"></div>
+        <div class="furniture-item"></div>
+        <div class="furniture-item"></div>
+        <div class="furniture-item"></div>
+        <div class="furniture-item"></div>
+    </div>
+
+    <!-- Геометрические декоративные элементы -->
+    <div class="geometric-shapes">
+        <div class="shape shape-triangle"></div>
+        <div class="shape shape-square"></div>
+        <div class="shape shape-diamond"></div>
+        <div class="shape shape-hexagon"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="bm-404-content">
+        <!-- Молоток для починки страницы -->
+        <div class="hammer-tool"></div>
+        
+        <!-- Главная иконка мебели -->
+        <div class="furniture-main"></div>
+
+        <!-- Декоративные круги вокруг 404 -->
+        <div class="bm-404-decorations">
+            <div class="decoration-circle">
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+            </div>
+            <div class="decoration-circle">
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+            </div>
+            <div class="decoration-circle">
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+                <div class="decoration-dot"></div>
+            </div>
+        </div>
+
+        <!-- Текст -->
+        <h1 class="bm-404-code">404</h1>
+        <h2 class="bm-404-title">Страница не найдена</h2>
+        <p class="bm-404-subtitle">
+            К сожалению, эта страница не существует в нашем каталоге. 
+            Возможно, она была перемещена или удалена. Давайте найдем 
+            что-то подходящее из нашей коллекции мебели.
+        </p>
+
+        <!-- Кнопки -->
+        <div class="bm-404-actions">
+            <a href="{% url 'client_service:index' %}" class="btn-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                На главную
+            </a>
+            <a href="{% url 'client_service:portfolio' %}" class="btn-outline">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 6h18v2H3V6zm0 4h18v2H3v-2zm0 4h18v2H3v-2zm0 4h18v2H3v-2z"/>
+                </svg>
+                Каталог мебели
+            </a>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

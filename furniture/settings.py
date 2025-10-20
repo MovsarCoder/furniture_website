@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 # Get ALLOWED_HOSTS from environment variable or use default
 allowed_hosts_str = config('ALLOWED_HOSTS', default='localhost,127.0.0.1')

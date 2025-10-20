@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
 </head>
 <body>
-<!-- Add floating furniture elements throughout the entire website -->
+
 <div class="global-furniture-background">
     <div class="global-furniture-item chair-item"></div>
     <div class="global-furniture-item sofa-item"></div>
@@ -36,20 +36,20 @@
             <a href="#features">{% trans 'About Company' %}</a>
             <a href="#contacts">{% trans 'Contacts' %}</a>
         </nav>
-        
+
         <div class="nav-right">
             <!-- Language Selector -->
             <div class="language-selector">
                 <div class="lang-current" id="langCurrent">
                     {% if LANGUAGE_CODE == 'en' %}
-                        <span class="lang-flag">🇺🇸</span>
-                        <span class="lang-text">EN</span>
+                    <span class="lang-flag">🇺🇸</span>
+                    <span class="lang-text">EN</span>
                     {% elif LANGUAGE_CODE == 'fr' %}
-                        <span class="lang-flag">🇫🇷</span>
-                        <span class="lang-text">FR</span>
+                    <span class="lang-flag">🇫🇷</span>
+                    <span class="lang-text">FR</span>
                     {% elif LANGUAGE_CODE == 'de' %}
-                        <span class="lang-flag">🇩🇪</span>
-                        <span class="lang-text">DE</span>
+                    <span class="lang-flag">🇩🇪</span>
+                    <span class="lang-text">DE</span>
                     {% endif %}
                     <span class="lang-arrow">▼</span>
                 </div>
@@ -72,7 +72,7 @@
                     </form>
                 </div>
             </div>
-            
+
             <button class="nav-cta" id="consultationBtn" aria-label="{% trans 'Order consultation' %}">{% trans 'Order Consultation' %}</button>
         </div>
     </div>
@@ -117,7 +117,6 @@
     </div>
 </footer>
 
-<!-- Модальное окно консультации -->
 <div id="consultationModal" class="modal" aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
     <div class="modal-backdrop" id="modalBackdrop"></div>
     <div class="modal-content">
@@ -129,37 +128,37 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        
+
         <div class="modal-body">
             <p class="modal-subtitle">
                 {% trans 'Leave your contacts and we will contact you within 30 minutes' %}
             </p>
-            
+
             <form id="consultationForm" class="consultation-form">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">{% trans 'Your name' %} *</label>
-                        <input type="text" id="name" name="name" required 
+                        <input type="text" id="name" name="name" required
                                placeholder="{% trans 'For example: Alexander' %}">
                         <span class="field-error" id="nameError"></span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="phone">{% trans 'Phone' %} *</label>
-                        <input type="tel" id="phone" name="phone" required 
+                        <input type="tel" id="phone" name="phone" required
                                placeholder="+7 (999) 123-45-67">
                         <span class="field-error" id="phoneError"></span>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="email">{% trans 'Email (optional)' %}</label>
-                    <input type="email" id="email" name="email" 
+                    <input type="email" id="email" name="email"
                            placeholder="your.email@example.com">
                     <span class="field-error" id="emailError"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="consultationType">{% trans 'Consultation type' %}</label>
                     <select id="consultationType" name="consultation_type">
@@ -169,19 +168,19 @@
                         <option value="repair">{% trans 'Repair/Restoration' %}</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="preferredTime">{% trans 'Preferred time' %}</label>
-                    <input type="text" id="preferredTime" name="preferred_time" 
+                    <input type="text" id="preferredTime" name="preferred_time"
                            placeholder="{% trans 'For example: morning, evening, weekends' %}">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="message">{% trans 'Message' %}</label>
-                    <textarea id="message" name="message" rows="3" 
+                    <textarea id="message" name="message" rows="3"
                               placeholder="{% trans 'Describe your wishes or questions...' %}"></textarea>
                 </div>
-                
+
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancelBtn">
                         {% trans 'Cancel' %}
@@ -193,7 +192,7 @@
                         </span>
                     </button>
                 </div>
-                
+
                 <div class="form-result" id="formResult" style="display: none;"></div>
             </form>
         </div>

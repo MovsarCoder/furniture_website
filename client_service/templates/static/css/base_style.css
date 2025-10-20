@@ -1488,6 +1488,17 @@
 
 .hero-card .orbit-dot {
   position: absolute;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+
+/* ===== СТАТИСТИКА ===== */
+.stats {
   width: 10px;
   height: 10px;
   background: rgba(255, 255, 255, 0.5);
@@ -5503,6 +5514,20 @@ img {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(67, 97, 238, 0.3);
+  position: relative;
+}
+
+.work-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-brand);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
 }
 
 .work-meta-header {
