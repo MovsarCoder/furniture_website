@@ -30,11 +30,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Language switching endpoint
     path('i18n/setlang/', set_language, name='set_language'),
-    
+
     # Auto documentation drf_spectacular
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
-    
+
     # Serve static and media files explicitly for both DEBUG modes
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),

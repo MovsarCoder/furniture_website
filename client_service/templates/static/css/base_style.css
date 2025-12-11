@@ -5508,11 +5508,7 @@ img {
   font-size: 36px;
   font-weight: 800;
   margin: 0 0 16px;
-  color: var(--text);
-  background: var(--gradient-brand);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--brand);
   line-height: 1.2;
   text-shadow: 0 2px 10px rgba(67, 97, 238, 0.3);
   position: relative;
@@ -5523,11 +5519,8 @@ img {
   position: absolute;
   bottom: -8px;
   left: 0;
-  width: 60px;
-  height: 4px;
-  background: var(--gradient-brand);
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
+  width: 0;
+  height: 0;
 }
 
 .work-meta-header {

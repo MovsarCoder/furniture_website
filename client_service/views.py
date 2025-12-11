@@ -50,6 +50,4 @@ def work_detail(request, pk):
 def custom_page_not_found(request, exception=None):
     contacts = Contact.objects.all()
     """Кастомная 404 страница в едином стиле сайта."""
-    return render(request, "base/404.html", context={
-        "contacts": contacts
-    }, status=404)
+    return render(request, "base/404.html", status=404)

@@ -1,13 +1,14 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Страница не найдена — B'Mass{% endblock %}
+{% block title %}{% trans 'Page not found' %} — B'Mass{% endblock %}
 {% block content %}
 
 <style>
-    /* ===== МЕБЕЛЬНАЯ 404 СТРАНИЦА ===== */
+    /* ===== FURNITURE 404 PAGE ===== */
     
-    /* ГЛАВНЫЙ КОНТЕЙНЕР */
+    /* MAIN CONTAINER */
     .bm-404-space {
       min-height: 100vh;
       background: var(--bg-gradient);
@@ -19,7 +20,7 @@
       overflow: hidden;
     }
 
-    /* Декоративные элементы мебели */
+    /* Decorative furniture elements */
     .furniture-elements {
       position: absolute;
       top: 0;
@@ -68,7 +69,7 @@
       50% { transform: translateY(-20px) rotate(5deg); opacity: 0.2; }
     }
 
-    /* Основной контент без карточки */
+    /* Main content without card */
     .bm-404-content {
       max-width: 800px;
       width: 100%;
@@ -78,7 +79,7 @@
       animation: slideUp 0.8s ease-out;
     }
 
-    /* Цифры 404 в стиле мебельного магазина */
+    /* 404 numbers in furniture shop style */
     .bm-404-code {
       font-size: 140px;
       font-weight: 900;
@@ -95,7 +96,7 @@
       filter: drop-shadow(0 10px 20px rgba(67, 97, 238, 0.2));
     }
 
-    /* Декоративные элементы вокруг 404 */
+    /* Decorative elements around 404 */
     .bm-404-decorations {
       position: absolute;
       top: 50%;
@@ -142,7 +143,7 @@
       animation-direction: reverse;
     }
 
-    /* Точки на кругах */
+    /* Dots on circles */
     .decoration-dot {
       position: absolute;
       width: 6px;
@@ -157,7 +158,7 @@
     .decoration-dot:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
     .decoration-dot:nth-child(4) { top: 50%; left: 0; transform: translateY(-50%); }
 
-    /* Молоток для починки страницы */
+    /* Hammer to fix the page */
     .hammer-tool {
       position: absolute;
       top: 20px;
@@ -209,7 +210,7 @@
       75% { transform: rotate(15deg); }
     }
 
-    /* Иконка мебели справа от заголовка */
+    /* Furniture icon to the right of the header */
     .furniture-main {
       position: absolute;
       top: 20px;
@@ -235,7 +236,7 @@
       animation: rotate 10s linear infinite;
     }
 
-    /* Дополнительные мебельные элементы */
+    /* Additional furniture elements */
     .furniture-decorations {
       position: absolute;
       top: 0;
@@ -291,7 +292,7 @@
       background-size: contain;
     }
 
-    /* Текстовое содержимое */
+    /* Text content */
     .bm-404-title {
       font-size: 36px;
       font-weight: 800;
@@ -311,7 +312,7 @@
       animation: textReveal 1s ease-out 0.7s both;
     }
 
-    /* Кнопки в стиле мебельного магазина */
+    /* Buttons in furniture shop style */
     .bm-404-actions {
       display: flex;
       gap: 24px;
@@ -402,7 +403,7 @@
       box-shadow: 0 16px 48px rgba(67, 97, 238, 0.2);
     }
 
-    /* Геометрические декоративные элементы */
+    /* Geometric decorative elements */
     .geometric-shapes {
       position: absolute;
       top: 0;
@@ -465,12 +466,12 @@
       50% { transform: translateY(-15px) rotate(180deg); opacity: 0.2; }
     }
 
-    /* Дополнительные элементы */
+    /* Additional elements */
     .bm-404-content:hover .furniture-main {
       animation-duration: 1s;
     }
 
-    /* Адаптивность */
+    /* Responsiveness */
     @media (max-width: 1200px) {
       .bm-404-code { font-size: 120px; letter-spacing: 6px; }
       .bm-404-title { font-size: 32px; }
@@ -525,7 +526,7 @@
 </style>
 
 <section class="bm-404-space">
-    <!-- Декоративные элементы мебели -->
+    <!-- Decorative furniture elements -->
     <div class="furniture-elements">
         <div class="furniture-icon"></div>
         <div class="furniture-icon"></div>
@@ -533,7 +534,7 @@
         <div class="furniture-icon"></div>
     </div>
 
-    <!-- Дополнительные мебельные элементы -->
+    <!-- Additional furniture elements -->
     <div class="furniture-decorations">
         <div class="furniture-item"></div>
         <div class="furniture-item"></div>
@@ -543,7 +544,7 @@
         <div class="furniture-item"></div>
     </div>
 
-    <!-- Геометрические декоративные элементы -->
+    <!-- Geometric decorative elements -->
     <div class="geometric-shapes">
         <div class="shape shape-triangle"></div>
         <div class="shape shape-square"></div>
@@ -551,15 +552,15 @@
         <div class="shape shape-hexagon"></div>
     </div>
 
-    <!-- Основной контент -->
+    <!-- Main content -->
     <div class="bm-404-content">
-        <!-- Молоток для починки страницы -->
+        <!-- Hammer to fix the page -->
         <div class="hammer-tool"></div>
         
-        <!-- Главная иконка мебели -->
+        <!-- Main furniture icon -->
         <div class="furniture-main"></div>
 
-        <!-- Декоративные круги вокруг 404 -->
+        <!-- Decorative circles around 404 -->
         <div class="bm-404-decorations">
             <div class="decoration-circle">
                 <div class="decoration-dot"></div>
@@ -581,28 +582,26 @@
             </div>
         </div>
 
-        <!-- Текст -->
+        <!-- Text -->
         <h1 class="bm-404-code">404</h1>
-        <h2 class="bm-404-title">Страница не найдена</h2>
+        <h2 class="bm-404-title">{% trans 'Page not found' %}</h2>
         <p class="bm-404-subtitle">
-            К сожалению, эта страница не существует в нашем каталоге. 
-            Возможно, она была перемещена или удалена. Давайте найдем 
-            что-то подходящее из нашей коллекции мебели.
+            {% trans 'Unfortunately, this page does not exist in our catalog. It may have been moved or deleted. Let us find something suitable from our furniture collection.' %}
         </p>
 
-        <!-- Кнопки -->
+        <!-- Buttons -->
         <div class="bm-404-actions">
             <a href="{% url 'client_service:index' %}" class="btn-primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                 </svg>
-                На главную
+                {% trans 'Home' %}
             </a>
             <a href="{% url 'client_service:portfolio' %}" class="btn-outline">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3 6h18v2H3V6zm0 4h18v2H3v-2zm0 4h18v2H3v-2zm0 4h18v2H3v-2z"/>
                 </svg>
-                Каталог мебели
+                {% trans 'Furniture catalog' %}
             </a>
         </div>
     </div>

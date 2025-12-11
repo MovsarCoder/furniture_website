@@ -53,3 +53,7 @@ Thumbs.db
 .venv/
 venv/
 ENV/
+
+# Docker
+.env
+.dockerignore
