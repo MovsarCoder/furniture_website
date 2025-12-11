@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from rest_framework import viewsets
 
 from admin_service.serializers import *
@@ -74,7 +75,7 @@ def consultation_request(request):
         if not name or not phone:
             return JsonResponse({
                 'success': False,
-                'error': 'Имя и телефон обязательны для заполнения'
+                'error': str(_('Name and phone are required'))
             }, status=400)
 
         # Создаем заявку
@@ -89,20 +90,20 @@ def consultation_request(request):
 
         return JsonResponse({
             'success': True,
-            'message': 'Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.',
+            'message': str(_('Thank you! Your request has been accepted. We will contact you soon.')),
             'consultation_id': consultation.id
         })
 
     except json.JSONDecodeError:
         return JsonResponse({
             'success': False,
-            'error': 'Некорректные данные'
+            'error': str(_('Invalid data'))
         }, status=400)
 
     except Exception as e:
         return JsonResponse({
             'success': False,
-            'error': 'Произошла ошибка при обработке заявки. Попробуйте позже.'
+            'error': str(_('An error occurred while processing the request. Please try again later.'))
         }, status=500)
 
 
@@ -119,7 +120,7 @@ def update_consultation_status(request, request_id):
         if new_status not in ['new', 'in_progress', 'completed', 'cancelled']:
             return JsonResponse({
                 'success': False,
-                'error': 'Неверный статус'
+                'error': str(_('Invalid status'))
             }, status=400)
 
         consultation.status = new_status
@@ -127,12 +128,12 @@ def update_consultation_status(request, request_id):
 
         return JsonResponse({
             'success': True,
-            'message': 'Статус успешно обновлен',
+            'message': str(_('Status updated successfully')),
             'new_status': consultation.get_status_display()
         })
 
     except Exception as e:
         return JsonResponse({
             'success': False,
-            'error': 'Произошла ошибка при обновлении статуса'
+            'error': str(_('An error occurred while updating status'))
         }, status=500)

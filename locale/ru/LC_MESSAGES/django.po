@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 01:39+0300\n"
+"POT-Creation-Date: 2025-12-11 20:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,58 +16,820 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-msgid "By request"
+#: admin_service/templates/consultation/consultation.html:5
+#: admin_service/templates/consultation/consultation.html:12
+msgid "Consultation Requests Management"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:13
+msgid "All requests received from clients"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:21
+#, fuzzy
+#| msgid "By request"
+msgid "Total requests"
 msgstr "По запросу"
 
-msgid "The final cost is calculated individually after consultation"
-msgstr "Окончательная стоимость рассчитывается индивидуально после консультации"
+#: admin_service/templates/consultation/consultation.html:28
+#: admin_service/templates/consultation/consultation.html:55
+msgid "New"
+msgstr ""
 
-#: client_service/templates/base/404.html:7
+#: admin_service/templates/consultation/consultation.html:35
+#: admin_service/templates/consultation/consultation.html:57
+msgid "Completed"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:56
+msgid "In progress"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:58
+msgid "Cancelled"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:66
+msgid "Phone:"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:73
+msgid "Email:"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:80
+msgid "Type:"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:87
+msgid "Preferred time:"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:95
+msgid "Message:"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:104
+msgid "Take in progress"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:107
+#: admin_service/templates/consultation/consultation.html:111
+#, fuzzy
+#| msgid "Contact us"
+msgid "Contacted"
+msgstr "Связаться с нами"
+
+#: admin_service/templates/consultation/consultation.html:114
+#, fuzzy
+#| msgid "Return to the"
+msgid "Return to new"
+msgstr "Вернуться на"
+
+#: admin_service/templates/consultation/consultation.html:118
+#, fuzzy
+#| msgid "Return to the"
+msgid "Return to progress"
+msgstr "Вернуться на"
+
+#: admin_service/templates/consultation/consultation.html:124
+#: client_service/templates/base/base.html:186
+msgid "Cancel"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:134
+#, fuzzy
+#| msgid "By request"
+msgid "No requests yet"
+msgstr "По запросу"
+
+#: admin_service/templates/consultation/consultation.html:135
+msgid "Requests from clients will be displayed here"
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:389
+msgid "Error: "
+msgstr ""
+
+#: admin_service/templates/consultation/consultation.html:390
+#: admin_service/views.py:138
+msgid "An error occurred while updating status"
+msgstr ""
+
+#: admin_service/views.py:78
+msgid "Name and phone are required"
+msgstr ""
+
+#: admin_service/views.py:93
+msgid "Thank you! Your request has been accepted. We will contact you soon."
+msgstr ""
+
+#: admin_service/views.py:100
+msgid "Invalid data"
+msgstr ""
+
+#: admin_service/views.py:106
+msgid "An error occurred while processing the request. Please try again later."
+msgstr ""
+
+#: admin_service/views.py:123
+msgid "Invalid status"
+msgstr ""
+
+#: admin_service/views.py:131
+msgid "Status updated successfully"
+msgstr ""
+
+#: client_service/templates/base/404.html:5
+#: client_service/templates/base/404.html:587
 msgid "Page not found"
 msgstr "Страница не найдена"
 
-#: client_service/templates/base/404.html:14
-msgid "Unfortunately, the requested page does not exist. It may have been moved or deleted."
-msgstr "К сожалению, запрашиваемая страница не существует. Она могла быть перемещена или удалена."
+#: client_service/templates/base/404.html:589
+#, fuzzy
+#| msgid ""
+#| "Unfortunately, the requested page does not exist. It may have been moved "
+#| "or deleted."
+msgid ""
+"Unfortunately, this page does not exist in our catalog. It may have been "
+"moved or deleted. Let us find something suitable from our furniture "
+"collection."
+msgstr ""
+"К сожалению, запрашиваемая страница не существует. Она могла быть перемещена "
+"или удалена."
 
-#: client_service/templates/base/404.html:16
-msgid "Return to main page"
-msgstr "Вернуться на главную страницу"
+#: client_service/templates/base/404.html:598
+#: client_service/templates/base/base.html:33
+#: client_service/templates/base/base.html:95
+#: client_service/templates/home/home.html:5
+#: client_service/templates/works/work_detail.html:12
+msgid "Home"
+msgstr ""
 
-#: client_service/templates/base/404.html:17
+#: client_service/templates/base/404.html:604
+msgid "Furniture catalog"
+msgstr ""
+
+#: client_service/templates/base/base.html:32
+msgid "Main navigation"
+msgstr ""
+
+#: client_service/templates/base/base.html:34
+#: client_service/templates/base/base.html:96
+#: client_service/templates/home/home.html:299
+#: client_service/templates/works/works.html:4
+#: client_service/templates/works/works.html:14
+msgid "Our Works"
+msgstr ""
+
+#: client_service/templates/base/base.html:35
+#: client_service/templates/base/base.html:97
+msgid "Reviews"
+msgstr ""
+
+#: client_service/templates/base/base.html:36
+#: client_service/templates/base/base.html:98
+msgid "About Company"
+msgstr ""
+
+#: client_service/templates/base/base.html:37
+#: client_service/templates/base/base.html:99
+#: client_service/templates/home/home.html:527
+#: client_service/templates/works/works.html:126
+#, fuzzy
+#| msgid "Contact us"
+msgid "Contacts"
+msgstr "Связаться с нами"
+
+#: client_service/templates/base/base.html:76
+#: client_service/templates/works/work_detail.html:150
+msgid "Order consultation"
+msgstr ""
+
+#: client_service/templates/base/base.html:76
+#: client_service/templates/base/base.html:125
+msgid "Order Consultation"
+msgstr ""
+
+#: client_service/templates/base/base.html:91
+msgid ""
+"Modern furniture for your interior — we manufacture, deliver and install on "
+"time."
+msgstr ""
+
+#: client_service/templates/base/base.html:94
+msgid "Navigation"
+msgstr ""
+
+#: client_service/templates/base/base.html:102
+msgid "Help"
+msgstr ""
+
+#: client_service/templates/base/base.html:103
+msgid "FAQ"
+msgstr ""
+
+#: client_service/templates/base/base.html:104
+msgid "Warranty"
+msgstr ""
+
+#: client_service/templates/base/base.html:105
+#: client_service/templates/home/home.html:113
+msgid "Delivery"
+msgstr ""
+
+#: client_service/templates/base/base.html:106
+msgid "Privacy Policy"
+msgstr ""
+
+#: client_service/templates/base/base.html:109
+#, fuzzy
+#| msgid "Contact us"
+msgid "Contact"
+msgstr "Связаться с нами"
+
+#: client_service/templates/base/base.html:116
+msgid "All rights reserved."
+msgstr ""
+
+#: client_service/templates/base/base.html:127
+msgid "Close window"
+msgstr ""
+
+#: client_service/templates/base/base.html:134
+msgid "Leave your contacts and we will contact you within 30 minutes"
+msgstr ""
+
+#: client_service/templates/base/base.html:141
+msgid "Your name"
+msgstr ""
+
+#: client_service/templates/base/base.html:143
+msgid "For example: Alexander"
+msgstr ""
+
+#: client_service/templates/base/base.html:148
+msgid "Phone"
+msgstr ""
+
+#: client_service/templates/base/base.html:156
+msgid "Email (optional)"
+msgstr ""
+
+#: client_service/templates/base/base.html:163
+msgid "Consultation type"
+msgstr ""
+
+#: client_service/templates/base/base.html:165
+msgid "General consultation"
+msgstr ""
+
+#: client_service/templates/base/base.html:166
+msgid "Design project"
+msgstr ""
+
+#: client_service/templates/base/base.html:167
+msgid "Custom furniture"
+msgstr ""
+
+#: client_service/templates/base/base.html:168
+msgid "Repair/Restoration"
+msgstr ""
+
+#: client_service/templates/base/base.html:173
+msgid "Preferred time"
+msgstr ""
+
+#: client_service/templates/base/base.html:175
+msgid "For example: morning, evening, weekends"
+msgstr ""
+
+#: client_service/templates/base/base.html:179
+msgid "Message"
+msgstr ""
+
+#: client_service/templates/base/base.html:181
+msgid "Describe your wishes or questions..."
+msgstr ""
+
+#: client_service/templates/base/base.html:189
+#, fuzzy
+#| msgid "By request"
+msgid "Send request"
+msgstr "По запросу"
+
+#: client_service/templates/base/base.html:191
+msgid "Sending..."
+msgstr ""
+
+#: client_service/templates/base/base.html:209
+msgid "Please enter your name"
+msgstr ""
+
+#: client_service/templates/base/base.html:210
+msgid "Name must be at least 2 characters"
+msgstr ""
+
+#: client_service/templates/base/base.html:211
+msgid "Please enter phone number"
+msgstr ""
+
+#: client_service/templates/base/base.html:212
+msgid "Please enter a valid phone number (8-15 digits)"
+msgstr ""
+
+#: client_service/templates/base/base.html:213
+msgid "Phone number must contain only digits"
+msgstr ""
+
+#: client_service/templates/base/base.html:214
+msgid "Please enter a valid email address"
+msgstr ""
+
+#: client_service/templates/base/base.html:215
+msgid "An error occurred while sending the request"
+msgstr ""
+
+#: client_service/templates/base/base.html:216
+msgid ""
+"An error occurred while sending the request. Check your internet connection "
+"and try again."
+msgstr ""
+
+#: client_service/templates/base/base.html:217
+#: client_service/templates/home/home.html:479
+msgid "Previous review"
+msgstr ""
+
+#: client_service/templates/base/base.html:218
+#: client_service/templates/home/home.html:483
+msgid "Next review"
+msgstr ""
+
+#: client_service/templates/base/base.html:219
+#: client_service/templates/home/home.html:381
+msgid "Customer reviews"
+msgstr ""
+
+#: client_service/templates/base/base.html:220
+msgid "Consultation modal not found"
+msgstr ""
+
+#: client_service/templates/home/home.html:21
+msgid "Custom furniture to order"
+msgstr ""
+
+#: client_service/templates/home/home.html:24
+msgid "We create furniture"
+msgstr ""
+
+#: client_service/templates/home/home.html:25
+msgid "dreams"
+msgstr ""
+
+#: client_service/templates/home/home.html:25
+msgid "for your home"
+msgstr ""
+
+#: client_service/templates/home/home.html:28
+#, python-format
+msgid ""
+"Design and manufacture of unique furniture for your interior. From idea to "
+"implementation — 100%% quality and attention to detail."
+msgstr ""
+
+#: client_service/templates/home/home.html:31
+#: client_service/templates/home/home.html:497
+#: client_service/templates/works/works.html:116
+msgid "Get consultation"
+msgstr ""
+
+#: client_service/templates/home/home.html:32
 msgid "View works"
 msgstr "Посмотреть работы"
 
-#: client_service/templates/base/404.html:18
-msgid "Contact us"
-msgstr "Связаться с нами"
+#: client_service/templates/home/home.html:37
+msgid "Delivery 2-4 weeks"
+msgstr ""
 
-#: client_service/templates/base/404.html:22
-msgid "What you can do:"
-msgstr "Что вы можете сделать:"
+#: client_service/templates/home/home.html:41
+#: client_service/templates/home/home.html:278
+#: client_service/templates/home/home.html:517
+#: client_service/templates/works/work_detail.html:126
+msgid "Quality guarantee"
+msgstr ""
 
-#: client_service/templates/base/404.html:24
-msgid "Check the address for correctness"
-msgstr "Проверьте адрес на правильность"
+#: client_service/templates/home/home.html:45
+msgid "clients"
+msgstr ""
 
-#: client_service/templates/base/404.html:25
-msgid "Return to the"
-msgstr "Вернуться на"
+#: client_service/templates/home/home.html:85
+msgid "Furniture creation process"
+msgstr ""
 
-#: client_service/templates/base/404.html:25
-msgid "main page"
-msgstr "главную страницу"
+#: client_service/templates/home/home.html:86
+msgid "From idea to finished product — every stage under control"
+msgstr ""
 
-#: client_service/templates/base/404.html:26
-msgid "Use the navigation menu"
-msgstr "Используйте меню навигации"
+#: client_service/templates/home/home.html:92
+#: client_service/templates/works/work_detail.html:164
+msgid "Consultation"
+msgstr ""
 
-#: client_service/templates/base/404.html:41
+#: client_service/templates/home/home.html:93
+msgid "We discuss your ideas and requirements"
+msgstr ""
+
+#: client_service/templates/home/home.html:99
+#: client_service/templates/works/work_detail.html:171
+msgid "Design"
+msgstr ""
+
+#: client_service/templates/home/home.html:100
+msgid "We create 3D models and drawings"
+msgstr ""
+
+#: client_service/templates/home/home.html:106
+#: client_service/templates/works/work_detail.html:178
+msgid "Production"
+msgstr ""
+
+#: client_service/templates/home/home.html:107
+msgid "We manufacture with quality control"
+msgstr ""
+
+#: client_service/templates/home/home.html:114
+msgid "We carefully deliver and install"
+msgstr ""
+
+#: client_service/templates/home/home.html:125
+msgid "About us in numbers"
+msgstr ""
+
+#: client_service/templates/home/home.html:126
+msgid "Facts that clients trust"
+msgstr ""
+
+#: client_service/templates/home/home.html:130
+msgid "Verified data"
+msgstr ""
+
+#: client_service/templates/home/home.html:148
+msgid "Satisfied clients"
+msgstr ""
+
+#: client_service/templates/home/home.html:149
+msgid "High trust rating"
+msgstr ""
+
+#: client_service/templates/home/home.html:175
+msgid "Completed projects"
+msgstr ""
+
+#: client_service/templates/home/home.html:176
+msgid "Unique furniture"
+msgstr ""
+
+#: client_service/templates/home/home.html:202
+msgid "Years of experience"
+msgstr ""
+
+#: client_service/templates/home/home.html:203
+msgid "Professional expertise"
+msgstr ""
+
+#: client_service/templates/home/home.html:229
+msgid "Weeks to delivery"
+msgstr ""
+
+#: client_service/templates/home/home.html:230
+msgid "Fast implementation"
+msgstr ""
+
+#: client_service/templates/home/home.html:249
+msgid "Leader in custom furniture"
+msgstr ""
+
+#: client_service/templates/home/home.html:253
+msgid "Premium quality materials"
+msgstr ""
+
+#: client_service/templates/home/home.html:257
+msgid "Precise deadlines"
+msgstr ""
+
+#: client_service/templates/home/home.html:268
+msgid "Why choose us"
+msgstr ""
+
+#: client_service/templates/home/home.html:273
+#: client_service/templates/works/work_detail.html:119
+msgid "Fast delivery"
+msgstr ""
+
+#: client_service/templates/home/home.html:274
+msgid ""
+"From 2 to 4 weeks — we transparently plan deadlines and stick to them. We "
+"deliver throughout Russia with careful packaging."
+msgstr ""
+
+#: client_service/templates/home/home.html:279
+msgid ""
+"Reliable materials, careful assembly and control at every stage. We provide "
+"an official warranty on all products."
+msgstr ""
+
+#: client_service/templates/home/home.html:283
+msgid "Experienced craftsmen"
+msgstr ""
+
+#: client_service/templates/home/home.html:284
+msgid ""
+"Dozens of completed projects — from kitchens to wardrobes. Our specialists "
+"constantly improve their qualifications."
+msgstr ""
+
+#: client_service/templates/home/home.html:288
+msgid "Individual approach"
+msgstr ""
+
+#: client_service/templates/home/home.html:289
+msgid ""
+"We will adapt to your style and budget — we will offer the best solutions. "
+"Free consultations and 3D project visualization."
+msgstr ""
+
+#: client_service/templates/home/home.html:300
+#: client_service/templates/works/works.html:15
+msgid "Portfolio of unique handmade furniture"
+msgstr ""
+
+#: client_service/templates/home/home.html:303
+msgid "View all"
+msgstr ""
+
+#: client_service/templates/home/home.html:317
+#: client_service/templates/works/works.html:59
+msgid "Quick View"
+msgstr ""
+
+#: client_service/templates/home/home.html:323
+#: client_service/templates/works/works.html:65
+msgid "Recommended"
+msgstr ""
+
+#: client_service/templates/home/home.html:349
+#: client_service/templates/works/works.html:91
+msgid "Cost:"
+msgstr ""
+
+#: client_service/templates/home/home.html:354
+#: client_service/templates/works/work_detail.html:71
+#: client_service/templates/works/works.html:96
+msgid "By request"
+msgstr "По запросу"
+
+#: client_service/templates/home/home.html:358
+#: client_service/templates/works/works.html:100
+msgid "More details"
+msgstr ""
+
+#: client_service/templates/home/home.html:369
+msgid "Didn\\"
+msgstr ""
+
+#: client_service/templates/home/home.html:372
+msgid "Discuss individual project"
+msgstr ""
+
+#: client_service/templates/home/home.html:382
+msgid "More than 1000 satisfied customers trust us to create dream furniture"
+msgstr ""
+
+#: client_service/templates/home/home.html:396
+msgid "Average rating"
+msgstr ""
+
+#: client_service/templates/home/home.html:413
+#: client_service/templates/home/home.html:422
+msgid "Verified client"
+msgstr ""
+
+#: client_service/templates/home/home.html:442
+msgid "Project:"
+msgstr ""
+
+#: client_service/templates/home/home.html:451
+msgid "Helpful"
+msgstr ""
+
+#: client_service/templates/home/home.html:457
+msgid "B\\"
+msgstr ""
+
+#: client_service/templates/home/home.html:465
+msgid "Reviews will appear soon!"
+msgstr ""
+
+#: client_service/templates/home/home.html:466
+msgid "Be the first to leave a review about our work"
+msgstr ""
+
+#: client_service/templates/home/home.html:468
+msgid "Order project"
+msgstr ""
+
+#: client_service/templates/home/home.html:492
+msgid "Want to join satisfied customers?"
+msgstr ""
+
+#: client_service/templates/home/home.html:493
+msgid ""
+"Get a free consultation and find out how we can make your dream of perfect "
+"furniture come true"
+msgstr ""
+
+#: client_service/templates/home/home.html:500
+#, fuzzy
+#| msgid "View works"
+msgid "View our works"
+msgstr "Посмотреть работы"
+
+#: client_service/templates/home/home.html:509
+#: client_service/templates/works/works.html:20
+msgid "projects"
+msgstr ""
+
+#: client_service/templates/home/home.html:513
+msgid "rating"
+msgstr ""
+
+#: client_service/templates/home/home.html:528
+#: client_service/templates/works/works.html:127
+msgid "Choose a convenient branch for you"
+msgstr ""
+
+#: client_service/templates/home/home.html:549
+#: client_service/templates/works/works.html:148
 msgid "View on Google Maps"
 msgstr "Посмотреть на Google Maps"
 
-#: client_service/templates/base/404.html:42
+#: client_service/templates/home/home.html:557
+#: client_service/templates/works/works.html:156
 msgid "No contacts!"
 msgstr "Нет контактов!"
+
+#: client_service/templates/works/work_detail.html:14
+msgid "Portfolio"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:24
+msgid "Zoom image"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:68
+#, fuzzy
+#| msgid "The final cost is calculated individually after consultation"
+msgid "Final cost is calculated individually"
+msgstr ""
+"Окончательная стоимость рассчитывается индивидуально после консультации"
+
+#: client_service/templates/works/work_detail.html:73
+msgid "The final cost is calculated individually after consultation"
+msgstr ""
+"Окончательная стоимость рассчитывается индивидуально после консультации"
+
+#: client_service/templates/works/work_detail.html:80
+msgid "Description"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:88
+msgid "Dimensions"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:93
+msgid "Width (cm)"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:99
+msgid "Height (cm)"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:105
+msgid "Depth (cm)"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:114
+msgid "Features"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:120
+msgid "From 2 to 4 weeks throughout the country"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:127
+msgid "Official 2-year warranty"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:133
+msgid "Convenient payment"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:134
+msgid "Cash or card upon receipt"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:140
+msgid "Professional assembly"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:141
+msgid "Experienced masters with years of experience"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:153
+msgid "Back to all works"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:159
+msgid "Creation process"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:165
+msgid "We discuss your wishes and take measurements"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:172
+msgid "We create 3D visualization and drawings"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:179
+msgid "We manufacture furniture on modern equipment"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:185
+msgid "Delivery and assembly"
+msgstr ""
+
+#: client_service/templates/works/work_detail.html:186
+msgid "We carefully deliver and assemble on site"
+msgstr ""
+
+#: client_service/templates/works/works.html:29
+msgid "All Works"
+msgstr ""
+
+#: client_service/templates/works/works.html:33
+msgid "Kitchens"
+msgstr ""
+
+#: client_service/templates/works/works.html:37
+msgid "Wardrobes"
+msgstr ""
+
+#: client_service/templates/works/works.html:41
+msgid "Tables"
+msgstr ""
+
+#: client_service/templates/works/works.html:45
+msgid "Cabinets"
+msgstr ""
+
+#: client_service/templates/works/works.html:112
+msgid "Want to order similar furniture?"
+msgstr ""
+
+#: client_service/templates/works/works.html:113
+msgid "Our masters will create a unique piece specially for you"
+msgstr ""
+
+#: furniture/settings.py:112
+msgid "English"
+msgstr ""
+
+#: furniture/settings.py:113
+msgid "Français"
+msgstr ""
+
+#: furniture/settings.py:114
+msgid "Deutsch"
+msgstr ""
+
+#~ msgid "Return to main page"
+#~ msgstr "Вернуться на главную страницу"
+
+#~ msgid "What you can do:"
+#~ msgstr "Что вы можете сделать:"
+
+#~ msgid "Check the address for correctness"
+#~ msgstr "Проверьте адрес на правильность"
+
+#~ msgid "main page"
+#~ msgstr "главную страницу"
+
+#~ msgid "Use the navigation menu"
+#~ msgstr "Используйте меню навигации"

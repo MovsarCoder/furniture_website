@@ -1,15 +1,16 @@
 {% extends 'base/base.html' %}
+{% load i18n %}
 
 {% block title %}
-Управление заявками на консультацию - B'Mass
+{% trans 'Consultation Requests Management' %} - B'Mass
 {% endblock %}
 
 {% block content %}
 <section class="admin-consultation-page section container">
     <div class="admin-header">
         <div class="section-header">
-            <h1 class="section-title">📋 Управление заявками на консультацию</h1>
-            <p class="section-sub">Все поступившие заявки от клиентов</p>
+            <h1 class="section-title">📋 {% trans 'Consultation Requests Management' %}</h1>
+            <p class="section-sub">{% trans 'All requests received from clients' %}</p>
         </div>
 
         <div class="stats-row">
@@ -17,21 +18,21 @@
                 <div class="stat-icon">🇺🇸</div>
                 <div class="stat-info">
                     <div class="stat-number">{{ total_count }}</div>
-                    <div class="stat-label">Всего заявок</div>
+                    <div class="stat-label">{% trans 'Total requests' %}</div>
                 </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">⚡</div>
                 <div class="stat-info">
                     <div class="stat-number">{{ new_count }}</div>
-                    <div class="stat-label">Новые</div>
+                    <div class="stat-label">{% trans 'New' %}</div>
                 </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">✅</div>
                 <div class="stat-info">
                     <div class="stat-number">{{ completed_count }}</div>
-                    <div class="stat-label">Завершено</div>
+                    <div class="stat-label">{% trans 'Completed' %}</div>
                 </div>
             </div>
         </div>
@@ -51,10 +52,10 @@
                         </div>
                     </div>
                     <div class="status-badge status-{{ request.status }}">
-                        {% if request.status == 'new' %}🆕 Новая
-                        {% elif request.status == 'in_progress' %}⏳ В работе
-                        {% elif request.status == 'completed' %}✅ Завершена
-                        {% elif request.status == 'cancelled' %}❌ Отменена
+                        {% if request.status == 'new' %}🆕 {% trans 'New' %}
+                        {% elif request.status == 'in_progress' %}⏳ {% trans 'In progress' %}
+                        {% elif request.status == 'completed' %}✅ {% trans 'Completed' %}
+                        {% elif request.status == 'cancelled' %}❌ {% trans 'Cancelled' %}
                         {% endif %}
                     </div>
                 </div>
@@ -62,28 +63,28 @@
                 <div class="request-details">
                     <div class="detail-item">
                         <span class="detail-icon">📞</span>
-                        <span class="detail-label">Телефон:</span>
+                        <span class="detail-label">{% trans 'Phone:' %}</span>
                         <a href="tel:{{ request.phone }}" class="detail-value contact-link">{{ request.phone }}</a>
                     </div>
 
                     {% if request.email %}
                     <div class="detail-item">
                         <span class="detail-icon">✉️</span>
-                        <span class="detail-label">Email:</span>
+                        <span class="detail-label">{% trans 'Email:' %}</span>
                         <a href="mailto:{{ request.email }}" class="detail-value contact-link">{{ request.email }}</a>
                     </div>
                     {% endif %}
 
                     <div class="detail-item">
                         <span class="detail-icon">🎯</span>
-                        <span class="detail-label">Тип:</span>
+                        <span class="detail-label">{% trans 'Type:' %}</span>
                         <span class="detail-value">{{ request.get_consultation_type_display }}</span>
                     </div>
 
                     {% if request.preferred_time %}
                     <div class="detail-item">
                         <span class="detail-icon">⏰</span>
-                        <span class="detail-label">Предпочтительное время:</span>
+                        <span class="detail-label">{% trans 'Preferred time:' %}</span>
                         <span class="detail-value">{{ request.preferred_time }}</span>
                     </div>
                     {% endif %}
@@ -91,7 +92,7 @@
                     {% if request.message %}
                     <div class="detail-item message-item">
                         <span class="detail-icon">💬</span>
-                        <span class="detail-label">Сообщение:</span>
+                        <span class="detail-label">{% trans 'Message:' %}</span>
                         <div class="detail-value message-text">{{ request.message }}</div>
                     </div>
                     {% endif %}
@@ -100,27 +101,27 @@
                 <div class="request-actions">
                     {% if request.status == 'new' %}
                     <button class="btn btn-primary" onclick="updateStatus({{ request.id }}, 'in_progress')">
-                        🚀 Взять в работу
+                        🚀 {% trans 'Take in progress' %}
                     </button>
                     <button class="btn btn-success" onclick="updateStatus({{ request.id }}, 'completed')">
-                        ✅ Связался
+                        ✅ {% trans 'Contacted' %}
                     </button>
                     {% elif request.status == 'in_progress' %}
                     <button class="btn btn-success" onclick="updateStatus({{ request.id }}, 'completed')">
-                        ✅ Связался
+                        ✅ {% trans 'Contacted' %}
                     </button>
                     <button class="btn btn-secondary" onclick="updateStatus({{ request.id }}, 'new')">
-                        ↩️ Вернуть в новые
+                        ↩️ {% trans 'Return to new' %}
                     </button>
                     {% elif request.status == 'completed' %}
                     <button class="btn btn-secondary" onclick="updateStatus({{ request.id }}, 'in_progress')">
-                        🔄 Вернуть в работу
+                        🔄 {% trans 'Return to progress' %}
                     </button>
                     {% endif %}
 
                     {% if request.status != 'cancelled' %}
                     <button class="btn btn-danger" onclick="updateStatus({{ request.id }}, 'cancelled')">
-                        ❌ Отменить
+                        ❌ {% trans 'Cancel' %}
                     </button>
                     {% endif %}
                 </div>
@@ -130,8 +131,8 @@
         {% else %}
         <div class="no-requests">
             <div class="no-requests-icon">📭</div>
-            <h3>Пока нет заявок</h3>
-            <p>Заявки от клиентов будут отображаться здесь</p>
+            <h3>{% trans 'No requests yet' %}</h3>
+            <p>{% trans 'Requests from clients will be displayed here' %}</p>
         </div>
         {% endif %}
     </div>
@@ -383,6 +384,16 @@
 </style>
 
 <script>
+    // Translations for consultation page JavaScript
+    window.consultationTranslations = {
+        'Error: ': '{% trans "Error: " %}',
+        'An error occurred while updating status': '{% trans "An error occurred while updating status" %}'
+    };
+    
+    function gettext(key) {
+        return window.consultationTranslations[key] || window.translations?.[key] || key;
+    }
+    
     async function updateStatus(requestId, newStatus) {
         try {
             const response = await fetch(`/admin_service/consultation-request/${requestId}/update-status/`, {
@@ -402,11 +413,11 @@
                 // Reload page to show updated status
                 location.reload();
             } else {
-                alert('Ошибка: ' + data.error);
+                alert(gettext('Error: ') + data.error);
             }
         } catch (error) {
             console.error('Error updating status:', error);
-            alert('Произошла ошибка при обновлении статуса');
+            alert(gettext('An error occurred while updating status'));
         }
     }
 

@@ -513,17 +513,18 @@
   });
   
   // Enhanced accessibility attributes
+  const gettext = window.gettext || function(key) { return key; };
   if (prev) {
     prev.setAttribute('aria-controls', 'reviewsTrack');
-    prev.setAttribute('aria-label', 'Предыдущий отзыв');
+    prev.setAttribute('aria-label', gettext('Previous review'));
   }
   if (next) {
     next.setAttribute('aria-controls', 'reviewsTrack');
-    next.setAttribute('aria-label', 'Следующий отзыв');
+    next.setAttribute('aria-label', gettext('Next review'));
   }
   
   track.setAttribute('role', 'region');
-  track.setAttribute('aria-label', 'Отзывы клиентов');
+  track.setAttribute('aria-label', gettext('Customer reviews'));
 })();
 
 // ===== АКТИВНЫЕ ПУНКТЫ МЕНЮ ПРИ ПРОКРУТКЕ =====
@@ -633,7 +634,8 @@ window.openConsultationModal = function() {
   const form = document.getElementById('consultationForm');
   
   if (!modal || !form) {
-    console.error('Модальное окно консультации не найдено');
+    const gettext = window.gettext || function(key) { return key; };
+    console.error(gettext('Consultation modal not found'));
     return;
   }
   
@@ -740,38 +742,40 @@ window.quickView = function(workId) {
   
   // Validation functions
   function validateField(name, value) {
+    const gettext = window.gettext || function(key) { return key; };
+    
     switch (name) {
       case 'name':
         if (!value.trim()) {
-          showError('name', 'Пожалуйста, введите ваше имя');
+          showError('name', gettext('Please enter your name'));
           return false;
         }
         if (value.trim().length < 2) {
-          showError('name', 'Имя должно содержать минимум 2 символа');
+          showError('name', gettext('Name must be at least 2 characters'));
           return false;
         }
         break;
         
       case 'phone':
         if (!value.trim()) {
-          showError('phone', 'Пожалуйста, введите номер телефона');
+          showError('phone', gettext('Please enter phone number'));
           return false;
         }
         // More flexible phone validation for international numbers
         const cleanPhone = value.replace(/[\s\(\)\-\+\.]/g, '');
         if (cleanPhone.length < 8 || cleanPhone.length > 15) {
-          showError('phone', 'Пожалуйста, введите корректный номер телефона (8-15 цифр)');
+          showError('phone', gettext('Please enter a valid phone number (8-15 digits)'));
           return false;
         }
         if (!/^[0-9]+$/.test(cleanPhone)) {
-          showError('phone', 'Номер телефона должен содержать только цифры');
+          showError('phone', gettext('Phone number must contain only digits'));
           return false;
         }
         break;
         
       case 'email':
         if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          showError('email', 'Пожалуйста, введите корректный email адрес');
+          showError('email', gettext('Please enter a valid email address'));
           return false;
         }
         break;
@@ -871,12 +875,14 @@ window.quickView = function(workId) {
         }, 3000);
         
       } else {
-        showResult(data.error || 'Произошла ошибка при отправке заявки', false);
+        const gettext = window.gettext || function(key) { return key; };
+        showResult(data.error || gettext('An error occurred while sending the request'), false);
       }
       
     } catch (error) {
-      console.error('Ошибка отправки формы:', error);
-      showResult('Произошла ошибка при отправке заявки. Проверьте подключение к интернету и попробуйте снова.', false);
+      console.error('Form submission error:', error);
+      const gettext = window.gettext || function(key) { return key; };
+      showResult(gettext('An error occurred while sending the request. Check your internet connection and try again.'), false);
     } finally {
       setLoadingState(false);
     }

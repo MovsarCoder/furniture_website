@@ -203,6 +203,26 @@
 <script>
     var y=document.getElementById('year');
     if(y){ y.textContent=new Date().getFullYear(); }
+    
+    // Translations for JavaScript
+    window.translations = {
+        'Please enter your name': '{% trans "Please enter your name" %}',
+        'Name must be at least 2 characters': '{% trans "Name must be at least 2 characters" %}',
+        'Please enter phone number': '{% trans "Please enter phone number" %}',
+        'Please enter a valid phone number (8-15 digits)': '{% trans "Please enter a valid phone number (8-15 digits)" %}',
+        'Phone number must contain only digits': '{% trans "Phone number must contain only digits" %}',
+        'Please enter a valid email address': '{% trans "Please enter a valid email address" %}',
+        'An error occurred while sending the request': '{% trans "An error occurred while sending the request" %}',
+        'An error occurred while sending the request. Check your internet connection and try again.': '{% trans "An error occurred while sending the request. Check your internet connection and try again." %}',
+        'Previous review': '{% trans "Previous review" %}',
+        'Next review': '{% trans "Next review" %}',
+        'Customer reviews': '{% trans "Customer reviews" %}',
+        'Consultation modal not found': '{% trans "Consultation modal not found" %}'
+    };
+    
+    window.gettext = function(key) {
+        return window.translations[key] || key;
+    };
 </script>
 
 </body>
