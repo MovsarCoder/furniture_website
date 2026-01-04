@@ -513,17 +513,18 @@
   });
   
   // Enhanced accessibility attributes
+  const gettext = window.gettext || function(key) { return key; };
   if (prev) {
     prev.setAttribute('aria-controls', 'reviewsTrack');
-    prev.setAttribute('aria-label', 'Предыдущий отзыв');
+    prev.setAttribute('aria-label', gettext('Previous review'));
   }
   if (next) {
     next.setAttribute('aria-controls', 'reviewsTrack');
-    next.setAttribute('aria-label', 'Следующий отзыв');
+    next.setAttribute('aria-label', gettext('Next review'));
   }
   
   track.setAttribute('role', 'region');
-  track.setAttribute('aria-label', 'Отзывы клиентов');
+  track.setAttribute('aria-label', gettext('Customer reviews'));
 })();
 
 // ===== АКТИВНЫЕ ПУНКТЫ МЕНЮ ПРИ ПРОКРУТКЕ =====
@@ -633,7 +634,8 @@ window.openConsultationModal = function() {
   const form = document.getElementById('consultationForm');
   
   if (!modal || !form) {
-    console.error('Модальное окно консультации не найдено');
+    const gettext = window.gettext || function(key) { return key; };
+    console.error(gettext('Consultation modal not found'));
     return;
   }
   
@@ -740,38 +742,40 @@ window.quickView = function(workId) {
   
   // Validation functions
   function validateField(name, value) {
+    const gettext = window.gettext || function(key) { return key; };
+    
     switch (name) {
       case 'name':
         if (!value.trim()) {
-          showError('name', 'Пожалуйста, введите ваше имя');
+          showError('name', gettext('Please enter your name'));
           return false;
         }
         if (value.trim().length < 2) {
-          showError('name', 'Имя должно содержать минимум 2 символа');
+          showError('name', gettext('Name must be at least 2 characters'));
           return false;
         }
         break;
         
       case 'phone':
         if (!value.trim()) {
-          showError('phone', 'Пожалуйста, введите номер телефона');
+          showError('phone', gettext('Please enter phone number'));
           return false;
         }
         // More flexible phone validation for international numbers
         const cleanPhone = value.replace(/[\s\(\)\-\+\.]/g, '');
         if (cleanPhone.length < 8 || cleanPhone.length > 15) {
-          showError('phone', 'Пожалуйста, введите корректный номер телефона (8-15 цифр)');
+          showError('phone', gettext('Please enter a valid phone number (8-15 digits)'));
           return false;
         }
         if (!/^[0-9]+$/.test(cleanPhone)) {
-          showError('phone', 'Номер телефона должен содержать только цифры');
+          showError('phone', gettext('Phone number must contain only digits'));
           return false;
         }
         break;
         
       case 'email':
         if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          showError('email', 'Пожалуйста, введите корректный email адрес');
+          showError('email', gettext('Please enter a valid email address'));
           return false;
         }
         break;
@@ -871,12 +875,14 @@ window.quickView = function(workId) {
         }, 3000);
         
       } else {
-        showResult(data.error || 'Произошла ошибка при отправке заявки', false);
+        const gettext = window.gettext || function(key) { return key; };
+        showResult(data.error || gettext('An error occurred while sending the request'), false);
       }
       
     } catch (error) {
-      console.error('Ошибка отправки формы:', error);
-      showResult('Произошла ошибка при отправке заявки. Проверьте подключение к интернету и попробуйте снова.', false);
+      console.error('Form submission error:', error);
+      const gettext = window.gettext || function(key) { return key; };
+      showResult(gettext('An error occurred while sending the request. Check your internet connection and try again.'), false);
     } finally {
       setLoadingState(false);
     }
@@ -954,24 +960,57 @@ window.quickView = function(workId) {
   function selectLanguage(langCode) {
     console.log('Selecting language:', langCode);
     
-    // Check if form exists
-    if (languageForm) {
-      console.log('Using form submission');
-      // Create hidden input for language selection
-      const languageInput = document.createElement('input');
-      languageInput.type = 'hidden';
-      languageInput.name = 'language';
-      languageInput.value = langCode;
-      
-      // Add to form and submit
-      languageForm.appendChild(languageInput);
-      languageForm.submit();
-    } else {
-      console.log('Using fallback URL redirect');
-      // Fallback: redirect to language switch URL directly
-      const currentPath = window.location.pathname + window.location.search + window.location.hash;
-      window.location.href = `/i18n/setlang/?language=${langCode}&next=${encodeURIComponent(currentPath)}`;
+    // Получаем домен для выбранного языка из data-атрибута
+    const selectedOption = langDropdown.querySelector(`[data-lang="${langCode}"]`);
+    if (!selectedOption) {
+      console.error('Language option not found:', langCode);
+      return;
     }
+    
+    const targetDomain = selectedOption.getAttribute('data-domain');
+    if (!targetDomain) {
+      console.error('Domain not found for language:', langCode);
+      return;
+    }
+    
+    // Получаем текущий путь (без домена)
+    const currentPath = window.location.pathname + window.location.search + window.location.hash;
+    
+    // Определяем протокол (http или https)
+    const protocol = window.location.protocol;
+    
+    // Получаем текущий хост (домен + порт если есть)
+    const currentHost = window.location.hostname;
+    const currentPort = window.location.port;
+    
+    // Проверяем, работаем ли мы локально (127.0.0.1 или localhost)
+    const isLocal = currentHost === '127.0.0.1' || currentHost === 'localhost' || currentHost.startsWith('192.168.');
+    
+    if (isLocal) {
+      // Локальное тестирование: используем параметр языка в URL вместо редиректа на домен
+      console.log('Local testing mode: using language parameter');
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', langCode);
+      window.location.href = url.toString();
+      return;
+    }
+    
+    // Если мы уже на нужном домене, не делаем редирект
+    if (currentHost === targetDomain || currentHost === `www.${targetDomain}`) {
+      console.log('Already on correct domain');
+      return;
+    }
+    
+    // Формируем новый URL с сохранением порта (для продакшена)
+    let newUrl;
+    if (currentPort) {
+      newUrl = `${protocol}//${targetDomain}:${currentPort}${currentPath}`;
+    } else {
+      newUrl = `${protocol}//${targetDomain}${currentPath}`;
+    }
+    
+    console.log('Redirecting to:', newUrl);
+    window.location.href = newUrl;
   }
   
   // Event listeners

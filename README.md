@@ -321,7 +321,7 @@ docker-compose up
 Для продакшена используйте:
 
 ```bash
-docker-compose -f docker-compose.yml up --build
+docker-compose -f docker-compose2.yml up --build
 ```
 
 В продакшене обязательно:

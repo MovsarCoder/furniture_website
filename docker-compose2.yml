@@ -1,0 +1,50 @@
+services:
+  web:
+    build: .
+    container_name: furniture_web
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    environment:
+      DEBUG: "True"
+      SECRET_KEY: "django-dev-secret-key-change-in-production-please-use-env-file"
+      ALLOWED_HOSTS: "localhost,127.0.0.1,0.0.0.0"
+      GOOGLE_MAPS_API_KEY: "your-google-maps-api-key"
+      DB_ENGINE: "django.db.backends.postgresql"
+      DB_NAME: "furniture_db"
+      DB_USER: "db_user"
+      DB_PASSWORD: "db_password"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    entrypoint: [ "/app/entrypoint.sh" ]
+    command: [ "gunicorn", "furniture.wsgi:application", "--bind", "0.0.0.0:8000" ]
+
+  db:
+    image: postgres:15-alpine
+    container_name: furniture_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: "furniture_db"
+      POSTGRES_USER: "db_user"
+      POSTGRES_PASSWORD: "db_password"
+    ports:
+      - "5432:5432"  # Для доступа с локального хоста (опционально)
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U db_user -d furniture_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  static_volume:
+  media_volume:
+  postgres_data:

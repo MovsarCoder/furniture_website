@@ -1,22 +1,27 @@
+# Docker Compose конфигурация
+# Для продакшена с nginx: закомментируйте блок ports в секции web
+# Использование: docker-compose up -d --build
+
 services:
   web:
     build: .
     container_name: furniture_web
     ports:
-      - "8000:8000"
+      - "8000:8000"  # Для продакшена с nginx закомментируйте эту строку
     volumes:
       - .:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      # Используем bind mount для доступа nginx на хосте (для продакшена)
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
     environment:
-      DEBUG: "True"
-      SECRET_KEY: "django-dev-secret-key-change-in-production-please-use-env-file"
-      ALLOWED_HOSTS: "localhost,127.0.0.1,0.0.0.0"
-      GOOGLE_MAPS_API_KEY: "your-google-maps-api-key"
-      DB_ENGINE: "django.db.backends.postgresql"
-      DB_NAME: "furniture_db"
-      DB_USER: "db_user"
-      DB_PASSWORD: "db_password"
+      DEBUG: "${DEBUG:-True}"
+      SECRET_KEY: "${SECRET_KEY:-django-dev-secret-key-change-in-production}"
+      ALLOWED_HOSTS: "${ALLOWED_HOSTS:-localhost,127.0.0.1,0.0.0.0,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr}"
+      GOOGLE_MAPS_API_KEY: "${GOOGLE_MAPS_API_KEY:-your-google-maps-api-key}"
+      DB_ENGINE: "${DB_ENGINE:-django.db.backends.postgresql}"
+      DB_NAME: "${DB_NAME:-furniture_db}"
+      DB_USER: "${DB_USER:-db_user}"
+      DB_PASSWORD: "${DB_PASSWORD:-db_password}"
       DB_HOST: "db"
       DB_PORT: "5432"
     depends_on:
@@ -24,7 +29,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     entrypoint: [ "/app/entrypoint.sh" ]
-    command: [ "gunicorn", "furniture.wsgi:application", "--bind", "0.0.0.0:8000" ]
+    command: [ "gunicorn", "furniture.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "60" ]
 
   db:
     image: postgres:15-alpine
@@ -32,19 +37,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_DB: "furniture_db"
-      POSTGRES_USER: "db_user"
-      POSTGRES_PASSWORD: "db_password"
+      POSTGRES_DB: "${DB_NAME:-furniture_db}"
+      POSTGRES_USER: "${DB_USER:-db_user}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-db_password}"
+    # Порт для доступа к БД с хоста (для бэкапа/отладки)
+    # Для продакшена закомментируйте, если не нужен доступ
     ports:
-      - "5432:5432"  # Для доступа с локального хоста (опционально)
+      - "127.0.0.1:5432:5432"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U db_user -d furniture_db" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-db_user} -d ${DB_NAME:-furniture_db}" ]
       interval: 5s
       timeout: 5s
       retries: 5
     restart: unless-stopped
 
 volumes:
-  static_volume:
-  media_volume:
   postgres_data:
+
