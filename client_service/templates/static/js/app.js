@@ -960,24 +960,57 @@ window.quickView = function(workId) {
   function selectLanguage(langCode) {
     console.log('Selecting language:', langCode);
     
-    // Check if form exists
-    if (languageForm) {
-      console.log('Using form submission');
-      // Create hidden input for language selection
-      const languageInput = document.createElement('input');
-      languageInput.type = 'hidden';
-      languageInput.name = 'language';
-      languageInput.value = langCode;
-      
-      // Add to form and submit
-      languageForm.appendChild(languageInput);
-      languageForm.submit();
-    } else {
-      console.log('Using fallback URL redirect');
-      // Fallback: redirect to language switch URL directly
-      const currentPath = window.location.pathname + window.location.search + window.location.hash;
-      window.location.href = `/i18n/setlang/?language=${langCode}&next=${encodeURIComponent(currentPath)}`;
+    // Получаем домен для выбранного языка из data-атрибута
+    const selectedOption = langDropdown.querySelector(`[data-lang="${langCode}"]`);
+    if (!selectedOption) {
+      console.error('Language option not found:', langCode);
+      return;
     }
+    
+    const targetDomain = selectedOption.getAttribute('data-domain');
+    if (!targetDomain) {
+      console.error('Domain not found for language:', langCode);
+      return;
+    }
+    
+    // Получаем текущий путь (без домена)
+    const currentPath = window.location.pathname + window.location.search + window.location.hash;
+    
+    // Определяем протокол (http или https)
+    const protocol = window.location.protocol;
+    
+    // Получаем текущий хост (домен + порт если есть)
+    const currentHost = window.location.hostname;
+    const currentPort = window.location.port;
+    
+    // Проверяем, работаем ли мы локально (127.0.0.1 или localhost)
+    const isLocal = currentHost === '127.0.0.1' || currentHost === 'localhost' || currentHost.startsWith('192.168.');
+    
+    if (isLocal) {
+      // Локальное тестирование: используем параметр языка в URL вместо редиректа на домен
+      console.log('Local testing mode: using language parameter');
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', langCode);
+      window.location.href = url.toString();
+      return;
+    }
+    
+    // Если мы уже на нужном домене, не делаем редирект
+    if (currentHost === targetDomain || currentHost === `www.${targetDomain}`) {
+      console.log('Already on correct domain');
+      return;
+    }
+    
+    // Формируем новый URL с сохранением порта (для продакшена)
+    let newUrl;
+    if (currentPort) {
+      newUrl = `${protocol}//${targetDomain}:${currentPort}${currentPath}`;
+    } else {
+      newUrl = `${protocol}//${targetDomain}${currentPath}`;
+    }
+    
+    console.log('Redirecting to:', newUrl);
+    window.location.href = newUrl;
   }
   
   // Event listeners

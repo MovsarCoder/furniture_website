@@ -41,35 +41,33 @@
             <!-- Language Selector -->
             <div class="language-selector">
                 <div class="lang-current" id="langCurrent">
-                    {% if LANGUAGE_CODE == 'en' %}
-                    <span class="lang-flag">🇺🇸</span>
-                    <span class="lang-text">EN</span>
+                    {% if LANGUAGE_CODE == 'de' %}
+                    <span class="lang-flag">🇩🇪</span>
+                    <span class="lang-text">DE</span>
                     {% elif LANGUAGE_CODE == 'fr' %}
                     <span class="lang-flag">🇫🇷</span>
                     <span class="lang-text">FR</span>
-                    {% elif LANGUAGE_CODE == 'de' %}
+                    {% else %}
                     <span class="lang-flag">🇩🇪</span>
                     <span class="lang-text">DE</span>
                     {% endif %}
                     <span class="lang-arrow">▼</span>
                 </div>
                 <div class="lang-dropdown" id="langDropdown">
-                    <form id="languageForm" method="post" action="{% url 'set_language' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                        <div class="lang-option{% if LANGUAGE_CODE == 'en' %} active{% endif %}" data-lang="en">
-                            <span class="lang-flag">🇺🇸</span>
-                            <span class="lang-name">English</span>
-                        </div>
-                        <div class="lang-option{% if LANGUAGE_CODE == 'fr' %} active{% endif %}" data-lang="fr">
-                            <span class="lang-flag">🇫🇷</span>
-                            <span class="lang-name">Français</span>
-                        </div>
-                        <div class="lang-option{% if LANGUAGE_CODE == 'de' %} active{% endif %}" data-lang="de">
-                            <span class="lang-flag">🇩🇪</span>
-                            <span class="lang-name">Deutsch</span>
-                        </div>
-                    </form>
+                    <!-- Переключение языков через редирект на домены -->
+                    <!-- Каждый язык на своем отдельном домене -->
+                    <div class="lang-option{% if LANGUAGE_CODE == 'de' %} active{% endif %}" 
+                         data-lang="de" 
+                         data-domain="bmass.at">
+                        <span class="lang-flag">🇩🇪</span>
+                        <span class="lang-name">Deutsch</span>
+                    </div>
+                    <div class="lang-option{% if LANGUAGE_CODE == 'fr' %} active{% endif %}" 
+                         data-lang="fr" 
+                         data-domain="bmass.fr">
+                        <span class="lang-flag">🇫🇷</span>
+                        <span class="lang-name">Français</span>
+                    </div>
                 </div>
             </div>
 

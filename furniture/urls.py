@@ -28,7 +28,7 @@ handler404 = 'client_service.views.custom_page_not_found'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Language switching endpoint
+    # Language switching endpoint (оставлен для совместимости, но теперь используется редирект на домены)
     path('i18n/setlang/', set_language, name='set_language'),
 
     # Auto documentation drf_spectacular
@@ -40,10 +40,9 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
-# Internationalized URLs
-urlpatterns += i18n_patterns(
-    path("i18n/", include("django.conf.urls.i18n")),
+# URLs без языковых префиксов - язык определяется по домену через middleware
+# i18n_patterns больше не нужны, так как язык определяется автоматически по домену
+urlpatterns += [
     path("admin_service/", include("admin_service.urls")),
     path("", include("client_service.urls")),  # Root website
-    prefix_default_language=False,
-)
+]

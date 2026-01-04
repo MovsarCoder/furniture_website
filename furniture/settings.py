@@ -18,8 +18,13 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 
 # Get ALLOWED_HOSTS from environment variable or use default
-allowed_hosts_str = config('ALLOWED_HOSTS', default='localhost,127.0.0.1')
-ALLOWED_HOSTS = allowed_hosts_str.split(',') if isinstance(allowed_hosts_str, str) else ['localhost', '127.0.0.1']
+# Поддержка доменов: немецкий и французский
+allowed_hosts_str = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr')
+ALLOWED_HOSTS = allowed_hosts_str.split(',') if isinstance(allowed_hosts_str, str) else [
+    'localhost', '127.0.0.1',
+    'bmass.at', 'www.bmass.at',  # Немецкий
+    'bmass.fr', 'www.bmass.fr',  # Французский
+]
 
 # Application definition
 
@@ -46,6 +51,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'furniture.middleware.DomainLanguageMiddleware',  # Определение языка по домену (ПЕРЕД LocaleMiddleware)
     "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -97,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'de'  # Немецкий по умолчанию
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -121,6 +127,25 @@ GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY', default='AIzaSyCV338EzjXB46q
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+# Маппинг доменов на языки для DomainLanguageMiddleware
+# Каждый домен автоматически определяет свой язык
+DOMAIN_LANGUAGE_MAP = {
+    'bmass.at': 'de',  # Немецкий
+    'www.bmass.at': 'de',
+    'bmass.fr': 'fr',  # Французский
+    'www.bmass.fr': 'fr',
+    # Для локального тестирования - используем немецкий по умолчанию
+    'localhost': 'de',
+    '127.0.0.1': 'de',
+}
+
+# Маппинг языков на домены для редиректа при переключении языка
+# Используется в шаблонах и JavaScript
+LANGUAGE_DOMAIN_MAP = {
+    'de': 'bmass.at',  # Немецкий домен
+    'fr': 'bmass.fr',  # Французский домен
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
