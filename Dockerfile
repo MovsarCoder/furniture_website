@@ -14,15 +14,16 @@ RUN apt-get update && \
       && rm -rf /var/lib/apt/lists/*
 
 # Копируем requirements и устанавливаем зависимости
+# Делаем это раньше для кэширования слоев Docker
 COPY requirements.txt /app/
 RUN pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
 # Копируем entrypoint в /app и делаем исполняемым
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Копируем проект в рабочую директорию
+# Копируем проект в рабочую директорию (в конце для лучшего кэширования)
 COPY . /app/
 
 # (Опционально) не выполнять collectstatic на этапе build, делаем это в entrypoint
