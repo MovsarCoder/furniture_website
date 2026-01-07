@@ -53,7 +53,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'furniture.middleware.DomainLanguageMiddleware',  # Определение языка по домену (ПЕРЕД LocaleMiddleware)
+    'furniture.middleware.DomainLanguageMiddleware',  # <-- перед LocaleMiddleware
     "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'furniture.urls'
 
