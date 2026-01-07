@@ -55,17 +55,12 @@ venv/
 ENV/
 
 # Docker
-.env
 .dockerignore
 *.sqlite3
 *.pyc
-__pycache__/
 *.pyo
 *.pyd
-.Python
 env/
-venv/
-.venv/
 env.bak/
 venv.bak/
 .venv.bak/

@@ -28,22 +28,6 @@
                     <span class="tab-icon">🏠</span>
                     <span>{% trans 'All Works' %}</span>
                 </button>
-                <button class="filter-tab" data-filter="kitchen">
-                    <span class="tab-icon">🍳</span>
-                    <span>{% trans 'Kitchens' %}</span>
-                </button>
-                <button class="filter-tab" data-filter="wardrobe">
-                    <span class="tab-icon">👔</span>
-                    <span>{% trans 'Wardrobes' %}</span>
-                </button>
-                <button class="filter-tab" data-filter="table">
-                    <span class="tab-icon">🪑</span>
-                    <span>{% trans 'Tables' %}</span>
-                </button>
-                <button class="filter-tab" data-filter="cabinet">
-                    <span class="tab-icon">📚</span>
-                    <span>{% trans 'Cabinets' %}</span>
-                </button>
             </div>
         </div>
 
@@ -132,7 +116,9 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else
+                %}—{% endif %}
+            </div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
