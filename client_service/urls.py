@@ -1,7 +1,6 @@
 from django.urls import path
 from client_service.views import *
 
-# Create your views here.
 
 app_name = "client_service"
 

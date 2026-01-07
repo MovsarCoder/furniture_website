@@ -3,9 +3,6 @@ from django.db.models import IntegerField
 import requests
 from django.conf import settings
 
-# Create your models here.
-
-
 languages = [
     ("en", "English"),
     ("fr", "Français"),
@@ -116,7 +113,6 @@ class Review(models.Model):
         return f"{self.author_name} | {self.rating} звезд | {self.text[:50]}..."
 
     def get_stars_display(self):
-        """Возвращает HTML для отображения звезд"""
         stars = ''
         for i in range(1, 6):
             if i <= self.rating:
@@ -148,15 +144,12 @@ class Contact(models.Model):
         return f"{self.branch_name} | {self.address} | {self.country}"
 
     def save(self, *args, **kwargs):
-        # Если у нас есть адрес, но нет координат, попробуем получить их
         if self.address and (not self.latitude or not self.longitude):
             self.get_coordinates_from_address()
         super().save(*args, **kwargs)
 
     def get_coordinates_from_address(self):
-        """Получить координаты по адресу с помощью Google Geocoding API"""
         try:
-            # Здесь нужно использовать ваш API ключ Google Maps
             api_key = getattr(settings, 'GOOGLE_MAPS_API_KEY', None)
             if not api_key:
                 return
@@ -176,7 +169,6 @@ class Contact(models.Model):
                 self.latitude = location['lat']
                 self.longitude = location['lng']
         except Exception as e:
-            # В случае ошибки просто оставляем координаты пустыми
             pass
 
 
@@ -226,5 +218,3 @@ class ConsultationRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
-
-# Create your models here.

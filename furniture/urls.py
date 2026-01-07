@@ -17,32 +17,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from django.conf.urls.static import static
 from django.views.static import serve
 from django.urls import re_path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import set_language
 
 handler404 = 'client_service.views.custom_page_not_found'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Language switching endpoint (оставлен для совместимости, но теперь используется редирект на домены)
     path('i18n/setlang/', set_language, name='set_language'),
 
-    # Auto documentation drf_spectacular
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 
-    # Serve static and media files explicitly for both DEBUG modes
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
-# URLs без языковых префиксов - язык определяется по домену через middleware
-# i18n_patterns больше не нужны, так как язык определяется автоматически по домену
 urlpatterns += [
     path("admin_service/", include("admin_service.urls")),
-    path("", include("client_service.urls")),  # Root website
+    path("", include("client_service.urls")),
 ]

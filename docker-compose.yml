@@ -1,7 +1,3 @@
-# Docker Compose конфигурация
-# Для продакшена с nginx: закомментируйте блок ports в секции web
-# Использование: docker-compose up -d --build
-
 services:
   web:
     build: .
@@ -10,7 +6,6 @@ services:
       - "127.0.0.1:8000:8000"
     volumes:
       - .:/app
-      # Используем bind mount для доступа nginx на хосте (для продакшена)
       - ./staticfiles:/app/staticfiles
       - ./media:/app/media
     environment:
@@ -40,8 +35,6 @@ services:
       POSTGRES_DB: "${DB_NAME:-furniture_db}"
       POSTGRES_USER: "${DB_USER:-db_user}"
       POSTGRES_PASSWORD: "${DB_PASSWORD:-db_password}"
-    # Порт для доступа к БД с хоста (для бэкапа/отладки)
-    # Для продакшена закомментируйте, если не нужен доступ
     ports:
       - "127.0.0.1:5432:5432"
     healthcheck:

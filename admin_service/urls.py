@@ -3,7 +3,6 @@ from rest_framework.routers import DefaultRouter
 
 from admin_service.views import *
 
-# Create your views here.
 
 app_name = "admin_service"
 

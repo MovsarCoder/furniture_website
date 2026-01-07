@@ -12,7 +12,6 @@ from admin_service.serializers import *
 from admin_service.models import *
 
 
-# ViewSets для автодокументации всех запросов для всех моделей
 class WorkViewSet(viewsets.ModelViewSet):
     queryset = Work.objects.all()
     serializer_class = WorkSerializer
@@ -38,19 +37,16 @@ class ConsultationRequestsViewSet(viewsets.ModelViewSet):
     serializer_class = ConsultationRequestSerializer
 
 
-# страница с отображением всех заявок на консультацию также генерация запросов для заявок
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
 def consultation_request(request):
     consultation = ConsultationRequest.objects.all()
     """Обработка заявок на консультацию"""
     if request.method == 'GET':
-        # Подсчитываем статистику
         total_count = consultation.count()
         new_count = consultation.filter(status='new').count()
         completed_count = consultation.filter(status='completed').count()
 
-        # Возвращаем страницу с информацией о консультациях
         return render(request, "consultation/consultation.html",
                       context={
                           "consultation_requests": consultation,
@@ -59,11 +55,9 @@ def consultation_request(request):
                           "completed_count": completed_count
                       })
 
-    # POST request handling
     try:
         data = json.loads(request.body)
 
-        # Валидация данных
         name = data.get('name', '').strip()
         phone = data.get('phone', '').strip()
         email = data.get('email', '').strip()
@@ -71,14 +65,12 @@ def consultation_request(request):
         message = data.get('message', '').strip()
         preferred_time = data.get('preferred_time', '').strip()
 
-        # Базовая валидация
         if not name or not phone:
             return JsonResponse({
                 'success': False,
                 'error': str(_('Name and phone are required'))
             }, status=400)
 
-        # Создаем заявку
         consultation = ConsultationRequest.objects.create(
             name=name,
             phone=phone,
@@ -107,11 +99,9 @@ def consultation_request(request):
         }, status=500)
 
 
-# Post на смену статуса у заявки на консультацию
 @csrf_exempt
 @require_http_methods(["POST"])
 def update_consultation_status(request, request_id):
-    """Обновление статуса заявки на консультацию"""
     try:
         consultation = get_object_or_404(ConsultationRequest, id=request_id)
         data = json.loads(request.body)

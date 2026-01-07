@@ -1,13 +1,10 @@
 from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404
-from django.utils import translation
-from django.conf import settings
-from django.urls import translate_url
+
 
 from admin_service.models import *
 
 
-# Create your views here.
 
 
 def index(request):
@@ -16,7 +13,6 @@ def index(request):
     contacts = Contact.objects.all()
     stats = Stats.objects.first()
 
-    # Calculate real statistics
     total_projects = Work.objects.count()
     avg_rating = reviews.aggregate(avg_rating=Avg('rating'))['avg_rating'] or 0
     avg_rating = round(avg_rating, 1) if avg_rating else 4.9
