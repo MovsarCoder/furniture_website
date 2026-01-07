@@ -7,7 +7,7 @@ services:
     build: .
     container_name: furniture_web
     ports:
-      - "8000:8000"  # Для продакшена с nginx закомментируйте эту строку
+      - "127.0.0.1:8000:8000"
     volumes:
       - .:/app
       # Используем bind mount для доступа nginx на хосте (для продакшена)
