@@ -133,6 +133,7 @@ LANGUAGES = [
     ('en', _('English')),
     ('fr', _('Français')),
     ('de', _('Deutsch')),
+    ('ru', _('Русский')),
 ]
 
 # Google Maps API Key
@@ -150,6 +151,8 @@ DOMAIN_LANGUAGE_MAP = {
     'www.bmass.at': 'de',
     'bmass.fr': 'fr',  # Французский
     'www.bmass.fr': 'fr',
+    'bmass.ru': 'ru',  # Русский
+    'www.bmass.ru': 'ru',
     # Для локального тестирования - используем немецкий по умолчанию
     'localhost': 'de',
     '127.0.0.1': 'de',
@@ -160,6 +163,7 @@ DOMAIN_LANGUAGE_MAP = {
 LANGUAGE_DOMAIN_MAP = {
     'de': 'bmass.at',  # Немецкий домен
     'fr': 'bmass.fr',  # Французский домен
+    'ru': 'bmass.ru',  # Русский домен
 }
 
 # Static files (CSS, JavaScript, Images)

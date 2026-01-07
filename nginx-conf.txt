@@ -1,0 +1,99 @@
+# Конфигурация для bmass.at
+server {
+    server_name bmass.at www.bmass.at;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    access_log /var/log/nginx/bmass.at.access.log;
+    error_log  /var/log/nginx/bmass.at.error.log;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/bmass.at-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/bmass.at-0001/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+
+# Конфигурация для bmass.fr
+server {
+    server_name bmass.fr www.bmass.fr;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    access_log /var/log/nginx/bmass.fr.access.log;
+    error_log  /var/log/nginx/bmass.fr.error.log;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/bmass.fr/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/bmass.fr/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = www.bmass.at) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = bmass.at) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name bmass.at www.bmass.at;
+    return 404; # managed by Certbot
+
+
+
+
+}
+server {
+    if ($host = www.bmass.fr) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = bmass.fr) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name bmass.fr www.bmass.fr;
+    return 404; # managed by Certbot
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+

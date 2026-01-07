@@ -47,6 +47,9 @@
                     {% elif LANGUAGE_CODE == 'fr' %}
                     <span class="lang-flag">🇫🇷</span>
                     <span class="lang-text">FR</span>
+                    {% elif LANGUAGE_CODE == 'ru' %}
+                    <span class="lang-flag">🇷🇺</span>
+                    <span class="lang-text">RU</span>
                     {% else %}
                     <span class="lang-flag">🇩🇪</span>
                     <span class="lang-text">DE</span>
@@ -67,6 +70,12 @@
                          data-domain="bmass.fr">
                         <span class="lang-flag">🇫🇷</span>
                         <span class="lang-name">Français</span>
+                    </div>
+                    <div class="lang-option{% if LANGUAGE_CODE == 'ru' %} active{% endif %}" 
+                         data-lang="ru" 
+                         data-domain="bmass.ru">
+                        <span class="lang-flag">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
                     </div>
                 </div>
             </div>
