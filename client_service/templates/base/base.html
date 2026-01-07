@@ -31,10 +31,10 @@
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
             <a href="{% url 'client_service:index' %}" class="active">{% trans 'Home' %}</a>
-            <a href="{% url 'client_service:portfolio' %}">{% trans 'Our Works' %}</a>
-            <a href="{% url 'client_service:reviews' %}">{% trans 'Reviews' %}</a>
-            <a href="{% url 'client_service:features' %}">{% trans 'About Company' %}</a>
-            <a href="{% url 'client_service:contacts' %}">{% trans 'Contacts' %}</a>
+            <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
+            <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
+            <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
+            <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
         </nav>
 
         <div class="nav-right">
@@ -56,14 +56,14 @@
                 <div class="lang-dropdown" id="langDropdown">
                     <!-- Переключение языков через редирект на домены -->
                     <!-- Каждый язык на своем отдельном домене -->
-                    <div class="lang-option{% if LANGUAGE_CODE == 'de' %} active{% endif %}" 
-                         data-lang="de" 
+                    <div class="lang-option{% if LANGUAGE_CODE == 'de' %} active{% endif %}"
+                         data-lang="de"
                          data-domain="bmass.at">
                         <span class="lang-flag">🇩🇪</span>
                         <span class="lang-name">Deutsch</span>
                     </div>
-                    <div class="lang-option{% if LANGUAGE_CODE == 'fr' %} active{% endif %}" 
-                         data-lang="fr" 
+                    <div class="lang-option{% if LANGUAGE_CODE == 'fr' %} active{% endif %}"
+                         data-lang="fr"
                          data-domain="bmass.fr">
                         <span class="lang-flag">🇫🇷</span>
                         <span class="lang-name">Français</span>
