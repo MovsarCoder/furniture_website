@@ -16,6 +16,6 @@ router.register("consultation_requests", ConsultationRequestsViewSet)
 
 urlpatterns = [
     *router.urls,
-    path("consultation-request/", consultation_request, name="consultation_request"),
-    path("consultation-request/<int:request_id>/update-status/", update_consultation_status, name="update_consultation_status"),
+    path("request/", consultation_request, name="consultation_request"),
+    path("request/<int:request_id>/update-status/", update_consultation_status, name="update_consultation_status"),
 ]
