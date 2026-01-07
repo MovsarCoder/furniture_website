@@ -50,6 +50,9 @@ class DomainLanguageMiddleware:
             request.LANGUAGE_CODE = language
             # Активируем язык для текущего запроса
             translation.activate(language)
+            
+            # Ensure the language is preserved in session if needed
+            request.session['django_language'] = language
         else:
             # Если домен не найден в маппинге, используем язык по умолчанию (немецкий)
             # Это важно для локального тестирования через 127.0.0.1
