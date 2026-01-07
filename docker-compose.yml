@@ -7,23 +7,29 @@ services:
     build: .
     container_name: furniture_web
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"  # Для продакшена с nginx закомментируйте эту строку
     volumes:
       - .:/app
+      # Используем bind mount для доступа nginx на хосте (для продакшена)
       - ./staticfiles:/app/staticfiles
       - ./media:/app/media
     environment:
-      DEBUG: "False"
-      ALLOWED_HOSTS: "bmass.at,www.bmass.at,bmass.fr,www.bmass.fr"
+      DEBUG: "${DEBUG:-True}"
+      SECRET_KEY: "${SECRET_KEY:-django-dev-secret-key-change-in-production}"
+      ALLOWED_HOSTS: "${ALLOWED_HOSTS:-localhost,127.0.0.1,0.0.0.0,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr}"
+      GOOGLE_MAPS_API_KEY: "${GOOGLE_MAPS_API_KEY:-your-google-maps-api-key}"
+      DB_ENGINE: "${DB_ENGINE:-django.db.backends.postgresql}"
+      DB_NAME: "${DB_NAME:-furniture_db}"
+      DB_USER: "${DB_USER:-db_user}"
+      DB_PASSWORD: "${DB_PASSWORD:-db_password}"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
     entrypoint: [ "/app/entrypoint.sh" ]
-    command: [
-      "gunicorn",
-      "furniture.wsgi:application",
-      "--bind", "0.0.0.0:8000",
-      "--workers", "3",
-      "--timeout", "60"
-    ]
+    command: [ "gunicorn", "furniture.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "60" ]
 
   db:
     image: postgres:15-alpine
