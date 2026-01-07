@@ -31,10 +31,10 @@
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
             <a href="{% url 'client_service:index' %}" class="active">{% trans 'Home' %}</a>
-            <a href="#portfolio">{% trans 'Our Works' %}</a>
-            <a href="#reviews">{% trans 'Reviews' %}</a>
-            <a href="#features">{% trans 'About Company' %}</a>
-            <a href="#contacts">{% trans 'Contacts' %}</a>
+            <a href="{% url 'client_service:portfolio' %}">{% trans 'Our Works' %}</a>
+            <a href="{% url 'client_service:reviews' %}">{% trans 'Reviews' %}</a>
+            <a href="{% url 'client_service:features' %}">{% trans 'About Company' %}</a>
+            <a href="{% url 'client_service:contacts' %}">{% trans 'Contacts' %}</a>
         </nav>
 
         <div class="nav-right">
