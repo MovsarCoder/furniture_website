@@ -16,6 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
 
 DEBUG = True
+CSRF_TRUSTED_ORIGINS = ['https://bmass.at', "https://bmass.fr"]
+
 
 # Get ALLOWED_HOSTS from environment variable or use default
 # Поддержка доменов: немецкий и французский
