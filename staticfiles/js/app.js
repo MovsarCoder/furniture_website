@@ -30,11 +30,7 @@
         progressBar.style.width = (barProgress * parseFloat(targetWidth)) + '%';
       }
 
-      // Пульсация иконки во время анимации
-      if(icon && progress < 1) {
-        const pulseScale = 1 + Math.sin(progress * Math.PI * 4) * 0.1;
-        icon.style.transform = `scale(${pulseScale})`;
-      }
+
 
       // Активация искр в процессе анимации
       sparkles.forEach((sparkle, index) => {
@@ -43,14 +39,7 @@
         }
       });
 
-      // Добавляем свечение при завершении
-      if(progress >= 1) {
-        el.style.textShadow = '0 0 20px rgba(59, 130, 246, 0.6)';
-        if(icon) {
-          icon.style.transform = 'scale(1)';
-          icon.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.4)';
-        }
-      }
+
 
       if(progress < 1){
         requestAnimationFrame(step);

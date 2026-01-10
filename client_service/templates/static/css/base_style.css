@@ -495,7 +495,7 @@
 .depth-effect {
   position: absolute;
   inset: 0;
-  background: 
+  background:
     radial-gradient(circle at 30% 30%, rgba(67, 97, 238, 0.1) 0%, transparent 20%),
     radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
     radial-gradient(circle at 50% 20%, rgba(247, 37, 133, 0.1) 0%, transparent 25%);
@@ -506,31 +506,31 @@
 
 @keyframes depth-shift {
   0% {
-    background-position: 
+    background-position:
       30% 30%,
       70% 70%,
       50% 20%;
   }
   25% {
-    background-position: 
+    background-position:
       35% 35%,
       65% 65%,
       45% 25%;
   }
   50% {
-    background-position: 
+    background-position:
       40% 30%,
       60% 70%,
       55% 15%;
   }
   75% {
-    background-position: 
+    background-position:
       35% 25%,
       65% 75%,
       45% 25%;
   }
   100% {
-    background-position: 
+    background-position:
       30% 30%,
       70% 70%,
       50% 20%;
@@ -1013,9 +1013,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(59, 130, 246, 0.03) 0%, 
-    rgba(6, 182, 212, 0.03) 50%, 
+  background: linear-gradient(135deg,
+    rgba(59, 130, 246, 0.03) 0%,
+    rgba(6, 182, 212, 0.03) 50%,
     rgba(139, 92, 246, 0.03) 100%);
   pointer-events: none;
 }
@@ -1058,8 +1058,8 @@
 }
 
 .stat-card {
-  background: linear-gradient(145deg, 
-    var(--panel) 0%, 
+  background: linear-gradient(145deg,
+    var(--panel) 0%,
     var(--panel-2) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
@@ -1102,9 +1102,9 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(135deg, 
-    rgba(139, 92, 246, 0.3) 0%, 
-    rgba(59, 130, 246, 0.2) 50%, 
+  background: linear-gradient(135deg,
+    rgba(139, 92, 246, 0.3) 0%,
+    rgba(59, 130, 246, 0.2) 50%,
     rgba(6, 182, 212, 0.3) 100%);
   border-radius: var(--radius-lg);
   z-index: -1;
@@ -1121,9 +1121,9 @@
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-lg), var(--shadow-glow);
   border-color: rgba(139, 92, 246, 0.4);
-  background: linear-gradient(145deg, 
-    rgba(139, 92, 246, 0.08) 0%, 
-    var(--panel-hover) 50%, 
+  background: linear-gradient(145deg,
+    rgba(139, 92, 246, 0.08) 0%,
+    var(--panel-hover) 50%,
     rgba(59, 130, 246, 0.06) 100%);
 }
 
@@ -1144,7 +1144,7 @@
 .background-pattern {
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 40% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
@@ -1194,9 +1194,9 @@
 
 .stat-card:hover .stat-icon {
   transform: scale(1.1) rotate(6deg);
-  background: linear-gradient(135deg, 
-    rgba(139, 92, 246, 0.9) 0%, 
-    rgba(59, 130, 246, 0.8) 50%, 
+  background: linear-gradient(135deg,
+    rgba(139, 92, 246, 0.9) 0%,
+    rgba(59, 130, 246, 0.8) 50%,
     rgba(6, 182, 212, 0.9) 100%);
   border-color: rgba(139, 92, 246, 0.6);
   box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4),
@@ -1252,10 +1252,10 @@
 
 .stat-card:hover .num {
   transform: scale(1.05);
-  background: linear-gradient(135deg, 
-    #8b5cf6 0%, 
-    #3b82f6 30%, 
-    #06b6d4 60%, 
+  background: linear-gradient(135deg,
+    #8b5cf6 0%,
+    #3b82f6 30%,
+    #06b6d4 60%,
     #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1334,9 +1334,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.3) 50%, 
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
     transparent 100%);
   transform: translateX(-100%);
   animation: progressShimmer 2s ease-in-out infinite;
@@ -3921,7 +3921,7 @@ img {
     flex-direction: column;
     gap: 8px;
   }
-  
+
   /* Ensure our button styles are consistent on mobile */
   .portfolio-card .card-footer {
     flex-direction: column;
@@ -5508,7 +5508,11 @@ img {
   font-size: 36px;
   font-weight: 800;
   margin: 0 0 16px;
-  color: var(--brand);
+  color: var(--text);
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1.2;
   text-shadow: 0 2px 10px rgba(67, 97, 238, 0.3);
   position: relative;
@@ -5519,8 +5523,11 @@ img {
   position: absolute;
   bottom: -8px;
   left: 0;
-  width: 0;
-  height: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-brand);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
 }
 
 .work-meta-header {

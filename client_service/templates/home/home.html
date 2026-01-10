@@ -33,15 +33,15 @@
             </div>
             <div class="hero-features animate-fade-in" style="animation-delay: 0.9s;">
                 <div class="feature-item hover-scale">
-                    <span class="feature-icon bounce-animation">🚚</span>
+                    <span class="feature-icon">🚚</span>
                     <span>{% trans 'Delivery 2-4 weeks' %}</span>
                 </div>
                 <div class="feature-item hover-scale">
-                    <span class="feature-icon bounce-animation" style="animation-delay: 0.2s;">🛡️</span>
+                    <span class="feature-icon" style="animation-delay: 0.2s;">🛡️</span>
                     <span>{% trans 'Quality guarantee' %}</span>
                 </div>
                 <div class="feature-item hover-scale">
-                    <span class="feature-icon bounce-animation" style="animation-delay: 0.4s;">⭐</span>
+                    <span class="feature-icon" style="animation-delay: 0.4s;">⭐</span>
                     <span>{{ total_projects }}+ {% trans 'clients' %}</span>
                 </div>
             </div>
@@ -301,7 +301,7 @@
             </div>
             <a href="{% url 'client_service:portfolio' %}" class="portfolio-view-all hover-lift">
                 <span>{% trans 'View all' %}</span>
-                <span class="arrow bounce-animation">→</span>
+                <span class="arrow">→</span>
             </a>
         </div>
 
@@ -348,10 +348,10 @@
                         <div class="price-section">
                             <span class="price-label">{% trans 'Cost:' %}</span>
                             {% if work.price %}
-                                <span class="price-value">{{ work.price }}</span>
-                                <span class="price-unit">{{ work.currency|upper }}</span>
+                            <span class="price-value">{{ work.price }}</span>
+                            <span class="price-unit">{{ work.currency|upper }}</span>
                             {% else %}
-                                <span class="price-value request">{% trans 'By request' %}</span>
+                            <span class="price-value request">{% trans 'By request' %}</span>
                             {% endif %}
                         </div>
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
@@ -533,7 +533,8 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="color:#cfe3ff; font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% else %}—{% endif %}</div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% endif %}
+            </div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>

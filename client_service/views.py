@@ -1,10 +1,7 @@
 from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404
 
-
 from admin_service.models import *
-
-
 
 
 def index(request):
@@ -15,7 +12,7 @@ def index(request):
 
     total_projects = Work.objects.count()
     avg_rating = reviews.aggregate(avg_rating=Avg('rating'))['avg_rating'] or 0
-    avg_rating = round(avg_rating, 1) if avg_rating else 4.9
+    avg_rating = round(avg_rating, 1) if avg_rating else 0.0
 
     return render(request, "home/home.html", context={
         "works": works,
@@ -44,6 +41,5 @@ def work_detail(request, pk):
 
 
 def custom_page_not_found(request, exception=None):
-    contacts = Contact.objects.all()
     """Кастомная 404 страница в едином стиле сайта."""
     return render(request, "base/404.html", status=404)
