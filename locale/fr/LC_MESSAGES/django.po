@@ -401,6 +401,10 @@ msgstr "Mobilier sur mesure"
 msgid "We create furniture"
 msgstr "Nous créons des meubles"
 
+
+msgid "Furniture"
+msgstr "Möbel"
+
 #: client_service/templates/home/home.html:25
 msgid "dreams"
 msgstr "de rêve"

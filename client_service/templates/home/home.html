@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}
 {% trans 'Home' %} - B'Mass
@@ -33,15 +34,15 @@
             </div>
             <div class="hero-features animate-fade-in" style="animation-delay: 0.9s;">
                 <div class="feature-item hover-scale">
-                    <span class="feature-icon">🚚</span>
+                    <span class="feature-icon">|</span>
                     <span>{% trans 'Delivery 2-4 weeks' %}</span>
                 </div>
                 <div class="feature-item hover-scale">
-                    <span class="feature-icon" style="animation-delay: 0.2s;">🛡️</span>
+                    <span class="feature-icon" style="animation-delay: 0.2s;">|</span>
                     <span>{% trans 'Quality guarantee' %}</span>
                 </div>
                 <div class="feature-item hover-scale">
-                    <span class="feature-icon" style="animation-delay: 0.4s;">⭐</span>
+                    <span class="feature-icon" style="animation-delay: 0.4s;">|</span>
                     <span>{{ total_projects }}+ {% trans 'clients' %}</span>
                 </div>
             </div>
@@ -49,27 +50,9 @@
         <div class="hero-visual animate-slide-up" style="animation-delay: 0.4s;">
             <div class="hero-card floating-card">
                 <div class="hero-image">
-                    <!-- Remove furniture background from here since it's now in the main hero section -->
-                    <div class="orbit-dot"></div>
                 </div>
-                <div class="floating-elements">
-                    <!-- Удалены SVG элементы, так как добавлены стикеры -->
-                </div>
-                <!-- Enhanced decorative elements -->
                 <div class="decorative-elements">
-                    <div class="sparkle sparkle-1"></div>
-                    <div class="sparkle sparkle-2"></div>
-                    <div class="sparkle sparkle-3"></div>
-                    <div class="floating-emoji emoji-1">🛋️</div>
-                    <div class="floating-emoji emoji-2">🪑</div>
-                    <div class="floating-emoji emoji-3">🛏️</div>
-                    <div class="floating-emoji emoji-4">🌟</div>
-                    <!-- Добавляем новые декоративные элементы -->
-                    <div class="floating-shape shape-1"></div>
-                    <div class="floating-shape shape-2"></div>
-                    <div class="floating-shape shape-3"></div>
-                    <div class="pulse-circle circle-1"></div>
-                    <div class="pulse-circle circle-2"></div>
+                    <img src="{% static 'images/logo.png' %}" alt="" style="margin-top: 120px;">
                 </div>
                 <div class="gradient-overlay"></div>
                 <!-- Добавляем новый элемент для создания эффекта глубины -->
@@ -496,7 +479,7 @@
                     <span class="btn-icon">📞</span>
                     <span>{% trans 'Get consultation' %}</span>
                 </button>
-                <a href="#portfolio" class="btn btn-outline">
+                <a href="{% url 'client_service:portfolio' %}" class="btn btn-outline">
                     <span>{% trans 'View our works' %}</span>
                     <span class="btn-arrow">→</span>
                 </a>

@@ -302,6 +302,10 @@ msgstr "Beratungstyp"
 msgid "General consultation"
 msgstr "Allgemeine Beratung"
 
+
+msgid "Furniture"
+msgstr "Möbel"
+
 #: client_service/templates/base/base.html:166
 msgid "Design project"
 msgstr "Design-Projekt"
