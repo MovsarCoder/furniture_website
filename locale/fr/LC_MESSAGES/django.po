@@ -403,7 +403,7 @@ msgstr "Nous créons des meubles"
 
 
 msgid "Furniture"
-msgstr "Möbel"
+msgstr "Meubles"
 
 #: client_service/templates/home/home.html:25
 msgid "dreams"
