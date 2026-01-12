@@ -6245,8 +6245,3 @@ img {
     opacity: 0;
     transition: 0.25s;
 }
-
-.mega-column a:hover::before {
-    opacity: 1;
-    background: #000;
-}
