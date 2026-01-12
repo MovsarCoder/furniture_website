@@ -911,3 +911,117 @@ msgstr ""
 
 #~ msgid "TZ Mebel"
 #~ msgstr "B'Mass"
+
+msgid "Furniture"
+msgstr "Möbel"
+
+msgid "Storage"
+msgstr "Aufbewahrung"
+
+msgid "Shelf"
+msgstr "Regal"
+
+msgid "Sideboard"
+msgstr "Sideboard"
+
+msgid "Chest of Drawers"
+msgstr "Kommode"
+
+msgid "Wardrobe"
+msgstr "Kleiderschrank"
+
+msgid "Coat Rack"
+msgstr "Garderobe"
+
+msgid "Console Table"
+msgstr "Konsolentisch"
+
+msgid "Media Furniture"
+msgstr "Medienschrank"
+
+msgid "Sofa"
+msgstr "Sofa"
+
+msgid "Sofa Bed"
+msgstr "Schlafsofa"
+
+msgid "Daybed"
+msgstr "Liege"
+
+msgid "Table"
+msgstr "Tisch"
+
+msgid "Dining Table"
+msgstr "Esstisch"
+
+msgid "Round Table"
+msgstr "Runder Tisch"
+
+msgid "Extendable Table"
+msgstr "Ausziehbarer Tisch"
+
+msgid "Work Table"
+msgstr "Arbeitstisch"
+
+msgid "Coffee Table"
+msgstr "Couchtisch"
+
+msgid "Bedside Table"
+msgstr "Nachttisch"
+
+msgid "Seating"
+msgstr "Sitzgelegenheiten"
+
+msgid "Dining Chair"
+msgstr "Esszimmerstuhl"
+
+msgid "Office Chair"
+msgstr "Bürostuhl"
+
+msgid "Stool"
+msgstr "Hocker"
+
+msgid "Bar Stool"
+msgstr "Barhocker"
+
+msgid "Bench"
+msgstr "Bank"
+
+msgid "Lounge Chair"
+msgstr "Sessel"
+
+msgid "Sleeping"
+msgstr "Schlafen"
+
+msgid "Bed"
+msgstr "Bett"
+
+msgid "Bunk Bed"
+msgstr "Etagenbett"
+
+msgid "Nightstand"
+msgstr "Nachttisch"
+
+msgid "Home Accessories"
+msgstr "Wohnaccessoires"
+
+msgid "Rug"
+msgstr "Teppich"
+
+msgid "Mirror"
+msgstr "Spiegel"
+
+msgid "Vases"
+msgstr "Vasen"
+
+msgid "Tableware"
+msgstr "Geschirr"
+
+msgid "Gifts & Home Objects"
+msgstr "Geschenke & Wohnobjekte"
+
+msgid "Art Objects"
+msgstr "Kunstobjekte"
+
+msgid "Gift Cards"
+msgstr "Gutscheine"

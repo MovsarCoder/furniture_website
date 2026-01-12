@@ -6141,4 +6141,112 @@ img {
   50% {
     transform: translateY(-8px);
   }
+
+
+/* === Nav item === */
+
+}
+.nav-item {
+    position: relative;
+}
+
+/* === Mega dropdown === */
+.mega-dropdown {
+    position: absolute;
+    top: 100%;
+    left: -400px; /* привязка к левому краю nav-item */
+    transform: translateX(50px) translateY(12px); /* сдвиг вправо на 50px */
+    width: 1380px;
+    max-width: 95vw; /* не выходит за экран */
+    background: #ffffff;
+    padding: 32px 40px;
+    display: flex;
+    gap: 64px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+    z-index: 1000;
+
+    /* Анимация */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Показываем dropdown */
+.nav-item:hover .mega-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(50px) translateY(0);
+}
+
+/* === Колонки === */
+.mega-column {
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* для псевдоэлемента вертикальной линии */
+    align-self: stretch; /* растягиваем колонку на всю высоту */
+    padding-right: 20px; /* чтобы текст не прилипал к линии */
+}
+
+/* Вертикальная разделительная линия между колонками */
+.mega-column:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;             /* толщина линии */
+    height: 100%;           /* на всю высоту колонки */
+    background-color: #e0e0e0; /* светло-серая линия */
+}
+
+/* === Заголовки === */
+.mega-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #111;
+    cursor: default;
+    letter-spacing: 0.3px;
+}
+
+/* === Ссылки === */
+.mega-column a {
+    position: relative;
+    padding: 15px 12px;
+    margin-left: -12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 12.5px;
+    color: #444;
+    transition: all 0.25s ease;
+}
+
+/* Hover стиль */
+.mega-column a:hover {
+    background: linear-gradient(90deg, #f5f7fa, #eef1f5);
+    color: #000;
+    padding-left: 18px;
+}
+
+/* Маленькая точка слева при hover */
+.mega-column a::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    background: #999;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: 0.25s;
+}
+
+.mega-column a:hover::before {
+    opacity: 1;
+    background: #000;
 }

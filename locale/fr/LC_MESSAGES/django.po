@@ -910,3 +910,117 @@ msgstr "Allemand"
 
 #~ msgid "TZ Mebel"
 #~ msgstr "B'Mass"
+
+msgid "Furniture"
+msgstr "Meubles"
+
+msgid "Storage"
+msgstr "Rangement"
+
+msgid "Shelf"
+msgstr "Étagère"
+
+msgid "Sideboard"
+msgstr "Buffet"
+
+msgid "Chest of Drawers"
+msgstr "Commode"
+
+msgid "Wardrobe"
+msgstr "Armoire"
+
+msgid "Coat Rack"
+msgstr "Porte-manteau"
+
+msgid "Console Table"
+msgstr "Console"
+
+msgid "Media Furniture"
+msgstr "Meuble TV"
+
+msgid "Sofa"
+msgstr "Canapé"
+
+msgid "Sofa Bed"
+msgstr "Canapé-lit"
+
+msgid "Daybed"
+msgstr "Banquette"
+
+msgid "Table"
+msgstr "Table"
+
+msgid "Dining Table"
+msgstr "Table à manger"
+
+msgid "Round Table"
+msgstr "Table ronde"
+
+msgid "Extendable Table"
+msgstr "Table extensible"
+
+msgid "Work Table"
+msgstr "Table de travail"
+
+msgid "Coffee Table"
+msgstr "Table basse"
+
+msgid "Bedside Table"
+msgstr "Table de chevet"
+
+msgid "Seating"
+msgstr "Assises"
+
+msgid "Dining Chair"
+msgstr "Chaise de salle à manger"
+
+msgid "Office Chair"
+msgstr "Chaise de bureau"
+
+msgid "Stool"
+msgstr "Tabouret"
+
+msgid "Bar Stool"
+msgstr "Tabouret de bar"
+
+msgid "Bench"
+msgstr "Banc"
+
+msgid "Lounge Chair"
+msgstr "Fauteuil"
+
+msgid "Sleeping"
+msgstr "Chambre"
+
+msgid "Bed"
+msgstr "Lit"
+
+msgid "Bunk Bed"
+msgstr "Lit superposé"
+
+msgid "Nightstand"
+msgstr "Table de chevet"
+
+msgid "Home Accessories"
+msgstr "Accessoires de maison"
+
+msgid "Rug"
+msgstr "Tapis"
+
+msgid "Mirror"
+msgstr "Miroir"
+
+msgid "Vases"
+msgstr "Vases"
+
+msgid "Tableware"
+msgstr "Vaisselle"
+
+msgid "Gifts & Home Objects"
+msgstr "Cadeaux & objets décoratifs"
+
+msgid "Art Objects"
+msgstr "Objets d'art"
+
+msgid "Gift Cards"
+msgstr "Cartes-cadeaux"

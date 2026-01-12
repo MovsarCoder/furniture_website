@@ -30,7 +30,70 @@
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
             <a href="{% url 'client_service:index' %}#home" class="active">{% trans 'Home' %}</a>
-            <a href="{% url 'client_service:index' %}#home">{% trans 'Furniture' %}</a>
+            <!--            <a href="{% url 'client_service:index' %}#home">{% trans 'Furniture' %}</a>-->
+
+            <div class="nav-item">
+                <a href="#" onclick="return false;">{% trans 'Furniture' %}</a>
+                <div class="mega-dropdown">
+                    <div class="mega-column">
+                        <div class="mega-title">{% trans "Storage" %}</div>
+                        <a href="#">{% trans "Shelf" %}</a>
+                        <a href="#">{% trans "Sideboard" %}</a>
+                        <a href="#">{% trans "Chest of Drawers" %}</a>
+                        <a href="#">{% trans "Wardrobe" %}</a>
+                        <a href="#">{% trans "Coat Rack" %}</a>
+                        <a href="#">{% trans "Console Table" %}</a>
+                        <a href="#">{% trans "Media Furniture" %}</a>
+                    </div>
+
+                    <div class="mega-column">
+                        <div class="mega-title">{% trans "Sofa" %}</div>
+                        <a href="#">{% trans "Sofa" %}</a>
+                        <a href="#">{% trans "Sofa Bed" %}</a>
+                        <a href="#">{% trans "Daybed" %}</a>
+                    </div>
+
+                    <div class="mega-column">
+                        <div class="mega-title">{% trans "Table" %}</div>
+                        <a href="#">{% trans "Dining Table" %}</a>
+                        <a href="#">{% trans "Round Table" %}</a>
+                        <a href="#">{% trans "Extendable Table" %}</a>
+                        <a href="#">{% trans "Work Table" %}</a>
+                        <a href="#">{% trans "Coffee Table" %}</a>
+                        <a href="#">{% trans "Bedside Table" %}</a>
+                    </div>
+
+                    <div class="mega-column">
+                        <div class="mega-title">{% trans "Seating" %}</div>
+                        <a href="#">{% trans "Dining Chair" %}</a>
+                        <a href="#">{% trans "Office Chair" %}</a>
+                        <a href="#">{% trans "Stool" %}</a>
+                        <a href="#">{% trans "Bar Stool" %}</a>
+                        <a href="#">{% trans "Bench" %}</a>
+                        <a href="#">{% trans "Lounge Chair" %}</a>
+                    </div>
+
+                    <div class="mega-column">
+                        <div class="mega-title">{% trans "Sleeping" %}</div>
+                        <a href="#">{% trans "Bed" %}</a>
+                        <a href="#">{% trans "Bunk Bed" %}</a>
+                        <a href="#">{% trans "Nightstand" %}</a>
+                    </div>
+
+                    <div class="mega-column">
+                        <div class="mega-title">{% trans "Home Accessories" %}</div>
+                        <a href="#">{% trans "Rug" %}</a>
+                        <a href="#">{% trans "Mirror" %}</a>
+                        <a href="#">{% trans "Vases" %}</a>
+                        <a href="#">{% trans "Tableware" %}</a>
+                        <a href="#">{% trans "Gifts & Home Objects" %}</a>
+                        <a href="#">{% trans "Art Objects" %}</a>
+                        <a href="#">{% trans "Gift Cards" %}</a>
+                    </div>
+                </div>
+            </div>
+
+
             <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
             <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
             <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
