@@ -25,7 +25,7 @@
     <div class="container nav-inner">
         <a href="{% url 'client_service:index' %}">
             <div class="brand">
-                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" width="500">
+                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" style="width: 120%">
             </div>
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
@@ -50,7 +50,7 @@
     <div class="container foot-grid">
         <div class="foot-col">
             <div class="brand" style="margin-bottom:10px;">
-                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" width="200" style="margin-left: -50px; margin-top: -40px;">
+                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" style="margin-left: -50px; margin-top: -40px; width: 60%;">
             </div>
             <div class="section-sub" style="margin-top: -30px;">{% trans 'Modern furniture for your interior — we manufacture, deliver and install on time.' %}</div>
         </div>
@@ -167,7 +167,8 @@
 <script>
     var y=document.getElementById('year');
     if(y){ y.textContent=new Date().getFullYear(); }
-    
+
+
     // Translations for JavaScript
     window.translations = {
         'Please enter your name': '{% trans "Please enter your name" %}',

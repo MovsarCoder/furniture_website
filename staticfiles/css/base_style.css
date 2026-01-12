@@ -302,6 +302,9 @@
 .decorative-elements {
   position: absolute;
   inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pointer-events: none;
 }
 
@@ -1511,12 +1514,6 @@
   }
 }
 
-/* Enhanced decorative elements */
-.decorative-elements {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
 
 .sparkle {
   position: absolute;
@@ -2764,7 +2761,7 @@ a {
 }
 
 img {
-  max-width: 100%;
+  width: 100%;
   display: block;
   border-radius: var(--radius-sm);
 }
