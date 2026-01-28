@@ -1,6 +1,6 @@
 from unfold.admin import ModelAdmin
 from django.contrib import admin
-from .models import Review, Contact, Work, Stats, ConsultationRequest
+from .models import Review, Contact, Work, Stats, ConsultationRequest, Category
 
 
 @admin.register(Work)
@@ -59,3 +59,10 @@ class ConsultationRequestAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+
+@admin.register(Category)
+class CategoryAdmin(ModelAdmin):
+    list_display = ('id', 'title', 'description')
+    list_editable = ('description',)
+    list_filter = ('title', 'description')
+

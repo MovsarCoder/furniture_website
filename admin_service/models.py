@@ -41,10 +41,19 @@ CURRENCIES = [
 ]
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Название категории", unique=True)
+    description = models.CharField(max_length=500, blank=True, verbose_name="Описание категории (не обязательно)", )
+
+    def __str__(self):
+        return f"{self.title}"
+
+
 class Work(models.Model):
-    title = models.CharField(max_length=255, blank=True, verbose_name="Название мебели | Тип")
+    title = models.CharField(max_length=255, verbose_name="Название мебели")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="works", verbose_name="Категория")
     description = models.TextField(blank=True, verbose_name="Описание мебели")
-    image = models.ImageField(upload_to="portfolio/", verbose_name="Фотография мебели")
+    image = models.ImageField(upload_to="portfolio/", blank=True, null=True, verbose_name="Фотография мебели")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена", default=0)
     currency = models.CharField(max_length=5, choices=CURRENCIES, default="usd", verbose_name="Валюта")
     country = models.CharField(max_length=5, choices=COUNTRIES, default="us", verbose_name="Страна работы")

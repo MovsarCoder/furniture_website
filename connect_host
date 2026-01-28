@@ -1,2 +1,22 @@
 ssh root@72.62.179.100
 Пароль: GnsTb9RHPvV@
+
+
+django-admin makemessages -l fr
+django-admin makemessages -l de
+django-admin compilemessages
+python manage.py collectstatic
+
+
+# Очистите кэш переводов
+find . -name "*.mo" -delete
+find . -name "*.pyc" -delete
+find . -type d -name "__pycache__" -exec rm -rf {} +
+
+# Пересоздайте и скомпилируйте переводы
+django-admin makemessages -l fr
+django-admin makemessages -l de
+django-admin compilemessages
+
+# Перезапустите сервер
+python manage.py runserver
