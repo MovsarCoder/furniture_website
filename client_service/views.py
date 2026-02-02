@@ -5,7 +5,7 @@ from admin_service.models import *
 
 
 def index(request):
-    works = Work.objects.filter(for_sale=True).order_by("?")[:3]
+    works = Work.objects.filter(our_work=True).order_by("?")[:3]
     reviews = Review.objects.all()
     contacts = Contact.objects.all()
     stats = Stats.objects.first()
@@ -28,9 +28,9 @@ def all_works(request):
     works = Work.objects.all()
     contacts = Contact.objects.all()
     host_name = request.get_host().removeprefix("bmass.")
-    #
-    # if works:
-    #     works = works.filter(for_sale=True)
+
+    if works:
+        works = works.filter(our_work=True)
 
     return render(request, "works/works.html", context={
         "works": works,
@@ -59,7 +59,7 @@ def catalog_view(request):
     contacts = Contact.objects.all()
 
     if category:
-        works = works.filter(category__title=category, for_sale=False)
+        works = works.filter(category__title=category, our_work=False)
 
         # Переведем section и category прежде чем отправить их в .html
     return render(request, 'mobel/view_mobel.html', {

@@ -4,15 +4,13 @@ import requests
 from django.conf import settings
 
 languages = [
-    ("en", "English"),
     ("fr", "Français"),
-    ("de", "Deutsch")
+    ("at", "Deutsch")
 ]
 
 country = [
-    ("am", "America"),
     ("fr", "Français"),
-    ("de", "Deutsch")
+    ("at", "Austria")
 ]
 
 WORK_TYPES = [
@@ -30,9 +28,8 @@ STATUSES = [
 ]
 
 COUNTRIES = [
-    ("us", "United States"),
     ("fr", "France"),
-    ("de", "Germany"),
+    ("at", "Austria"),
 ]
 
 CURRENCIES = [
@@ -62,7 +59,7 @@ class Work(models.Model):
     work_type = models.CharField(max_length=20, choices=WORK_TYPES, verbose_name="Тип работы", default="custom")
     status = models.CharField(max_length=20, choices=STATUSES, verbose_name="Статус", default="in_progress")
     material = models.CharField(max_length=100, blank=True, verbose_name="Материал")
-    for_sale = models.BooleanField(verbose_name="для продажи ДА/НЕТ", blank=True, null=True, default=False)
+    our_work = models.BooleanField(verbose_name="Отобразить в разделе наши работы НЕТ/ДА", blank=True, null=True, default=False)
     width = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Ширина (см)")
     height = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Высота (см)")
     depth = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Глубина (см)")

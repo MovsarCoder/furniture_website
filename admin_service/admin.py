@@ -5,10 +5,10 @@ from .models import Review, Contact, Work, Stats, ConsultationRequest, Category
 
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
-    list_display = ('id', 'category', 'title', 'description', "for_sale", 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
-    list_editable = ('description', "for_sale", 'category', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
-    list_filter = ('for_sale', 'work_type', 'category', 'status', 'country', 'date', 'created_at', 'language',)
-    search_fields = ('title', 'category', 'description', 'for_sale', "date", "created_at", "status", "work_type", "language", 'country')
+    list_display = ('id', 'category', 'title', 'description', "our_work", 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
+    list_editable = ('description', "our_work", 'category', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
+    list_filter = ('our_work', 'work_type', 'category', 'status', 'country', 'date', 'created_at', 'language',)
+    search_fields = ('title', 'category', 'description', 'our_work', "date", "created_at", "status", "work_type", "language", 'country')
     date_hierarchy = 'created_at'
 
 
