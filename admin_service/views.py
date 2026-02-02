@@ -41,7 +41,6 @@ class ConsultationRequestsViewSet(viewsets.ModelViewSet):
 @require_http_methods(["GET", "POST"])
 def consultation_request(request):
     consultation = ConsultationRequest.objects.all()
-    """Обработка заявок на консультацию"""
     if request.method == 'GET':
         total_count = consultation.count()
         new_count = consultation.filter(status='new').count()

@@ -62,6 +62,7 @@ class Work(models.Model):
     work_type = models.CharField(max_length=20, choices=WORK_TYPES, verbose_name="Тип работы", default="custom")
     status = models.CharField(max_length=20, choices=STATUSES, verbose_name="Статус", default="in_progress")
     material = models.CharField(max_length=100, blank=True, verbose_name="Материал")
+    for_sale = models.BooleanField(verbose_name="для продажи ДА/НЕТ", blank=True, null=True, default=False)
     width = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Ширина (см)")
     height = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Высота (см)")
     depth = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Глубина (см)")
@@ -142,8 +143,6 @@ class Contact(models.Model):
     instagram = models.URLField(blank=True, null=True, verbose_name="Страница филлиала в Instagram", help_text='https://www.instagram.com/Nickname"', default='https://www.instagram.com/')
     country = models.CharField(max_length=15, choices=country, default='am', verbose_name="Страна филлиала")
     language = models.CharField(max_length=5, choices=languages, default="en", verbose_name="Основной язык филлиала")
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name="Широта")
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name="Долгота")
 
     class Meta:
         verbose_name = "Контакты"

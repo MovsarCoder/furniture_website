@@ -5,7 +5,7 @@ from admin_service.models import *
 
 
 def index(request):
-    works = Work.objects.order_by("?")[:3]
+    works = Work.objects.filter(for_sale=True).order_by("?")[:3]
     reviews = Review.objects.all()
     contacts = Contact.objects.all()
     stats = Stats.objects.first()
@@ -27,9 +27,15 @@ def index(request):
 def all_works(request):
     works = Work.objects.all()
     contacts = Contact.objects.all()
+    host_name = request.get_host()
+    #
+    # if works:
+    #     works = works.filter(for_sale=True)
+
     return render(request, "works/works.html", context={
         "works": works,
-        "contacts": contacts
+        "contacts": contacts,
+        "host_name": host_name,
     })
 
 
@@ -43,3 +49,22 @@ def work_detail(request, pk):
 def custom_page_not_found(request, exception=None):
     """Кастомная 404 страница в едином стиле сайта."""
     return render(request, "base/404.html", status=404)
+
+
+def catalog_view(request):
+    section = request.GET.get('section')
+    category = request.GET.get('category')
+
+    works = Work.objects.all()
+    contacts = Contact.objects.all()
+
+    if category:
+        works = works.filter(category__title=category, for_sale=False)
+
+        # Переведем section и category прежде чем отправить их в .html
+    return render(request, 'mobel/view_mobel.html', {
+        'section': section,
+        'category': category,
+        "contacts": contacts,
+        "works": works,
+    })

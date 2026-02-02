@@ -43,6 +43,12 @@
                         <span>{{ work.material }}</span>
                     </div>
                     {% endif %}
+                    {% if work.material %}
+                    <div class="work-badge material">
+                        <span class="badge-icon">🪵</span>
+                        <span>{{ work.material }}</span>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -54,23 +60,24 @@
                         <span class="meta-item">📅 {{ work.date|date:"d.m.Y" }}</span>
                         {% if work.country %}<span class="meta-item">🌍 {{ work.get_country_display }}</span>{% endif %}
                         <span class="meta-item">🌐 {{ work.get_language_display }}</span>
+                        {% if work.category %} <span class="meta-item">🏷️ {{ work.category }}</span>{% endif %}
                     </div>
                 </div>
 
                 <!-- Price Block -->
                 <div class="price-block">
                     {% if work.price %}
-                        <div class="price-main">
-                            <span class="price-currency">💰</span>
-                            <span class="price-value">{{ work.price }}</span>
-                            <span class="price-unit">{{ work.currency|upper }}</span>
-                        </div>
-                        <div class="price-note">{% trans 'Final cost is calculated individually' %}</div>
+                    <div class="price-main">
+                        <span class="price-currency">💰</span>
+                        <span class="price-value">{{ work.price }}</span>
+                        <span class="price-unit">{{ work.currency|upper }}</span>
+                    </div>
+                    <div class="price-note">{% trans 'Final cost is calculated individually' %}</div>
                     {% else %}
-                        <div class="price-main">
-                            <span class="price-value request">{% trans 'By request' %}</span>
-                        </div>
-                        <div class="price-note">{% trans 'The final cost is calculated individually after consultation' %}</div>
+                    <div class="price-main">
+                        <span class="price-value request">{% trans 'By request' %}</span>
+                    </div>
+                    <div class="price-note">{% trans 'The final cost is calculated individually after consultation' %}</div>
                     {% endif %}
                 </div>
 

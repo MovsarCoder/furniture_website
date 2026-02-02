@@ -1,11 +1,13 @@
-{% extends 'base/base.html' %}
+{% extends "base/base.html" %}
 {% load i18n %}
+{% load static %}
 
-{% block title %}{% trans 'Our Works' %}{% endblock %}
+{% block title %}
+{{ section }} → {{ category }} - B'Mass
+{% endblock %}
 
 {% block content %}
 
-<h1>{{ host_name }}</h1>
 
 <section class="section">
     <div class="container">
@@ -29,6 +31,11 @@
                 <button class="filter-tab active" data-filter="all">
                     <span class="tab-icon">🏠</span>
                     <span>{% trans 'All Works' %}</span>
+                </button>
+
+                <button class="filter-tab active" data-filter="all">
+                    <span class="tab-icon">🏠</span>
+                    <span>{{ section }} | {{ category }}</span>
                 </button>
             </div>
         </div>
@@ -162,4 +169,7 @@
     </div>
 </section>
 
+
 {% endblock %}
+
+

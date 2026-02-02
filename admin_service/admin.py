@@ -5,10 +5,10 @@ from .models import Review, Contact, Work, Stats, ConsultationRequest, Category
 
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
-    list_display = ('id', 'title', 'description', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
-    list_editable = ('description', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
-    list_filter = ('work_type', 'status', 'country', 'date', 'created_at', 'language',)
-    search_fields = ('title', 'description', "date", "created_at", "status", "work_type", "language", 'country')
+    list_display = ('id', 'category', 'title', 'description', "for_sale", 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
+    list_editable = ('description', "for_sale", 'category', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
+    list_filter = ('for_sale', 'work_type', 'category', 'status', 'country', 'date', 'created_at', 'language',)
+    search_fields = ('title', 'category', 'description', 'for_sale', "date", "created_at", "status", "work_type", "language", 'country')
     date_hierarchy = 'created_at'
 
 
@@ -29,8 +29,8 @@ class ReviewAdmin(ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(ModelAdmin):
-    list_display = ('id', 'branch_name', 'phone', 'email', 'address', 'latitude', 'longitude', "start_time", "end_time", 'country', 'language')
-    list_editable = ("phone", "email", "address", 'latitude', 'longitude', "start_time", "end_time", "country", "language")
+    list_display = ('id', 'branch_name', 'phone', 'email', 'address', "start_time", "end_time", 'country', 'language')
+    list_editable = ("phone", "email", "address", "start_time", "end_time", "country", "language")
     list_filter = ('country', 'language', "start_time", "end_time")
     search_fields = ('branch_name', 'address')
 
@@ -59,6 +59,7 @@ class ConsultationRequestAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+
 
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):

@@ -37,37 +37,38 @@
                 <div class="mega-dropdown">
                     <div class="mega-column">
                         <div class="mega-title">{% trans "Storage" %}</div>
-                        <a href="#">{% trans "Shelf" %}</a>
-                        <a href="#">{% trans "Sideboard" %}</a>
-                        <a href="#">{% trans "Chest of Drawers" %}</a>
-                        <a href="#">{% trans "Wardrobe" %}</a>
-                        <a href="#">{% trans "Coat Rack" %}</a>
-                        <a href="#">{% trans "Console Table" %}</a>
-                        <a href="#">{% trans "Media Furniture" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Shelf">{% trans "Shelf" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Sideboard">{% trans "Sideboard" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Chest of Drawers">{% trans "Chest of Drawers" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Wardrobe">{% trans "Wardrobe" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Coat Rack">{% trans "Coat Rack" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Console Table">{% trans "Console Table" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Storage&category=Media Furniture">{% trans "Media Furniture" %}</a>
                     </div>
 
                     <div class="mega-column">
                         <div class="mega-title">{% trans "Sofa" %}</div>
-                        <a href="#">{% trans "Sofa" %}</a>
-                        <a href="#">{% trans "Sofa Bed" %}</a>
-                        <a href="#">{% trans "Daybed" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sofa&category=Sofa">{% trans "Sofa" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sofa&category=Sofa Bed">{% trans "Sofa Bed" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sofa&category=Daybed">{% trans "Daybed" %}</a>
                     </div>
 
                     <div class="mega-column">
                         <div class="mega-title">{% trans "Sleeping" %}</div>
-                        <a href="#">{% trans "Bed" %}</a>
-                        <a href="#">{% trans "Bunk Bed" %}</a>
-                        <a href="#">{% trans "Nightstand" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Bed">{% trans "Bed" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Bunk Bed">{% trans "Bunk Bed" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Nightstand">{% trans "Nightstand" %}</a>
                     </div>
 
                     <div class="mega-column">
                         <div class="mega-title">{% trans "Kitchen" %}</div>
-                        <a href="#">{% trans "Classic / Traditional" %}</a>
-                        <a href="#">{% trans "Modern / High-Tech" %}</a>
-                        <a href="#">{% trans "Scandinavian" %}</a>
-                        <a href="#">{% trans "Loft / Industrial" %}</a>
-                        <a href="#">{% trans "Provence" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Classic / Traditional">{% trans "Classic / Traditional" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Modern / High-Tech">{% trans "Modern / High-Tech" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Scandinavian">{% trans "Scandinavian" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Loft / Industrial">{% trans "Loft / Industrial" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Provence">{% trans "Provence" %}</a>
                     </div>
+
                 </div>
             </div>
 
