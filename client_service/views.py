@@ -27,7 +27,7 @@ def index(request):
 def all_works(request):
     works = Work.objects.all()
     contacts = Contact.objects.all()
-    host_name = request.get_host()
+    host_name = request.get_host().removeprefix("bmass.")
     #
     # if works:
     #     works = works.filter(for_sale=True)
