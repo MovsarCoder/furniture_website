@@ -5,7 +5,8 @@ from admin_service.models import *
 
 
 def index(request):
-    works = Work.objects.filter(our_work=True).order_by("?")[:3]
+    host_name = request.get_host().removeprefix("bmass.")
+    works = Work.objects.filter(our_work=True, country=host_name).order_by("?")[:3]
     reviews = Review.objects.all()
     contacts = Contact.objects.all()
     stats = Stats.objects.first()
@@ -30,7 +31,7 @@ def all_works(request):
     host_name = request.get_host().removeprefix("bmass.")
 
     if works:
-        works = works.filter(our_work=True)
+        works = works.filter(our_work=True, country=host_name)
 
     return render(request, "works/works.html", context={
         "works": works,
@@ -52,14 +53,16 @@ def custom_page_not_found(request, exception=None):
 
 
 def catalog_view(request):
+    host_name = request.get_host().removeprefix("bmass.")
     section = request.GET.get('section')
     category = request.GET.get('category')
+
 
     works = Work.objects.all()
     contacts = Contact.objects.all()
 
     if category:
-        works = works.filter(category__title=category, our_work=False)
+        works = works.filter(category__title=category, our_work=False, country=host_name)
 
         # Переведем section и category прежде чем отправить их в .html
     return render(request, 'mobel/view_mobel.html', {
