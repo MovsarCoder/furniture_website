@@ -166,6 +166,9 @@ msgstr "Möbelkatalog"
 msgid "Main navigation"
 msgstr "Hauptnavigation"
 
+msgid "Toggle navigation"
+msgstr "Navigation umschalten"
+
 #: client_service/templates/base/base.html:33
 #: client_service/templates/base/base.html:36
 msgid "Furniture"

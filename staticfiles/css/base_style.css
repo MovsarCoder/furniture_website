@@ -2773,6 +2773,32 @@ img {
   justify-content: center;
 }
 
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.nav-toggle-bar {
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+}
+
 .nav a {
   color: var(--muted);
   font-weight: 600;
@@ -3075,6 +3101,59 @@ img {
 @media (max-width: 768px) {
   .nav {
     display: none;
+  }
+
+  .nav.open {
+    display: flex;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 16px 20px 24px;
+    background: #ffffff;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+    z-index: 999;
+  }
+
+  .nav.open a {
+    padding: 12px 16px;
+    border-radius: 10px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-item > a {
+    width: 100%;
+  }
+
+  .nav.open .mega-dropdown {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 8px 0 0;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .nav.open .mega-column {
+    min-width: 140px;
+    padding-right: 0;
   }
 
   .nav-right {
