@@ -5964,14 +5964,13 @@ img {
 .mega-dropdown {
     position: absolute;
     top: 100%;
-    left: -400px; /* привязка к левому краю nav-item */
-    transform: translateX(50px) translateY(12px); /* сдвиг вправо на 50px */
-    width: 1380px;
-    max-width: 95vw; /* не выходит за экран */
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    width: min(980px, 92vw);
     background: #ffffff;
-    padding: 32px 40px;
+    padding: 24px 28px;
     display: flex;
-    gap: 64px;
+    gap: 32px;
     border-radius: 16px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
     z-index: 1000;
@@ -5988,17 +5987,17 @@ img {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateX(50px) translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
 /* === Колонки === */
 .mega-column {
-    min-width: 150px;
+    min-width: 140px;
     display: flex;
     flex-direction: column;
     position: relative; /* для псевдоэлемента вертикальной линии */
     align-self: stretch; /* растягиваем колонку на всю высоту */
-    padding-right: 20px; /* чтобы текст не прилипал к линии */
+    padding-right: 16px; /* чтобы текст не прилипал к линии */
 }
 
 /* Вертикальная разделительная линия между колонками */
@@ -6014,9 +6013,9 @@ img {
 
 /* === Заголовки === */
 .mega-title {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     color: #111;
     cursor: default;
     letter-spacing: 0.3px;
@@ -6025,35 +6024,39 @@ img {
 /* === Ссылки === */
 .mega-column a {
     position: relative;
-    padding: 15px 12px;
-    margin-left: -12px;
+    padding: 9px 10px;
+    margin-left: 0;
     border-radius: 8px;
-    text-decoration: none;
-    font-size: 12.5px;
-    color: #444;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    font-size: 13px;
+    color: #4a4a4a;
     transition: all 0.25s ease;
 }
 
 /* Hover стиль */
 .mega-column a:hover {
-    background: linear-gradient(90deg, #f5f7fa, #eef1f5);
-    color: #000;
-    padding-left: 18px;
+    background: #f4f6f8;
+    color: #111;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
 }
 
-/* Маленькая точка слева при hover */
-.mega-column a::before {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 50%;
-    width: 4px;
-    height: 4px;
-    background: #999;
-    border-radius: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    transition: 0.25s;
+.mega-column a:visited,
+.mega-column a:active,
+.mega-column a:focus {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+}
+
+.mega-column a:hover::before,
+.mega-column a:focus-visible::before {
+    opacity: 1;
+}
+
+.mega-column a:focus-visible {
+    outline: 2px solid rgba(0,0,0,0.2);
+    outline-offset: 2px;
 }
 
 
