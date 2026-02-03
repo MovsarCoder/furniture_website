@@ -455,6 +455,155 @@
   observer.observe(reviewsTrack);
 })();
 
+// Photo carousel for homepage
+(function(){
+  const carousel = document.querySelector('[data-carousel="home"]');
+  if(!carousel) return;
+
+  const track = carousel.querySelector('.carousel-track');
+  const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+  const prevBtn = carousel.querySelector('[data-carousel-prev]');
+  const nextBtn = carousel.querySelector('[data-carousel-next]');
+  const dotsContainer = carousel.querySelector('[data-carousel-dots]');
+
+  if(!track || slides.length === 0) return;
+
+  let index = 0;
+  let autoplayInterval = null;
+  let isHovered = false;
+  let isDragging = false;
+  let startX = 0;
+  let currentX = 0;
+  let startTranslate = 0;
+
+  function createDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  function updateDots() {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  function update() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    updateDots();
+  }
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    update();
+    resetAutoplay();
+  }
+
+  function next() {
+    goTo(index + 1);
+  }
+
+  function prev() {
+    goTo(index - 1);
+  }
+
+  function startAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+    if (slides.length <= 1) return;
+    autoplayInterval = setInterval(() => {
+      if (!isHovered && !isDragging) next();
+    }, 4500);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+  }
+
+  function resetAutoplay() {
+    stopAutoplay();
+    setTimeout(() => {
+      if (!isHovered) startAutoplay();
+    }, 120);
+  }
+
+  function handleStart(e) {
+    isDragging = true;
+    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    currentX = startX;
+    startTranslate = -index * track.offsetWidth;
+    track.style.transition = 'none';
+    stopAutoplay();
+  }
+
+  function handleMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const diff = currentX - startX;
+    const translate = startTranslate + diff;
+    track.style.transform = `translateX(${translate}px)`;
+  }
+
+  function handleEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = currentX - startX;
+    const threshold = Math.min(120, track.offsetWidth * 0.15);
+    track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+    if (Math.abs(diff) > threshold) {
+      diff < 0 ? next() : prev();
+    } else {
+      update();
+    }
+    startAutoplay();
+  }
+
+  prevBtn?.addEventListener('click', () => prev());
+  nextBtn?.addEventListener('click', () => next());
+
+  carousel.addEventListener('mouseenter', () => {
+    isHovered = true;
+    stopAutoplay();
+  });
+
+  carousel.addEventListener('mouseleave', () => {
+    isHovered = false;
+    resetAutoplay();
+  });
+
+  track.addEventListener('touchstart', handleStart, { passive: false });
+  track.addEventListener('touchmove', handleMove, { passive: false });
+  track.addEventListener('touchend', handleEnd);
+  track.addEventListener('mousedown', handleStart);
+  document.addEventListener('mousemove', handleMove);
+  document.addEventListener('mouseup', handleEnd);
+  track.addEventListener('contextmenu', e => e.preventDefault());
+
+  const gettext = window.gettext || function(key) { return key; };
+  prevBtn?.setAttribute('aria-label', gettext('Previous photo'));
+  nextBtn?.setAttribute('aria-label', gettext('Next photo'));
+  track.setAttribute('role', 'region');
+  track.setAttribute('aria-label', gettext('Photo carousel'));
+
+  createDots();
+  update();
+  startAutoplay();
+})();
+
 // Mobile burger menu toggle with a11y
 (function(){
   const toggle = document.querySelector('.nav-toggle');

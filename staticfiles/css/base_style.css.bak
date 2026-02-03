@@ -1050,35 +1050,104 @@
   pointer-events: none;
 }
 
+.floating-element {
+  position: absolute;
+  animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+}
 
+.floating-element:hover {
+  animation-duration: 2s;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+}
 
-
-
-
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
 
 /* Улучшенные анимации для плавающих элементов */
+.floating-element {
+  position: absolute;
+  animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+}
 
-
-
+.floating-element:hover {
+  animation-duration: 2s;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+}
 
 /* Стили для SVG иконок */
+.furniture-icon {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+  animation: icon-rotate 8s linear infinite;
+}
 
+@keyframes icon-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
+.chair-icon {
+  color: #343a40; /* Темно-серый цвет для стула */
+  text-shadow: 0 0 20px rgba(52, 58, 64, 0.3);
+  animation-delay: 0s;
+}
 
+.bed-icon {
+  color: #495057; /* Темно-серый цвет для кровати */
+  text-shadow: 0 0 20px rgba(73, 80, 87, 0.3);
+  animation-delay: 1s;
+}
 
+.cabinet-icon {
+  color: #6c757d; /* Серый цвет для шкафа */
+  text-shadow: 0 0 20px rgba(108, 117, 125, 0.3);
+  animation-delay: 2s;
+}
 
+.floating-element:hover .furniture-icon {
+  transform: scale(1.3) rotate(15deg);
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2)) brightness(0.9);
+}
 
+.element-1 {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+}
 
+.element-2 {
+  top: 50%;
+  right: 20%;
+  animation-delay: 1s;
+}
 
-
-
-
-
-
-
-
-
-
+.element-3 {
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 2s;
+}
 
 /* Process Timeline */
 .delivery-hero {
@@ -1500,7 +1569,12 @@
 }
 
 /* Hero Visual */
-
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .hero-card {
   width: 400px;
@@ -1578,7 +1652,11 @@
   opacity: 0.3;
 }
 
-
+.floating-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 
 /* Добавим декоративные элементы */
 .hero-card::after {
@@ -1636,56 +1714,186 @@
 }
 
 
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #000;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #000, 0 0 20px var(--accent);
+  animation: sparkle-animation 3s infinite;
+}
 
+.sparkle-1 {
+  top: 15%;
+  left: 25%;
+  animation-delay: 0s;
+}
 
+.sparkle-2 {
+  top: 70%;
+  left: 80%;
+  animation-delay: 1s;
+}
 
+.sparkle-3 {
+  top: 40%;
+  left: 70%;
+  animation-delay: 2s;
+}
 
+@keyframes sparkle-animation {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translateY(-20px);
+  }
+}
 
+.floating-emoji {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.8;
+  animation: float-emoji 8s infinite ease-in-out;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.5));
+}
 
+.emoji-1 {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
 
+.emoji-2 {
+  top: 60%;
+  left: 85%;
+  animation-delay: 2s;
+}
 
+.emoji-3 {
+  top: 80%;
+  left: 25%;
+  animation-delay: 4s;
+}
 
+.emoji-4 {
+  top: 30%;
+  left: 80%;
+  animation-delay: 6s;
+}
 
+@keyframes float-emoji {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(-10deg);
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.1) 100%);
+  pointer-events: none;
+}
 
 /* Enhanced floating elements */
+.floating-element {
+  position: absolute;
+  animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+}
 
+.floating-element:hover {
+  animation-duration: 2s;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+}
 
-
-
-
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
 
 /* Стили для SVG иконок */
+.furniture-icon {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+  animation: icon-rotate 8s linear infinite;
+}
 
+@keyframes icon-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
+.chair-icon {
+  color: #343a40; /* Темно-серый цвет для стула */
+  text-shadow: 0 0 20px rgba(52, 58, 64, 0.3);
+  animation-delay: 0s;
+}
 
+.bed-icon {
+  color: #495057; /* Темно-серый цвет для кровати */
+  text-shadow: 0 0 20px rgba(73, 80, 87, 0.3);
+  animation-delay: 1s;
+}
 
+.cabinet-icon {
+  color: #6c757d; /* Серый цвет для шкафа */
+  text-shadow: 0 0 20px rgba(108, 117, 125, 0.3);
+  animation-delay: 2s;
+}
 
-
-
-
-
-
-
+.floating-element:hover {
+  animation-duration: 2s;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+}
 
 /* Удалены стили для SVG иконок, так как они больше не используются */
+.element-1 {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+}
 
+.element-2 {
+  top: 50%;
+  right: 20%;
+  animation-delay: 1s;
+}
 
-
-
-
+.element-3 {
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 2s;
+}
 
 .stat-card:hover .sparkle {
   animation-duration: 1.5s;
@@ -1816,7 +2024,25 @@
 }
 
 /* Enhanced stat card interaction */
-
+.stat-card {
+  background: linear-gradient(145deg,
+    var(--panel) 0%,
+    var(--panel-2) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
 
 /* Floating particles background */
 .stats-enhanced::before {
@@ -1845,40 +2071,118 @@
 }
 
 /* Pulsing glow effect for numbers */
+.num {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.4s ease;
+  position: relative;
+  letter-spacing: -0.5px;
+}
 
+.stats-footer {
+  margin-top: 48px;
+  position: relative;
+  z-index: 1;
+}
 
-
-
-
+.stats-highlight {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
 
 /* Interactive highlight items */
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 
+.highlight-item:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
 
+.highlight-icon {
+  font-size: 20px;
+  filter: drop-shadow(0 0 10px rgba(52, 58, 64, 0.2));
+}
 
-
-
-
-
+.highlight-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
 
 /* Улучшенная анимация появления карточек */
+.stat-card {
+  animation: slideInUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px);
+}
 
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
 
-
-
-
-
-
-
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* Улучшенная анимация частиц */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #343a40, #6c757d);
+  border-radius: 50%;
+  opacity: 0;
+  animation: enhancedSparkle 4s ease-in-out infinite;
+  box-shadow: 0 0 10px currentColor;
+}
 
-
-
+@keyframes enhancedSparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0px) scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1.2) rotate(180deg);
+  }
+}
 
 /* ===== ADDITIONAL SPARKLE AND SHIMMER EFFECTS ===== */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(300%) rotate(45deg); }
+}
 
-
-
+.shimmer-effect::after {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    transparent 100%);
+  animation: shimmer 2s ease-in-out infinite;
+}
 
 .highlight-item {
   border-radius: var(--radius);
@@ -1955,11 +2259,27 @@
   overflow: hidden;
 }
 
+.highlight-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(52, 58, 64, 0.08) 50%,
+    transparent 100%);
+  transition: left 0.3s ease;
+}
 
+.highlight-item:hover::before {
+  left: 100%;
+}
 
-
-
-
+.highlight-item:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
 
 .highlight-item::before {
   background: linear-gradient(90deg,
@@ -1969,7 +2289,9 @@
   transition: left 0.5s ease;
 }
 
-
+.highlight-item:hover::before {
+  left: 100%;
+}
 
 .highlight-item:hover {
   background: rgba(0, 0, 0, 0.08);
@@ -2471,7 +2793,10 @@
   transform: translateX(4px);
 }
 
-
+.quick-view-btn:hover {
+  background: black;
+  transform: scale(1.05);
+}
 
 .view-btn {
   display: flex;
@@ -3641,9 +3966,20 @@ img {
 }
 
 /* Card Footer */
+.showcase-card .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-
-
+.price-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 .price-label {
   font-size: 12px;
@@ -3668,11 +4004,29 @@ img {
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
+.details-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(52, 58, 64, 0.1);
+  color: var(--brand);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
 
+.details-btn:hover {
+  background: rgba(52, 58, 64, 0.2);
+  transform: translateX(4px);
+}
 
-
-
-
+.btn-arrow {
+  transition: var(--transition);
+}
 
 .details-btn:hover .btn-arrow {
   transform: translateX(4px);
@@ -3694,7 +4048,9 @@ img {
   margin: 0 0 20px 0;
 }
 
-
+.btn-icon {
+  font-size: 16px;
+}
 
 /* No Works State */
 .no-works {
@@ -3777,7 +4133,11 @@ img {
     width: 100%;
   }
 }
-
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
 
 .feature {
   background: linear-gradient(135deg, var(--panel), var(--panel-2));
@@ -4190,7 +4550,12 @@ img {
   text-shadow: 0 0 10px rgba(253, 126, 20, 0.3);
 }
 
-
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
 .reviews-container {
   position: relative;
@@ -5197,13 +5562,22 @@ img {
 }
 
 /* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
+::-webkit-scrollbar-track {
+  background: var(--panel);
+}
 
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-brand);
+  border-radius: 4px;
+}
 
-
-
-
-
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-2);
+}
 
 /* ===== WORKS PAGE & WORK DETAIL STYLES ===== */
 
@@ -5739,7 +6113,12 @@ img {
   line-height: 1.5;
 }
 
-
+.stats-highlight {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
 
 .contact-actions {
   display: flex;
@@ -5924,9 +6303,19 @@ img {
   }
 }
 /* New logo image styles */
+.logo-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: var(--shadow-brand);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-
-
+.logo-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
 
 /* Hero logo styles */
 .hero-logo {
@@ -5964,13 +6353,14 @@ img {
 .mega-dropdown {
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(12px);
-    width: min(980px, 92vw);
+    left: -400px; /* привязка к левому краю nav-item */
+    transform: translateX(50px) translateY(12px); /* сдвиг вправо на 50px */
+    width: 1380px;
+    max-width: 95vw; /* не выходит за экран */
     background: #ffffff;
-    padding: 24px 28px;
+    padding: 32px 40px;
     display: flex;
-    gap: 32px;
+    gap: 64px;
     border-radius: 16px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
     z-index: 1000;
@@ -5987,17 +6377,17 @@ img {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(50px) translateY(0);
 }
 
 /* === Колонки === */
 .mega-column {
-    min-width: 140px;
+    min-width: 150px;
     display: flex;
     flex-direction: column;
     position: relative; /* для псевдоэлемента вертикальной линии */
     align-self: stretch; /* растягиваем колонку на всю высоту */
-    padding-right: 16px; /* чтобы текст не прилипал к линии */
+    padding-right: 20px; /* чтобы текст не прилипал к линии */
 }
 
 /* Вертикальная разделительная линия между колонками */
@@ -6013,9 +6403,9 @@ img {
 
 /* === Заголовки === */
 .mega-title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: #111;
     cursor: default;
     letter-spacing: 0.3px;
@@ -6024,39 +6414,35 @@ img {
 /* === Ссылки === */
 .mega-column a {
     position: relative;
-    padding: 9px 10px;
-    margin-left: 0;
+    padding: 15px 12px;
+    margin-left: -12px;
     border-radius: 8px;
-    text-decoration: none !important;
-    text-decoration-line: none !important;
-    font-size: 13px;
-    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 12.5px;
+    color: #444;
     transition: all 0.25s ease;
 }
 
 /* Hover стиль */
 .mega-column a:hover {
-    background: #f4f6f8;
-    color: #111;
-    text-decoration: none !important;
-    text-decoration-line: none !important;
+    background: linear-gradient(90deg, #f5f7fa, #eef1f5);
+    color: #000;
+    padding-left: 18px;
 }
 
-.mega-column a:visited,
-.mega-column a:active,
-.mega-column a:focus {
-    text-decoration: none !important;
-    text-decoration-line: none !important;
-}
-
-.mega-column a:hover::before,
-.mega-column a:focus-visible::before {
-    opacity: 1;
-}
-
-.mega-column a:focus-visible {
-    outline: 2px solid rgba(0,0,0,0.2);
-    outline-offset: 2px;
+/* Маленькая точка слева при hover */
+.mega-column a::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    background: #999;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: 0.25s;
 }
 
 
