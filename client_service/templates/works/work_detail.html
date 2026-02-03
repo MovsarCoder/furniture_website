@@ -91,9 +91,9 @@
                         {% if work.width and work.height and work.depth %}
                         <div class="spec-item">
                             <div class="spec-label"></div>
-                            <div class="spec-value">{% trans 'Width (cm)' %}  {{ work.width }}</div>
-                            <div class="spec-value">{% trans 'Height (cm)' %} {{ work.height }}</div>
-                            <div class="spec-value">{% trans 'Depth (cm)' %} {{ work.depth }}</div>
+                            <div class="spec-value">{% trans 'Width (cm)' %}|slice:":5" {{ work.width }} (см)</div>
+                            <div class="spec-value">{% trans 'Height (cm)' %} {{ work.height }} (см)</div>
+                            <div class="spec-value">{% trans 'Depth (cm)' %} {{ work.depth }} (см)</div>
                         </div>
                         {% endif %}
                     </div>
