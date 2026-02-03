@@ -6149,18 +6149,27 @@ img {
 }
 
 /* === Mega dropdown === */
+.navbar {
+  --nav-height: 84px;
+}
+
+.navbar.scrolled {
+  --nav-height: 70px;
+}
+
 .mega-dropdown {
-    position: absolute;
-    top: 100%;
-    left: -400px; /* привязка к левому краю nav-item */
-    transform: translateX(50px) translateY(12px); /* сдвиг вправо на 50px */
-    width: 1380px;
-    max-width: 95vw; /* не выходит за экран */
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    transform: translateY(12px);
     background: #ffffff;
     padding: 32px 40px;
     display: flex;
     gap: 64px;
-    border-radius: 16px;
+    border-radius: 0;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
     z-index: 1000;
 
@@ -6176,7 +6185,7 @@ img {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateX(50px) translateY(0);
+    transform: translateY(0);
 }
 
 /* === Колонки === */
