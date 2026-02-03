@@ -90,14 +90,10 @@
                     <div class="specs-grid">
                         {% if work.width and work.height and work.depth %}
                         <div class="spec-item">
-                            <div class="spec-label">{% trans 'Width (cm)' %}</div>
-                            <div class="spec-value">{{ work.width }}</div>
-
-                            <div class="spec-label">{% trans 'Height (cm)' %}</div>
-                            <div class="spec-value">{{ work.height }}</div>
-
-                            <div class="spec-label">{% trans 'Depth (cm)' %}</div>
-                            <div class="spec-value">{{ work.depth }}</div>
+                            <div class="spec-label"></div>
+                            <div class="spec-value">{% trans 'Width (cm)' %}  {{ work.width }}</div>
+                            <div class="spec-value">{% trans 'Height (cm)' %} {{ work.height }}</div>
+                            <div class="spec-value">{% trans 'Depth (cm)' %} {{ work.depth }}</div>
                         </div>
                         {% endif %}
                     </div>
