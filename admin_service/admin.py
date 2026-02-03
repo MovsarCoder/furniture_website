@@ -70,8 +70,9 @@ class CategoryAdmin(ModelAdmin):
 
 
 @admin.register(CarouselPhoto)
-class CarouselPhotoAdmin(admin.ModelAdmin):
+class CarouselPhotoAdmin(ModelAdmin):
     list_display = ("title", "is_active", "order", "created_at")
+    list_editable = ("is_active", "order")
     list_filter = ("is_active",)
     search_fields = ("title", "caption")
     ordering = ("order", "-created_at")
