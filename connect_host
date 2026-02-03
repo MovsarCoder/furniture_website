@@ -20,3 +20,19 @@ django-admin compilemessages
 
 # Перезапустите сервер
 python manage.py runserver
+
+
+
+# Удалить файл БД
+rm db.sqlite3
+
+# Удалить папки migrations (кроме __init__.py)
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc" -delete
+
+# Создать миграции заново
+python manage.py makemigrations
+python manage.py migrate
+
+# Создать суперпользователя
+python manage.py createsuperuser
