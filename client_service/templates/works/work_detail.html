@@ -88,22 +88,16 @@
                 <div class="specifications">
                     <h3>📏 {% trans 'Dimensions' %}</h3>
                     <div class="specs-grid">
-                        {% if work.width %}
+                        {% if work.width and work.height and work.depth %}
                         <div class="spec-item">
-                            <div class="spec-value">{{ work.width }}</div>
                             <div class="spec-label">{% trans 'Width (cm)' %}</div>
-                        </div>
-                        {% endif %}
-                        {% if work.height %}
-                        <div class="spec-item">
-                            <div class="spec-value">{{ work.height }}</div>
+                            <div class="spec-value">{{ work.width }}</div>
+
                             <div class="spec-label">{% trans 'Height (cm)' %}</div>
-                        </div>
-                        {% endif %}
-                        {% if work.depth %}
-                        <div class="spec-item">
-                            <div class="spec-value">{{ work.depth }}</div>
+                            <div class="spec-value">{{ work.height }}</div>
+
                             <div class="spec-label">{% trans 'Depth (cm)' %}</div>
+                            <div class="spec-value">{{ work.depth }}</div>
                         </div>
                         {% endif %}
                     </div>

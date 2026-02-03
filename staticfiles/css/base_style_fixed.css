@@ -1038,7 +1038,6 @@
   align-items: center;
 }
 
-
 .stats-enhanced {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1236,17 +1235,34 @@
   font-weight: 900;
   color: var(--text);
   line-height: 1;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   transition: all 0.4s ease;
   position: relative;
   letter-spacing: -0.5px;
 }
 
 .stat-card:hover .num {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: initial !important;
+
   transform: scale(1.05);
+  background: linear-gradient(135deg,
+    #6c757d 0%,
+    #343a40 30%,
+    #adb5bd 60%,
+    #6c757d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 20px rgba(108, 117, 125, 0.3));
 }
 
 .stat-card:hover .label {
+  color: rgba(33, 37, 41, 0.95);
   transform: translateY(-1px);
 }
 
@@ -1258,6 +1274,10 @@
 .num-suffix {
   font-size: 28px;
   font-weight: 700;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-left: 2px;
 }
 
@@ -1474,7 +1494,6 @@
   gap: 24px;
 }
 
-
 /* ===== СТАТИСТИКА ===== */
 .stats {
   width: 10px;
@@ -1496,7 +1515,6 @@
     opacity: 1;
   }
 }
-
 
 .sparkle {
   position: absolute;
@@ -1863,6 +1881,7 @@
   background: var(--gradient-brand);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   transition: all 0.4s ease;
   position: relative;
   letter-spacing: -0.5px;
@@ -1999,6 +2018,8 @@
 
 /* Glow effect */
 .num {
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   transition: all 0.4s ease;
   position: relative;
 }
@@ -2010,6 +2031,10 @@
   left: 0;
   right: 0;
   bottom: 0;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   filter: blur(8px);
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -2123,7 +2148,6 @@
   50% { transform: translateX(100%); }
   100% { transform: translateX(100%); }
 }
-
 
 /* Enhanced responsive design */
 @media (max-width: 1200px) {
@@ -5692,7 +5716,6 @@ img {
   box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
 }
 
-
 /* Features Grid */
 .work-features {
   margin-bottom: 32px;
@@ -6118,7 +6141,6 @@ img {
     transform: translateY(-8px);
   }
 
-
 /* === Nav item === */
 
 }
@@ -6222,7 +6244,10 @@ img {
     transition: 0.25s;
 }
 
-
-
-
 /* Раздел мебели стили */
+
+.stats .num {
+  color: var(--text-primary);
+  background: none;
+  -webkit-text-fill-color: initial;
+}
