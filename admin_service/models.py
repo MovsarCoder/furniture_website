@@ -223,3 +223,21 @@ class ConsultationRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
+
+
+
+class CarouselPhoto(models.Model):
+    title = models.CharField(max_length=120, verbose_name="Title")
+    caption = models.TextField(blank=True, verbose_name="Caption")
+    image = models.ImageField(upload_to="carousel/", verbose_name="Image")
+    is_active = models.BooleanField(default=True, verbose_name="Active")
+    order = models.PositiveIntegerField(default=0, verbose_name="Order")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["order", "-created_at"]
+        verbose_name = "Carousel photo"
+        verbose_name_plural = "Carousel photos"
+
+    def __str__(self):
+        return self.title

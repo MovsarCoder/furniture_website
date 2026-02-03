@@ -1,11 +1,12 @@
 from unfold.admin import ModelAdmin
 from django.contrib import admin
-from .models import Review, Contact, Work, Stats, ConsultationRequest, Category
+from .models import Review, Contact, Work, Stats, ConsultationRequest, Category, CarouselPhoto
 
 
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
-    list_display = ('id', 'category', 'title', 'description', "our_work", 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth', 'created_at')
+    list_display = ('id', 'category', 'title', 'description', "our_work", 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth',
+                    'created_at')
     list_editable = ('description', "our_work", 'category', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
     list_filter = ('our_work', 'work_type', 'category', 'status', 'country', 'date', 'created_at', 'language',)
     search_fields = ('title', 'category', 'description', 'our_work', "date", "created_at", "status", "work_type", "language", 'country')
@@ -67,3 +68,10 @@ class CategoryAdmin(ModelAdmin):
     list_editable = ('description',)
     list_filter = ('title', 'description')
 
+
+@admin.register(CarouselPhoto)
+class CarouselPhotoAdmin(admin.ModelAdmin):
+    list_display = ("title", "is_active", "order", "created_at")
+    list_filter = ("is_active",)
+    search_fields = ("title", "caption")
+    ordering = ("order", "-created_at")

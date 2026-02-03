@@ -7,6 +7,7 @@ from admin_service.models import *
 def index(request):
     host_name = request.get_host().removeprefix("bmass.")
     works = Work.objects.filter(our_work=True).order_by("?")[:3]
+    carousel_photos = CarouselPhoto.objects.filter(is_active=True)
     reviews = Review.objects.all()
     contacts = Contact.objects.all()
     stats = Stats.objects.first()
@@ -17,6 +18,7 @@ def index(request):
 
     return render(request, "home/home.html", context={
         "works": works,
+        "carousel_photos": carousel_photos,
         "reviews": reviews,
         "contacts": contacts,
         "stats": stats,
