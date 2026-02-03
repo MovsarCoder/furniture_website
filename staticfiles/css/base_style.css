@@ -5328,13 +5328,14 @@ img {
 /* Work Detail Page Layout */
 .work-detail {
   display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
   gap: 40px;
   align-items: start;
   margin-top: 32px;
 }
 
 .work-media {
+  min-width: 0;
   background: var(--gradient-panel);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-lg);
@@ -5393,6 +5394,7 @@ img {
 }
 
 .work-info {
+  min-width: 0;
   background: var(--gradient-panel);
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 32px;
@@ -5409,7 +5411,7 @@ img {
 }
 
 .work-title {
-  font-size: 36px;
+  font-size: clamp(24px, 4vw, 36px);
   font-weight: 800;
   margin: 0 0 16px;
   color: var(--text);
@@ -5441,6 +5443,8 @@ img {
 }
 
 .meta-item {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   padding: 8px 16px;
   background: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -5475,6 +5479,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 12px;
+  flex-wrap: wrap;
   margin-bottom: 12px;
   position: relative;
 }
@@ -5484,14 +5489,14 @@ img {
 }
 
 .price-value {
-  font-size: 42px;
+  font-size: clamp(28px, 6vw, 42px);
   font-weight: 800;
   color: var(--brand);
   text-shadow: 0 0 10px rgba(52, 58, 64, 0.2);
 }
 
 .price-unit {
-  font-size: 24px;
+  font-size: clamp(16px, 4vw, 24px);
   font-weight: 600;
   color: var(--text); /* Made currency black as requested */
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -5584,6 +5589,8 @@ img {
 }
 
 .work-badge {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -5953,22 +5960,29 @@ img {
     gap: 20px;
   }
 
+  .work-media {
+    padding: 20px;
+  }
+
   .work-title {
-    font-size: 28px;
+    font-size: clamp(22px, 6vw, 28px);
   }
 
   .work-info {
-    padding: 24px;
+    padding: 22px;
   }
 
   .work-image {
     height: 300px;
   }
 
-  .specifications {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  .specs-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px;
-    padding: 20px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
   }
 
   .contact-actions {
@@ -5986,7 +6000,7 @@ img {
   }
 
   .work-info {
-    padding: 20px;
+    padding: 18px;
   }
 
   .work-image {
@@ -5998,8 +6012,17 @@ img {
     padding: 12px 16px;
   }
 
-  .specifications {
-    grid-template-columns: 1fr 1fr;
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-item {
+    width: 100%;
+  }
+
+  .work-badge {
+    width: 100%;
+    justify-content: center;
   }
 }
 /* New logo image styles */
