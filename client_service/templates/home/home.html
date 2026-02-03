@@ -8,26 +8,26 @@
 
 {% block content %}
 
-<section id="home" class="section hero-intro full-bleed animate-fade-in">
-    <div class="hero-intro-inner">
-        <div class="hero-text animate-slide-up">
-            <h1 class="hero-title animate-text-reveal">
+<section id="home" class="hero-intro">
+    <div class="">
+        <div class="hero-text">
+            <p class="hero-title" style="margin-top: -30px;">
                 {% trans 'We create furniture' %}
-                <span class="gradient-text glow-text">{% trans 'dreams' %}</span> {% trans 'for your home' %}
-            </h1>
-            <p class="hero-description animate-slide-up" style="animation-delay: 0.3s;">
+                {% trans 'dreams' %}
+                {% trans 'for your home' %}
+            </p>
+            <p class="hero-description" style="animation-delay: 0.3s;">
                 {% trans 'Design and manufacture of unique furniture for your interior. From idea to implementation — 100% quality and attention to detail.' %}
             </p>
-            <div class="hero-actions animate-slide-up" style="animation-delay: 0.6s;">
-                <button class="btn btn-primary hover-lift" onclick="openConsultationModal()">{% trans 'Get consultation' %}</button>
-                <a href="#portfolio" class="btn btn-outline hover-lift">{% trans 'View works' %}</a>
-            </div>
+            <hr>
+            <br>
         </div>
     </div>
 </section>
 
+
 {% if carousel_photos %}
-<section id="home-carousel" class="section photo-carousel full-bleed animate-fade-in">
+<section id="home-carousel" class="section photo-carousel full-bleed animate-fade-in" style="margin-top: -30px;">
     <div class="carousel-shell" data-carousel="home">
         <div class="carousel-viewport">
             <div class="carousel-track">
@@ -46,18 +46,14 @@
         </div>
 
         <div class="carousel-controls">
-            <button class="carousel-arrow prev" type="button" data-carousel-prev aria-label="{% trans 'Previous photo' %}">
-                ←
-            </button>
             <div class="carousel-dots" data-carousel-dots></div>
-            <button class="carousel-arrow next" type="button" data-carousel-next aria-label="{% trans 'Next photo' %}">
-                →
-            </button>
         </div>
     </div>
 </section>
 {% endif %}
 
+<br>
+<hr>
 
 <section id="portfolio" class="section container animate-fade-in">
     <div class="portfolio-hero">
