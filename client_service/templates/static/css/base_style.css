@@ -5627,6 +5627,42 @@ img {
   box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
 }
 
+/* Work detail badge styling (soft furniture look) */
+.work-detail .work-badge {
+  background: #ffffff;
+  color: #6f655b;
+  border: 1px solid #e7e0d7;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.work-detail .work-badge:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.work-detail .work-badge.material {
+  background: #f8f4f0;
+  border-color: #e7ddd2;
+  color: #6b5c4f;
+  box-shadow: none;
+}
+
+.work-detail .work-badge.material:hover {
+  box-shadow: none;
+}
+
+.work-detail .work-badge.status {
+  background: #f4f6f0;
+  border-color: #dfe7d6;
+  color: #5d6b55;
+  box-shadow: none;
+}
+
+.work-detail .work-badge.status:hover {
+  box-shadow: none;
+}
+
 
 /* Features Grid */
 .work-features {
