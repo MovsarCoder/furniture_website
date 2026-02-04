@@ -6103,7 +6103,9 @@ img {
 }
 
 /* Показываем dropdown */
-.nav-item:hover .mega-dropdown {
+.nav-item:hover .mega-dropdown,
+.nav-item:focus-within .mega-dropdown,
+.mega-dropdown:hover {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
