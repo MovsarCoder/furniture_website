@@ -5568,7 +5568,7 @@ img {
 }
 
 .spec-value {
-  font-size: 19px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--brand);
   margin-bottom: 8px;
@@ -6060,6 +6060,14 @@ img {
 }
 .nav-item {
     position: relative;
+}
+.nav-item::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: 100%;
+    height: 16px;
 }
 
 /* === Mega dropdown === */
