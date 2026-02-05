@@ -2,7 +2,7 @@
 :root {
   /* Цветовая палитра - БЕЛО-ЧЕРНАЯ */
   --bg: #ffffff;                   /* БЕЛЫЙ фон */
-  --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #fafafa 100%);
+  --bg-gradient: linear-gradient(135deg, #f3f6ff 0%, #f5f5f5 50%, #fafafa 100%);
   --panel: #f8f9fa;                /* Светло-серые панели */
   --panel-2: #e9ecef;              /* Чуть темнее панели */
   --panel-hover: #dee2e6;          /* Цвет при наведении */
