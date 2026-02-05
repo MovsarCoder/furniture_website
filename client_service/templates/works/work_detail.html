@@ -5,183 +5,903 @@
 
 {% block content %}
 
-<section class="section">
+<section class="product-detail-section">
     <div class="container">
         <!-- Breadcrumb Navigation -->
-        <nav class="breadcrumb" aria-label="breadcrumb">
-            <a href="{% url 'client_service:index' %}" class="breadcrumb-link">🏠 {% trans 'Home' %}</a>
-            <span class="breadcrumb-separator">›</span>
-            <a href="{% url 'client_service:portfolio' %}" class="breadcrumb-link">💼 {% trans 'Portfolio' %}</a>
-            <span class="breadcrumb-separator">›</span>
+        <nav class="breadcrumb-nav" aria-label="breadcrumb">
+            <a href="{% url 'client_service:index' %}" class="breadcrumb-link">{% trans 'Home' %}</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="{% url 'client_service:portfolio' %}" class="breadcrumb-link">{% trans 'Portfolio' %}</a>
+            <span class="breadcrumb-separator">/</span>
             <span class="breadcrumb-current">{{ work.title }}</span>
         </nav>
 
-        <div class="work-detail">
-            <div class="work-media">
-                <div class="image-container">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
-                    <div class="image-overlay">
-                        <button class="image-zoom-btn" aria-label="{% trans 'Zoom image' %}">🔍</button>
-                    </div>
-                </div>
-
-                <!-- Work Badges -->
-                <div class="work-badges">
-                    <div class="work-badge status">
-                        <span class="badge-icon">📊</span>
-                        <span>{{ work.get_status_display }}</span>
-                    </div>
-                    {% if work.work_type %}
-                    <div class="work-badge">
-                        <span class="badge-icon">🏷️</span>
-                        <span>{{ work.get_work_type_display }}</span>
-                    </div>
-                    {% endif %}
-                    {% if work.material %}
-                    <div class="work-badge material">
-                        <span class="badge-icon">🪵</span>
-                        <span>{{ work.material }}</span>
-                    </div>
+        <div class="product-detail-layout">
+            <!-- Left: Product Image -->
+            <div class="product-image-section">
+                <div class="product-image-wrapper">
+                    {% if work.image %}
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="product-main-image" loading="lazy">
+                    <button class="image-zoom-btn" aria-label="{% trans 'Zoom image' %}" onclick="openImageModal('{{ work.image.url }}')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
                     {% endif %}
                 </div>
             </div>
 
-            <div class="work-info">
-                <!-- Header with Title and Price -->
-                <div class="work-header">
-                    <h1 class="work-title">{{ work.title }}</h1>
-                    <div class="work-meta-header">
-                        <span class="meta-item">📅 {{ work.date|date:"d.m.Y" }}</span>
-                        {% if work.country %}<span class="meta-item">🌍 {{ work.get_country_display }}</span>{% endif %}
-                        <span class="meta-item">🌐 {{ work.get_language_display }}</span>
-                        {% if work.category %} <span class="meta-item">🏷️ {{ work.category }}</span>{% endif %}
+            <!-- Right: Product Information -->
+            <div class="product-info-section">
+                <!-- Product Header -->
+                <div class="product-header">
+                    <div class="product-category-badge">
+                        {% if work.category %}{{ work.category.title }}{% endif %}
                     </div>
-                </div>
-
-                <!-- Price Block -->
-                <div class="price-block">
-                    {% if work.price %}
-                    <div class="price-main">
-                        <span class="price-currency">💰</span>
-                        <span class="price-value">{{ work.price }}</span>
-                        <span class="price-unit">{{ work.currency|upper }}</span>
-                    </div>
-                    <div class="price-note">{% trans 'Final cost is calculated individually' %}</div>
-                    {% else %}
-                    <div class="price-main">
-                        <span class="price-value request">{% trans 'By request' %}</span>
-                    </div>
-                    <div class="price-note">{% trans 'The final cost is calculated individually after consultation' %}</div>
+                    <h1 class="product-title">{{ work.title }}</h1>
+                    {% if work.description %}
+                    <p class="product-subtitle">{{ work.description|truncatewords:30 }}</p>
                     {% endif %}
                 </div>
 
-                <!-- Description -->
-                {% if work.description %}
-                <div class="work-description">
-                    <h3>📝 {% trans 'Description' %}</h3>
-                    <p>{{ work.description }}</p>
-                </div>
-                {% endif %}
-
-                <!-- Specifications -->
-                {% if work.width or work.height or work.depth %}
-                <div class="specifications">
-                    <h3>📏 {% trans 'Dimensions' %}</h3>
-                    <div class="specs-grid">
-                        {% if work.width and work.height and work.depth %}
-                        <div class="spec-item">
-                            <div class="spec-label"></div>
-                            <div class="spec-value">{% trans 'Width (cm)'|slice:":5" %} {{ work.width|stringformat:"d" }} (см)</div>
-                            <div class="spec-value">{% trans 'Height (cm)'|slice:":5" %} {{ work.height|stringformat:"d" }} (см)</div>
-                            <div class="spec-value">{% trans 'Depth (cm)'|slice:":5" %} {{ work.depth|stringformat:"d" }} (см)</div>
-                        </div>
-                        {% endif %}
+                <!-- Price Section -->
+                <div class="product-price-section">
+                    {% if work.price %}
+                    <div class="price-display">
+                        <span class="price-value">{{ work.price|floatformat:0 }}</span>
+                        <span class="price-currency">{{ work.get_currency_display }}</span>
                     </div>
-                </div>
-                {% endif %}
-
-                <!-- Features Grid -->
-                <div class="work-features">
-                    <h3>✨ {% trans 'Features' %}</h3>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🚚</div>
-                            <div class="feature-content">
-                                <div class="feature-title">{% trans 'Fast delivery' %}</div>
-                                <div class="feature-desc">{% trans 'From 2 to 4 weeks throughout the country' %}</div>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🛡️</div>
-                            <div class="feature-content">
-                                <div class="feature-title">{% trans 'Quality guarantee' %}</div>
-                                <div class="feature-desc">{% trans 'Official 2-year warranty' %}</div>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">💳</div>
-                            <div class="feature-content">
-                                <div class="feature-title">{% trans 'Convenient payment' %}</div>
-                                <div class="feature-desc">{% trans 'Cash or card upon receipt' %}</div>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🤝</div>
-                            <div class="feature-content">
-                                <div class="feature-title">{% trans 'Professional assembly' %}</div>
-                                <div class="feature-desc">{% trans 'Experienced masters with years of experience' %}</div>
-                            </div>
-                        </div>
+                    <p class="price-note">{% trans 'Final cost is calculated individually' %}</p>
+                    {% else %}
+                    <div class="price-display">
+                        <span class="price-value request">{% trans 'By request' %}</span>
                     </div>
+                    <p class="price-note">{% trans 'The final cost is calculated individually after consultation' %}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Quick Info Badges -->
+                <div class="product-badges">
+                    {% if work.material %}
+                    <div class="info-badge">
+                        <span class="badge-icon">🪵</span>
+                        <span class="badge-text">{{ work.material }}</span>
+                    </div>
+                    {% endif %}
+                    {% if work.work_type %}
+                    <div class="info-badge">
+                        <span class="badge-icon">🏷️</span>
+                        <span class="badge-text">{{ work.get_work_type_display }}</span>
+                    </div>
+                    {% endif %}
+                    {% if work.status %}
+                    <div class="info-badge status-badge">
+                        <span class="badge-icon">✓</span>
+                        <span class="badge-text">{{ work.get_status_display }}</span>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <button class="btn-primary" onclick="openConsultationModal()">
-                        <span>📩 {% trans 'Order consultation' %}</span>
+                <div class="product-actions">
+                    <button class="btn-primary-large" onclick="openConsultationModal()">
+                        <span class="btn-icon">📩</span>
+                        <span>{% trans 'Order consultation' %}</span>
                     </button>
-                    <a href="{% url 'client_service:portfolio' %}" class="btn-secondary">
-                        <span>← {% trans 'Back to all works' %}</span>
+                    <a href="{% url 'client_service:portfolio' %}" class="btn-secondary-large">
+                        <span>← {% trans 'Back to catalog' %}</span>
                     </a>
                 </div>
 
-                <!-- Timeline/Process -->
-                <div class="work-timeline">
-                    <h3>📈 {% trans 'Creation process' %}</h3>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-icon">📝</div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">{% trans 'Consultation' %}</div>
-                                <div class="timeline-desc">{% trans 'We discuss your wishes and take measurements' %}</div>
+                <!-- Product Details Button -->
+                <button class="product-details-toggle" onclick="toggleProductDetails()">
+                    <span>{% trans 'Product Details' %}</span>
+                    <svg class="toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 7.5l5 5 5-5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Product Details Modal/Sidebar -->
+        <div class="product-details-modal" id="productDetailsModal">
+            <div class="modal-backdrop" onclick="toggleProductDetails()"></div>
+            <div class="modal-content-wrapper">
+                <div class="modal-header">
+                    <h2 class="modal-title">{% trans 'Product Details' %}</h2>
+                    <button class="modal-close-btn" onclick="toggleProductDetails()" aria-label="{% trans 'Close' %}">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- General Information -->
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'General Information' %}</h3>
+                        <ul class="details-list">
+                            {% if work.width and work.height and work.depth %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Dimensions' %}:</span>
+                                <span class="detail-value">{{ work.width|floatformat:0 }} × {{ work.height|floatformat:0 }} × {{ work.depth|floatformat:0 }} cm</span>
+                            </li>
+                            {% endif %}
+                            {% if work.category %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Category' %}:</span>
+                                <span class="detail-value">{{ work.category.title }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.material %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Material' %}:</span>
+                                <span class="detail-value">{{ work.material }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.work_type %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Type' %}:</span>
+                                <span class="detail-value">{{ work.get_work_type_display }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.date %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Production Date' %}:</span>
+                                <span class="detail-value">{{ work.date|date:"d.m.Y" }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.country %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Country' %}:</span>
+                                <span class="detail-value">{{ work.get_country_display }}</span>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <!-- Product Advantages -->
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'Product Advantages' %}</h3>
+                        <ul class="advantages-list">
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'High quality materials' %}</span>
+                            </li>
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'Individual design' %}</span>
+                            </li>
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'Professional assembly' %}</span>
+                            </li>
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'Warranty included' %}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Delivery & Care -->
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'Delivery & Care' %}</h3>
+                        <div class="delivery-info">
+                            <div class="info-item">
+                                <span class="info-icon">🚚</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Delivery' %}:</strong>
+                                    <span>{% trans 'From 2 to 4 weeks throughout the country' %}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-icon">🎨</div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">{% trans 'Design' %}</div>
-                                <div class="timeline-desc">{% trans 'We create 3D visualization and drawings' %}</div>
+                            <div class="info-item">
+                                <span class="info-icon">📦</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Packaging' %}:</strong>
+                                    <span>{% trans 'Carefully packed in protective materials' %}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-icon">🔨</div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">{% trans 'Production' %}</div>
-                                <div class="timeline-desc">{% trans 'We manufacture furniture on modern equipment' %}</div>
+                            <div class="info-item">
+                                <span class="info-icon">🔧</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Assembly' %}:</strong>
+                                    <span>{% trans 'Professional assembly by our masters' %}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-icon">🚚</div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">{% trans 'Delivery and assembly' %}</div>
-                                <div class="timeline-desc">{% trans 'We carefully deliver and assemble on site' %}</div>
+                            <div class="info-item">
+                                <span class="info-icon">🛡️</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Warranty' %}:</strong>
+                                    <span>{% trans 'Official 2-year warranty' %}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Full Description -->
+                    {% if work.description %}
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'Description' %}</h3>
+                        <div class="description-content">
+                            <p>{{ work.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
+            </div>
+        </div>
+
+        <!-- Image Modal -->
+        <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+            <div class="image-modal-content">
+                <button class="image-modal-close" onclick="closeImageModal()" aria-label="{% trans 'Close' %}">×</button>
+                <img id="modalImage" src="" alt="{{ work.title }}">
             </div>
         </div>
     </div>
 </section>
+
+<style>
+/* Product Detail Section Styles */
+.product-detail-section {
+    padding: 40px 0 80px;
+    background: #fafafa;
+    min-height: calc(100vh - 200px);
+}
+
+.breadcrumb-nav {
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.breadcrumb-link {
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+    color: #212529;
+}
+
+.breadcrumb-separator {
+    color: #adb5bd;
+}
+
+.breadcrumb-current {
+    color: #212529;
+    font-weight: 500;
+}
+
+/* Product Layout */
+.product-detail-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: start;
+}
+
+/* Product Image Section */
+.product-image-section {
+    position: sticky;
+    top: 120px;
+}
+
+.product-image-wrapper {
+    position: relative;
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    aspect-ratio: 4/3;
+}
+
+.product-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-zoom-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.product-image-wrapper:hover .image-zoom-btn {
+    opacity: 1;
+}
+
+.image-zoom-btn:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.image-zoom-btn svg {
+    color: #212529;
+}
+
+/* Product Info Section */
+.product-info-section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.product-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.product-category-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6c757d;
+    margin-bottom: 16px;
+}
+
+.product-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #212529;
+    margin: 0 0 12px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.product-subtitle {
+    font-size: 16px;
+    color: #6c757d;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Price Section */
+.product-price-section {
+    margin-bottom: 32px;
+    padding: 24px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.price-display {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.price-value {
+    font-size: 42px;
+    font-weight: 700;
+    color: #212529;
+    letter-spacing: -1px;
+}
+
+.price-value.request {
+    font-size: 32px;
+}
+
+.price-currency {
+    font-size: 20px;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+.price-note {
+    font-size: 14px;
+    color: #6c757d;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Product Badges */
+.product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.info-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.info-badge.status-badge {
+    background: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.badge-icon {
+    font-size: 16px;
+}
+
+.badge-text {
+    font-size: 14px;
+}
+
+/* Action Buttons */
+.product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.btn-primary-large,
+.btn-secondary-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary-large {
+    background: #212529;
+    color: #ffffff;
+}
+
+.btn-primary-large:hover {
+    background: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary-large {
+    background: #f8f9fa;
+    color: #212529;
+    border: 1px solid #e9ecef;
+}
+
+.btn-secondary-large:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+/* Product Details Toggle */
+.product-details-toggle {
+    width: 100%;
+    padding: 14px 20px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #212529;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.product-details-toggle:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.product-details-toggle.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Product Details Modal */
+.product-details-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.product-details-modal.active {
+    display: flex;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content-wrapper {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    margin: auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #212529;
+    margin: 0;
+}
+
+.modal-close-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+    background: #e9ecef;
+    transform: rotate(90deg);
+}
+
+.modal-close-btn svg {
+    color: #212529;
+}
+
+.modal-body {
+    padding: 32px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.details-section {
+    margin-bottom: 32px;
+}
+
+.details-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #212529;
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #212529;
+    font-size: 14px;
+    text-align: right;
+}
+
+.advantages-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.advantage-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.advantage-item:last-child {
+    border-bottom: none;
+}
+
+.advantage-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.delivery-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.info-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-content strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: #212529;
+}
+
+.info-content span {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.description-content {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #495057;
+}
+
+.description-content p {
+    margin: 0 0 16px;
+}
+
+.description-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Image Modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.image-modal.active {
+    display: flex;
+}
+
+.image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.image-modal-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.image-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.image-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .product-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .product-image-section {
+        position: static;
+    }
+
+    .modal-content-wrapper {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .product-title {
+        font-size: 28px;
+    }
+
+    .price-value {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 640px) {
+    .product-info-section {
+        padding: 24px;
+    }
+
+    .modal-body {
+        padding: 24px;
+    }
+
+    .product-title {
+        font-size: 24px;
+    }
+
+    .price-value {
+        font-size: 32px;
+    }
+}
+</style>
+
+<script>
+function toggleProductDetails() {
+    const modal = document.getElementById('productDetailsModal');
+    const toggle = document.querySelector('.product-details-toggle');
+    
+    modal.classList.toggle('active');
+    toggle.classList.toggle('active');
+    
+    // Prevent body scroll when modal is open
+    if (modal.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+function openImageModal(imageUrl) {
+    const modal = document.getElementById('imageModal');
+    const img = document.getElementById('modalImage');
+    
+    img.src = imageUrl;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const detailsModal = document.getElementById('productDetailsModal');
+        const imageModal = document.getElementById('imageModal');
+        
+        if (detailsModal.classList.contains('active')) {
+            toggleProductDetails();
+        }
+        if (imageModal.classList.contains('active')) {
+            closeImageModal();
+        }
+    }
+});
+</script>
 
 {% endblock %}
