@@ -8,8 +8,50 @@
 
 {% block content %}
 
+{% if carousel_photos %}
+<section id="home" class="hero-stack">
+    <div class="photo-carousel full-bleed animate-fade-in">
+        <div class="carousel-shell" data-carousel="home">
+            <div class="carousel-viewport">
+                <div class="carousel-track">
+                    {% for photo in carousel_photos %}
+                    <div class="carousel-slide">
+                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" loading="lazy">
+                        <div class="carousel-overlay">
+                            <div class="carousel-title">{{ photo.title }}</div>
+                            {% if photo.caption %}
+                            <div class="carousel-caption">{{ photo.caption }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <div class="carousel-dots" data-carousel-dots></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-intro hero-intro-overlay">
+        <div class="hero-intro-inner">
+            <div class="hero-text">
+                <p class="hero-title">
+                    {% trans 'We create furniture' %}
+                    {% trans 'dreams' %}
+                    {% trans 'for your home' %}
+                </p>
+                <p class="hero-description" style="animation-delay: 0.3s;">
+                    {% trans 'Design and manufacture of unique furniture for your interior. From idea to implementation — 100% quality and attention to detail.' %}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
 <section id="home" class="hero-intro">
-    <div class="">
+    <div class="hero-intro-inner">
         <div class="hero-text">
             <p class="hero-title" style="margin-top: -30px;">
                 {% trans 'We create furniture' %}
@@ -19,32 +61,6 @@
             <p class="hero-description" style="animation-delay: 0.3s;">
                 {% trans 'Design and manufacture of unique furniture for your interior. From idea to implementation — 100% quality and attention to detail.' %}
             </p>
-        </div>
-    </div>
-</section>
-
-
-{% if carousel_photos %}
-<section id="home-carousel" class="section photo-carousel full-bleed animate-fade-in" style="margin-top: -30px;">
-    <div class="carousel-shell" data-carousel="home">
-        <div class="carousel-viewport">
-            <div class="carousel-track">
-                {% for photo in carousel_photos %}
-                <div class="carousel-slide">
-                    <img src="{{ photo.image.url }}" alt="{{ photo.title }}" loading="lazy">
-                    <div class="carousel-overlay">
-                        <div class="carousel-title">{{ photo.title }}</div>
-                        {% if photo.caption %}
-                        <div class="carousel-caption">{{ photo.caption }}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="carousel-controls">
-            <div class="carousel-dots" data-carousel-dots></div>
         </div>
     </div>
 </section>
