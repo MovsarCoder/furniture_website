@@ -227,23 +227,18 @@
             if (isScrolled) {
                 // When navbar is scrolled (white background)
                 navLinks.forEach(link => {
-                    link.style.color = '#212529';
                     link.style.textShadow = 'none';
                 });
                 if (navCta) {
-                    navCta.style.color = '#212529';
-                    navCta.style.background = 'linear-gradient(135deg, #343a40 0%, #212529 50%, #495057 100%)';
                     navCta.style.border = 'none';
                 }
             } else {
                 // When navbar is at top (transparent)
                 navLinks.forEach(link => {
-                    link.style.color = 'white';
                     link.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
                 });
                 if (navCta) {
                     navCta.style.color = 'white';
-                    navCta.style.background = 'rgba(255, 255, 255, 0.25)';
                     navCta.style.border = '1px solid rgba(255, 255, 255, 0.3)';
                 }
             }
