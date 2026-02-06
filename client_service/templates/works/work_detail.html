@@ -44,6 +44,15 @@
                     {% if work.description %}
                     <p class="product-subtitle">{{ work.description|truncatewords:30 }}</p>
                     {% endif %}
+
+                    {% if work.width and work.height and work.depth %}
+                    <div class="product-dimensions-inline">
+                        <span class="dimensions-label">{% trans 'Width / Height / Depth' %}:</span>
+                        <span class="dimensions-value">
+                            {{ work.width|floatformat:0 }} / {{ work.height|floatformat:0 }} / {{ work.depth|floatformat:0 }} {% trans 'cm' %}
+                        </span>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <!-- Price Section -->
@@ -126,8 +135,10 @@
                         <ul class="details-list">
                             {% if work.width and work.height and work.depth %}
                             <li class="detail-item">
-                                <span class="detail-label">{% trans 'Dimensions' %}:</span>
-                                <span class="detail-value">{{ work.width|floatformat:0 }} × {{ work.height|floatformat:0 }} × {{ work.depth|floatformat:0 }} cm</span>
+                                <span class="detail-label">{% trans 'Width / Height / Depth' %}:</span>
+                                <span class="detail-value">
+                                    {{ work.width|floatformat:0 }} / {{ work.height|floatformat:0 }} / {{ work.depth|floatformat:0 }} {% trans 'cm' %}
+                                </span>
                             </li>
                             {% endif %}
                             {% if work.category %}

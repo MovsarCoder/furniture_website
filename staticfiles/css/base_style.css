@@ -5577,6 +5577,27 @@ img {
   font-weight: 400;
 }
 
+/* Inline Dimensions Under Title */
+.product-dimensions-inline {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #e9ecef;
+  font-size: 15px;
+  color: #495057;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.product-dimensions-inline .dimensions-label {
+  font-weight: 700;
+  color: #212529;
+}
+
+.product-dimensions-inline .dimensions-value {
+  font-weight: 600;
+}
+
 /* Price Section */
 .product-price-section {
   margin-bottom: 36px;
@@ -5990,15 +6011,15 @@ img {
 }
 
 .detail-label {
-  font-weight: 500;
-  color: #6c757d;
+  font-weight: 600;
+  color: #343a40;
   font-size: 14px;
 }
 
 .detail-value {
-  font-weight: 600;
-  color: #212529;
-  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  font-size: 15px;
   text-align: right;
 }
 
