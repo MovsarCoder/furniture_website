@@ -41,7 +41,7 @@
                         {% if work.category %}{{ work.category.title }}{% endif %}
                     </div>
                     <h1 class="product-title">{{ work.title }}</h1>
-                    
+
                     <!-- Product Details Button (Moved to Top) -->
                     <button class="product-details-toggle-top" onclick="toggleProductDetails()">
                         <span>{% trans 'Product Details' %}</span>
@@ -54,7 +54,7 @@
                             </svg>
                         </div>
                     </button>
-                    
+
                     {% if work.description %}
                     <p class="product-subtitle">{{ work.description|truncatewords:30 }}</p>
                     {% endif %}
@@ -67,7 +67,7 @@
                         </span>
                     </div>
                     {% endif %}
-                    
+
                     <!-- Product Data/Status Information (Moved Here) -->
                     <div class="product-status-info">
                         <!-- Quick Info Badges -->
@@ -110,7 +110,6 @@
                     {% endif %}
                 </div>
 
-                
 
                 <!-- Action Buttons -->
                 <div class="product-actions">
@@ -123,7 +122,7 @@
                     </a>
                 </div>
 
-                
+
             </div>
         </div>
 
