@@ -49,6 +49,64 @@ msgstr "En cours"
 msgid "Cancelled"
 msgstr "Annulé"
 
+#: client_service/templates/base/base.html:243
+#: client_service/templates/base/base.html:244
+#: client_service/templates/base/base.html:245
+#: client_service/templates/works/works.html:137
+#: client_service/templates/home/home.html:509
+#: client_service/templates/mobel/view_mobel.html:146
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: client_service/templates/base/base.html:243
+#: client_service/templates/base/base.html:244
+#: client_service/templates/base/base.html:245
+#: client_service/templates/works/works.html:137
+#: client_service/templates/home/home.html:509
+#: client_service/templates/mobel/view_mobel.html:146
+msgid "Instagram"
+msgstr "Instagram"
+
+#: client_service/templates/base/base.html:245
+msgid "muridovaslambek@bmass.com"
+msgstr "muridovaslambek@bmass.com"
+
+#: client_service/templates/base/base.html:261
+msgid "×"
+msgstr "×"
+
+#: client_service/templates/works/works.html:68
+msgid "Section Furniture:"
+msgstr "Section Meubles:"
+
+#: client_service/templates/works/works.html:72
+msgid "Category Furniture:"
+msgstr "Catégorie Meubles:"
+
+#: client_service/templates/works/works.html:76
+msgid "Country:"
+msgstr "Pays:"
+
+#: client_service/templates/works/works.html:80
+msgid "Language:"
+msgstr "Langue:"
+
+#: client_service/templates/mobel/view_mobel.html:77
+msgid "Section Furniture: {{ section }}"
+msgstr "Section Meubles: {{ section }}"
+
+#: client_service/templates/mobel/view_mobel.html:81
+msgid "Category Furniture: {{ category }}"
+msgstr "Catégorie Meubles: {{ category }}"
+
+#: client_service/templates/mobel/view_mobel.html:85
+msgid "Country: {{ work.get_country_display }}"
+msgstr "Pays: {{ work.get_country_display }}"
+
+#: client_service/templates/mobel/view_mobel.html:89
+msgid "Language: {{ work.get_language_display }}"
+msgstr "Langue: {{ work.get_language_display }}"
+
 #: admin_service/templates/consultation/consultation.html:66
 msgid "Phone:"
 msgstr "Téléphone :"

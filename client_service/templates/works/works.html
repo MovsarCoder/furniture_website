@@ -65,19 +65,19 @@
                             {% endif %}
                             <div class="detail-item">
                                 <span class="detail-icon">📂</span>
-                                <span class="detail-text">Section Furniture: {{ section }}</span>
+                                <span class="detail-text">{% trans 'Section Furniture:' %} {{ section }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-icon">🏷️</span>
-                                <span class="detail-text">Category Furniture: {{ work.category }}</span>
+                                <span class="detail-text">{% trans 'Category Furniture:' %} {{ work.category }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-icon">🌐</span>
-                                <span class="detail-text">Country: {{ work.get_country_display }}</span>
+                                <span class="detail-text">{% trans 'Country:' %} {{ work.get_country_display }}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-icon">🌍</span>
-                                <span class="detail-text">Language: {{ work.get_language_display }}</span>
+                                <span class="detail-text">{% trans 'Language:' %} {{ work.get_language_display }}</span>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
-            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 WhatsApp</a> · <a href="{{ contact.instagram }}">📷 Instagram</a></div>
+            <div class="contact-row"><a href="{{ contact.whatsapp }}">💬 {% trans 'WhatsApp' %}</a> · <a href="{{ contact.instagram }}">📷 {% trans 'Instagram' %}</a></div>
             {% if contact.address %}
             <div class="contact-map">
                 <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
