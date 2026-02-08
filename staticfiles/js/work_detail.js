@@ -9,7 +9,7 @@
     // Toggle Product Details Modal
     function toggleProductDetails() {
         const modal = document.getElementById('productDetailsModal');
-        const toggle = document.querySelector('.product-details-toggle');
+        const toggle = document.querySelector('.product-details-toggle-top') || document.querySelector('.product-details-toggle');
         
         if (!modal || !toggle) return;
         

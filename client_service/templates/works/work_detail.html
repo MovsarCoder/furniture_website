@@ -33,24 +33,28 @@
                 </div>
             </div>
 
-
             <!-- Right: Product Information -->
             <div class="product-info-section">
-
-                <!-- Product Details Button -->
-                <button class="product-details-toggle" onclick="toggleProductDetails()">
-                    <span>{% trans 'Product Details' %}</span>
-                    <svg class="toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M5 7.5l5 5 5-5"/>
-                    </svg>
-                </button>
-
                 <!-- Product Header -->
                 <div class="product-header">
                     <div class="product-category-badge">
                         {% if work.category %}{{ work.category.title }}{% endif %}
                     </div>
                     <h1 class="product-title">{{ work.title }}</h1>
+                    
+                    <!-- Product Details Button (Moved to Top) -->
+                    <button class="product-details-toggle-top" onclick="toggleProductDetails()">
+                        <span>{% trans 'Product Details' %}</span>
+                        <div class="toggle-arrows">
+                            <svg class="arrow-top" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#ff6b6b" stroke-width="2">
+                                <path d="M4 10l4-4 4 4"/>
+                            </svg>
+                            <svg class="arrow-bottom" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#4ecdc4" stroke-width="2">
+                                <path d="M4 6l4 4 4-4"/>
+                            </svg>
+                        </div>
+                    </button>
+                    
                     {% if work.description %}
                     <p class="product-subtitle">{{ work.description|truncatewords:30 }}</p>
                     {% endif %}
@@ -63,6 +67,31 @@
                         </span>
                     </div>
                     {% endif %}
+                    
+                    <!-- Product Data/Status Information (Moved Here) -->
+                    <div class="product-status-info">
+                        <!-- Quick Info Badges -->
+                        <div class="product-badges">
+                            {% if work.material %}
+                            <div class="info-badge">
+                                <span class="badge-icon">🪵</span>
+                                <span class="badge-text">{{ work.material }}</span>
+                            </div>
+                            {% endif %}
+                            {% if work.work_type %}
+                            <div class="info-badge">
+                                <span class="badge-icon">🏷️</span>
+                                <span class="badge-text">{{ work.get_work_type_display }}</span>
+                            </div>
+                            {% endif %}
+                            {% if work.status %}
+                            <div class="info-badge status-badge">
+                                <span class="badge-icon">✓</span>
+                                <span class="badge-text">{{ work.get_status_display }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Price Section -->
@@ -81,27 +110,7 @@
                     {% endif %}
                 </div>
 
-                <!-- Quick Info Badges -->
-                <div class="product-badges">
-                    {% if work.material %}
-                    <div class="info-badge">
-                        <span class="badge-icon">🪵</span>
-                        <span class="badge-text">{{ work.material }}</span>
-                    </div>
-                    {% endif %}
-                    {% if work.work_type %}
-                    <div class="info-badge">
-                        <span class="badge-icon">🏷️</span>
-                        <span class="badge-text">{{ work.get_work_type_display }}</span>
-                    </div>
-                    {% endif %}
-                    {% if work.status %}
-                    <div class="info-badge status-badge">
-                        <span class="badge-icon">✓</span>
-                        <span class="badge-text">{{ work.get_status_display }}</span>
-                    </div>
-                    {% endif %}
-                </div>
+                
 
                 <!-- Action Buttons -->
                 <div class="product-actions">
@@ -114,6 +123,7 @@
                     </a>
                 </div>
 
+                
             </div>
         </div>
 
