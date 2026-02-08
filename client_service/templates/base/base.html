@@ -8,6 +8,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}B'Mass{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+        <style>
+            .logo-image-navbar {
+                width: 160px;
+                height: auto;
+                object-fit: contain;
+            }
+            @media (max-width: 768px) {
+                .logo-image-navbar {
+                    width: 140px;
+                }
+            }
+            
+            /* Improved features section layout */
+            .features {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 24px;
+                margin: 40px 0;
+            }
+            
+            .feature {
+                flex: 1;
+                min-width: 280px;
+                max-width: 350px;
+                background: linear-gradient(135deg, var(--panel), var(--panel-2));
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: var(--radius-lg);
+                padding: 32px 24px;
+                box-shadow: var(--shadow);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                transition: var(--transition);
+                position: relative;
+                overflow: hidden;
+                height: 100%;
+            }
+            
+            @media (max-width: 768px) {
+                .feature {
+                    min-width: 100%;
+                    max-width: 100%;
+                }
+            }
+        </style>
 </head>
 <body>
 
@@ -25,7 +72,7 @@
     <div class="container nav-inner">
         <a href="{% url 'client_service:index' %}">
             <div class="brand">
-                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" style="width: 120%">
+                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" class="logo-image-navbar">
             </div>
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
