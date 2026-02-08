@@ -33,136 +33,14 @@
                 </div>
             </div>
 
-            <!-- Product Details Modal/Sidebar -->
-            <div class="product-details-modal" id="productDetailsModal">
-                <div class="modal-backdrop" onclick="toggleProductDetails()"></div>
-                <div class="modal-content-wrapper">
-                    <div class="modal-header">
-                        <h2 class="modal-title">{% trans 'Product Details' %}</h2>
-                        <button class="modal-close-btn" onclick="toggleProductDetails()" aria-label="{% trans 'Close' %}">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
 
-                    <div class="modal-body">
-                        <!-- General Information -->
-                        <div class="details-section">
-                            <h3 class="section-title">{% trans 'General Information' %}</h3>
-                            <ul class="details-list">
-                                {% if work.width and work.height and work.depth %}
-                                <li class="detail-item">
-                                    <span class="detail-label">{% trans 'Width / Height / Depth' %}:</span>
-                                    <span class="detail-value">
-                                    {{ work.width|floatformat:0 }} / {{ work.height|floatformat:0 }} / {{ work.depth|floatformat:0 }} {% trans 'cm' %}
-                                </span>
-                                </li>
-                                {% endif %}
-                                {% if work.category %}
-                                <li class="detail-item">
-                                    <span class="detail-label">{% trans 'Category' %}:</span>
-                                    <span class="detail-value">{{ work.category.title }}</span>
-                                </li>
-                                {% endif %}
-                                {% if work.material %}
-                                <li class="detail-item">
-                                    <span class="detail-label">{% trans 'Material' %}:</span>
-                                    <span class="detail-value">{{ work.material }}</span>
-                                </li>
-                                {% endif %}
-                                {% if work.work_type %}
-                                <li class="detail-item">
-                                    <span class="detail-label">{% trans 'Type' %}:</span>
-                                    <span class="detail-value">{{ work.get_work_type_display }}</span>
-                                </li>
-                                {% endif %}
-                                {% if work.date %}
-                                <li class="detail-item">
-                                    <span class="detail-label">{% trans 'Production Date' %}:</span>
-                                    <span class="detail-value">{{ work.date|date:"d.m.Y" }}</span>
-                                </li>
-                                {% endif %}
-                                {% if work.country %}
-                                <li class="detail-item">
-                                    <span class="detail-label">{% trans 'Country' %}:</span>
-                                    <span class="detail-value">{{ work.get_country_display }}</span>
-                                </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-
-                        <!-- Product Advantages -->
-                        <div class="details-section">
-                            <h3 class="section-title">{% trans 'Product Advantages' %}</h3>
-                            <ul class="advantages-list">
-                                <li class="advantage-item">
-                                    <span class="advantage-icon">✓</span>
-                                    <span>{% trans 'High quality materials' %}</span>
-                                </li>
-                                <li class="advantage-item">
-                                    <span class="advantage-icon">✓</span>
-                                    <span>{% trans 'Individual design' %}</span>
-                                </li>
-                                <li class="advantage-item">
-                                    <span class="advantage-icon">✓</span>
-                                    <span>{% trans 'Professional assembly' %}</span>
-                                </li>
-                                <li class="advantage-item">
-                                    <span class="advantage-icon">✓</span>
-                                    <span>{% trans 'Warranty included' %}</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Delivery & Care -->
-                        <div class="details-section">
-                            <h3 class="section-title">{% trans 'Delivery & Care' %}</h3>
-                            <div class="delivery-info">
-                                <div class="info-item">
-                                    <span class="info-icon">🚚</span>
-                                    <div class="info-content">
-                                        <strong>{% trans 'Delivery' %}:</strong>
-                                        <span>{% trans 'From 2 to 4 weeks throughout the country' %}</span>
-                                    </div>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-icon">📦</span>
-                                    <div class="info-content">
-                                        <strong>{% trans 'Packaging' %}:</strong>
-                                        <span>{% trans 'Carefully packed in protective materials' %}</span>
-                                    </div>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-icon">🔧</span>
-                                    <div class="info-content">
-                                        <strong>{% trans 'Assembly' %}:</strong>
-                                        <span>{% trans 'Professional assembly by our masters' %}</span>
-                                    </div>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-icon">🛡️</span>
-                                    <div class="info-content">
-                                        <strong>{% trans 'Warranty' %}:</strong>
-                                        <span>{% trans 'Official 2-year warranty' %}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Full Description -->
-                        {% if work.description %}
-                        <div class="details-section">
-                            <h3 class="section-title">{% trans 'Description' %}</h3>
-                            <div class="description-content">
-                                <p>{{ work.description }}</p>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+            <!-- Product Details Button -->
+            <button class="product-details-toggle" onclick="toggleProductDetails()">
+                <span>{% trans 'Product Details' %}</span>
+                <svg class="toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 7.5l5 5 5-5"/>
+                </svg>
+            </button>
 
             <!-- Right: Product Information -->
             <div class="product-info-section">
@@ -235,13 +113,137 @@
                     </a>
                 </div>
 
-                <!-- Product Details Button -->
-                <button class="product-details-toggle" onclick="toggleProductDetails()">
-                    <span>{% trans 'Product Details' %}</span>
-                    <svg class="toggle-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M5 7.5l5 5 5-5"/>
-                    </svg>
-                </button>
+            </div>
+        </div>
+
+        <!-- Product Details Modal/Sidebar -->
+        <div class="product-details-modal" id="productDetailsModal">
+            <div class="modal-backdrop" onclick="toggleProductDetails()"></div>
+            <div class="modal-content-wrapper">
+                <div class="modal-header">
+                    <h2 class="modal-title">{% trans 'Product Details' %}</h2>
+                    <button class="modal-close-btn" onclick="toggleProductDetails()" aria-label="{% trans 'Close' %}">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- General Information -->
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'General Information' %}</h3>
+                        <ul class="details-list">
+                            {% if work.width and work.height and work.depth %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Width / Height / Depth' %}:</span>
+                                <span class="detail-value">
+                                    {{ work.width|floatformat:0 }} / {{ work.height|floatformat:0 }} / {{ work.depth|floatformat:0 }} {% trans 'cm' %}
+                                </span>
+                            </li>
+                            {% endif %}
+                            {% if work.category %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Category' %}:</span>
+                                <span class="detail-value">{{ work.category.title }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.material %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Material' %}:</span>
+                                <span class="detail-value">{{ work.material }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.work_type %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Type' %}:</span>
+                                <span class="detail-value">{{ work.get_work_type_display }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.date %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Production Date' %}:</span>
+                                <span class="detail-value">{{ work.date|date:"d.m.Y" }}</span>
+                            </li>
+                            {% endif %}
+                            {% if work.country %}
+                            <li class="detail-item">
+                                <span class="detail-label">{% trans 'Country' %}:</span>
+                                <span class="detail-value">{{ work.get_country_display }}</span>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <!-- Product Advantages -->
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'Product Advantages' %}</h3>
+                        <ul class="advantages-list">
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'High quality materials' %}</span>
+                            </li>
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'Individual design' %}</span>
+                            </li>
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'Professional assembly' %}</span>
+                            </li>
+                            <li class="advantage-item">
+                                <span class="advantage-icon">✓</span>
+                                <span>{% trans 'Warranty included' %}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Delivery & Care -->
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'Delivery & Care' %}</h3>
+                        <div class="delivery-info">
+                            <div class="info-item">
+                                <span class="info-icon">🚚</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Delivery' %}:</strong>
+                                    <span>{% trans 'From 2 to 4 weeks throughout the country' %}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">📦</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Packaging' %}:</strong>
+                                    <span>{% trans 'Carefully packed in protective materials' %}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">🔧</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Assembly' %}:</strong>
+                                    <span>{% trans 'Professional assembly by our masters' %}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">🛡️</span>
+                                <div class="info-content">
+                                    <strong>{% trans 'Warranty' %}:</strong>
+                                    <span>{% trans 'Official 2-year warranty' %}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Description -->
+                    {% if work.description %}
+                    <div class="details-section">
+                        <h3 class="section-title">{% trans 'Description' %}</h3>
+                        <div class="description-content">
+                            <p>{{ work.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
