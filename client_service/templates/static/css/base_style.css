@@ -2292,7 +2292,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 520px; /* Ensure consistent height */
+  min-height: 350px; /* Ensure consistent height */
 }
 
 .portfolio-card:hover {
