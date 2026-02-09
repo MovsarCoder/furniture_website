@@ -5156,6 +5156,341 @@ img {
   background: var(--brand-2);
 }
 
+/* Product Details Button - Top Position */
+.product-details-toggle-top {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #212529;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 16px 0 24px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.product-details-toggle-top:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+    border-color: #dee2e6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.toggle-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.arrow-top {
+    transition: transform 0.3s ease;
+}
+
+.arrow-bottom {
+    transition: transform 0.3s ease;
+}
+
+.product-details-toggle-top.active .arrow-top {
+    transform: translateY(2px);
+}
+
+.product-details-toggle-top.active .arrow-bottom {
+    transform: translateY(-2px);
+}
+
+/* Product Status Info Section */
+.product-status-info {
+    margin: 20px 0;
+    padding: 16px;
+    background: rgba(248, 249, 250, 0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(233, 236, 239, 0.5);
+}
+
+.product-status-info .product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* Logo Image Navbar */
+.logo-image-navbar {
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 404 Page Styles */
+.bm-404-space {
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.bm-404-content {
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    z-index: 10;
+}
+
+.bm-404-code {
+    font-size: 140px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    text-shadow: 0 0 30px rgba(67, 97, 238, 0.3);
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 10px 20px rgba(67, 97, 238, 0.2));
+}
+
+.bm-404-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 30px 0 15px;
+    color: var(--text);
+}
+
+.bm-404-subtitle {
+    color: var(--text-muted);
+    margin: 0 0 40px;
+    font-size: 18px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.bm-404-actions {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.btn-primary, .btn-outline {
+    font-weight: 700;
+    padding: 18px 36px;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: var(--gradient-brand);
+    color: white;
+    border: none;
+    box-shadow: 0 8px 32px rgba(67, 97, 238, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(67, 97, 238, 0.6);
+}
+
+.btn-outline {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    border: 2px solid rgba(67, 97, 238, 0.3);
+    backdrop-filter: blur(20px);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(67, 97, 238, 0.5);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(67, 97, 238, 0.2);
+}
+
+/* 404 Responsive Styles */
+@media (max-width: 1200px) {
+    .bm-404-code { font-size: 120px; letter-spacing: 6px; }
+    .bm-404-title { font-size: 32px; }
+    .bm-404-subtitle { font-size: 17px; }
+}
+
+@media (max-width: 1024px) {
+    .bm-404-code { font-size: 100px; letter-spacing: 4px; }
+    .bm-404-title { font-size: 28px; }
+    .bm-404-subtitle { font-size: 16px; }
+}
+
+@media (max-width: 768px) {
+    .bm-404-code { font-size: 80px; letter-spacing: 2px; }
+    .bm-404-title { font-size: 24px; }
+    .bm-404-subtitle { font-size: 15px; }
+    .bm-404-actions { flex-direction: column; align-items: center; gap: 16px; }
+    .btn-primary, .btn-outline { width: 100%; max-width: 300px; }
+}
+
+@media (max-width: 480px) {
+    .bm-404-code { font-size: 60px; letter-spacing: 1px; }
+    .bm-404-title { font-size: 20px; }
+    .bm-404-subtitle { font-size: 14px; }
+    .btn-primary, .btn-outline { padding: 14px 28px; font-size: 15px; }
+}
+
+/* Improved features section layout */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    margin: 40px 0;
+}
+
+.feature {
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    background: linear-gradient(135deg, var(--panel), var(--panel-2));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Original Mega Dropdown Menu Styles */
+.mega-dropdown {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    transform: translateY(12px);
+    background: #ffffff;
+    padding: 24px 28px;
+    display: flex;
+    gap: 32px;
+    border-radius: 0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Show dropdown on hover */
+.nav-item:hover .mega-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.mega-column {
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-self: stretch;
+    padding-right: 16px;
+}
+
+/* Vertical separator line between columns */
+.mega-column:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #e0e0e0;
+}
+
+.mega-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #111;
+    cursor: default;
+    letter-spacing: 0.3px;
+}
+
+.mega-column a {
+    position: relative;
+    padding: 9px 10px;
+    margin-left: 0;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-size: 13px;
+    color: #4a4a4a;
+    transition: all 0.25s ease;
+}
+
+.mega-column a:hover {
+    background: #f4f6f8;
+    color: #111;
+    text-decoration: none !important;
+}
+
+/* Simplified Recommendations section */
+.dropdown-recommendations {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.recommendation-item {
+    flex: 1;
+    min-width: 180px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.recommendation-title {
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.recommendation-text {
+    font-size: 11px;
+    color: #6c757d;
+    line-height: 1.3;
+}
+
 /* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 1024px) {
   .features {
@@ -7031,6 +7366,36 @@ img {
 
   .work-image {
     height: 300px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mega-dropdown {
+    padding: 20px 25px !important;
+  }
+  
+  .dropdown-recommendations {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-image-navbar {
+    width: 140px;
+  }
+  
+  .product-details-toggle-top {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .product-status-info .product-badges {
+    justify-content: flex-start;
+  }
+  
+  .feature {
+    min-width: 100%;
+    max-width: 100%;
   }
 
   .specs-grid {
