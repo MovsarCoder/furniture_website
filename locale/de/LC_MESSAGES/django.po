@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 03:11+0300\n"
+"POT-Creation-Date: 2026-02-09 03:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,11 +136,11 @@ msgid "Status updated successfully"
 msgstr "Status erfolgreich aktualisiert"
 
 #: client_service/templates/base/404.html:5
-#: client_service/templates/base/404.html:586
+#: client_service/templates/base/404.html:587
 msgid "Page not found"
 msgstr "Seite nicht gefunden"
 
-#: client_service/templates/base/404.html:588
+#: client_service/templates/base/404.html:589
 msgid ""
 "Unfortunately, this page does not exist in our catalog. It may have been "
 "moved or deleted. Let us find something suitable from our furniture "
@@ -150,7 +150,7 @@ msgstr ""
 "möglicherweise verschoben oder gelöscht. Lassen Sie uns etwas Passendes aus "
 "unserer Möbelkollektion finden."
 
-#: client_service/templates/base/404.html:597
+#: client_service/templates/base/404.html:598
 #: client_service/templates/base/base.html:32
 #: client_service/templates/base/base.html:122
 #: client_service/templates/home/home.html:6
@@ -158,7 +158,7 @@ msgstr ""
 msgid "Home"
 msgstr "Startseite"
 
-#: client_service/templates/base/404.html:603
+#: client_service/templates/base/404.html:604
 msgid "Furniture catalog"
 msgstr "Möbelkatalog"
 
@@ -844,10 +844,8 @@ msgstr "Bild vergrößern"
 
 #: client_service/templates/works/work_detail.html:47
 #: client_service/templates/works/work_detail.html:134
-#, fuzzy
-#| msgid "Production"
 msgid "Product Details"
-msgstr "Produktion"
+msgstr "Produktdetails"
 
 #: client_service/templates/works/work_detail.html:64
 #: client_service/templates/works/work_detail.html:150
@@ -868,10 +866,8 @@ msgid "The final cost is calculated individually after consultation"
 msgstr "Die endgültigen Kosten werden nach der Beratung individuell berechnet"
 
 #: client_service/templates/works/work_detail.html:121
-#, fuzzy
-#| msgid "Back to all works"
 msgid "Back to catalog"
-msgstr "Zurück zu allen Arbeiten"
+msgstr "Zurück zum Katalog"
 
 #: client_service/templates/works/work_detail.html:135
 #: client_service/templates/works/work_detail.html:263
@@ -879,18 +875,16 @@ msgid "Close"
 msgstr "Schließen"
 
 #: client_service/templates/works/work_detail.html:146
-#, fuzzy
-#| msgid "General consultation"
 msgid "General Information"
-msgstr "Allgemeine Beratung"
+msgstr "Allgemeine Informationen"
 
 #: client_service/templates/works/work_detail.html:158
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: client_service/templates/works/work_detail.html:164
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: client_service/templates/works/work_detail.html:170
 #, fuzzy
@@ -899,18 +893,16 @@ msgid "Type"
 msgstr "Typ:"
 
 #: client_service/templates/works/work_detail.html:176
-#, fuzzy
-#| msgid "Production"
 msgid "Production Date"
-msgstr "Produktion"
+msgstr "Produktionsdatum"
 
 #: client_service/templates/works/work_detail.html:182
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #: client_service/templates/works/work_detail.html:191
 msgid "Product Advantages"
-msgstr ""
+msgstr "Produktvorteile"
 
 #: client_service/templates/works/work_detail.html:195
 #, fuzzy
@@ -935,10 +927,8 @@ msgid "Warranty included"
 msgstr "Garantie"
 
 #: client_service/templates/works/work_detail.html:214
-#, fuzzy
-#| msgid "Delivery"
 msgid "Delivery & Care"
-msgstr "Lieferung"
+msgstr "Lieferung & Pflege"
 
 #: client_service/templates/works/work_detail.html:220
 msgid "From 2 to 4 weeks throughout the country"
@@ -946,21 +936,19 @@ msgstr "Von 2 bis 4 Wochen im ganzen Land"
 
 #: client_service/templates/works/work_detail.html:226
 msgid "Packaging"
-msgstr ""
+msgstr "Verpackung"
 
 #: client_service/templates/works/work_detail.html:227
 msgid "Carefully packed in protective materials"
-msgstr ""
+msgstr "Sorgfältig in Schutzmaterialien verpackt"
 
 #: client_service/templates/works/work_detail.html:233
 msgid "Assembly"
-msgstr ""
+msgstr "Montage"
 
 #: client_service/templates/works/work_detail.html:234
-#, fuzzy
-#| msgid "Professional assembly"
 msgid "Professional assembly by our masters"
-msgstr "Professionelle Montage"
+msgstr "Professionelle Montage durch unsere Meister"
 
 #: client_service/templates/works/work_detail.html:241
 msgid "Official 2-year warranty"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 03:11+0300\n"
+"POT-Creation-Date: 2026-02-09 03:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,11 +135,11 @@ msgid "Status updated successfully"
 msgstr "Statut mis à jour avec succès"
 
 #: client_service/templates/base/404.html:5
-#: client_service/templates/base/404.html:586
+#: client_service/templates/base/404.html:587
 msgid "Page not found"
 msgstr "Page non trouvée"
 
-#: client_service/templates/base/404.html:588
+#: client_service/templates/base/404.html:589
 msgid ""
 "Unfortunately, this page does not exist in our catalog. It may have been "
 "moved or deleted. Let us find something suitable from our furniture "
@@ -149,7 +149,7 @@ msgstr ""
 "être été déplacée ou supprimée. Laissez-nous trouver quelque chose d'adapté "
 "dans notre collection de meubles."
 
-#: client_service/templates/base/404.html:597
+#: client_service/templates/base/404.html:598
 #: client_service/templates/base/base.html:32
 #: client_service/templates/base/base.html:122
 #: client_service/templates/home/home.html:6
@@ -157,7 +157,7 @@ msgstr ""
 msgid "Home"
 msgstr "Accueil"
 
-#: client_service/templates/base/404.html:603
+#: client_service/templates/base/404.html:604
 msgid "Furniture catalog"
 msgstr "Catalogue de meubles"
 
@@ -878,38 +878,32 @@ msgid "Close"
 msgstr "Fermer"
 
 #: client_service/templates/works/work_detail.html:146
-#, fuzzy
-#| msgid "General consultation"
 msgid "General Information"
-msgstr "Consultation générale"
+msgstr "Informations générales"
 
 #: client_service/templates/works/work_detail.html:158
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: client_service/templates/works/work_detail.html:164
 msgid "Material"
-msgstr ""
+msgstr "Matériau"
 
 #: client_service/templates/works/work_detail.html:170
-#, fuzzy
-#| msgid "Type:"
 msgid "Type"
-msgstr "Type :"
+msgstr "Type"
 
 #: client_service/templates/works/work_detail.html:176
-#, fuzzy
-#| msgid "Production"
 msgid "Production Date"
-msgstr "Production"
+msgstr "Date de production"
 
 #: client_service/templates/works/work_detail.html:182
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: client_service/templates/works/work_detail.html:191
 msgid "Product Advantages"
-msgstr ""
+msgstr "Avantages du produit"
 
 #: client_service/templates/works/work_detail.html:195
 #, fuzzy
@@ -918,26 +912,20 @@ msgid "High quality materials"
 msgstr "Matériaux de qualité premium"
 
 #: client_service/templates/works/work_detail.html:199
-#, fuzzy
-#| msgid "Individual approach"
 msgid "Individual design"
-msgstr "Approche individuelle"
+msgstr "Design individuel"
 
 #: client_service/templates/works/work_detail.html:203
 msgid "Professional assembly"
 msgstr "Assemblage professionnel"
 
 #: client_service/templates/works/work_detail.html:207
-#, fuzzy
-#| msgid "Warranty"
 msgid "Warranty included"
-msgstr "Garantie"
+msgstr "Garantie incluse"
 
 #: client_service/templates/works/work_detail.html:214
-#, fuzzy
-#| msgid "Delivery"
 msgid "Delivery & Care"
-msgstr "Livraison"
+msgstr "Livraison & Soins"
 
 #: client_service/templates/works/work_detail.html:220
 msgid "From 2 to 4 weeks throughout the country"
@@ -945,21 +933,19 @@ msgstr "De 2 à 4 semaines dans tout le pays"
 
 #: client_service/templates/works/work_detail.html:226
 msgid "Packaging"
-msgstr ""
+msgstr "Emballage"
 
 #: client_service/templates/works/work_detail.html:227
 msgid "Carefully packed in protective materials"
-msgstr ""
+msgstr "Soigneusement emballé dans des matériaux protecteurs"
 
 #: client_service/templates/works/work_detail.html:233
 msgid "Assembly"
-msgstr ""
+msgstr "Montage"
 
 #: client_service/templates/works/work_detail.html:234
-#, fuzzy
-#| msgid "Professional assembly"
 msgid "Professional assembly by our masters"
-msgstr "Assemblage professionnel"
+msgstr "Montage professionnel par nos experts"
 
 #: client_service/templates/works/work_detail.html:241
 msgid "Official 2-year warranty"
