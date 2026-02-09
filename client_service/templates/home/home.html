@@ -100,10 +100,6 @@
                 </div>
 
                 <div class="card-content">
-                    <div class="card-main-content">
-                        <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
-                    </div>
-
                     <div class="card-footer">
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
                             <span>{% trans 'More details' %}</span>
