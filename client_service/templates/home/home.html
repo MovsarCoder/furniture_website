@@ -102,32 +102,6 @@
                 <div class="card-content">
                     <div class="card-main-content">
                         <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
-                        <p class="card-description">{{ work.description|truncatewords:16|default:"{% trans 'Description will appear soon' %}" }}</p>
-
-                        <div class="card-details">
-                            {% if work.material %}
-                            <div class="detail-item">
-                                <span class="detail-icon">🪵</span>
-                                <span class="detail-text">{{ work.material }}</span>
-                            </div>
-                            {% endif %}
-                            <div class="detail-item">
-                                <span class="detail-icon">📂</span>
-                                <span class="detail-text">Section Furniture: {{ section }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🏷️</span>
-                                <span class="detail-text">Category Furniture: {{ work.category }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🌐</span>
-                                <span class="detail-text">Country: {{ work.get_country_display }}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🌍</span>
-                                <span class="detail-text">Language: {{ work.get_language_display }}</span>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="card-footer">
