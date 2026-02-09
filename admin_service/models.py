@@ -149,7 +149,7 @@ class Contact(models.Model):
         return f"{self.branch_name} | {self.address} | {self.country}"
 
     def save(self, *args, **kwargs):
-        if self.address and (not self.latitude or not self.longitude):
+        if self.address:
             self.get_coordinates_from_address()
         super().save(*args, **kwargs)
 
@@ -223,7 +223,6 @@ class ConsultationRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
-
 
 
 class CarouselPhoto(models.Model):
