@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-10 00:13+0300\n"
+"POT-Creation-Date: 2026-02-10 00:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,6 +250,32 @@ msgstr "Loft / Industriel"
 msgid "Provence"
 msgstr "Provence"
 
+#: client_service/templates/base/base.html:74
+msgid "Popular Now"
+msgstr ""
+
+#: client_service/templates/base/base.html:75
+msgid "Check out our trending modern wardrobes with smart storage solutions"
+msgstr ""
+
+#: client_service/templates/base/base.html:78
+#, fuzzy
+#| msgid "Design"
+msgid "Design Ideas"
+msgstr "Design"
+
+#: client_service/templates/base/base.html:79
+msgid "Explore Scandinavian kitchen sets with minimalist aesthetics"
+msgstr ""
+
+#: client_service/templates/base/base.html:82
+msgid "Custom Solutions"
+msgstr ""
+
+#: client_service/templates/base/base.html:83
+msgid "Get personalized sofa designs tailored to your living space"
+msgstr ""
+
 #: client_service/templates/base/base.html:90
 #: client_service/templates/base/base.html:121
 #: client_service/templates/home/home.html:73
@@ -301,10 +327,8 @@ msgid "Reviews"
 msgstr "Avis"
 
 #: client_service/templates/base/base.html:124
-#, fuzzy
-#| msgid "Production"
 msgid "Details"
-msgstr "Production"
+msgstr "Détails"
 
 #: client_service/templates/base/base.html:127
 msgid "Help"
@@ -330,14 +354,12 @@ msgid "Privacy Policy"
 msgstr "Politique de Confidentialité"
 
 #: client_service/templates/base/base.html:132
-#, fuzzy
-#| msgid "General consultation"
 msgid "General conditions"
-msgstr "Consultation générale"
+msgstr "Conditions générales"
 
 #: client_service/templates/base/base.html:133
 msgid "Availability"
-msgstr ""
+msgstr "Accessibilité"
 
 #: client_service/templates/base/base.html:136
 msgid "Contact"
