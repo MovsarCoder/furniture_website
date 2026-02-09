@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 03:21+0300\n"
+"POT-Creation-Date: 2026-02-10 00:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,11 +152,10 @@ msgstr ""
 
 #: client_service/templates/base/404.html:598
 #: client_service/templates/base/base.html:32
-#: client_service/templates/base/base.html:122
 #: client_service/templates/home/home.html:6
 #: client_service/templates/works/work_detail.html:13
 msgid "Home"
-msgstr "Startseite"
+msgstr "Home"
 
 #: client_service/templates/base/404.html:604
 msgid "Furniture catalog"
@@ -253,46 +252,42 @@ msgid "Provence"
 msgstr "Provence"
 
 #: client_service/templates/base/base.html:90
-#: client_service/templates/base/base.html:123
+#: client_service/templates/base/base.html:121
 #: client_service/templates/home/home.html:73
 #: client_service/templates/works/works.html:4
 #: client_service/templates/works/works.html:14
 msgid "Our Works"
-msgstr "Unsere Arbeiten"
+msgstr "Referenzen"
 
 #: client_service/templates/base/base.html:91
-#: client_service/templates/base/base.html:124
-msgid "Reviews"
-msgstr "Bewertungen"
+#: client_service/templates/base/base.html:123
+msgid "About Company"
+msgstr "Über uns"
 
 #: client_service/templates/base/base.html:92
-#: client_service/templates/base/base.html:125
-msgid "About Company"
-msgstr "Über das Unternehmen"
-
-#: client_service/templates/base/base.html:93
-#: client_service/templates/base/base.html:126
 #: client_service/templates/home/home.html:495
 #: client_service/templates/mobel/view_mobel.html:131
 #: client_service/templates/works/works.html:122
 msgid "Contacts"
-msgstr "Kontakte"
+msgstr "Kontakt"
 
-#: client_service/templates/base/base.html:96
+#: client_service/templates/base/base.html:95
 msgid "Toggle navigation"
 msgstr "Navigation umschalten"
 
-#: client_service/templates/base/base.html:104
+#: client_service/templates/base/base.html:103
 #: client_service/templates/works/work_detail.html:118
+#, fuzzy
+#| msgid "Order Consultation"
 msgid "Order consultation"
-msgstr "Beratung bestellen"
+msgstr "Jetzt kontaktieren"
 
-#: client_service/templates/base/base.html:104
+#: client_service/templates/base/base.html:103
 #: client_service/templates/base/base.html:152
 msgid "Order Consultation"
-msgstr "Beratung bestellen"
+msgstr "Jetzt kontaktieren"
 
-#: client_service/templates/base/base.html:118
+#: client_service/templates/base/base.html:117
 msgid ""
 "Modern furniture for your interior — we manufacture, deliver and install on "
 "time."
@@ -300,32 +295,48 @@ msgstr ""
 "Moderne Möbel für Ihr Interieur — wir fertigen, liefern und montieren "
 "termingerecht."
 
-#: client_service/templates/base/base.html:121
+#: client_service/templates/base/base.html:120
 msgid "Navigation"
 msgstr "Navigation"
 
-#: client_service/templates/base/base.html:129
+#: client_service/templates/base/base.html:122
+msgid "Reviews"
+msgstr "Bewertungen"
+
+#: client_service/templates/base/base.html:124
+msgid "Details"
+msgstr "Impressum"
+
+#: client_service/templates/base/base.html:127
 msgid "Help"
 msgstr "Hilfe"
 
-#: client_service/templates/base/base.html:130
+#: client_service/templates/base/base.html:128
 msgid "FAQ"
 msgstr "FAQ"
 
-#: client_service/templates/base/base.html:131
+#: client_service/templates/base/base.html:129
 #: client_service/templates/works/work_detail.html:240
 msgid "Warranty"
 msgstr "Garantie"
 
-#: client_service/templates/base/base.html:132
+#: client_service/templates/base/base.html:130
 #: client_service/templates/home/home.html:316
 #: client_service/templates/works/work_detail.html:219
 msgid "Delivery"
 msgstr "Lieferung"
 
-#: client_service/templates/base/base.html:133
+#: client_service/templates/base/base.html:131
 msgid "Privacy Policy"
 msgstr "Datenschutzrichtlinie"
+
+#: client_service/templates/base/base.html:132
+msgid "General conditions"
+msgstr "AGB"
+
+#: client_service/templates/base/base.html:133
+msgid "Availability"
+msgstr "Barrierefreiheit"
 
 #: client_service/templates/base/base.html:136
 msgid "Contact"
@@ -497,7 +508,7 @@ msgstr "Fotokarussell"
 #: client_service/templates/home/home.html:41
 #: client_service/templates/home/home.html:57
 msgid "We create furniture"
-msgstr "Wir schaffen Möbel"
+msgstr "Träume für Ihr Zuhause"
 
 #: client_service/templates/home/home.html:42
 #: client_service/templates/home/home.html:58

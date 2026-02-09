@@ -67,28 +67,27 @@
                         <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Loft / Industrial">{% trans "Loft / Industrial" %}</a>
                         <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Provence">{% trans "Provence" %}</a>
                     </div>
-                
-                <!-- Recommendations Section -->
-                <div class="dropdown-recommendations">
-                    <div class="recommendation-item">
-                        <div class="recommendation-title">Popular Now</div>
-                        <div class="recommendation-text">Check out our trending modern wardrobes with smart storage solutions</div>
+
+                    <!-- Recommendations Section -->
+                    <div class="dropdown-recommendations">
+                        <div class="recommendation-item">
+                            <div class="recommendation-title">Popular Now</div>
+                            <div class="recommendation-text">Check out our trending modern wardrobes with smart storage solutions</div>
+                        </div>
+                        <div class="recommendation-item">
+                            <div class="recommendation-title">Design Ideas</div>
+                            <div class="recommendation-text">Explore Scandinavian kitchen sets with minimalist aesthetics</div>
+                        </div>
+                        <div class="recommendation-item">
+                            <div class="recommendation-title">Custom Solutions</div>
+                            <div class="recommendation-text">Get personalized sofa designs tailored to your living space</div>
+                        </div>
                     </div>
-                    <div class="recommendation-item">
-                        <div class="recommendation-title">Design Ideas</div>
-                        <div class="recommendation-text">Explore Scandinavian kitchen sets with minimalist aesthetics</div>
-                    </div>
-                    <div class="recommendation-item">
-                        <div class="recommendation-title">Custom Solutions</div>
-                        <div class="recommendation-text">Get personalized sofa designs tailored to your living space</div>
-                    </div>
-                </div>
                 </div>
             </div>
 
 
             <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
-            <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
             <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
             <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
         </nav>
@@ -119,11 +118,10 @@
         </div>
         <div class="foot-col">
             <h5>{% trans 'Navigation' %}</h5>
-            <a href="{% url 'client_service:index' %}">{% trans 'Home' %}</a>
             <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
             <a href="{% url 'client_service:index' %}#reviews">{% trans 'Reviews' %}</a>
             <a href="{% url 'client_service:index' %}#features">{% trans 'About Company' %}</a>
-            <a href="#contacts">{% trans 'Contacts' %}</a>
+            <a href="#">{% trans 'Details' %}</a>
         </div>
         <div class="foot-col">
             <h5>{% trans 'Help' %}</h5>
@@ -131,6 +129,8 @@
             <a href="#">{% trans 'Warranty' %}</a>
             <a href="#">{% trans 'Delivery' %}</a>
             <a href="#">{% trans 'Privacy Policy' %}</a>
+            <a href="#">{% trans 'General conditions' %}</a>
+            <a href="#">{% trans 'Availability'%}</a>
         </div>
         <div class="foot-col">
             <h5>{% trans 'Contact' %}</h5>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 03:21+0300\n"
+"POT-Creation-Date: 2026-02-10 00:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,6 @@ msgstr ""
 
 #: client_service/templates/base/404.html:598
 #: client_service/templates/base/base.html:32
-#: client_service/templates/base/base.html:122
 #: client_service/templates/home/home.html:6
 #: client_service/templates/works/work_detail.html:13
 msgid "Home"
@@ -252,7 +251,7 @@ msgid "Provence"
 msgstr "Provence"
 
 #: client_service/templates/base/base.html:90
-#: client_service/templates/base/base.html:123
+#: client_service/templates/base/base.html:121
 #: client_service/templates/home/home.html:73
 #: client_service/templates/works/works.html:4
 #: client_service/templates/works/works.html:14
@@ -260,38 +259,32 @@ msgid "Our Works"
 msgstr "Nos Réalisations"
 
 #: client_service/templates/base/base.html:91
-#: client_service/templates/base/base.html:124
-msgid "Reviews"
-msgstr "Avis"
-
-#: client_service/templates/base/base.html:92
-#: client_service/templates/base/base.html:125
+#: client_service/templates/base/base.html:123
 msgid "About Company"
 msgstr "À Propos"
 
-#: client_service/templates/base/base.html:93
-#: client_service/templates/base/base.html:126
+#: client_service/templates/base/base.html:92
 #: client_service/templates/home/home.html:495
 #: client_service/templates/mobel/view_mobel.html:131
 #: client_service/templates/works/works.html:122
 msgid "Contacts"
 msgstr "Contact"
 
-#: client_service/templates/base/base.html:96
+#: client_service/templates/base/base.html:95
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: client_service/templates/base/base.html:104
+#: client_service/templates/base/base.html:103
 #: client_service/templates/works/work_detail.html:118
 msgid "Order consultation"
 msgstr "Commander une consultation"
 
-#: client_service/templates/base/base.html:104
+#: client_service/templates/base/base.html:103
 #: client_service/templates/base/base.html:152
 msgid "Order Consultation"
 msgstr "Commander une Consultation"
 
-#: client_service/templates/base/base.html:118
+#: client_service/templates/base/base.html:117
 msgid ""
 "Modern furniture for your interior — we manufacture, deliver and install on "
 "time."
@@ -299,32 +292,52 @@ msgstr ""
 "Mobilier moderne pour votre intérieur — nous fabriquons, livrons et "
 "installons dans les délais."
 
-#: client_service/templates/base/base.html:121
+#: client_service/templates/base/base.html:120
 msgid "Navigation"
 msgstr "Navigation"
 
-#: client_service/templates/base/base.html:129
+#: client_service/templates/base/base.html:122
+msgid "Reviews"
+msgstr "Avis"
+
+#: client_service/templates/base/base.html:124
+#, fuzzy
+#| msgid "Production"
+msgid "Details"
+msgstr "Production"
+
+#: client_service/templates/base/base.html:127
 msgid "Help"
 msgstr "Aide"
 
-#: client_service/templates/base/base.html:130
+#: client_service/templates/base/base.html:128
 msgid "FAQ"
 msgstr "FAQ"
 
-#: client_service/templates/base/base.html:131
+#: client_service/templates/base/base.html:129
 #: client_service/templates/works/work_detail.html:240
 msgid "Warranty"
 msgstr "Garantie"
 
-#: client_service/templates/base/base.html:132
+#: client_service/templates/base/base.html:130
 #: client_service/templates/home/home.html:316
 #: client_service/templates/works/work_detail.html:219
 msgid "Delivery"
 msgstr "Livraison"
 
-#: client_service/templates/base/base.html:133
+#: client_service/templates/base/base.html:131
 msgid "Privacy Policy"
 msgstr "Politique de Confidentialité"
+
+#: client_service/templates/base/base.html:132
+#, fuzzy
+#| msgid "General consultation"
+msgid "General conditions"
+msgstr "Consultation générale"
+
+#: client_service/templates/base/base.html:133
+msgid "Availability"
+msgstr ""
 
 #: client_service/templates/base/base.html:136
 msgid "Contact"
