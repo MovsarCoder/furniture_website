@@ -61,46 +61,7 @@
                 </div>
 
                 <div class="card-content">
-                    <div class="card-main-content">
-                        <h3 class="card-title">{{ work.title|truncatewords:3 }}</h3>
-                        <p class="card-description">{{ work.description|truncatewords:16|default:"{% trans 'Description will appear soon' %}" }}</p>
-
-                        <div class="card-details">
-                            {% if work.material %}
-                            <div class="detail-item">
-                                <span class="detail-icon">🪵</span>
-                                <span class="detail-text">{{ work.material }}</span>
-                            </div>
-                            {% endif %}
-                            <div class="detail-item">
-                                <span class="detail-icon">📂</span>
-                                <span class="detail-text">{% blocktrans %}Section Furniture: {{ section }}{% endblocktrans %}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🏷️</span>
-                                <span class="detail-text">{% blocktrans %}Category Furniture: {{ category }}{% endblocktrans %}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🌐</span>
-                                <span class="detail-text">{% blocktrans %}Country: {{ work.get_country_display }}{% endblocktrans %}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🌍</span>
-                                <span class="detail-text">{% blocktrans %}Language: {{ work.get_language_display }}{% endblocktrans %}</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="card-footer">
-                        <div class="price-section">
-                            <span class="price-label">{% trans 'Cost:' %}</span>
-                            {% if work.price %}
-                            <span class="price-value">{{ work.price }}</span>
-                            <span class="price-unit">{{ work.currency|upper }}</span>
-                            {% else %}
-                            <span class="price-value request">{% trans 'By request' %}</span>
-                            {% endif %}
-                        </div>
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
                             <span>{% trans 'More details' %}</span>
                             <span class="btn-arrow">→</span>
