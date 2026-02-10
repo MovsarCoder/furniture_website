@@ -1,6 +1,8 @@
 from unfold.admin import ModelAdmin
 from django.contrib import admin
 from .models import Review, Contact, Work, Stats, ConsultationRequest, Category, CarouselPhoto
+from django.forms import ModelForm
+from django.forms.widgets import TimeInput
 
 
 @admin.register(Work)
@@ -28,8 +30,20 @@ class ReviewAdmin(ModelAdmin):
     date_hierarchy = 'date'
 
 
+class ContactAdminForm(ModelForm):
+    class Meta:
+        model = Contact
+        fields = "__all__"
+        widgets = {
+            "start_time": TimeInput(format="%H:%M", attrs={"type": "time"}),
+            "end_time": TimeInput(format="%H:%M", attrs={"type": "time"}),
+        }
+
+
 @admin.register(Contact)
 class ContactAdmin(ModelAdmin):
+    form = ContactAdminForm
+
     list_display = ('id', 'branch_name', 'phone', 'email', 'address', "start_time", "end_time", 'country', 'language')
     list_editable = ("phone", "email", "address", "start_time", "end_time", "country", "language")
     list_filter = ('country', 'language', "start_time", "end_time")

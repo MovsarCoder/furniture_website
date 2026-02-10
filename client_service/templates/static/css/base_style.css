@@ -5138,6 +5138,72 @@ img {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* ===== OPENING HOURS ===== */
+.opening-hours {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.opening-hours h5 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 700;
+  text-align: center;
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.hours-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.hours-row .day {
+  font-weight: 600;
+  color: var(--text);
+  min-width: 25px;
+}
+
+.hours-row .time {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hours-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .opening-hours {
+    padding: 12px;
+    margin-top: 15px;
+  }
+  
+  .hours-row {
+    font-size: 12px;
+    padding: 3px 0;
+  }
+}
+
 /* ===== СКРОЛЛБАР ===== */
 ::-webkit-scrollbar {
   width: 8px;
