@@ -134,8 +134,33 @@ class Contact(models.Model):
     phone = models.CharField(max_length=20, verbose_name="Номер телефона филлиала")
     email = models.EmailField(blank=True, verbose_name="Email филлиала")
     address = models.CharField(max_length=255, blank=True, verbose_name="Адрес филлиала")
+    
+    # Individual day opening hours
+    monday_open = models.TimeField(blank=True, null=True, verbose_name='Понедельник - Открытие', help_text='Формат: ЧЧ:ММ')
+    monday_close = models.TimeField(blank=True, null=True, verbose_name='Понедельник - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    tuesday_open = models.TimeField(blank=True, null=True, verbose_name='Вторник - Открытие', help_text='Формат: ЧЧ:ММ')
+    tuesday_close = models.TimeField(blank=True, null=True, verbose_name='Вторник - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    wednesday_open = models.TimeField(blank=True, null=True, verbose_name='Среда - Открытие', help_text='Формат: ЧЧ:ММ')
+    wednesday_close = models.TimeField(blank=True, null=True, verbose_name='Среда - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    thursday_open = models.TimeField(blank=True, null=True, verbose_name='Четверг - Открытие', help_text='Формат: ЧЧ:ММ')
+    thursday_close = models.TimeField(blank=True, null=True, verbose_name='Четверг - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    friday_open = models.TimeField(blank=True, null=True, verbose_name='Пятница - Открытие', help_text='Формат: ЧЧ:ММ')
+    friday_close = models.TimeField(blank=True, null=True, verbose_name='Пятница - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    saturday_open = models.TimeField(blank=True, null=True, verbose_name='Суббота - Открытие', help_text='Формат: ЧЧ:ММ')
+    saturday_close = models.TimeField(blank=True, null=True, verbose_name='Суббота - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    sunday_open = models.TimeField(blank=True, null=True, verbose_name='Воскресенье - Открытие', help_text='Формат: ЧЧ:ММ')
+    sunday_close = models.TimeField(blank=True, null=True, verbose_name='Воскресенье - Закрытие', help_text='Формат: ЧЧ:ММ')
+    
+    # Legacy fields (kept for backward compatibility)
     start_time = models.TimeField(blank=True, verbose_name='Открытие филлиала', null=True, help_text='Пример: 9:00')
     end_time = models.TimeField(blank=True, verbose_name='Закрытие филлиала', null=True, help_text='Пример: 24:00')
+    
     whatsapp = models.URLField(blank=True, null=True, verbose_name="Контактный номер в Whastapp", help_text='wa.me/+phone_number', default='wa.me/+')
     instagram = models.URLField(blank=True, null=True, verbose_name="Страница филлиала в Instagram", help_text='https://www.instagram.com/Nickname"', default='https://www.instagram.com/')
     country = models.CharField(max_length=15, choices=country, default='am', verbose_name="Страна филлиала")
@@ -147,6 +172,30 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.branch_name} | {self.address} | {self.country}"
+
+    def get_opening_hours_for_day(self, day_name):
+        """Return opening hours for a specific day (monday, tuesday, etc.)"""
+        open_time = getattr(self, f'{day_name}_open')
+        close_time = getattr(self, f'{day_name}_close')
+        
+        if open_time and close_time:
+            return f"{open_time.strftime('%H:%M')} - {close_time.strftime('%H:%M')}"
+        elif open_time and not close_time:
+            return f"{open_time.strftime('%H:%M')} - ?"
+        elif not open_time and close_time:
+            return f"? - {close_time.strftime('%H:%M')}"
+        else:
+            return "Закрыто"  # Closed
+    
+    def get_all_opening_hours(self):
+        """Return a dictionary of all opening hours"""
+        days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        hours = {}
+        
+        for day in days:
+            hours[day] = self.get_opening_hours_for_day(day)
+        
+        return hours
 
     def save(self, *args, **kwargs):
         if self.address:
