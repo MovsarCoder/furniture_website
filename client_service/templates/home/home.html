@@ -471,48 +471,8 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="font-weight:700;">{{ contact.branch_name }}</div>
-
-            <!-- Opening Hours -->
-            {% if contact.get_all_opening_hours %}
-            <div class="opening-hours-section">
-                <h4>{% trans 'Opening Hours' %}</h4>
-                <div class="hours-container">
-                    <div class="hours-column">
-                        <div class="hours-row">
-                            <span class="day">{% trans 'Mo' %}</span>
-                            <span class="time">{{ contact.monday_hours }}</span>
-                        </div>
-                        <div class="hours-row">
-                            <span class="day">{% trans 'Tu' %}</span>
-                            <span class="time">{{ contact.tuesday_hours }}</span>
-                        </div>
-                        <div class="hours-row">
-                            <span class="day">{% trans 'We' %}</span>
-                            <span class="time">{{ contact.wednesday_hours }}</span>
-                        </div>
-                        <div class="hours-row">
-                            <span class="day">{% trans 'Th' %}</span>
-                            <span class="time">{{ contact.thursday_hours }}</span>
-                        </div>
-                        <div class="hours-row">
-                            <span class="day">{% trans 'Fr' %}</span>
-                            <span class="time">{{ contact.friday_hours }}</span>
-                        </div>
-                    </div>
-                    <div class="hours-column">
-                        <div class="hours-row">
-                            <span class="day">{% trans 'Sa' %}</span>
-                            <span class="time">{{ contact.saturday_hours }}</span>
-                        </div>
-                        <div class="hours-row">
-                            <span class="day">{% trans 'Su' %}</span>
-                            <span class="time">{{ contact.sunday_hours }}</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% endif %}
             </div>
-            {% endif %}
-
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>

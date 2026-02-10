@@ -1,8 +1,6 @@
 from unfold.admin import ModelAdmin
 from django.contrib import admin
 from .models import Review, Contact, Work, Stats, ConsultationRequest, Category, CarouselPhoto
-from django.forms import ModelForm
-from django.forms.widgets import TimeInput
 
 
 @admin.register(Work)
@@ -30,64 +28,12 @@ class ReviewAdmin(ModelAdmin):
     date_hierarchy = 'date'
 
 
-class ContactAdminForm(ModelForm):
-    class Meta:
-        model = Contact
-        fields = "__all__"
-        widgets = {
-            "start_time": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "end_time": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "monday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "monday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "tuesday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "tuesday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "wednesday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "wednesday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "thursday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "thursday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "friday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "friday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "saturday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "saturday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "sunday_open": TimeInput(format="%H:%M", attrs={"type": "time"}),
-            "sunday_close": TimeInput(format="%H:%M", attrs={"type": "time"}),
-        }
-
-
 @admin.register(Contact)
 class ContactAdmin(ModelAdmin):
-    form = ContactAdminForm
-
-    list_display = ('id', 'branch_name', 'phone', 'email', 'address', 'country', 'language')
-    list_editable = ("phone", "email", "address", "country", "language")
-    list_filter = ('country', 'language')
+    list_display = ('id', 'branch_name', 'phone', 'email', 'address', "start_time", "end_time", 'country', 'language')
+    list_editable = ("phone", "email", "address", "start_time", "end_time", "country", "language")
+    list_filter = ('country', 'language', "start_time", "end_time")
     search_fields = ('branch_name', 'address')
-    
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('branch_name', 'phone', 'email', 'address', 'country', 'language')
-        }),
-        ('Время работы по дням недели', {
-            'fields': (
-                ('monday_open', 'monday_close'),
-                ('tuesday_open', 'tuesday_close'),
-                ('wednesday_open', 'wednesday_close'),
-                ('thursday_open', 'thursday_close'),
-                ('friday_open', 'friday_close'),
-                ('saturday_open', 'saturday_close'),
-                ('sunday_open', 'sunday_close'),
-            ),
-            'classes': ('collapse',)
-        }),
-        ('Контакты в соцсетях', {
-            'fields': ('whatsapp', 'instagram'),
-            'classes': ('collapse',)
-        }),
-        ('Устаревшие поля (для совместимости)', {
-            'fields': ('start_time', 'end_time'),
-            'classes': ('collapse',)
-        }),
-    )
 
 
 @admin.register(ConsultationRequest)
