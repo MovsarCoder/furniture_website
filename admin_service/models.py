@@ -184,9 +184,7 @@ class Contact(models.Model):
             return f"{open_time.strftime('%H:%M')} - ?"
         elif not open_time and close_time:
             return f"? - {close_time.strftime('%H:%M')}"
-        else:
-            return "Закрыто"  # Closed
-    
+
     def get_all_opening_hours(self):
         """Return a dictionary of all opening hours"""
         days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
