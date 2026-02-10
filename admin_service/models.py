@@ -184,6 +184,14 @@ class Contact(models.Model):
             return f"{open_time.strftime('%H:%M')} - ?"
         elif not open_time and close_time:
             return f"? - {close_time.strftime('%H:%M')}"
+        else:
+            # Return translated "Closed" based on contact's language
+            if hasattr(self, 'language') and self.language == 'de':
+                return "Geschlossen"
+            elif hasattr(self, 'language') and self.language == 'fr':
+                return "Fermé"
+            else:
+                return "Closed"
 
     def get_all_opening_hours(self):
         """Return a dictionary of all opening hours"""

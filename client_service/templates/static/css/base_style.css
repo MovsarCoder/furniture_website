@@ -5177,6 +5177,7 @@ img {
   padding: 5px 0;
   font-size: 14px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  gap: 8px; /* Reduced spacing between day and time */
 }
 
 .hours-row:last-child {
@@ -5213,6 +5214,7 @@ img {
 .branch .hours-row {
   font-size: 13px;
   padding: 4px 0;
+  gap: 6px; /* Reduced spacing for branch hours */
 }
 
 /* Mobile responsiveness for contact pages */
@@ -5239,6 +5241,7 @@ img {
   .hours-row {
     font-size: 12px;
     padding: 3px 0;
+    gap: 5px; /* Reduced spacing for mobile */
   }
   
   .hours-row .day {

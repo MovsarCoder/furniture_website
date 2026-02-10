@@ -471,7 +471,7 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="font-weight:700;">{{ contact.branch_name }}</div>
-            
+
             <!-- Opening Hours -->
             {% if contact.get_all_opening_hours %}
             <div class="opening-hours-section">
@@ -512,7 +512,7 @@
                 </div>
             </div>
             {% endif %}
-            
+
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
             <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
