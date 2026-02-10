@@ -471,7 +471,7 @@
         {% for contact in contacts %}
         <div class="branch">
             <div class="section-sub" style="font-weight:700;">{{ contact.branch_name }}</div>
-            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time|time:"g:i A" }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time|time:"g:i A" }}{% endif %}
+            <div class="contact_row">🕐 {% if contact.start_time %}{{ contact.start_time }}{% else %}—{% endif %} - {% if contact.end_time %}{{ contact.end_time }}{% endif %}
             </div>
             <div class="contact-row">📞 {{ contact.phone }}</div>
             <div class="contact-row">📧 {{ contact.email }}</div>
