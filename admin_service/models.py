@@ -196,6 +196,35 @@ class Contact(models.Model):
             hours[day] = self.get_opening_hours_for_day(day)
         
         return hours
+    
+    # Properties for template access
+    @property
+    def monday_hours(self):
+        return self.get_opening_hours_for_day('monday')
+    
+    @property
+    def tuesday_hours(self):
+        return self.get_opening_hours_for_day('tuesday')
+    
+    @property
+    def wednesday_hours(self):
+        return self.get_opening_hours_for_day('wednesday')
+    
+    @property
+    def thursday_hours(self):
+        return self.get_opening_hours_for_day('thursday')
+    
+    @property
+    def friday_hours(self):
+        return self.get_opening_hours_for_day('friday')
+    
+    @property
+    def saturday_hours(self):
+        return self.get_opening_hours_for_day('saturday')
+    
+    @property
+    def sunday_hours(self):
+        return self.get_opening_hours_for_day('sunday')
 
     def save(self, *args, **kwargs):
         if self.address:

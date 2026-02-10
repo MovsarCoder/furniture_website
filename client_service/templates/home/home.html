@@ -480,33 +480,33 @@
                     <div class="hours-column">
                         <div class="hours-row">
                             <span class="day">{% trans 'Mo' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"monday" }}</span>
+                            <span class="time">{{ contact.monday_hours }}</span>
                         </div>
                         <div class="hours-row">
                             <span class="day">{% trans 'Tu' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"tuesday" }}</span>
+                            <span class="time">{{ contact.tuesday_hours }}</span>
                         </div>
                         <div class="hours-row">
                             <span class="day">{% trans 'We' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"wednesday" }}</span>
+                            <span class="time">{{ contact.wednesday_hours }}</span>
                         </div>
                         <div class="hours-row">
                             <span class="day">{% trans 'Th' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"thursday" }}</span>
+                            <span class="time">{{ contact.thursday_hours }}</span>
                         </div>
                         <div class="hours-row">
                             <span class="day">{% trans 'Fr' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"friday" }}</span>
+                            <span class="time">{{ contact.friday_hours }}</span>
                         </div>
                     </div>
                     <div class="hours-column">
                         <div class="hours-row">
                             <span class="day">{% trans 'Sa' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"saturday" }}</span>
+                            <span class="time">{{ contact.saturday_hours }}</span>
                         </div>
                         <div class="hours-row">
                             <span class="day">{% trans 'Su' %}</span>
-                            <span class="time">{{ contact.get_opening_hours_for_day:"sunday" }}</span>
+                            <span class="time">{{ contact.sunday_hours }}</span>
                         </div>
                     </div>
                 </div>
