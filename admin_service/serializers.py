@@ -20,7 +20,18 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class OpeningHourSerializer(serializers.ModelSerializer):
+    day_label = serializers.CharField(source="get_day_display", read_only=True)
+    day_full = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = OpeningHour
+        fields = ("id", "day", "day_label", "day_full", "is_closed", "open_time", "close_time")
+
+
 class ContactSerializer(serializers.ModelSerializer):
+    opening_hours = OpeningHourSerializer(many=True, read_only=True)
+
     class Meta:
         model = Contact
         fields = "__all__"

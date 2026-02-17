@@ -1,6 +1,20 @@
 from unfold.admin import ModelAdmin
+from django import forms
 from django.contrib import admin
-from .models import Review, Contact, Work, Stats, ConsultationRequest, Category, CarouselPhoto
+from django.db import models
+from .models import Review, Contact, Work, Stats, ConsultationRequest, Category, CarouselPhoto, OpeningHour
+
+
+class OpeningHourInline(admin.TabularInline):
+    model = OpeningHour
+    extra = 0
+    max_num = 7
+    can_delete = False
+    fields = ("day", "is_closed", "open_time", "close_time")
+    readonly_fields = ("day",)
+    formfield_overrides = {
+        models.TimeField: {"widget": forms.TimeInput(attrs={"type": "time", "step": "300"})},
+    }
 
 
 @admin.register(Work)
@@ -30,10 +44,16 @@ class ReviewAdmin(ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(ModelAdmin):
-    list_display = ('id', 'branch_name', 'phone', 'email', 'address', "start_time", "end_time", 'country', 'language')
-    list_editable = ("phone", "email", "address", "start_time", "end_time", "country", "language")
-    list_filter = ('country', 'language', "start_time", "end_time")
+    list_display = ('id', 'branch_name', 'phone', 'email', 'address', 'country', 'language')
+    list_editable = ("phone", "email", "address", "country", "language")
+    list_filter = ('country', 'language')
     search_fields = ('branch_name', 'address')
+    inlines = [OpeningHourInline]
+
+    def get_inline_instances(self, request, obj=None):
+        if obj is None:
+            return []
+        return super().get_inline_instances(request, obj)
 
 
 @admin.register(ConsultationRequest)

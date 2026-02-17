@@ -9,7 +9,7 @@ def index(request):
     works = Work.objects.filter(our_work=True, country=host_name).order_by("?")[:3]
     carousel_photos = CarouselPhoto.objects.filter(is_active=True)
     reviews = Review.objects.all()
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.prefetch_related("opening_hours").all()
     stats = Stats.objects.first()
 
     total_projects = Work.objects.count()
@@ -29,7 +29,7 @@ def index(request):
 
 def all_works(request):
     works = Work.objects.all()
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.prefetch_related("opening_hours").all()
     host_name = request.get_host().removeprefix("bmass.")
 
     if works:
@@ -60,7 +60,7 @@ def catalog_view(request):
     category = request.GET.get('category')
 
     works = Work.objects.all()
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.prefetch_related("opening_hours").all()
 
     if category:
         works = works.filter(category__title=category, our_work=False, country=host_name)

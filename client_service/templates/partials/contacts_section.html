@@ -1,0 +1,73 @@
+{% load i18n %}
+
+<section id="contacts" class="section container">
+    <div class="section-header">
+        <div>
+            <div class="section-title">{% trans 'Contacts' %}</div>
+            <div class="section-sub">{% trans 'Choose a convenient branch for you' %}</div>
+        </div>
+    </div>
+    <div class="branches">
+        {% if contacts %}
+        {% for contact in contacts %}
+        <div class="branch">
+            <div class="branch-header">
+                <div class="branch-title">
+                    <span class="branch-icon">🏬</span>
+                    <span class="branch-name">{{ contact.branch_name }}</span>
+                </div>
+            </div>
+
+            {% if contact.get_all_opening_hours %}
+            <div class="opening-hours">
+                <div class="opening-hours-title">
+                    <span class="opening-hours-icon">🕐</span>
+                    <span>{% trans 'Opening Hours' %}</span>
+                </div>
+                <div class="opening-hours-grid">
+                    {% for hour in contact.get_all_opening_hours %}
+                    <div class="hours-item {% if hour.is_closed %}closed{% endif %}">
+                        <span class="day">{{ hour.get_day_display }}</span>
+                        <span class="time">
+                            {% if hour.is_closed %}
+                                {% trans 'Closed' %}
+                            {% elif hour.open_time and hour.close_time %}
+                                {{ hour.open_time|time:"H:i" }} - {{ hour.close_time|time:"H:i" }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="contact-row">📞 {{ contact.phone }}</div>
+            <div class="contact-row">📧 {{ contact.email }}</div>
+            <div class="contact-row">📍 {{ contact.address }} | {{ contact.get_country_display }}</div>
+            <div class="contact-row">
+                <a href="{{ contact.whatsapp }}">💬 {% trans 'WhatsApp' %}</a>
+                <span class="contact-divider">·</span>
+                <a href="{{ contact.instagram }}">📷 {% trans 'Instagram' %}</a>
+            </div>
+            {% if contact.address %}
+            <div class="contact-map">
+                <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
+                    <div class="mini-map"
+                         style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
+                        <div class="map-marker">📍</div>
+                    </div>
+                    <div class="map-overlay">
+                        <span class="map-text">{% trans 'View on Google Maps' %}</span>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <h1>{% trans 'No contacts!' %}</h1>
+        {% endif %}
+    </div>
+</section>

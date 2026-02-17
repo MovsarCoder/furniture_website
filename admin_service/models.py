@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import IntegerField
+from django.utils.translation import gettext_lazy as _
 import requests
 from django.conf import settings
 
@@ -134,8 +135,6 @@ class Contact(models.Model):
     phone = models.CharField(max_length=20, verbose_name="Номер телефона филлиала")
     email = models.EmailField(blank=True, verbose_name="Email филлиала")
     address = models.CharField(max_length=255, blank=True, verbose_name="Адрес филлиала")
-    start_time = models.TimeField(blank=True, verbose_name='Открытие филлиала', null=True, help_text='Пример: 9:00')
-    end_time = models.TimeField(blank=True, verbose_name='Закрытие филлиала', null=True, help_text='Пример: 24:00')
     whatsapp = models.URLField(blank=True, null=True, verbose_name="Контактный номер в Whastapp", help_text='wa.me/+phone_number', default='wa.me/+')
     instagram = models.URLField(blank=True, null=True, verbose_name="Страница филлиала в Instagram", help_text='https://www.instagram.com/Nickname"', default='https://www.instagram.com/')
     country = models.CharField(max_length=15, choices=country, default='am', verbose_name="Страна филлиала")
@@ -152,6 +151,20 @@ class Contact(models.Model):
         if self.address:
             self.get_coordinates_from_address()
         super().save(*args, **kwargs)
+        self.ensure_opening_hours()
+
+    def ensure_opening_hours(self):
+        existing_days = set(self.opening_hours.values_list("day", flat=True))
+        missing = [
+            OpeningHour(contact=self, day=day)
+            for day in range(7)
+            if day not in existing_days
+        ]
+        if missing:
+            OpeningHour.objects.bulk_create(missing)
+
+    def get_all_opening_hours(self):
+        return self.opening_hours.all()
 
     def get_coordinates_from_address(self):
         try:
@@ -175,6 +188,48 @@ class Contact(models.Model):
                 self.longitude = location['lng']
         except Exception as e:
             pass
+
+
+class OpeningHour(models.Model):
+    class Day(models.IntegerChoices):
+        MONDAY = 0, _("Mo")
+        TUESDAY = 1, _("Tu")
+        WEDNESDAY = 2, _("We")
+        THURSDAY = 3, _("Th")
+        FRIDAY = 4, _("Fr")
+        SATURDAY = 5, _("Sa")
+        SUNDAY = 6, _("Su")
+
+    DAY_FULL = {
+        Day.MONDAY: _("Monday"),
+        Day.TUESDAY: _("Tuesday"),
+        Day.WEDNESDAY: _("Wednesday"),
+        Day.THURSDAY: _("Thursday"),
+        Day.FRIDAY: _("Friday"),
+        Day.SATURDAY: _("Saturday"),
+        Day.SUNDAY: _("Sunday"),
+    }
+
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, related_name="opening_hours")
+    day = models.PositiveSmallIntegerField(choices=Day.choices, verbose_name="День недели")
+    is_closed = models.BooleanField(default=False, verbose_name="Выходной")
+    open_time = models.TimeField(blank=True, null=True, verbose_name="Открытие", help_text="Формат: ЧЧ:ММ")
+    close_time = models.TimeField(blank=True, null=True, verbose_name="Закрытие", help_text="Формат: ЧЧ:ММ")
+
+    class Meta:
+        verbose_name = "График работы"
+        verbose_name_plural = "График работы"
+        ordering = ("day",)
+        constraints = [
+            models.UniqueConstraint(fields=["contact", "day"], name="unique_opening_hour_per_day")
+        ]
+
+    def __str__(self):
+        return f"{self.contact.branch_name} | {self.get_day_display()}"
+
+    @property
+    def day_full(self):
+        return self.DAY_FULL.get(self.day, "")
 
 
 class ConsultationRequest(models.Model):

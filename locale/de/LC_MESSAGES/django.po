@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-11 00:07+0300\n"
+"POT-Creation-Date: 2026-02-18 01:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin_service/models.py:195
+msgid "Mo"
+msgstr ""
+
+#: admin_service/models.py:196
+#, fuzzy
+#| msgid "True"
+msgid "Tu"
+msgstr "Wahr"
+
+#: admin_service/models.py:197
+msgid "We"
+msgstr ""
+
+#: admin_service/models.py:198
+msgid "Th"
+msgstr ""
+
+#: admin_service/models.py:199
+msgid "Fr"
+msgstr ""
+
+#: admin_service/models.py:200
+#, fuzzy
+#| msgid "Sofa"
+msgid "Sa"
+msgstr "Sofa"
+
+#: admin_service/models.py:201
+msgid "Su"
+msgstr ""
+
+#: admin_service/models.py:204
+msgid "Monday"
+msgstr ""
+
+#: admin_service/models.py:205
+msgid "Tuesday"
+msgstr ""
+
+#: admin_service/models.py:206
+msgid "Wednesday"
+msgstr ""
+
+#: admin_service/models.py:207
+msgid "Thursday"
+msgstr ""
+
+#: admin_service/models.py:208
+msgid "Friday"
+msgstr ""
+
+#: admin_service/models.py:209
+msgid "Saturday"
+msgstr ""
+
+#: admin_service/models.py:210
+msgid "Sunday"
+msgstr ""
 
 #: admin_service/templates/consultation/consultation.html:5
 #: admin_service/templates/consultation/consultation.html:12
@@ -291,9 +351,7 @@ msgid "About Company"
 msgstr "Über uns"
 
 #: client_service/templates/base/base.html:92
-#: client_service/templates/home/home.html:465
-#: client_service/templates/mobel/view_mobel.html:92
-#: client_service/templates/works/works.html:83
+#: client_service/templates/partials/contacts_section.html:6
 msgid "Contacts"
 msgstr "Kontakt"
 
@@ -369,16 +427,12 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: client_service/templates/base/base.html:137
-#: client_service/templates/home/home.html:479
-#: client_service/templates/mobel/view_mobel.html:146
-#: client_service/templates/works/works.html:137
+#: client_service/templates/partials/contacts_section.html:50
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
 #: client_service/templates/base/base.html:138
-#: client_service/templates/home/home.html:479
-#: client_service/templates/mobel/view_mobel.html:146
-#: client_service/templates/works/works.html:137
+#: client_service/templates/partials/contacts_section.html:52
 msgid "Instagram"
 msgstr "Instagram"
 
@@ -799,24 +853,6 @@ msgstr "Projekte"
 msgid "rating"
 msgstr "Bewertung"
 
-#: client_service/templates/home/home.html:466
-#: client_service/templates/mobel/view_mobel.html:93
-#: client_service/templates/works/works.html:84
-msgid "Choose a convenient branch for you"
-msgstr "Wählen Sie eine für Sie passende Filiale"
-
-#: client_service/templates/home/home.html:488
-#: client_service/templates/mobel/view_mobel.html:155
-#: client_service/templates/works/works.html:146
-msgid "View on Google Maps"
-msgstr "Auf Google Maps anzeigen"
-
-#: client_service/templates/home/home.html:496
-#: client_service/templates/mobel/view_mobel.html:163
-#: client_service/templates/works/works.html:154
-msgid "No contacts!"
-msgstr "Keine Kontakte!"
-
 #: client_service/templates/mobel/view_mobel.html:18
 msgid "Assortment"
 msgstr "Sortiment"
@@ -836,49 +872,27 @@ msgstr "Möchten Sie ähnliche Möbel bestellen?"
 msgid "Our masters will create a unique piece specially for you"
 msgstr "Unsere Meister erstellen ein einzigartiges Stück speziell für Sie"
 
-#: client_service/templates/mobel/view_mobel.html:105
-#: client_service/templates/works/works.html:96
+#: client_service/templates/partials/contacts_section.html:7
+msgid "Choose a convenient branch for you"
+msgstr "Wählen Sie eine für Sie passende Filiale"
+
+#: client_service/templates/partials/contacts_section.html:25
 msgid "Opening Hours"
 msgstr ""
 
-#: client_service/templates/mobel/view_mobel.html:109
-#: client_service/templates/works/works.html:100
-msgid "Mo"
-msgstr ""
-
-#: client_service/templates/mobel/view_mobel.html:113
-#: client_service/templates/works/works.html:104
+#: client_service/templates/partials/contacts_section.html:33
 #, fuzzy
-#| msgid "True"
-msgid "Tu"
-msgstr "Wahr"
+#| msgid "Close"
+msgid "Closed"
+msgstr "Schließen"
 
-#: client_service/templates/mobel/view_mobel.html:117
-#: client_service/templates/works/works.html:108
-msgid "We"
-msgstr ""
+#: client_service/templates/partials/contacts_section.html:62
+msgid "View on Google Maps"
+msgstr "Auf Google Maps anzeigen"
 
-#: client_service/templates/mobel/view_mobel.html:121
-#: client_service/templates/works/works.html:112
-msgid "Th"
-msgstr ""
-
-#: client_service/templates/mobel/view_mobel.html:125
-#: client_service/templates/works/works.html:116
-msgid "Fr"
-msgstr ""
-
-#: client_service/templates/mobel/view_mobel.html:131
-#: client_service/templates/works/works.html:122
-#, fuzzy
-#| msgid "Sofa"
-msgid "Sa"
-msgstr "Sofa"
-
-#: client_service/templates/mobel/view_mobel.html:135
-#: client_service/templates/works/works.html:126
-msgid "Su"
-msgstr ""
+#: client_service/templates/partials/contacts_section.html:70
+msgid "No contacts!"
+msgstr "Keine Kontakte!"
 
 #: client_service/templates/works/work_detail.html:15
 msgid "Portfolio"
