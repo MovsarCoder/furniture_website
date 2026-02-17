@@ -68,19 +68,34 @@
                         <a href="{% url 'client_service:catalog' %}?section=Kitchen&category=Provence">{% trans "Provence" %}</a>
                     </div>
 
-                    <!-- Recommendations Section -->
-                    <div class="dropdown-recommendations">
-                        <div class="recommendation-item">
-                            <div class="recommendation-title">{% trans 'Popular Now' %}</div>
-                            <div class="recommendation-text">{% trans 'Check out our trending modern wardrobes with smart storage solutions' %}</div>
+                    <div class="dropdown-works" data-interval="5000">
+                        <div class="dropdown-works-head">
+                            <div class="dropdown-works-title">{% trans 'Our Works' %}</div>
+                            <div class="dropdown-works-sub">{% trans 'Fresh picks from our portfolio' %}</div>
                         </div>
-                        <div class="recommendation-item">
-                            <div class="recommendation-title">{% trans 'Design Ideas' %}</div>
-                            <div class="recommendation-text">{% trans 'Explore Scandinavian kitchen sets with minimalist aesthetics' %}</div>
-                        </div>
-                        <div class="recommendation-item">
-                            <div class="recommendation-title">{% trans 'Custom Solutions' %}</div>
-                            <div class="recommendation-text">{% trans 'Get personalized sofa designs tailored to your living space' %}</div>
+                        <div class="dropdown-works-grid" id="dropdownWorksGrid">
+                            {% if nav_our_works %}
+                                {% for work in nav_our_works %}
+                                <a href="{% url 'client_service:work_detail' work.id %}" class="dropdown-work-card {% if forloop.counter <= 3 %}is-visible{% endif %}" data-work-card>
+                                    <div class="work-thumb">
+                                        {% if work.image %}
+                                            <img src="{{ work.image.url }}" alt="{{ work.title }}">
+                                        {% else %}
+                                            <div class="work-thumb-placeholder">🏡</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="work-info">
+                                        <div class="work-title">{{ work.title }}</div>
+                                        <div class="work-meta">
+                                            <span class="work-category">{{ work.category.title }}</span>
+                                            <span class="work-price">{{ work.price }} {{ work.get_currency_display }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            {% else %}
+                                <div class="dropdown-works-empty">{% trans 'No featured items yet' %}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -291,6 +306,32 @@
     window.gettext = function(key) {
         return window.translations[key] || key;
     };
+
+    (function(){
+        const grid = document.getElementById('dropdownWorksGrid');
+        if (!grid) return;
+
+        const cards = Array.from(grid.querySelectorAll('[data-work-card]'));
+        if (cards.length <= 3) return;
+
+        const container = grid.closest('.dropdown-works');
+        const interval = Number(container?.dataset?.interval || 5000);
+        let last = [];
+
+        function pickNext() {
+            const pool = cards.filter(c => !last.includes(c));
+            const candidates = pool.length >= 3 ? pool : cards.slice();
+            const shuffled = candidates.sort(() => Math.random() - 0.5);
+            const next = shuffled.slice(0, 3);
+
+            cards.forEach(card => card.classList.remove('is-visible'));
+            next.forEach(card => card.classList.add('is-visible'));
+            last = next;
+        }
+
+        pickNext();
+        setInterval(pickNext, interval);
+    })();
 </script>
 
 </body>
