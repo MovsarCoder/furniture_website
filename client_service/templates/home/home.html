@@ -82,30 +82,32 @@
         <!-- Enhanced Portfolio Grid -->
         <div class="portfolio-enhanced-grid" id="portfolioGrid">
             {% for work in works %}
-            <div class="card-image-container">
-                <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
-                <div class="image-overlay">
-                    <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
-                        <span class="btn-icon">👁️</span>
-                        <span>{% trans 'Quick View' %}</span>
-                    </button>
+            <article class="portfolio-card">
+                <div class="card-image-container">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
+                    <div class="image-overlay">
+                        <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
+                            <span class="btn-icon">👁️</span>
+                            <span>{% trans 'Quick View' %}</span>
+                        </button>
+                    </div>
+                    <div class="card-badges">
+                        <span class="badge badge-category">{{ work.get_work_type_display }}</span>
+                        {% if work.is_featured %}
+                        <span class="badge badge-featured">⭐ {% trans 'Recommended' %}</span>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="card-badges">
-                    <span class="badge badge-category">{{ work.get_work_type_display }}</span>
-                    {% if work.is_featured %}
-                    <span class="badge badge-featured">⭐ {% trans 'Recommended' %}</span>
-                    {% endif %}
-                </div>
-            </div>
 
-            <div class="card-content">
-                <div class="card-footer">
-                    <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
-                        <span>{% trans 'More details' %}</span>
-                        <span class="btn-arrow">→</span>
-                    </a>
+                <div class="card-content">
+                    <div class="card-footer">
+                        <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
+                            <span>{% trans 'More details' %}</span>
+                            <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            </article>
             {% endfor %}
         </div>
 
