@@ -18,7 +18,6 @@
         </nav>
 
         <div class="product-detail-layout">
-            <!-- Left: Product Image -->
             <div class="product-image-section">
                 <div class="product-image-wrapper">
                     {% if work.image %}
@@ -76,12 +75,6 @@
                             <div class="info-badge">
                                 <span class="badge-icon">🪵</span>
                                 <span class="badge-text">{{ work.material }}</span>
-                            </div>
-                            {% endif %}
-                            {% if work.work_type %}
-                            <div class="info-badge">
-                                <span class="badge-icon">🏷️</span>
-                                <span class="badge-text">{{ work.get_work_type_display }}</span>
                             </div>
                             {% endif %}
                             {% if work.status %}
@@ -165,47 +158,6 @@
                                 <span class="detail-value">{{ work.material }}</span>
                             </li>
                             {% endif %}
-                            {% if work.work_type %}
-                            <li class="detail-item">
-                                <span class="detail-label">{% trans 'Type' %}:</span>
-                                <span class="detail-value">{{ work.get_work_type_display }}</span>
-                            </li>
-                            {% endif %}
-                            {% if work.date %}
-                            <li class="detail-item">
-                                <span class="detail-label">{% trans 'Production Date' %}:</span>
-                                <span class="detail-value">{{ work.date|date:"d.m.Y" }}</span>
-                            </li>
-                            {% endif %}
-                            {% if work.country %}
-                            <li class="detail-item">
-                                <span class="detail-label">{% trans 'Country' %}:</span>
-                                <span class="detail-value">{{ work.get_country_display }}</span>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-
-                    <!-- Product Advantages -->
-                    <div class="details-section">
-                        <h3 class="section-title">{% trans 'Product Advantages' %}</h3>
-                        <ul class="advantages-list">
-                            <li class="advantage-item">
-                                <span class="advantage-icon">✓</span>
-                                <span>{% trans 'High quality materials' %}</span>
-                            </li>
-                            <li class="advantage-item">
-                                <span class="advantage-icon">✓</span>
-                                <span>{% trans 'Individual design' %}</span>
-                            </li>
-                            <li class="advantage-item">
-                                <span class="advantage-icon">✓</span>
-                                <span>{% trans 'Professional assembly' %}</span>
-                            </li>
-                            <li class="advantage-item">
-                                <span class="advantage-icon">✓</span>
-                                <span>{% trans 'Warranty included' %}</span>
-                            </li>
                         </ul>
                     </div>
 
