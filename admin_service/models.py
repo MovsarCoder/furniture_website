@@ -33,12 +33,6 @@ COUNTRIES = [
     ("at", "Austria"),
 ]
 
-CURRENCIES = [
-    ("usd", "USD $"),
-    ("eur", "EUR €"),
-]
-
-
 class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название категории", unique=True)
     description = models.CharField(max_length=500, blank=True, verbose_name="Описание категории (не обязательно)", )
@@ -52,8 +46,6 @@ class Work(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="works", verbose_name="Категория")
     description = models.TextField(blank=True, verbose_name="Описание мебели")
     image = models.ImageField(upload_to="portfolio/", blank=True, null=True, verbose_name="Фотография мебели")
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена", default=0)
-    currency = models.CharField(max_length=5, choices=CURRENCIES, default="usd", verbose_name="Валюта")
     country = models.CharField(max_length=5, choices=COUNTRIES, default="us", verbose_name="Страна работы")
     date = models.DateField(blank=True, null=True, verbose_name="Дата изготовления")
     language = models.CharField(max_length=5, choices=languages, verbose_name="Выбор языка на работе")
@@ -72,7 +64,7 @@ class Work(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.title} | {self.price} {self.currency}"
+        return self.title
 
 
 class Stats(models.Model):
@@ -295,3 +287,41 @@ class CarouselPhoto(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class AboutPageContent(models.Model):
+    LANGUAGE_CHOICES = [
+        ("en", "English"),
+        ("de", "Deutsch"),
+        ("fr", "Français"),
+    ]
+
+    language = models.CharField(
+        max_length=5,
+        choices=LANGUAGE_CHOICES,
+        unique=True,
+        verbose_name="Язык страницы",
+    )
+    title = models.CharField(
+        max_length=200,
+        default="About Us",
+        verbose_name="Заголовок",
+    )
+    subtitle = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Подзаголовок",
+    )
+    content = models.TextField(
+        default="",
+        verbose_name="Основной текст",
+    )
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+
+    class Meta:
+        verbose_name = "About Us (контент)"
+        verbose_name_plural = "About Us (контент)"
+        ordering = ["language"]
+
+    def __str__(self):
+        return f"About Us [{self.language}]"

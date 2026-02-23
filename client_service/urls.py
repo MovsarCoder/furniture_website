@@ -5,6 +5,7 @@ app_name = "client_service"
 
 urlpatterns = [
     path("", index, name="index"),
+    path("about/", about_page, name="about"),
     path("portfolio/", all_works, name="portfolio"),
     path("portfolio/<int:pk>/", work_detail, name="work_detail"),
     path('catalog/', catalog_view, name='catalog'),

@@ -2445,12 +2445,6 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.price-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .details-btn {
   display: flex;
   align-items: center;
@@ -2802,6 +2796,7 @@ img {
 .nav a {
   color: var(--text);
   font-weight: 600;
+  font-size: 18px;
   padding: 12px 20px;
   border-radius: 12px;
   transition: var(--transition);
@@ -2908,7 +2903,7 @@ img {
   padding: 14px 24px;
   border-radius: 16px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   box-shadow: var(--shadow-brand);
   border: 0;
   cursor: pointer;
@@ -3724,35 +3719,6 @@ img {
 
 
 
-.price-label {
-  font-size: 12px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-}
-
-.price-value {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--brand);
-  letter-spacing: -0.5px;
-}
-
-.showcase-card .price-unit {
-  color: var(--text); /* Made currency black as requested */
-  font-weight: 600;
-  font-size: 16px;
-  align-self: center;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-
-
-
 .details-btn:hover .btn-arrow {
   transform: translateX(4px);
 }
@@ -4122,35 +4088,6 @@ img {
   backdrop-filter: saturate(1.2) blur(6px);
   border: 1px solid rgba(0,0,0,.14);
   background: rgba(255,255,255,.35);
-}
-
-.badge-price {
-  position: relative;
-  overflow: hidden;
-  background: var(--gradient-brand);
-  color: #f8fbff;
-  border: 1px solid rgba(0,0,0,.18);
-  box-shadow: 0 10px 24px rgba(52,58,64,.2), inset 0 1px 0 rgba(255,255,255,.25), 0 0 0 1px rgba(0,0,0,.06);
-  text-shadow: 0 1px 0 rgba(0,0,0,.25);
-}
-
-.badge-price::before {
-  content: "💸";
-  margin-right: 6px;
-}
-
-.badge-price::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(255,255,255,.28), rgba(255,255,255,0) 42%);
-  opacity: .7;
-}
-
-.portfolio-item:hover .badge-price {
-  box-shadow: 0 14px 30px rgba(52,58,64,.25), inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 1px rgba(0,0,0,.06);
-  transform: translateY(-1px);
 }
 
 .card-meta {
@@ -5548,7 +5485,7 @@ img {
     margin-left: 0;
     border-radius: 8px;
     text-decoration: none !important;
-    font-size: 13px;
+    font-size: 14px;
     color: #4a4a4a;
     transition: all 0.25s ease;
 }
@@ -6031,73 +5968,6 @@ img {
 
 .product-dimensions-inline .dimensions-value {
   font-weight: 600;
-}
-
-/* Price Section */
-.product-price-section {
-  margin-bottom: 36px;
-  padding: 32px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
-  border-radius: 16px;
-  border: 1px solid #e9ecef;
-  position: relative;
-  overflow: hidden;
-}
-
-.product-price-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
-
-.price-display {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 1;
-}
-
-.price-value {
-  font-size: 48px;
-  font-weight: 700;
-  color: #212529;
-  letter-spacing: -1.5px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.price-value.request {
-  font-size: 36px;
-  font-weight: 600;
-  color: #495057;
-}
-
-.price-currency {
-  font-size: 22px;
-  font-weight: 500;
-  color: #6c757d;
-  margin-left: 4px;
-}
-
-.price-note {
-  font-size: 13px;
-  color: #6c757d;
-  margin: 0;
-  font-style: italic;
-  position: relative;
-  z-index: 1;
-  font-weight: 400;
 }
 
 /* Product Badges */
@@ -6654,9 +6524,6 @@ img {
     font-size: 32px;
   }
 
-  .price-value {
-    font-size: 40px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -6680,10 +6547,6 @@ img {
     font-size: 28px;
   }
 
-  .price-value {
-    font-size: 36px;
-  }
-
   .product-detail-layout {
     gap: 40px;
   }
@@ -6700,10 +6563,6 @@ img {
 
   .product-title {
     font-size: 24px;
-  }
-
-  .price-value {
-    font-size: 32px;
   }
 
   .modal-title {
@@ -6739,9 +6598,6 @@ img {
     font-size: 32px;
   }
 
-  .price-value {
-    font-size: 40px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -6765,10 +6621,6 @@ img {
     font-size: 28px;
   }
 
-  .price-value {
-    font-size: 36px;
-  }
-
   .product-detail-layout {
     gap: 40px;
   }
@@ -6785,10 +6637,6 @@ img {
 
   .product-title {
     font-size: 24px;
-  }
-
-  .price-value {
-    font-size: 32px;
   }
 
   .modal-title {
@@ -6908,61 +6756,6 @@ img {
   color: var(--text-muted);
   font-size: 14px;
   font-weight: 500;
-}
-
-/* Enhanced Price Block */
-.price-block {
-  margin-bottom: 32px;
-  padding: 24px;
-  background: linear-gradient(135deg, rgba(52, 58, 64, 0.1), rgba(108, 117, 125, 0.1));
-  border: 1px solid rgba(52, 58, 64, 0.3);
-  border-radius: var(--radius-lg);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.price-block::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-brand);
-  opacity: 0.03;
-}
-
-.price-main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.price-currency {
-  font-size: 28px;
-}
-
-.price-value {
-  font-size: clamp(28px, 6vw, 42px);
-  font-weight: 800;
-  color: var(--brand);
-  text-shadow: 0 0 10px rgba(52, 58, 64, 0.2);
-}
-
-.price-unit {
-  font-size: clamp(16px, 4vw, 24px);
-  font-weight: 600;
-  color: var(--text); /* Made currency black as requested */
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-
-.price-note {
-  color: var(--muted);
-  font-size: 13px;
-  font-style: italic;
-  position: relative;
 }
 
 /* Work Description */
@@ -7529,11 +7322,6 @@ img {
     height: 250px;
   }
 
-  .price-block .badge-price {
-    font-size: 20px;
-    padding: 12px 16px;
-  }
-
   .specs-grid {
     grid-template-columns: 1fr;
   }
@@ -7671,7 +7459,7 @@ img {
     border-radius: 8px;
     text-decoration: none !important;
     text-decoration-line: none !important;
-    font-size: 13px;
+    font-size: 14px;
     color: #4a4a4a;
     border: 1px solid transparent;
     transition: all 0.25s ease;
@@ -7797,11 +7585,6 @@ img {
     gap: 8px;
     font-size: 11px;
     color: #6c757d;
-}
-
-.work-price {
-    font-weight: 600;
-    color: #343a40;
 }
 
 .dropdown-works-empty {

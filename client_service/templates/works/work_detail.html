@@ -87,23 +87,6 @@
                     </div>
                 </div>
 
-                <!-- Price Section -->
-                <div class="product-price-section">
-                    {% if work.price %}
-                    <div class="price-display">
-                        <span class="price-value">{{ work.price|floatformat:0 }}</span>
-                        <span class="price-currency">{{ work.get_currency_display }}</span>
-                    </div>
-                    <p class="price-note">{% trans 'Final cost is calculated individually' %}</p>
-                    {% else %}
-                    <div class="price-display">
-                        <span class="price-value request">{% trans 'By request' %}</span>
-                    </div>
-                    <p class="price-note">{% trans 'The final cost is calculated individually after consultation' %}</p>
-                    {% endif %}
-                </div>
-
-
                 <!-- Action Buttons -->
                 <div class="product-actions">
                     <button class="btn-primary-large" onclick="openConsultationModal()">

@@ -72,3 +72,18 @@ def catalog_view(request):
         "contacts": contacts,
         "works": works,
     })
+
+
+def about_page(request):
+    contacts = Contact.objects.prefetch_related("opening_hours").all()
+    current_language = request.LANGUAGE_CODE
+
+    about_content = (
+        AboutPageContent.objects.filter(language=current_language).first()
+        or AboutPageContent.objects.filter(language="en").first()
+    )
+
+    return render(request, "home/about.html", {
+        "contacts": contacts,
+        "about_content": about_content,
+    })

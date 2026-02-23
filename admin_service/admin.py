@@ -2,7 +2,17 @@ from unfold.admin import ModelAdmin
 from django import forms
 from django.contrib import admin
 from django.db import models
-from .models import Review, Contact, Work, Stats, ConsultationRequest, Category, CarouselPhoto, OpeningHour
+from .models import (
+    AboutPageContent,
+    Review,
+    Contact,
+    Work,
+    Stats,
+    ConsultationRequest,
+    Category,
+    CarouselPhoto,
+    OpeningHour,
+)
 
 
 class OpeningHourInline(admin.TabularInline):
@@ -19,9 +29,9 @@ class OpeningHourInline(admin.TabularInline):
 
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
-    list_display = ('id', 'category', 'title', 'description', "our_work", 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth',
+    list_display = ('id', 'category', 'title', 'description', "our_work", 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth',
                     'created_at')
-    list_editable = ('description', "our_work", 'category', 'price', 'currency', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
+    list_editable = ('description', "our_work", 'category', 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth')
     list_filter = ('our_work', 'work_type', 'category', 'status', 'country', 'date', 'created_at', 'language',)
     search_fields = ('title', 'category', 'description', 'our_work', "date", "created_at", "status", "work_type", "language", 'country')
     date_hierarchy = 'created_at'
@@ -96,3 +106,11 @@ class CarouselPhotoAdmin(ModelAdmin):
     list_filter = ("is_active",)
     search_fields = ("title", "caption")
     ordering = ("order", "-created_at")
+
+
+@admin.register(AboutPageContent)
+class AboutPageContentAdmin(ModelAdmin):
+    list_display = ("language", "title", "updated_at")
+    list_editable = ("title",)
+    readonly_fields = ("updated_at",)
+    search_fields = ("title", "subtitle", "content")

@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "About Us" %} - B'Mass{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div class="works-hero">
+        <div class="section-header">
+            <div>
+                <h1 class="section-title">
+                    {% if about_content and about_content.title %}
+                    {{ about_content.title }}
+                    {% else %}
+                    {% trans "About Us" %}
+                    {% endif %}
+                </h1>
+                {% if about_content and about_content.subtitle %}
+                <p class="section-subtitle">{{ about_content.subtitle }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="work-description">
+            {% if about_content and about_content.content %}
+            <p>{{ about_content.content|linebreaksbr }}</p>
+            {% else %}
+            <p>{% trans "Add About Us content in admin panel." %}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% include "partials/contacts_section.html" %}
+{% endblock %}
