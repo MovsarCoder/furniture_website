@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-24 02:39+0300\n"
+"POT-Creation-Date: 2026-02-26 02:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,7 +147,7 @@ msgid "Return to progress"
 msgstr "Zurück zu In Bearbeitung"
 
 #: admin_service/templates/consultation/consultation.html:124
-#: client_service/templates/base/base.html:246
+#: client_service/templates/base/base.html:247
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -211,7 +211,7 @@ msgstr ""
 "unserer Möbelkollektion finden."
 
 #: client_service/templates/base/404.html:598
-#: client_service/templates/base/base.html:32
+#: client_service/templates/base/base.html:33
 #: client_service/templates/home/home.html:6
 #: client_service/templates/works/work_detail.html:13
 msgid "Home"
@@ -221,183 +221,183 @@ msgstr "Home"
 msgid "Furniture catalog"
 msgstr "Möbelkatalog"
 
-#: client_service/templates/base/base.html:31
+#: client_service/templates/base/base.html:32
 msgid "Main navigation"
 msgstr "Hauptnavigation"
 
-#: client_service/templates/base/base.html:33
-#: client_service/templates/base/base.html:36
+#: client_service/templates/base/base.html:34
+#: client_service/templates/base/base.html:37
 msgid "Furniture"
 msgstr "Möbel"
 
-#: client_service/templates/base/base.html:39
+#: client_service/templates/base/base.html:40
 msgid "Storage"
 msgstr "Aufbewahrung"
 
-#: client_service/templates/base/base.html:40
+#: client_service/templates/base/base.html:41
 msgid "Shelf"
 msgstr "Regal"
 
-#: client_service/templates/base/base.html:41
+#: client_service/templates/base/base.html:42
 msgid "Sideboard"
 msgstr "Sideboard"
 
-#: client_service/templates/base/base.html:42
+#: client_service/templates/base/base.html:43
 msgid "Chest of Drawers"
 msgstr "Kommode"
 
-#: client_service/templates/base/base.html:43
+#: client_service/templates/base/base.html:44
 msgid "Coat Rack"
 msgstr "Garderobe"
 
-#: client_service/templates/base/base.html:44
+#: client_service/templates/base/base.html:45
 msgid "Media Furniture"
 msgstr "Medienschrank"
 
-#: client_service/templates/base/base.html:48
 #: client_service/templates/base/base.html:49
+#: client_service/templates/base/base.html:50
 msgid "Sofa"
 msgstr "Sofa"
 
-#: client_service/templates/base/base.html:50
+#: client_service/templates/base/base.html:51
 msgid "Corner sofa"
 msgstr "Ecksofa"
 
-#: client_service/templates/base/base.html:51
+#: client_service/templates/base/base.html:52
 msgid "Sofa Bed"
 msgstr "Schlafsofa"
 
-#: client_service/templates/base/base.html:52
+#: client_service/templates/base/base.html:53
 msgid "Daybed"
 msgstr "Tagesbett"
 
-#: client_service/templates/base/base.html:56
+#: client_service/templates/base/base.html:57
 msgid "Sleeping"
 msgstr "Schlafbereich"
 
-#: client_service/templates/base/base.html:57
-#: client_service/templates/base/base.html:84
+#: client_service/templates/base/base.html:58
+#: client_service/templates/base/base.html:85
 msgid "Bed"
 msgstr "Bett"
 
-#: client_service/templates/base/base.html:58
+#: client_service/templates/base/base.html:59
 msgid "Bedroom Set"
 msgstr "Schlafzimmerset"
 
-#: client_service/templates/base/base.html:59
+#: client_service/templates/base/base.html:60
 msgid "Double Bed"
 msgstr "Doppelbett"
 
-#: client_service/templates/base/base.html:60
-#: client_service/templates/base/base.html:86
+#: client_service/templates/base/base.html:61
+#: client_service/templates/base/base.html:87
 msgid "Wardrobe"
 msgstr "Kleiderschrank"
 
-#: client_service/templates/base/base.html:65
+#: client_service/templates/base/base.html:66
 msgid "Kitchen"
 msgstr "Küche"
 
-#: client_service/templates/base/base.html:66
+#: client_service/templates/base/base.html:67
 msgid "Classic / Traditional"
 msgstr "Klassisch / Traditionell"
 
-#: client_service/templates/base/base.html:67
+#: client_service/templates/base/base.html:68
 msgid "Modern / High-Tech"
 msgstr "Modern / High-Tech"
 
-#: client_service/templates/base/base.html:68
+#: client_service/templates/base/base.html:69
 msgid "Scandinavian"
 msgstr "Skandinavisch"
 
-#: client_service/templates/base/base.html:72
 #: client_service/templates/base/base.html:73
+#: client_service/templates/base/base.html:74
 msgid "Bathroom Furniture"
 msgstr "Badmöbel"
 
-#: client_service/templates/base/base.html:74
+#: client_service/templates/base/base.html:75
 msgid "Bathroom Sets"
 msgstr "Badezimmersets"
 
-#: client_service/templates/base/base.html:75
+#: client_service/templates/base/base.html:76
 msgid "Mirror Cabinets"
 msgstr "Spiegelschränke"
 
-#: client_service/templates/base/base.html:76
+#: client_service/templates/base/base.html:77
 msgid "Vanity Base Cabinets"
 msgstr "Waschtischunterschränke"
 
-#: client_service/templates/base/base.html:77
+#: client_service/templates/base/base.html:78
 msgid "Wall Cabinets"
 msgstr "Hängeschränke"
 
-#: client_service/templates/base/base.html:78
+#: client_service/templates/base/base.html:79
 msgid "Tall Cabinets"
 msgstr "Hochschränke"
 
-#: client_service/templates/base/base.html:79
+#: client_service/templates/base/base.html:80
 msgid "Washer & Dryer Cabinets"
 msgstr "Waschmaschinen- & Trocknerschränke"
 
-#: client_service/templates/base/base.html:83
+#: client_service/templates/base/base.html:84
 msgid "Kids"
 msgstr "Kinder"
 
-#: client_service/templates/base/base.html:85
+#: client_service/templates/base/base.html:86
 msgid "Bunk Bed"
 msgstr "Stockbett"
 
-#: client_service/templates/base/base.html:87
+#: client_service/templates/base/base.html:88
 msgid "Kids Furniture Set"
 msgstr "Kindermöbelset"
 
-#: client_service/templates/base/base.html:92
-#: client_service/templates/base/base.html:123
-#: client_service/templates/base/base.html:154
-#: client_service/templates/home/home.html:73
+#: client_service/templates/base/base.html:93
+#: client_service/templates/base/base.html:124
+#: client_service/templates/base/base.html:155
+#: client_service/templates/home/home.html:78
 #: client_service/templates/works/works.html:4
 #: client_service/templates/works/works.html:14
 msgid "Our Works"
 msgstr "Referenzen"
 
-#: client_service/templates/base/base.html:93
+#: client_service/templates/base/base.html:94
 msgid "Fresh picks from our portfolio"
 msgstr ""
 
-#: client_service/templates/base/base.html:115
+#: client_service/templates/base/base.html:116
 #, fuzzy
 #| msgid "No requests yet"
 msgid "No featured items yet"
 msgstr "Noch keine Anfragen"
 
-#: client_service/templates/base/base.html:124
-#: client_service/templates/base/base.html:156
+#: client_service/templates/base/base.html:125
+#: client_service/templates/base/base.html:157
 #: client_service/templates/home/about.html:4
 #: client_service/templates/home/about.html:15
 msgid "About Us"
 msgstr "Über uns"
 
-#: client_service/templates/base/base.html:125
+#: client_service/templates/base/base.html:126
 #: client_service/templates/partials/contacts_section.html:6
 msgid "Contacts"
 msgstr "Kontakt"
 
-#: client_service/templates/base/base.html:128
+#: client_service/templates/base/base.html:129
 msgid "Toggle navigation"
 msgstr "Navigation umschalten"
 
-#: client_service/templates/base/base.html:136
+#: client_service/templates/base/base.html:137
 #: client_service/templates/works/work_detail.html:94
 #, fuzzy
 #| msgid "Order Consultation"
 msgid "Order consultation"
 msgstr "Jetzt kontaktieren"
 
-#: client_service/templates/base/base.html:136
-#: client_service/templates/base/base.html:185
+#: client_service/templates/base/base.html:137
+#: client_service/templates/base/base.html:186
 msgid "Order Consultation"
 msgstr "Jetzt kontaktieren"
 
-#: client_service/templates/base/base.html:150
+#: client_service/templates/base/base.html:151
 msgid ""
 "Modern furniture for your interior — we manufacture, deliver and install on "
 "time."
@@ -405,174 +405,174 @@ msgstr ""
 "Moderne Möbel für Ihr Interieur — wir fertigen, liefern und montieren "
 "termingerecht."
 
-#: client_service/templates/base/base.html:153
+#: client_service/templates/base/base.html:154
 msgid "Navigation"
 msgstr "Navigation"
 
-#: client_service/templates/base/base.html:155
+#: client_service/templates/base/base.html:156
 msgid "Reviews"
 msgstr "Bewertungen"
 
-#: client_service/templates/base/base.html:157
+#: client_service/templates/base/base.html:158
 msgid "Details"
 msgstr "Impressum"
 
-#: client_service/templates/base/base.html:160
+#: client_service/templates/base/base.html:161
 msgid "Help"
 msgstr "Hilfe"
 
-#: client_service/templates/base/base.html:161
+#: client_service/templates/base/base.html:162
 msgid "FAQ"
 msgstr "FAQ"
 
-#: client_service/templates/base/base.html:162
+#: client_service/templates/base/base.html:163
 #: client_service/templates/works/work_detail.html:168
 msgid "Warranty"
 msgstr "Garantie"
 
-#: client_service/templates/base/base.html:163
-#: client_service/templates/home/home.html:285
+#: client_service/templates/base/base.html:164
+#: client_service/templates/home/home.html:295
 #: client_service/templates/works/work_detail.html:154
 msgid "Delivery"
 msgstr "Lieferung"
 
-#: client_service/templates/base/base.html:164
+#: client_service/templates/base/base.html:165
 msgid "Privacy Policy"
 msgstr "Datenschutzrichtlinie"
 
-#: client_service/templates/base/base.html:165
+#: client_service/templates/base/base.html:166
 msgid "General conditions"
 msgstr "AGB"
 
-#: client_service/templates/base/base.html:166
+#: client_service/templates/base/base.html:167
 msgid "Availability"
 msgstr "Barrierefreiheit"
 
-#: client_service/templates/base/base.html:169
+#: client_service/templates/base/base.html:170
 msgid "Contact"
 msgstr "Kontakt"
 
-#: client_service/templates/base/base.html:170
+#: client_service/templates/base/base.html:171
 #: client_service/templates/partials/contacts_section.html:50
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
-#: client_service/templates/base/base.html:171
+#: client_service/templates/base/base.html:172
 #: client_service/templates/partials/contacts_section.html:52
 msgid "Instagram"
 msgstr "Instagram"
 
-#: client_service/templates/base/base.html:172
+#: client_service/templates/base/base.html:173
 msgid "muridovaslambek@bmass.com"
 msgstr "muridovaslambek@bmass.com"
 
-#: client_service/templates/base/base.html:176
+#: client_service/templates/base/base.html:177
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
-#: client_service/templates/base/base.html:187
+#: client_service/templates/base/base.html:188
 msgid "Close window"
 msgstr "Fenster schließen"
 
-#: client_service/templates/base/base.html:188
+#: client_service/templates/base/base.html:189
 msgid "×"
 msgstr "×"
 
-#: client_service/templates/base/base.html:194
+#: client_service/templates/base/base.html:195
 msgid "Leave your contacts and we will contact you within 30 minutes"
 msgstr ""
 "Hinterlassen Sie Ihre Kontaktdaten und wir werden Sie innerhalb von 30 "
 "Minuten kontaktieren"
 
-#: client_service/templates/base/base.html:201
+#: client_service/templates/base/base.html:202
 msgid "Your name"
 msgstr "Ihr Name"
 
-#: client_service/templates/base/base.html:203
+#: client_service/templates/base/base.html:204
 msgid "For example: Alexander"
 msgstr "Zum Beispiel: Alexander"
 
-#: client_service/templates/base/base.html:208
+#: client_service/templates/base/base.html:209
 msgid "Phone"
 msgstr "Telefon"
 
-#: client_service/templates/base/base.html:216
+#: client_service/templates/base/base.html:217
 msgid "Email (optional)"
 msgstr "E-Mail (optional)"
 
-#: client_service/templates/base/base.html:223
+#: client_service/templates/base/base.html:224
 msgid "Consultation type"
 msgstr "Beratungstyp"
 
-#: client_service/templates/base/base.html:225
+#: client_service/templates/base/base.html:226
 msgid "General consultation"
 msgstr "Allgemeine Beratung"
 
-#: client_service/templates/base/base.html:226
+#: client_service/templates/base/base.html:227
 msgid "Design project"
 msgstr "Designprojekt"
 
-#: client_service/templates/base/base.html:227
+#: client_service/templates/base/base.html:228
 msgid "Custom furniture"
 msgstr "Maßgefertigte Möbel"
 
-#: client_service/templates/base/base.html:228
+#: client_service/templates/base/base.html:229
 msgid "Repair/Restoration"
 msgstr "Reparatur/Restaurierung"
 
-#: client_service/templates/base/base.html:233
+#: client_service/templates/base/base.html:234
 msgid "Preferred time"
 msgstr "Bevorzugte Zeit"
 
-#: client_service/templates/base/base.html:235
+#: client_service/templates/base/base.html:236
 msgid "For example: morning, evening, weekends"
 msgstr "Zum Beispiel: morgens, abends, Wochenenden"
 
-#: client_service/templates/base/base.html:239
+#: client_service/templates/base/base.html:240
 msgid "Message"
 msgstr "Nachricht"
 
-#: client_service/templates/base/base.html:241
+#: client_service/templates/base/base.html:242
 msgid "Describe your wishes or questions..."
 msgstr "Beschreiben Sie Ihre Wünsche oder Fragen..."
 
-#: client_service/templates/base/base.html:249
+#: client_service/templates/base/base.html:250
 msgid "Send request"
 msgstr "Anfrage senden"
 
-#: client_service/templates/base/base.html:251
+#: client_service/templates/base/base.html:252
 msgid "Sending..."
 msgstr "Wird gesendet..."
 
-#: client_service/templates/base/base.html:307
+#: client_service/templates/base/base.html:308
 msgid "Please enter your name"
 msgstr "Bitte geben Sie Ihren Namen ein"
 
-#: client_service/templates/base/base.html:308
+#: client_service/templates/base/base.html:309
 msgid "Name must be at least 2 characters"
 msgstr "Der Name muss mindestens 2 Zeichen lang sein"
 
-#: client_service/templates/base/base.html:309
+#: client_service/templates/base/base.html:310
 msgid "Please enter phone number"
 msgstr "Bitte geben Sie die Telefonnummer ein"
 
-#: client_service/templates/base/base.html:310
+#: client_service/templates/base/base.html:311
 msgid "Please enter a valid phone number (8-15 digits)"
 msgstr "Bitte geben Sie eine gültige Telefonnummer ein (8-15 Ziffern)"
 
-#: client_service/templates/base/base.html:311
+#: client_service/templates/base/base.html:312
 msgid "Phone number must contain only digits"
 msgstr "Die Telefonnummer darf nur Ziffern enthalten"
 
-#: client_service/templates/base/base.html:312
+#: client_service/templates/base/base.html:313
 msgid "Please enter a valid email address"
 msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
 
-#: client_service/templates/base/base.html:313
+#: client_service/templates/base/base.html:314
 msgid "An error occurred while sending the request"
 msgstr "Beim Senden der Anfrage ist ein Fehler aufgetreten"
 
-#: client_service/templates/base/base.html:314
+#: client_service/templates/base/base.html:315
 msgid ""
 "An error occurred while sending the request. Check your internet connection "
 "and try again."
@@ -580,34 +580,34 @@ msgstr ""
 "Beim Senden der Anfrage ist ein Fehler aufgetreten. Überprüfen Sie Ihre "
 "Internetverbindung und versuchen Sie es erneut."
 
-#: client_service/templates/base/base.html:315
-#: client_service/templates/home/home.html:394
+#: client_service/templates/base/base.html:316
+#: client_service/templates/home/home.html:404
 msgid "Previous review"
 msgstr "Vorherige Bewertung"
 
-#: client_service/templates/base/base.html:316
-#: client_service/templates/home/home.html:398
+#: client_service/templates/base/base.html:317
+#: client_service/templates/home/home.html:408
 msgid "Next review"
 msgstr "Nächste Bewertung"
 
-#: client_service/templates/base/base.html:317
-#: client_service/templates/home/home.html:296
+#: client_service/templates/base/base.html:318
+#: client_service/templates/home/home.html:306
 msgid "Customer reviews"
 msgstr "Kundenbewertungen"
 
-#: client_service/templates/base/base.html:318
+#: client_service/templates/base/base.html:319
 msgid "Consultation modal not found"
 msgstr "Beratungsmodal nicht gefunden"
 
-#: client_service/templates/base/base.html:319
+#: client_service/templates/base/base.html:320
 msgid "Previous photo"
 msgstr "Vorheriges Foto"
 
-#: client_service/templates/base/base.html:320
+#: client_service/templates/base/base.html:321
 msgid "Next photo"
 msgstr "Nächstes Foto"
 
-#: client_service/templates/base/base.html:321
+#: client_service/templates/base/base.html:322
 msgid "Photo carousel"
 msgstr "Fotokarussell"
 
@@ -615,23 +615,23 @@ msgstr "Fotokarussell"
 msgid "Add About Us content in admin panel."
 msgstr "Fügen Sie den About-Us-Inhalt im Admin-Bereich hinzu."
 
-#: client_service/templates/home/home.html:41
-#: client_service/templates/home/home.html:57
+#: client_service/templates/home/home.html:46
+#: client_service/templates/home/home.html:62
 msgid "We create furniture"
 msgstr "Wir schaffen Möbel"
 
-#: client_service/templates/home/home.html:42
-#: client_service/templates/home/home.html:58
+#: client_service/templates/home/home.html:47
+#: client_service/templates/home/home.html:63
 msgid "dreams"
 msgstr "Träume"
 
-#: client_service/templates/home/home.html:43
-#: client_service/templates/home/home.html:59
+#: client_service/templates/home/home.html:48
+#: client_service/templates/home/home.html:64
 msgid "for your home"
 msgstr "für Ihr Zuhause"
 
-#: client_service/templates/home/home.html:46
-#: client_service/templates/home/home.html:62
+#: client_service/templates/home/home.html:51
+#: client_service/templates/home/home.html:67
 #, fuzzy, python-format
 #| msgid ""
 #| "Design and manufacture of unique furniture for your interior. From idea "
@@ -643,178 +643,178 @@ msgstr ""
 "Design und Herstellung einzigartiger Möbel für Ihr Interieur. Von der Idee "
 "zur Umsetzung — 100% Qualität und Liebe zum Detail."
 
-#: client_service/templates/home/home.html:74
+#: client_service/templates/home/home.html:79
 #: client_service/templates/mobel/view_mobel.html:19
 #: client_service/templates/works/works.html:15
 msgid "Portfolio of unique handmade furniture"
 msgstr "Portfolio einzigartiger handgefertigter Möbel"
 
-#: client_service/templates/home/home.html:77
+#: client_service/templates/home/home.html:82
 msgid "View all"
 msgstr "Alle anzeigen"
 
-#: client_service/templates/home/home.html:91
-#: client_service/templates/mobel/view_mobel.html:52
-#: client_service/templates/works/works.html:43
+#: client_service/templates/home/home.html:101
+#: client_service/templates/mobel/view_mobel.html:57
+#: client_service/templates/works/works.html:48
 msgid "Quick View"
 msgstr "Schnellansicht"
 
-#: client_service/templates/home/home.html:96
-#: client_service/templates/mobel/view_mobel.html:57
-#: client_service/templates/works/works.html:48
+#: client_service/templates/home/home.html:106
+#: client_service/templates/mobel/view_mobel.html:62
+#: client_service/templates/works/works.html:53
 msgid "Recommended"
 msgstr "Empfohlen"
 
-#: client_service/templates/home/home.html:104
-#: client_service/templates/mobel/view_mobel.html:65
-#: client_service/templates/works/works.html:56
+#: client_service/templates/home/home.html:114
+#: client_service/templates/mobel/view_mobel.html:70
+#: client_service/templates/works/works.html:61
 msgid "More details"
 msgstr "Weitere Details"
 
-#: client_service/templates/home/home.html:115
+#: client_service/templates/home/home.html:125
 msgid "Didn\\"
 msgstr ""
 
-#: client_service/templates/home/home.html:118
+#: client_service/templates/home/home.html:128
 msgid "Discuss individual project"
 msgstr "Individuelles Projekt besprechen"
 
-#: client_service/templates/home/home.html:129
+#: client_service/templates/home/home.html:139
 msgid "About us in numbers"
 msgstr "Über uns in Zahlen"
 
-#: client_service/templates/home/home.html:130
+#: client_service/templates/home/home.html:140
 msgid "Facts that clients trust"
 msgstr "Fakten, denen Kunden vertrauen"
 
-#: client_service/templates/home/home.html:134
+#: client_service/templates/home/home.html:144
 msgid "Verified data"
 msgstr "Verifizierte Daten"
 
-#: client_service/templates/home/home.html:148
+#: client_service/templates/home/home.html:158
 msgid "Satisfied clients"
 msgstr "Zufriedene Kunden"
 
-#: client_service/templates/home/home.html:149
+#: client_service/templates/home/home.html:159
 msgid "High trust rating"
 msgstr "Hohe Vertrauensbewertung"
 
-#: client_service/templates/home/home.html:171
+#: client_service/templates/home/home.html:181
 msgid "Completed projects"
 msgstr "Abgeschlossene Projekte"
 
-#: client_service/templates/home/home.html:172
+#: client_service/templates/home/home.html:182
 msgid "Unique furniture"
 msgstr "Einzigartige Möbel"
 
-#: client_service/templates/home/home.html:194
+#: client_service/templates/home/home.html:204
 msgid "Years of experience"
 msgstr "Jahre Erfahrung"
 
-#: client_service/templates/home/home.html:195
+#: client_service/templates/home/home.html:205
 msgid "Professional expertise"
 msgstr "Professionelle Expertise"
 
-#: client_service/templates/home/home.html:217
+#: client_service/templates/home/home.html:227
 msgid "Weeks to delivery"
 msgstr "Wochen bis zur Lieferung"
 
-#: client_service/templates/home/home.html:218
+#: client_service/templates/home/home.html:228
 msgid "Fast implementation"
 msgstr "Schnelle Umsetzung"
 
-#: client_service/templates/home/home.html:237
+#: client_service/templates/home/home.html:247
 msgid "Leader in custom furniture"
 msgstr "Marktführer bei maßgefertigten Möbeln"
 
-#: client_service/templates/home/home.html:241
+#: client_service/templates/home/home.html:251
 msgid "Premium quality materials"
 msgstr "Premium-Qualitätsmaterialien"
 
-#: client_service/templates/home/home.html:245
+#: client_service/templates/home/home.html:255
 msgid "Precise deadlines"
 msgstr "Präzise Fristen"
 
-#: client_service/templates/home/home.html:257
+#: client_service/templates/home/home.html:267
 msgid "Furniture creation process"
 msgstr "Möbelherstellungsprozess"
 
-#: client_service/templates/home/home.html:258
+#: client_service/templates/home/home.html:268
 msgid "From idea to finished product — every stage under control"
 msgstr "Von der Idee zum fertigen Produkt — jede Phase unter Kontrolle"
 
-#: client_service/templates/home/home.html:264
+#: client_service/templates/home/home.html:274
 msgid "Consultation"
 msgstr "Beratung"
 
-#: client_service/templates/home/home.html:265
+#: client_service/templates/home/home.html:275
 msgid "We discuss your ideas and requirements"
 msgstr "Wir besprechen Ihre Ideen und Anforderungen"
 
-#: client_service/templates/home/home.html:271
+#: client_service/templates/home/home.html:281
 msgid "Design"
 msgstr "Design"
 
-#: client_service/templates/home/home.html:272
+#: client_service/templates/home/home.html:282
 msgid "We create 3D models and drawings"
 msgstr "Wir erstellen 3D-Modelle und Zeichnungen"
 
-#: client_service/templates/home/home.html:278
+#: client_service/templates/home/home.html:288
 msgid "Production"
 msgstr "Produktion"
 
-#: client_service/templates/home/home.html:279
+#: client_service/templates/home/home.html:289
 msgid "We manufacture with quality control"
 msgstr "Wir fertigen mit Qualitätskontrolle"
 
-#: client_service/templates/home/home.html:286
+#: client_service/templates/home/home.html:296
 msgid "We carefully deliver and install"
 msgstr "Wir liefern und installieren sorgfältig"
 
-#: client_service/templates/home/home.html:297
+#: client_service/templates/home/home.html:307
 msgid "More than 1000 satisfied customers trust us to create dream furniture"
 msgstr ""
 "Mehr als 1000 zufriedene Kunden vertrauen uns bei der Schaffung von "
 "Traummöbeln"
 
-#: client_service/templates/home/home.html:311
+#: client_service/templates/home/home.html:321
 msgid "Average rating"
 msgstr "Durchschnittliche Bewertung"
 
-#: client_service/templates/home/home.html:328
-#: client_service/templates/home/home.html:337
+#: client_service/templates/home/home.html:338
+#: client_service/templates/home/home.html:347
 msgid "Verified client"
 msgstr "Verifizierter Kunde"
 
-#: client_service/templates/home/home.html:357
+#: client_service/templates/home/home.html:367
 msgid "Project:"
 msgstr "Projekt:"
 
-#: client_service/templates/home/home.html:366
+#: client_service/templates/home/home.html:376
 msgid "Helpful"
 msgstr "Hilfreich"
 
-#: client_service/templates/home/home.html:372
+#: client_service/templates/home/home.html:382
 msgid "B\\"
 msgstr ""
 
-#: client_service/templates/home/home.html:380
+#: client_service/templates/home/home.html:390
 msgid "Reviews will appear soon!"
 msgstr "Bewertungen erscheinen bald!"
 
-#: client_service/templates/home/home.html:381
+#: client_service/templates/home/home.html:391
 msgid "Be the first to leave a review about our work"
 msgstr "Seien Sie der Erste, der eine Bewertung zu unserer Arbeit hinterlässt"
 
-#: client_service/templates/home/home.html:383
+#: client_service/templates/home/home.html:393
 msgid "Order project"
 msgstr "Projekt bestellen"
 
-#: client_service/templates/home/home.html:407
+#: client_service/templates/home/home.html:417
 msgid "Want to join satisfied customers?"
 msgstr "Möchten Sie sich den zufriedenen Kunden anschließen?"
 
-#: client_service/templates/home/home.html:408
+#: client_service/templates/home/home.html:418
 msgid ""
 "Get a free consultation and find out how we can make your dream of perfect "
 "furniture come true"
@@ -822,27 +822,27 @@ msgstr ""
 "Erhalten Sie eine kostenlose Beratung und erfahren Sie, wie wir Ihren Traum "
 "von perfekten Möbeln wahr werden lassen können"
 
-#: client_service/templates/home/home.html:412
-#: client_service/templates/mobel/view_mobel.html:81
-#: client_service/templates/works/works.html:72
+#: client_service/templates/home/home.html:422
+#: client_service/templates/mobel/view_mobel.html:86
+#: client_service/templates/works/works.html:77
 msgid "Get consultation"
 msgstr "Beratung erhalten"
 
-#: client_service/templates/home/home.html:415
+#: client_service/templates/home/home.html:425
 msgid "View our works"
 msgstr "Unsere Arbeiten ansehen"
 
-#: client_service/templates/home/home.html:424
+#: client_service/templates/home/home.html:434
 #: client_service/templates/mobel/view_mobel.html:24
 #: client_service/templates/works/works.html:20
 msgid "projects"
 msgstr "Projekte"
 
-#: client_service/templates/home/home.html:428
+#: client_service/templates/home/home.html:438
 msgid "rating"
 msgstr "Bewertung"
 
-#: client_service/templates/home/home.html:432
+#: client_service/templates/home/home.html:442
 msgid "Quality guarantee"
 msgstr "Qualitätsgarantie"
 
@@ -855,13 +855,13 @@ msgstr "Sortiment"
 msgid "All Works"
 msgstr "Alle Arbeiten"
 
-#: client_service/templates/mobel/view_mobel.html:77
-#: client_service/templates/works/works.html:68
+#: client_service/templates/mobel/view_mobel.html:82
+#: client_service/templates/works/works.html:73
 msgid "Want to order similar furniture?"
 msgstr "Möchten Sie ähnliche Möbel bestellen?"
 
-#: client_service/templates/mobel/view_mobel.html:78
-#: client_service/templates/works/works.html:69
+#: client_service/templates/mobel/view_mobel.html:83
+#: client_service/templates/works/works.html:74
 msgid "Our masters will create a unique piece specially for you"
 msgstr "Unsere Meister erstellen ein einzigartiges Stück speziell für Sie"
 

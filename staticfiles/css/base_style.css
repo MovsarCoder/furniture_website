@@ -7715,3 +7715,39 @@ body.menu-open {
     text-align: center;
   }
 }
+
+/* Mobile performance overrides to improve first paint/LCP */
+@media (max-width: 768px) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-text-reveal,
+  .pulse-animation,
+  .rotate-animation,
+  .bounce-animation,
+  .float-animation,
+  .glow-text,
+  .floating-card {
+    animation: none !important;
+  }
+
+  .navbar,
+  .filter-tab,
+  .quick-view-btn,
+  .image-overlay,
+  .lang-current,
+  .lang-dropdown {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .carousel-slide img,
+  .portfolio-image {
+    transition: none !important;
+    filter: none !important;
+  }
+
+  .carousel-shell:hover .carousel-slide img {
+    transform: none !important;
+    filter: none !important;
+  }
+}
