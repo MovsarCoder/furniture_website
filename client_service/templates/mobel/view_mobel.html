@@ -45,7 +45,12 @@
             {% for work in works %}
             <article class="portfolio-card">
                 <div class="card-image-container">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}"
+                         {% if forloop.first %}
+                         loading="eager" fetchpriority="high" decoding="sync"
+                         {% else %}
+                         loading="lazy" fetchpriority="low" decoding="async"
+                         {% endif %}>
                     <div class="image-overlay">
                         <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
                             <span class="btn-icon">👁️</span>
@@ -89,4 +94,3 @@
 
 
 {% endblock %}
-

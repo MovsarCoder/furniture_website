@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
 
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 CSRF_TRUSTED_ORIGINS = ['https://bmass.at', "https://bmass.fr", "https://www.bmass.at", "https://www.bmass.fr", "https://127.0.0.1"]
 
 # Get ALLOWED_HOSTS from environment variable or use default
@@ -170,8 +170,9 @@ LANGUAGE_DOMAIN_MAP = {
 
 STATIC_URL = "/static/"
 
-# Здесь указываем статику из client_service/static
+# Источники статики в проекте
 STATICFILES_DIRS = [
+    BASE_DIR / "client_service" / "static",
     BASE_DIR / "client_service" / "templates" / "static",
 ]
 
@@ -179,7 +180,11 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Static files storage backend
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# В production используем manifest-хэши для защиты от проблем кэша браузера.
+if DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 # Медиа (изображения загружаемые через ImageField и т.п.)
 MEDIA_URL = "/media/"

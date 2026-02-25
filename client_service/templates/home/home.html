@@ -16,7 +16,12 @@
                 <div class="carousel-track">
                     {% for photo in carousel_photos %}
                     <div class="carousel-slide">
-                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" loading="lazy">
+                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}"
+                             {% if forloop.first %}
+                             loading="eager" fetchpriority="high" decoding="sync"
+                             {% else %}
+                             loading="lazy" fetchpriority="low" decoding="async"
+                             {% endif %}>
                         <div class="carousel-overlay">
                             <div class="carousel-title">{{ photo.title }}</div>
                             {% if photo.caption %}
@@ -84,7 +89,12 @@
             {% for work in works %}
             <article class="portfolio-card">
                 <div class="card-image-container">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}" loading="lazy">
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}"
+                         {% if forloop.first %}
+                         loading="eager" fetchpriority="high" decoding="sync"
+                         {% else %}
+                         loading="lazy" fetchpriority="low" decoding="async"
+                         {% endif %}>
                     <div class="image-overlay">
                         <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
                             <span class="btn-icon">👁️</span>

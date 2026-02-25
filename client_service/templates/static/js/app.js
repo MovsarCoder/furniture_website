@@ -150,6 +150,7 @@
 
 // Enhanced hover effects for cards
 (function(){
+  if (!window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
   const cards = document.querySelectorAll('.card, .feature, .stat, .review, .branch');
 
   cards.forEach(card => {
@@ -165,20 +166,30 @@
   });
 })();
 
-// Loading animation for images
+// Optional image fade-in animation.
+// Apply only to images explicitly marked with data-fade-in
+// to avoid delaying LCP and accidental invisible cached images.
 (function(){
-  const images = document.querySelectorAll('img');
+  const images = document.querySelectorAll('img[data-fade-in]');
+  if (!images.length) return;
 
-  images.forEach(img => {
-    img.addEventListener('load', () => {
-      img.style.opacity = '1';
-      img.style.transform = 'scale(1)';
-    });
+  const reveal = (img) => {
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  };
 
-    // Set initial state
+  images.forEach((img) => {
     img.style.opacity = '0';
-    img.style.transform = 'scale(0.95)';
-    img.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    img.style.transform = 'scale(0.98)';
+    img.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+
+    if (img.complete) {
+      reveal(img);
+      return;
+    }
+
+    img.addEventListener('load', () => reveal(img), { once: true });
+    img.addEventListener('error', () => reveal(img), { once: true });
   });
 })();
 
