@@ -34,8 +34,8 @@
             <!--            <a href="{% url 'client_service:index' %}#home">{% trans 'Furniture' %}</a>-->
 
             <div class="nav-item">
-                <a href="#" onclick="return false;">{% trans 'Furniture' %}</a>
-                <div class="mega-dropdown">
+                <a href="#" onclick="return false;" class="nav-parent-link" aria-haspopup="true" aria-expanded="false" aria-controls="furniture-submenu">{% trans 'Furniture' %}</a>
+                <div class="mega-dropdown" id="furniture-submenu">
                     <div class="mega-column">
                         <div class="mega-title">{% trans "Storage" %}</div>
                         <a href="{% url 'client_service:catalog' %}?section=Storage&category=Shelf">{% trans "Shelf" %}</a>
@@ -56,8 +56,8 @@
                     <div class="mega-column">
                         <div class="mega-title">{% trans "Sleeping" %}</div>
                         <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Bed">{% trans "Bed" %}</a>
-                        <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Bedroom Set">{% trans "Bedroom Set" %}</a>
                         <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Double Bed">{% trans "Double Bed" %}</a>
+                        <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Bedroom Set">{% trans "Bedroom Set" %}</a>
                         <a href="{% url 'client_service:catalog' %}?section=Sleeping&category=Wardrobe">{% trans "Wardrobe" %}</a>
 
                     </div>
