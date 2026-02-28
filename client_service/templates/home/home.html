@@ -84,40 +84,41 @@
             </a>
         </div>
 
-        
-        <div class="portfolio-enhanced-grid" id="portfolioGrid">
-            {% for work in works %}
-            <article class="portfolio-card">
-                <div class="card-image-container">
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image{% if work.show_full_image %} full-view{% endif %}"
-                         {% if forloop.first %}
-                         loading="eager" fetchpriority="high" decoding="sync"
-                         {% else %}
-                         loading="lazy" fetchpriority="low" decoding="async"
-                         {% endif %}>
-                    <div class="image-overlay">
-                        <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
-                            <span class="btn-icon">👁️</span>
-                            <span>{% trans 'Quick View' %}</span>
-                        </button>
-                    </div>
-                    <div class="card-badges">
-                        {% if work.is_featured %}
-                        <span class="badge badge-featured">⭐ {% trans 'Recommended' %}</span>
-                        {% endif %}
-                    </div>
-                </div>
 
-                <div class="card-content">
-                    <div class="card-footer">
-                        <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
-                            <span>{% trans 'More details' %}</span>
-                            <span class="btn-arrow">→</span>
-                        </a>
+        <div class="showcase-grid">
+            {% if works %}
+            {% for work in works %}
+            <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
+                <a href="{% url 'client_service:work_detail' work.id %}">
+                    {% if work.image %}
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% endif %}
+                    <div class="showcase-tile-caption">
+                        <span>{{ work.title }}</span>
                     </div>
+                </a>
+            </article>
+            {% endfor %}
+            {% else %}
+            {% for work in nav_our_works|slice:":3" %}
+            <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
+                <a href="{% url 'client_service:work_detail' work.id %}">
+                    {% if work.image %}
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% endif %}
+                    <div class="showcase-tile-caption">
+                        <span>{{ work.title }}</span>
+                    </div>
+                </a>
+            </article>
+            {% empty %}
+            <article class="showcase-tile showcase-tile-large showcase-tile-placeholder">
+                <div class="showcase-tile-caption">
+                    <span>{% trans 'Your future interior can start here' %}</span>
                 </div>
             </article>
             {% endfor %}
+            {% endif %}
         </div>
 
 
@@ -138,37 +139,37 @@
     </div>
     <div class="showcase-grid">
         {% if works %}
-            {% for work in works %}
-            <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
-                <a href="{% url 'client_service:work_detail' work.id %}">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                    {% endif %}
-                    <div class="showcase-tile-caption">
-                        <span>{{ work.title }}</span>
-                    </div>
-                </a>
-            </article>
-            {% endfor %}
-        {% else %}
-            {% for work in nav_our_works|slice:":3" %}
-            <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
-                <a href="{% url 'client_service:work_detail' work.id %}">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                    {% endif %}
-                    <div class="showcase-tile-caption">
-                        <span>{{ work.title }}</span>
-                    </div>
-                </a>
-            </article>
-            {% empty %}
-            <article class="showcase-tile showcase-tile-large showcase-tile-placeholder">
+        {% for work in works %}
+        <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
+            <a href="{% url 'client_service:work_detail' work.id %}">
+                {% if work.image %}
+                <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                {% endif %}
                 <div class="showcase-tile-caption">
-                    <span>{% trans 'Your future interior can start here' %}</span>
+                    <span>{{ work.title }}</span>
                 </div>
-            </article>
-            {% endfor %}
+            </a>
+        </article>
+        {% endfor %}
+        {% else %}
+        {% for work in nav_our_works|slice:":3" %}
+        <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
+            <a href="{% url 'client_service:work_detail' work.id %}">
+                {% if work.image %}
+                <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                {% endif %}
+                <div class="showcase-tile-caption">
+                    <span>{{ work.title }}</span>
+                </div>
+            </a>
+        </article>
+        {% empty %}
+        <article class="showcase-tile showcase-tile-large showcase-tile-placeholder">
+            <div class="showcase-tile-caption">
+                <span>{% trans 'Your future interior can start here' %}</span>
+            </div>
+        </article>
+        {% endfor %}
         {% endif %}
     </div>
 </section>
@@ -281,7 +282,7 @@
             </div>
         </div>
 
-        
+
         <div class="stats-footer">
             <div class="stats-highlight">
                 <div class="highlight-item">
@@ -439,8 +440,6 @@
             </div>
         </div>
 
-        
-
 
         <div class="reviews-navigation">
             <button class="nav-btn prev-btn" id="reviewsPrev" aria-label="{% trans 'Previous review' %}">
@@ -453,7 +452,7 @@
         </div>
     </div>
 
-    
+
     <div class="reviews-cta">
         <div class="cta-content">
             <h3 class="cta-title">{% trans 'Want to join satisfied customers?' %}</h3>

@@ -4,9 +4,29 @@ from django.shortcuts import render, get_object_or_404
 from admin_service.models import *
 
 
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "0.0.0.0"}
+
+
+def _resolve_country_code(request):
+    host = request.get_host().split(":")[0].strip().lower()
+    if host.startswith("www."):
+        host = host[4:]
+    if host.startswith("bmass."):
+        host = host.split("bmass.", 1)[1]
+
+    available_country_codes = {code for code, _ in COUNTRIES}
+    if host in LOCAL_HOSTS:
+        return None
+    return host if host in available_country_codes else None
+
+
 def index(request):
-    host_name = request.get_host().removeprefix("bmass.")
-    works = Work.objects.filter(our_work=True, country=host_name).order_by("?")[:3]
+    country_code = _resolve_country_code(request)
+    works = Work.objects.filter(our_work=True)
+    if country_code:
+        works = works.filter(country=country_code)
+    works = works.order_by("?")[:3]
+
     carousel_photos = CarouselPhoto.objects.filter(is_active=True)
     reviews = Review.objects.all()
     contacts = Contact.objects.prefetch_related("opening_hours").all()
@@ -28,17 +48,17 @@ def index(request):
 
 
 def all_works(request):
-    works = Work.objects.all()
+    works = Work.objects.filter(our_work=True)
     contacts = Contact.objects.prefetch_related("opening_hours").all()
-    host_name = request.get_host().removeprefix("bmass.")
+    country_code = _resolve_country_code(request)
 
-    if works:
-        works = works.filter(our_work=True, country=host_name)
+    if country_code:
+        works = works.filter(country=country_code)
 
     return render(request, "works/works.html", context={
         "works": works,
         "contacts": contacts,
-        "host_name": host_name,
+        "host_name": country_code or "local",
     })
 
 
@@ -55,7 +75,7 @@ def custom_page_not_found(request, exception=None):
 
 
 def catalog_view(request):
-    host_name = request.get_host().removeprefix("bmass.")
+    country_code = _resolve_country_code(request)
     section = request.GET.get('section')
     category = request.GET.get('category')
 
@@ -63,9 +83,10 @@ def catalog_view(request):
     contacts = Contact.objects.prefetch_related("opening_hours").all()
 
     if category:
-        works = works.filter(category__title=category, our_work=False, country=host_name)
+        works = works.filter(category__title=category, our_work=False)
+        if country_code:
+            works = works.filter(country=country_code)
 
-        # Переведем section и category прежде чем отправить их в .html
     return render(request, 'mobel/view_mobel.html', {
         'section': section,
         'category': category,
