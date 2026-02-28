@@ -170,9 +170,8 @@ LANGUAGE_DOMAIN_MAP = {
 
 STATIC_URL = "/static/"
 
-# Источники статики в проекте
+# Здесь указываем статику из client_service/static
 STATICFILES_DIRS = [
-    BASE_DIR / "client_service" / "static",
     BASE_DIR / "client_service" / "templates" / "static",
 ]
 
@@ -180,11 +179,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Static files storage backend
-# В production используем manifest-хэши для защиты от проблем кэша браузера.
-if DEBUG:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-else:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Медиа (изображения загружаемые через ImageField и т.п.)
 MEDIA_URL = "/media/"
