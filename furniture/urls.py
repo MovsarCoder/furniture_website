@@ -41,7 +41,10 @@ urlpatterns += [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += staticfiles_urlpatterns()
-elif {"localhost", "127.0.0.1", "0.0.0.0"} & set(settings.ALLOWED_HOSTS):
+else:
+    # For production, we need to serve static files and media files directly
+    # since the nginx config forwards all requests to Django
     urlpatterns += [
-        re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
+        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+        re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]

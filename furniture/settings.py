@@ -51,6 +51,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Added for serving static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'furniture.middleware.DomainLanguageMiddleware',  # <-- перед LocaleMiddleware
     "django.middleware.locale.LocaleMiddleware",
@@ -170,8 +171,9 @@ LANGUAGE_DOMAIN_MAP = {
 
 STATIC_URL = "/static/"
 
-# Здесь указываем статику из client_service/static
+# Источники статики в проекте
 STATICFILES_DIRS = [
+    BASE_DIR / "client_service" / "static",
     BASE_DIR / "client_service" / "templates" / "static",
 ]
 
@@ -179,7 +181,11 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Static files storage backend
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# В production используем manifest-хэши для защиты от проблем кэша браузера.
+if DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 # Медиа (изображения загружаемые через ImageField и т.п.)
 MEDIA_URL = "/media/"
