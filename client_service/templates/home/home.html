@@ -132,49 +132,6 @@
     </div>
 </section>
 
-<section id="inspiration" class="section container furniture-showcase">
-    <div class="showcase-head">
-        <div class="section-title">{% trans 'Interior inspiration' %}</div>
-        <div class="section-sub">{% trans 'Visual references for your future furniture project' %}</div>
-    </div>
-    <div class="showcase-grid">
-        {% if works %}
-        {% for work in works %}
-        <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
-            <a href="{% url 'client_service:work_detail' work.id %}">
-                {% if work.image %}
-                <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                {% endif %}
-                <div class="showcase-tile-caption">
-                    <span>{{ work.title }}</span>
-                </div>
-            </a>
-        </article>
-        {% endfor %}
-        {% else %}
-        {% for work in nav_our_works|slice:":3" %}
-        <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
-            <a href="{% url 'client_service:work_detail' work.id %}">
-                {% if work.image %}
-                <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                {% endif %}
-                <div class="showcase-tile-caption">
-                    <span>{{ work.title }}</span>
-                </div>
-            </a>
-        </article>
-        {% empty %}
-        <article class="showcase-tile showcase-tile-large showcase-tile-placeholder">
-            <div class="showcase-tile-caption">
-                <span>{% trans 'Your future interior can start here' %}</span>
-            </div>
-        </article>
-        {% endfor %}
-        {% endif %}
-    </div>
-</section>
-
-
 <section id="stats" class="section container">
     <div class="stats-hero">
         <div class="section-header">
