@@ -9,19 +9,19 @@
     // Toggle Product Details Modal
     function toggleProductDetails() {
         const modal = document.getElementById('productDetailsModal');
-        const toggle = document.querySelector('.product-details-toggle');
+        const toggle = document.querySelector('.product-details-toggle-top') || document.querySelector('.product-details-toggle');
         
-        if (!modal || !toggle) return;
+        if (!modal) return;
         
         const isActive = modal.classList.contains('active');
         
         if (isActive) {
             modal.classList.remove('active');
-            toggle.classList.remove('active');
+            if (toggle) toggle.classList.remove('active');
             document.body.style.overflow = '';
         } else {
             modal.classList.add('active');
-            toggle.classList.add('active');
+            if (toggle) toggle.classList.add('active');
             document.body.style.overflow = 'hidden';
             
             // Animate sections on open

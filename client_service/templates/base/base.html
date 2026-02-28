@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}B'Mass{% endblock %}</title>
     <link rel="preload" as="image" href="{% static 'images/logo.png' %}" fetchpriority="high">
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <link href="https://fonts.cdnfonts.com/css/gilroy" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
 </head>
 <body>
@@ -16,7 +18,7 @@
     <div class="global-furniture-item chair-item"></div>
     <div class="global-furniture-item sofa-item"></div>
     <div class="global-furniture-item table-item"></div>
-    <!-- Add more furniture items for a richer experience -->
+    
     <div class="global-furniture-item chair-item second-chair"></div>
     <div class="global-furniture-item sofa-item second-sofa"></div>
     <div class="global-furniture-item table-item second-table"></div>
@@ -31,7 +33,6 @@
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
             <a href="{% url 'client_service:index' %}#home" class="active">{% trans 'Home' %}</a>
-            <!--            <a href="{% url 'client_service:index' %}#home">{% trans 'Furniture' %}</a>-->
 
             <div class="nav-item">
                 <a href="#" onclick="return false;" class="nav-parent-link" aria-haspopup="true" aria-expanded="false" aria-controls="furniture-submenu">{% trans 'Furniture' %}</a>
@@ -265,43 +266,6 @@
 <script>
     var y=document.getElementById('year');
     if(y){ y.textContent=new Date().getFullYear(); }
-
-    // Dynamic navbar text color handling
-    (function(){
-        const navbar = document.querySelector('.navbar');
-        const navLinks = document.querySelectorAll('.nav a');
-        const navCta = document.querySelector('.nav-cta');
-        
-        function updateNavbarColors() {
-            const isScrolled = navbar.classList.contains('scrolled');
-            
-            if (isScrolled) {
-                // When navbar is scrolled (white background)
-                navLinks.forEach(link => {
-                    link.style.textShadow = 'none';
-                });
-                if (navCta) {
-                    navCta.style.border = 'none';
-                }
-            } else {
-                // When navbar is at top (transparent)
-                navLinks.forEach(link => {
-                    link.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
-                });
-                if (navCta) {
-                    navCta.style.color = 'white';
-                    navCta.style.border = '1px solid rgba(255, 255, 255, 0.3)';
-                }
-            }
-        }
-        
-        // Initial update
-        updateNavbarColors();
-        
-        // Update on scroll
-        const observer = new MutationObserver(updateNavbarColors);
-        observer.observe(navbar, { attributes: true, attributeFilter: ['class'] });
-    })();
 
     // Translations for JavaScript
     window.translations = {

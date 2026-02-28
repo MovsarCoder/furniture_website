@@ -53,15 +53,19 @@
             </div>
             {% if contact.address %}
             <div class="contact-map">
-                <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" class="map-link">
-                    <div class="mini-map"
-                         style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}&zoom=15&size=300x200&key=AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I');">
-                        <div class="map-marker">📍</div>
+                <div class="map-link">
+                    <div class="mini-map mini-map-embed">
+                        <iframe
+                            title="{% trans 'Map for' %} {{ contact.branch_name }}"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://maps.google.com/maps?q={{ contact.address|urlencode }}%20{{ contact.get_country_display|urlencode }}&t=&z=14&ie=UTF8&iwloc=&output=embed">
+                        </iframe>
                     </div>
-                    <div class="map-overlay">
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ contact.address|urlencode }} {{ contact.get_country_display|urlencode }}" target="_blank" rel="noopener noreferrer" class="map-overlay">
                         <span class="map-text">{% trans 'View on Google Maps' %}</span>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
             {% endif %}
         </div>

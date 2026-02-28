@@ -8,7 +8,7 @@
 
 <section class="product-detail-section">
     <div class="container">
-        <!-- Breadcrumb Navigation -->
+        
         <nav class="breadcrumb-nav" aria-label="breadcrumb">
             <a href="{% url 'client_service:index' %}" class="breadcrumb-link">{% trans 'Home' %}</a>
             <span class="breadcrumb-separator">/</span>
@@ -32,16 +32,16 @@
                 </div>
             </div>
 
-            <!-- Right: Product Information -->
+            
             <div class="product-info-section">
-                <!-- Product Header -->
+                
                 <div class="product-header">
                     <div class="product-category-badge">
                         {% if work.category %}{{ work.category.title }}{% endif %}
                     </div>
                     <h1 class="product-title">{{ work.title }}</h1>
 
-                    <!-- Product Details Button (Moved to Top) -->
+                    
                     <button class="product-details-toggle-top" onclick="toggleProductDetails()">
                         <span>{% trans 'Product Details' %}</span>
                         <div class="toggle-arrows">
@@ -67,9 +67,9 @@
                     </div>
                     {% endif %}
 
-                    <!-- Product Data/Status Information (Moved Here) -->
+                    
                     <div class="product-status-info">
-                        <!-- Quick Info Badges -->
+                        
                         <div class="product-badges">
                             {% if work.material %}
                             <div class="info-badge">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
+                
                 <div class="product-actions">
                     <button class="btn-primary-large" onclick="openConsultationModal()">
                         <span class="btn-icon">📩</span>
@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <!-- Product Details Modal/Sidebar -->
+        
         <div class="product-details-modal" id="productDetailsModal">
             <div class="modal-backdrop" onclick="toggleProductDetails()"></div>
             <div class="modal-content-wrapper">
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <!-- General Information -->
+                    
                     <div class="details-section">
                         <h3 class="section-title">{% trans 'General Information' %}</h3>
                         <ul class="details-list">
@@ -144,7 +144,7 @@
                         </ul>
                     </div>
 
-                    <!-- Delivery & Care -->
+                    
                     <div class="details-section">
                         <h3 class="section-title">{% trans 'Delivery & Care' %}</h3>
                         <div class="delivery-info">
@@ -172,7 +172,7 @@
                         </div>
                     </div>
 
-                    <!-- Full Description -->
+                    
                     {% if work.description %}
                     <div class="details-section">
                         <h3 class="section-title">{% trans 'Description' %}</h3>
@@ -185,7 +185,7 @@
             </div>
         </div>
 
-        <!-- Image Modal -->
+        
         <div class="image-modal" id="imageModal" onclick="closeImageModal()">
             <div class="image-modal-content">
                 <button class="image-modal-close" onclick="closeImageModal()" aria-label="{% trans 'Close' %}">×</button>
