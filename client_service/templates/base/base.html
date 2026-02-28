@@ -18,7 +18,7 @@
     <div class="global-furniture-item chair-item"></div>
     <div class="global-furniture-item sofa-item"></div>
     <div class="global-furniture-item table-item"></div>
-    
+
     <div class="global-furniture-item chair-item second-chair"></div>
     <div class="global-furniture-item sofa-item second-sofa"></div>
     <div class="global-furniture-item table-item second-table"></div>
@@ -26,6 +26,14 @@
 
 <header class="navbar" role="banner">
     <div class="container nav-inner">
+
+        <button class="nav-toggle" type="button" aria-label="{% trans 'Toggle navigation' %}" aria-controls="primary-nav" aria-expanded="false">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+        </button>
+
+
         <a href="{% url 'client_service:index' %}">
             <div class="brand">
                 <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" class="logo-image-navbar" loading="eager" fetchpriority="high" decoding="sync">
@@ -126,13 +134,6 @@
             <a href="{% url 'client_service:about' %}">{% trans 'About Us' %}</a>
             <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
         </nav>
-
-        <button class="nav-toggle" type="button" aria-label="{% trans 'Toggle navigation' %}" aria-controls="primary-nav" aria-expanded="false">
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-        </button>
 
         <div class="nav-right">
             <button class="nav-cta" id="consultationBtn" aria-label="{% trans 'Order consultation' %}">{% trans 'Order Consultation' %}</button>
