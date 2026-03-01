@@ -184,13 +184,13 @@ class Contact(models.Model):
 
 class OpeningHour(models.Model):
     class Day(models.IntegerChoices):
-        MONDAY = 0, _("Mo")
-        TUESDAY = 1, _("Tu")
-        WEDNESDAY = 2, _("We")
-        THURSDAY = 3, _("Th")
-        FRIDAY = 4, _("Fr")
-        SATURDAY = 5, _("Sa")
-        SUNDAY = 6, _("Su")
+        MONDAY = 0, _("MO")
+        TUESDAY = 1, _("DI")
+        WEDNESDAY = 2, _("MI")
+        THURSDAY = 3, _("DO")
+        FRIDAY = 4, _("FR")
+        SATURDAY = 5, _("SA")
+        SUNDAY = 6, _("SO")
 
     DAY_FULL = {
         Day.MONDAY: _("Monday"),
