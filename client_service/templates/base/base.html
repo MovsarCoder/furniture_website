@@ -34,11 +34,6 @@
         </button>
 
 
-        <a href="{% url 'client_service:index' %}">
-            <div class="brand">
-                <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" class="logo-image-navbar" loading="eager" fetchpriority="high" decoding="sync">
-            </div>
-        </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
             <a href="{% url 'client_service:index' %}#home" class="active">{% trans 'Home' %}</a>
 
@@ -129,8 +124,14 @@
                 </div>
             </div>
 
-
             <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
+
+            <a href="{% url 'client_service:index' %}">
+                <div class="brand">
+                    <img src="{% static 'images/logo.png' %}" alt="B'Mass Logo" class="logo-image-navbar" loading="eager" fetchpriority="high" decoding="sync">
+                </div>
+            </a>
+
             <a href="{% url 'client_service:about' %}">{% trans 'About Us' %}</a>
             <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
         </nav>
