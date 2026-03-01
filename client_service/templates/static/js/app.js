@@ -649,6 +649,19 @@
   prevBtn?.addEventListener('click', () => prev());
   nextBtn?.addEventListener('click', () => next());
 
+  // Add click functionality to each slide
+  slides.forEach((slide, i) => {
+    slide.addEventListener('click', (e) => {
+      // Prevent click if user is dragging
+      if (!isDragging) {
+        goTo(i);
+      }
+    });
+    
+    // Also add a visual indicator that the slide is clickable
+    slide.style.cursor = 'pointer';
+  });
+
   carousel.addEventListener('mouseenter', () => {
     isHovered = true;
     stopAutoplay();
