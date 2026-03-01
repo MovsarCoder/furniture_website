@@ -341,6 +341,7 @@
   function handleStart(e) {
     isDragging = true;
     startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY; // Store initial Y position
     currentX = startX;
     initialTransform = currentIndex * (100 / reviewsPerView);
     reviewsTrack.style.transition = 'none';
@@ -349,11 +350,21 @@
 
   function handleMove(e) {
     if (!isDragging) return;
-    e.preventDefault();
     
-    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-    const diffX = currentX - startX;
-    const percentage = (diffX / reviewsTrack.offsetWidth) * 100;
+    // Only prevent default when we're definitely dragging horizontally
+    const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+    const diffX = Math.abs(clientX - startX);
+    const diffY = Math.abs(clientY - startY);
+    
+    // Only prevent default if horizontal movement is greater than vertical
+    if (diffX > diffY && diffX > 10) {
+      e.preventDefault();
+    }
+    
+    currentX = clientX;
+    const moveDiffX = currentX - startX;
+    const percentage = (moveDiffX / reviewsTrack.offsetWidth) * 100;
     const newTransform = -initialTransform - percentage;
     
     reviewsTrack.style.transform = `translateX(${newTransform}%)`;
@@ -475,15 +486,19 @@
   const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
   const prevBtn = carousel.querySelector('[data-carousel-prev]');
   const nextBtn = carousel.querySelector('[data-carousel-next]');
+  const prevNumEl = carousel.querySelector('[data-carousel-prev-num]');
+  const nextNumEl = carousel.querySelector('[data-carousel-next-num]');
   const dotsContainer = carousel.querySelector('[data-carousel-dots]');
 
   if(!track || slides.length === 0) return;
 
   let index = 0;
+  const total = slides.length;
   let autoplayInterval = null;
   let isHovered = false;
   let isDragging = false;
   let startX = 0;
+  let startY = 0;
   let currentX = 0;
   let startTranslate = 0;
 
@@ -510,6 +525,14 @@
   function update() {
     track.style.transform = `translateX(-${index * 100}%)`;
     updateDots();
+    if (prevNumEl) {
+      const prevIndex = (index - 1 + total) % total;
+      prevNumEl.textContent = String(prevIndex + 1);
+    }
+    if (nextNumEl) {
+      const nextIndex = (index + 1) % total;
+      nextNumEl.textContent = String(nextIndex + 1);
+    }
   }
 
   function goTo(i) {
@@ -554,6 +577,7 @@
   function handleStart(e) {
     isDragging = true;
     startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY; // Store initial Y position
     currentX = startX;
     startTranslate = -index * track.offsetWidth;
     track.style.transition = 'none';
@@ -562,8 +586,17 @@
 
   function handleMove(e) {
     if (!isDragging) return;
-    e.preventDefault();
-    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    
+    const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+    const diffX = Math.abs(clientX - startX);
+    const diffY = Math.abs(clientY - startY);
+    
+    if (diffX > diffY && diffX > 10) {
+      e.preventDefault();
+    }
+    
+    currentX = clientX;
     const diff = currentX - startX;
     const translate = startTranslate + diff;
     track.style.transform = `translateX(${translate}px)`;
