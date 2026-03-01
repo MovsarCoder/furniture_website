@@ -887,7 +887,7 @@
 }
 
 .hero-title {
-  font-size: clamp(32px, 6vw, 40px);
+  font-size: clamp(32px, 6vw, 38px);
   font-weight: 900;
   line-height: 1.1;
   margin: 0 0 24px 0;
@@ -4948,9 +4948,6 @@ img {
   background: rgba(0, 0, 0, 0.9);
 }
 
-.map-link:hover .map-text {
-  color: var(--brand);
-}
 
 /* ===== КОНТАКТЫ ===== */
 .branches {
@@ -5018,7 +5015,7 @@ img {
 }
 
 .opening-hours {
-  padding: 14px 16px;
+  padding: 16px 18px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.65);
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -5061,11 +5058,13 @@ img {
 }
 
 .hours-item .day {
+  font-size: 14px;
   font-weight: 700;
   color: var(--text);
 }
 
 .hours-item .time {
+  font-size: 14px;
   color: var(--text-muted);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -5087,7 +5086,7 @@ img {
   flex-wrap: wrap;
   row-gap: 4px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 17px;
   transition: var(--transition-fast);
 }
 
@@ -5120,7 +5119,7 @@ img {
 
 @media (max-width: 640px) {
   .opening-hours-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
   }
 }
 

@@ -22,12 +22,6 @@
                              {% else %}
                              loading="lazy" fetchpriority="low" decoding="async"
                              {% endif %}>
-                        <div class="carousel-overlay">
-                            <div class="carousel-title">{{ photo.title }}</div>
-                            {% if photo.caption %}
-                            <div class="carousel-caption">{{ photo.caption }}</div>
-                            {% endif %}
-                        </div>
                     </div>
                     {% endfor %}
                 </div>
