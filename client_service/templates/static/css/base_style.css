@@ -211,11 +211,10 @@
 
 .carousel-shell {
   position: relative;
-  background: #0f0f10;
   border-radius: 0;
   padding: 0;
   box-shadow: none;
-  overflow: hidden;
+  overflow: visible; /* Allow overflow for the 3D effect */
 }
 
 .carousel-viewport {
@@ -229,21 +228,74 @@
   display: flex;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  gap: 20px; /* Add gap between slides */
 }
 
 .carousel-slide {
-  min-width: 100%;
+  min-width: 33.333%; /* Show 3 slides at a time with one centered */
+  position: relative;
+  padding: 0 10px; /* Add some spacing between slides */
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.slide-image-container {
+  width: 100%;
+  height: 550px; /* Fixed height as requested */
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.6s ease;
   position: relative;
 }
 
-.carousel-slide img {
+.carousel-image {
   width: 100%;
-  height: clamp(420px, 85vh, 900px);
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio without distortion */
   display: block;
-  transform: scale(1);
-  transition: transform 1.2s ease, filter 1.2s ease;
-  filter: none;
+  transition: transform 0.6s ease;
+}
+
+/* Active slide - larger and brighter */
+.carousel-slide.active-slide {
+  transform: scale(1.1); /* Active slide is slightly larger */
+  z-index: 2;
+  opacity: 1;
+}
+
+.carousel-slide.active-slide .slide-image-container {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-10px);
+}
+
+/* Inactive slides - smaller and dimmer */
+.carousel-slide.inactive-slide {
+  transform: scale(0.9);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.carousel-slide.inactive-slide .slide-image-container {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect on images */
+.carousel-slide:hover .slide-image-container {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.carousel-slide:hover .carousel-image {
+  transform: scale(1.05);
+}
+
+/* Adjust viewport to accommodate multiple visible slides */
+.carousel-viewport {
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  padding: 80px 0; /* Add vertical padding to accommodate lifted center slide */
 }
 
 .carousel-slide::after {
@@ -264,8 +316,8 @@
   align-items: center;
   justify-content: center;
   gap: 18px;
-  padding: 16px 0 26px;
-  background: #0f0f10;
+  padding: 30px 0 20px;
+  background: transparent;
 }
 
 /* Стрелки поверх карусели — полупрозрачный круг как на референсе */
@@ -306,25 +358,29 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(255, 255, 255, 0.2);
   color: #fff;
   font-size: 14px;
   font-weight: 500;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-arrow:hover .carousel-arrow-circle {
-  background: rgba(0, 0, 0, 0.6);
-  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-arrow:active .carousel-arrow-circle {
-  transform: scale(0.98);
+  transform: scale(0.95);
 }
 
 .carousel-arrow-icon {
@@ -388,17 +444,52 @@
   backdrop-filter: blur(6px);
 }
 
+@media (max-width: 1024px) {
+  .carousel-slide {
+    min-width: 50%;
+    padding: 0 8px;
+  }
+  
+  .slide-image-container {
+    height: 400px;
+  }
+  
+  .carousel-track {
+    gap: 15px;
+  }
+  
+  .carousel-arrow-circle {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
+  }
+}
+
 @media (max-width: 768px) {
+  .carousel-slide {
+    min-width: 100%;
+    padding: 0 5px;
+  }
+  
+  .slide-image-container {
+    height: 300px;
+  }
+  
+  .carousel-track .carousel-slide:nth-child(2) {
+    transform: scale(1); /* Remove extra scale on mobile */
+  }
+  
   .carousel-controls {
     gap: 12px;
     padding: 14px 0 20px;
   }
 
   .carousel-arrow-circle {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
     font-size: 13px;
   }
 

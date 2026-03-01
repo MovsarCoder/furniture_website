@@ -522,8 +522,38 @@
     });
   }
 
+  function updateSlideStates() {
+    // Remove all active classes
+    slides.forEach(slide => {
+      slide.classList.remove('active-slide', 'inactive-slide');
+    });
+    
+    // Mark the current slide as active
+    if (slides[index]) {
+      slides[index].classList.add('active-slide');
+    }
+    
+    // Mark adjacent slides
+    const prevIndex = (index - 1 + total) % total;
+    const nextIndex = (index + 1) % total;
+    
+    if (slides[prevIndex]) {
+      slides[prevIndex].classList.add('inactive-slide');
+    }
+    if (slides[nextIndex]) {
+      slides[nextIndex].classList.add('inactive-slide');
+    }
+  }
+
   function update() {
-    track.style.transform = `translateX(-${index * 100}%)`;
+    // For the new multi-slide view, we shift by one slide at a time but show 3 slides
+    // We'll adjust the transform to show the active slide in the center
+    const offset = Math.max(0, Math.min(index - 1, total - 3)); // Ensure we don't go past the last possible position
+    track.style.transform = `translateX(calc(-${offset * (100/3)}% - ${offset * 20}px))`;
+    
+    // Update slide classes for active states
+    updateSlideStates();
+    
     updateDots();
     if (prevNumEl) {
       const prevIndex = (index - 1 + total) % total;

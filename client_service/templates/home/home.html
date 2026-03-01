@@ -16,12 +16,14 @@
                 <div class="carousel-track">
                     {% for photo in carousel_photos %}
                     <div class="carousel-slide">
-                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}"
-                             {% if forloop.first %}
-                             loading="eager" fetchpriority="high" decoding="sync"
-                             {% else %}
-                             loading="lazy" fetchpriority="low" decoding="async"
-                             {% endif %}>
+                        <div class="slide-image-container">
+                            <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="carousel-image"
+                                 {% if forloop.first %}
+                                 loading="eager" fetchpriority="high" decoding="sync"
+                                 {% else %}
+                                 loading="lazy" fetchpriority="low" decoding="async"
+                                 {% endif %}>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
