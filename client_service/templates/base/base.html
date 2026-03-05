@@ -97,35 +97,6 @@
                         <a href="{% url 'client_service:catalog' %}?section=Kids&category=Kids Furniture Set">{% trans "Kids Furniture Set" %}</a>
                     </div>
 
-                    <div class="dropdown-works" data-interval="5000">
-                        <div class="dropdown-works-head">
-                            <div class="dropdown-works-title">{% trans 'Our Works' %}</div>
-                            <div class="dropdown-works-sub">{% trans 'Fresh picks from our portfolio' %}</div>
-                        </div>
-                        <div class="dropdown-works-grid" id="dropdownWorksGrid">
-                            {% if nav_our_works %}
-                            {% for work in nav_our_works %}
-                            <a href="{% url 'client_service:work_detail' work.id %}" class="dropdown-work-card {% if forloop.counter <= 3 %}is-visible{% endif %}" data-work-card>
-                                <div class="work-thumb">
-                                    {% if work.image %}
-                                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                                    {% else %}
-                                    <div class="work-thumb-placeholder">🏡</div>
-                                    {% endif %}
-                                </div>
-                                <div class="work-info">
-                                    <div class="work-title">{{ work.title }}</div>
-                                    <div class="work-meta">
-                                        <span class="work-category">{{ work.category.title }}</span>
-                                    </div>
-                                </div>
-                            </a>
-                            {% endfor %}
-                            {% else %}
-                            <div class="dropdown-works-empty">{% trans 'No featured items yet' %}</div>
-                            {% endif %}
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -268,7 +239,6 @@
     var y=document.getElementById('year');
     if(y){ y.textContent=new Date().getFullYear(); }
 
-    // Translations for JavaScript
     window.translations = {
         'Please enter your name': '{% trans "Please enter your name" %}',
         'Name must be at least 2 characters': '{% trans "Name must be at least 2 characters" %}',
@@ -291,31 +261,6 @@
         return window.translations[key] || key;
     };
 
-    (function(){
-        const grid = document.getElementById('dropdownWorksGrid');
-        if (!grid) return;
-
-        const cards = Array.from(grid.querySelectorAll('[data-work-card]'));
-        if (cards.length <= 3) return;
-
-        const container = grid.closest('.dropdown-works');
-        const interval = Number(container?.dataset?.interval || 5000);
-        let last = [];
-
-        function pickNext() {
-            const pool = cards.filter(c => !last.includes(c));
-            const candidates = pool.length >= 3 ? pool : cards.slice();
-            const shuffled = candidates.sort(() => Math.random() - 0.5);
-            const next = shuffled.slice(0, 3);
-
-            cards.forEach(card => card.classList.remove('is-visible'));
-            next.forEach(card => card.classList.add('is-visible'));
-            last = next;
-        }
-
-        pickNext();
-        setInterval(pickNext, interval);
-    })();
 </script>
 
 </body>

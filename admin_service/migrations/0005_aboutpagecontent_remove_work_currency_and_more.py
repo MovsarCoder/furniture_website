@@ -6,32 +6,68 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('admin_service', '0004_opening_hours'),
+        ("admin_service", "0004_opening_hours"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AboutPageContent',
+            name="AboutPageContent",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('language', models.CharField(choices=[('en', 'English'), ('de', 'Deutsch'), ('fr', 'Français')], max_length=5, unique=True, verbose_name='Язык страницы')),
-                ('title', models.CharField(default='About Us', max_length=200, verbose_name='Заголовок')),
-                ('subtitle', models.CharField(blank=True, max_length=255, verbose_name='Подзаголовок')),
-                ('content', models.TextField(default='', verbose_name='Основной текст')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Дата обновления')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "language",
+                    models.CharField(
+                        choices=[
+                            ("en", "English"),
+                            ("de", "Deutsch"),
+                            ("fr", "Français"),
+                        ],
+                        max_length=5,
+                        unique=True,
+                        verbose_name="Язык страницы",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        default="About Us", max_length=200, verbose_name="Заголовок"
+                    ),
+                ),
+                (
+                    "subtitle",
+                    models.CharField(
+                        blank=True, max_length=255, verbose_name="Подзаголовок"
+                    ),
+                ),
+                (
+                    "content",
+                    models.TextField(default="", verbose_name="Основной текст"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Дата обновления"),
+                ),
             ],
             options={
-                'verbose_name': 'About Us (контент)',
-                'verbose_name_plural': 'About Us (контент)',
-                'ordering': ['language'],
+                "verbose_name": "About Us (контент)",
+                "verbose_name_plural": "About Us (контент)",
+                "ordering": ["language"],
             },
         ),
         migrations.RemoveField(
-            model_name='work',
-            name='currency',
+            model_name="work",
+            name="currency",
         ),
         migrations.RemoveField(
-            model_name='work',
-            name='price',
+            model_name="work",
+            name="price",
         ),
     ]

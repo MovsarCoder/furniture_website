@@ -4,15 +4,9 @@ from django.utils.translation import gettext_lazy as _
 import requests
 from django.conf import settings
 
-languages = [
-    ("fr", "Français"),
-    ("at", "Deutsch")
-]
+languages = [("fr", "Français"), ("at", "Deutsch")]
 
-country = [
-    ("fr", "Français"),
-    ("at", "Austria")
-]
+country = [("fr", "Français"), ("at", "Austria")]
 
 WORK_TYPES = [
     ("custom", "На заказ"),
@@ -33,9 +27,16 @@ COUNTRIES = [
     ("at", "Austria"),
 ]
 
+
 class Category(models.Model):
-    title = models.CharField(max_length=100, verbose_name="Название категории", unique=True)
-    description = models.CharField(max_length=500, blank=True, verbose_name="Описание категории (не обязательно)", )
+    title = models.CharField(
+        max_length=100, verbose_name="Название категории", unique=True
+    )
+    description = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name="Описание категории (не обязательно)",
+    )
 
     def __str__(self):
         return f"{self.title}"
@@ -43,20 +44,60 @@ class Category(models.Model):
 
 class Work(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название мебели")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="works", verbose_name="Категория")
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name="works",
+        verbose_name="Категория",
+    )
     description = models.TextField(blank=True, verbose_name="Описание мебели")
-    image = models.ImageField(upload_to="portfolio/", blank=True, null=True, verbose_name="Фотография мебели")
-    country = models.CharField(max_length=5, choices=COUNTRIES, default="us", verbose_name="Страна работы")
+    image = models.ImageField(
+        upload_to="portfolio/", blank=True, null=True, verbose_name="Фотография мебели"
+    )
+    country = models.CharField(
+        max_length=5, choices=COUNTRIES, default="us", verbose_name="Страна работы"
+    )
     date = models.DateField(blank=True, null=True, verbose_name="Дата изготовления")
-    language = models.CharField(max_length=5, choices=languages, verbose_name="Выбор языка на работе")
-    work_type = models.CharField(max_length=20, choices=WORK_TYPES, verbose_name="Тип работы", default="custom")
-    status = models.CharField(max_length=20, choices=STATUSES, verbose_name="Статус", default="in_progress")
+    language = models.CharField(
+        max_length=5, choices=languages, verbose_name="Выбор языка на работе"
+    )
+    work_type = models.CharField(
+        max_length=20, choices=WORK_TYPES, verbose_name="Тип работы", default="custom"
+    )
+    status = models.CharField(
+        max_length=20, choices=STATUSES, verbose_name="Статус", default="in_progress"
+    )
     material = models.CharField(max_length=100, blank=True, verbose_name="Материал")
-    our_work = models.BooleanField(verbose_name="Отобразить в разделе наши работы НЕТ/ДА", blank=True, null=True, default=False)
-    width = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Ширина (см)")
-    height = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Высота (см)")
-    depth = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Глубина (см)")
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, verbose_name='Дата добавления')
+    our_work = models.BooleanField(
+        verbose_name="Отобразить в разделе наши работы НЕТ/ДА",
+        blank=True,
+        null=True,
+        default=False,
+    )
+    width = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        verbose_name="Ширина (см)",
+    )
+    height = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        verbose_name="Высота (см)",
+    )
+    depth = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        verbose_name="Глубина (см)",
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, blank=True, verbose_name="Дата добавления"
+    )
 
     class Meta:
         verbose_name = "Работа"
@@ -68,10 +109,22 @@ class Work(models.Model):
 
 
 class Stats(models.Model):
-    clients_count = IntegerField(default=0, null=True, blank=True, verbose_name='Количество довольных клиентов')
-    projects_count = IntegerField(default=0, null=True, blank=True, verbose_name='Колисество выполненных работ')
-    years_experience = IntegerField(default=0, null=True, blank=True, verbose_name='Опыт работы')
-    delivery_weeks = IntegerField(default=0, null=True, blank=True, verbose_name='время доставки', help_text='Указывайте количество недель')
+    clients_count = IntegerField(
+        default=0, null=True, blank=True, verbose_name="Количество довольных клиентов"
+    )
+    projects_count = IntegerField(
+        default=0, null=True, blank=True, verbose_name="Колисество выполненных работ"
+    )
+    years_experience = IntegerField(
+        default=0, null=True, blank=True, verbose_name="Опыт работы"
+    )
+    delivery_weeks = IntegerField(
+        default=0,
+        null=True,
+        blank=True,
+        verbose_name="время доставки",
+        help_text="Указывайте количество недель",
+    )
 
     class Meta:
         verbose_name = "Статистика"
@@ -88,32 +141,47 @@ class Stats(models.Model):
 
 class Review(models.Model):
     RATING_CHOICES = [
-        (1, '1 звезда'),
-        (2, '2 звезды'),
-        (3, '3 звезды'),
-        (4, '4 звезды'),
-        (5, '5 звезд'),
+        (1, "1 звезда"),
+        (2, "2 звезды"),
+        (3, "3 звезды"),
+        (4, "4 звезды"),
+        (5, "5 звезд"),
     ]
 
-    author_name = models.CharField(max_length=100, verbose_name="Автор отзыва", blank=True)
+    author_name = models.CharField(
+        max_length=100, verbose_name="Автор отзыва", blank=True
+    )
     text = models.TextField(blank=True, verbose_name="Текст отзыва")
-    rating = models.IntegerField(choices=RATING_CHOICES, default=5, verbose_name="Рейтинг")
-    project_name = models.CharField(max_length=200, verbose_name="Название проекта", blank=True, default="Мебель на заказ")
+    rating = models.IntegerField(
+        choices=RATING_CHOICES, default=5, verbose_name="Рейтинг"
+    )
+    project_name = models.CharField(
+        max_length=200,
+        verbose_name="Название проекта",
+        blank=True,
+        default="Мебель на заказ",
+    )
     is_verified = models.BooleanField(default=True, verbose_name="Проверенный клиент")
-    helpful_count = models.IntegerField(default=0, verbose_name="Количество полезных голосов")
-    date = models.DateField(auto_now_add=True, verbose_name="Дата добавления отзыва", blank=True)
-    language = models.CharField(max_length=5, choices=languages, verbose_name="Выбор языка на отзыве")
+    helpful_count = models.IntegerField(
+        default=0, verbose_name="Количество полезных голосов"
+    )
+    date = models.DateField(
+        auto_now_add=True, verbose_name="Дата добавления отзыва", blank=True
+    )
+    language = models.CharField(
+        max_length=5, choices=languages, verbose_name="Выбор языка на отзыве"
+    )
 
     class Meta:
         verbose_name = "Отзывы"
         verbose_name_plural = "Отзывы"
-        ordering = ['-date']
+        ordering = ["-date"]
 
     def __str__(self):
         return f"{self.author_name} | {self.rating} звезд | {self.text[:50]}..."
 
     def get_stars_display(self):
-        stars = ''
+        stars = ""
         for i in range(1, 6):
             if i <= self.rating:
                 stars += '<span class="star filled">★</span>'
@@ -123,14 +191,37 @@ class Review(models.Model):
 
 
 class Contact(models.Model):
-    branch_name = models.CharField(max_length=100, verbose_name="Название Филлиала")  # например: "Москва", "Берлин"
+    branch_name = models.CharField(
+        max_length=100, verbose_name="Название Филлиала"
+    )  # например: "Москва", "Берлин"
     phone = models.CharField(max_length=20, verbose_name="Номер телефона филлиала")
     email = models.EmailField(blank=True, verbose_name="Email филлиала")
-    address = models.CharField(max_length=255, blank=True, verbose_name="Адрес филлиала")
-    whatsapp = models.URLField(blank=True, null=True, verbose_name="Контактный номер в Whastapp", help_text='wa.me/+phone_number', default='wa.me/+')
-    instagram = models.URLField(blank=True, null=True, verbose_name="Страница филлиала в Instagram", help_text='https://www.instagram.com/Nickname"', default='https://www.instagram.com/')
-    country = models.CharField(max_length=15, choices=country, default='am', verbose_name="Страна филлиала")
-    language = models.CharField(max_length=5, choices=languages, default="en", verbose_name="Основной язык филлиала")
+    address = models.CharField(
+        max_length=255, blank=True, verbose_name="Адрес филлиала"
+    )
+    whatsapp = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Контактный номер в Whastapp",
+        help_text="wa.me/+phone_number",
+        default="wa.me/+",
+    )
+    instagram = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Страница филлиала в Instagram",
+        help_text='https://www.instagram.com/Nickname"',
+        default="https://www.instagram.com/",
+    )
+    country = models.CharField(
+        max_length=15, choices=country, default="am", verbose_name="Страна филлиала"
+    )
+    language = models.CharField(
+        max_length=5,
+        choices=languages,
+        default="en",
+        verbose_name="Основной язык филлиала",
+    )
 
     class Meta:
         verbose_name = "Контакты"
@@ -160,24 +251,21 @@ class Contact(models.Model):
 
     def get_coordinates_from_address(self):
         try:
-            api_key = getattr(settings, 'GOOGLE_MAPS_API_KEY', None)
+            api_key = getattr(settings, "GOOGLE_MAPS_API_KEY", None)
             if not api_key:
                 return
 
             address = f"{self.address}, {self.get_country_display()}"
             url = f"https://maps.googleapis.com/maps/api/geocode/json"
-            params = {
-                'address': address,
-                'key': api_key
-            }
+            params = {"address": address, "key": api_key}
 
             response = requests.get(url, params=params)
             data = response.json()
 
-            if data['status'] == 'OK' and data['results']:
-                location = data['results'][0]['geometry']['location']
-                self.latitude = location['lat']
-                self.longitude = location['lng']
+            if data["status"] == "OK" and data["results"]:
+                location = data["results"][0]["geometry"]["location"]
+                self.latitude = location["lat"]
+                self.longitude = location["lng"]
         except Exception as e:
             pass
 
@@ -202,18 +290,28 @@ class OpeningHour(models.Model):
         Day.SUNDAY: _("Sunday"),
     }
 
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, related_name="opening_hours")
-    day = models.PositiveSmallIntegerField(choices=Day.choices, verbose_name="День недели")
+    contact = models.ForeignKey(
+        Contact, on_delete=models.CASCADE, related_name="opening_hours"
+    )
+    day = models.PositiveSmallIntegerField(
+        choices=Day.choices, verbose_name="День недели"
+    )
     is_closed = models.BooleanField(default=False, verbose_name="Выходной")
-    open_time = models.TimeField(blank=True, null=True, verbose_name="Открытие", help_text="Формат: ЧЧ:ММ")
-    close_time = models.TimeField(blank=True, null=True, verbose_name="Закрытие", help_text="Формат: ЧЧ:ММ")
+    open_time = models.TimeField(
+        blank=True, null=True, verbose_name="Открытие", help_text="Формат: ЧЧ:ММ"
+    )
+    close_time = models.TimeField(
+        blank=True, null=True, verbose_name="Закрытие", help_text="Формат: ЧЧ:ММ"
+    )
 
     class Meta:
         verbose_name = "График работы"
         verbose_name_plural = "График работы"
         ordering = ("day",)
         constraints = [
-            models.UniqueConstraint(fields=["contact", "day"], name="unique_opening_hour_per_day")
+            models.UniqueConstraint(
+                fields=["contact", "day"], name="unique_opening_hour_per_day"
+            )
         ]
 
     def __str__(self):
@@ -246,19 +344,14 @@ class ConsultationRequest(models.Model):
         max_length=20,
         choices=CONSULTATION_TYPES,
         default="general",
-        verbose_name="Тип консультации"
+        verbose_name="Тип консультации",
     )
     message = models.TextField(blank=True, verbose_name="Сообщение")
     preferred_time = models.CharField(
-        max_length=50,
-        blank=True,
-        verbose_name="Предпочтительное время"
+        max_length=50, blank=True, verbose_name="Предпочтительное время"
     )
     status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default="new",
-        verbose_name="Статус"
+        max_length=20, choices=STATUS_CHOICES, default="new", verbose_name="Статус"
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
@@ -282,7 +375,6 @@ class CarouselPhoto(models.Model):
         ordering = ["order", "-created_at"]
         verbose_name = "Carousel photo"
         verbose_name_plural = "Carousel photos"
-
 
 
 class AboutPageContent(models.Model):

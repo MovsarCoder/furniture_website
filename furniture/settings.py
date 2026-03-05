@@ -13,99 +13,118 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
+SECRET_KEY = config(
+    "SECRET_KEY", default="django-insecure-dev-key-change-in-production"
+)
 
 DEBUG = True
-CSRF_TRUSTED_ORIGINS = ['https://bmass.at', "https://bmass.fr", "https://www.bmass.at", "https://www.bmass.fr", "https://127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://bmass.at",
+    "https://bmass.fr",
+    "https://www.bmass.at",
+    "https://www.bmass.fr",
+    "https://127.0.0.1",
+]
 
 # Get ALLOWED_HOSTS from environment variable or use default
 # Поддержка доменов: немецкий и французский
-allowed_hosts_str = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr')
-ALLOWED_HOSTS = allowed_hosts_str.split(',') if isinstance(allowed_hosts_str, str) else [
-    'localhost', '127.0.0.1',
-    'bmass.at', 'www.bmass.at',  # Немецкий
-    'bmass.fr', 'www.bmass.fr',  # Французский
-]
+allowed_hosts_str = config(
+    "ALLOWED_HOSTS",
+    default="localhost,127.0.0.1,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr",
+)
+ALLOWED_HOSTS = (
+    allowed_hosts_str.split(",")
+    if isinstance(allowed_hosts_str, str)
+    else [
+        "localhost",
+        "127.0.0.1",
+        "bmass.at",
+        "www.bmass.at",  # Немецкий
+        "bmass.fr",
+        "www.bmass.fr",  # Французский
+    ]
+)
 
 # Application definition
 
 INSTALLED_APPS = [
     "unfold",  # Красивая тема админки
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'drf_spectacular',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "drf_spectacular",
     "admin_service",
     "client_service",
 ]
 
 # Настройка для авто документации drf_spectacular. Чтобы отображался автоматически по домену /api/docs
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Added for serving static files in production
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'furniture.middleware.DomainLanguageMiddleware',  # <-- перед LocaleMiddleware
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Added for serving static files in production
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "furniture.middleware.DomainLanguageMiddleware",  # <-- перед LocaleMiddleware
     "django.middleware.locale.LocaleMiddleware",
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'furniture.urls'
+ROOT_URLCONF = "furniture.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         # Теперь Django будет искать шаблоны и в client_service/templates
-        'DIRS': [BASE_DIR / "client_service" / "templates"],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n',
-                'client_service.context_processors.nav_our_works',
+        "DIRS": [BASE_DIR / "client_service" / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.i18n",
+                "client_service.context_processors.nav_our_works",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'furniture.wsgi.application'
+WSGI_APPLICATION = "furniture.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Поддержка PostgreSQL через переменные окружения, иначе SQLite для локальной разработки
-DB_ENGINE = config('DB_ENGINE', default='django.db.backends.sqlite3')
+DB_ENGINE = config("DB_ENGINE", default="django.db.backends.sqlite3")
 
-if DB_ENGINE == 'django.db.backends.postgresql' or DB_ENGINE == 'django.db.backends.postgresql_psycopg2':
+if (
+    DB_ENGINE == "django.db.backends.postgresql"
+    or DB_ENGINE == "django.db.backends.postgresql_psycopg2"
+):
     DATABASES = {
-        'default': {
-            'ENGINE': DB_ENGINE,
-            'NAME': config('DB_NAME', default='furniture_db'),
-            'USER': config('DB_USER', default='db_user'),
-            'PASSWORD': config('DB_PASSWORD', default='db_password'),
-            'HOST': config('DB_HOST', default='db'),
-            'PORT': config('DB_PORT', default='5432'),
+        "default": {
+            "ENGINE": DB_ENGINE,
+            "NAME": config("DB_NAME", default="furniture_db"),
+            "USER": config("DB_USER", default="db_user"),
+            "PASSWORD": config("DB_PASSWORD", default="db_password"),
+            "HOST": config("DB_HOST", default="db"),
+            "PORT": config("DB_PORT", default="5432"),
         }
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
@@ -113,18 +132,20 @@ else:
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'de'  # Немецкий по умолчанию
+LANGUAGE_CODE = "de"  # Немецкий по умолчанию
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 USE_L10N = True
@@ -134,36 +155,38 @@ USE_TZ = True
 from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = [
-    ('en', _('English')),
-    ('fr', _('Français')),
-    ('de', _('Deutsch')),
+    ("en", _("English")),
+    ("fr", _("Français")),
+    ("de", _("Deutsch")),
 ]
 
 # Google Maps API Key
-GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY', default='AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I')
+GOOGLE_MAPS_API_KEY = config(
+    "GOOGLE_MAPS_API_KEY", default="AIzaSyCV338EzjXB46qlz9tV5qCipoeTVvIqo4I"
+)
 
 # Локаль директории для переводов
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',
+    BASE_DIR / "locale",
 ]
 
 # Маппинг доменов на языки для DomainLanguageMiddleware
 # Каждый домен автоматически определяет свой язык
 DOMAIN_LANGUAGE_MAP = {
-    'bmass.at': 'de',  # Немецкий
-    'www.bmass.at': 'de',
-    'bmass.fr': 'fr',  # Французский
-    'www.bmass.fr': 'fr',
+    "bmass.at": "de",  # Немецкий
+    "www.bmass.at": "de",
+    "bmass.fr": "fr",  # Французский
+    "www.bmass.fr": "fr",
     # Для локального тестирования - используем немецкий по умолчанию
-    'localhost': 'de',
-    '127.0.0.1': 'de',
+    "localhost": "de",
+    "127.0.0.1": "de",
 }
 
 # Маппинг языков на домены для редиректа при переключении языка
 # Используется в шаблонах и JavaScript
 LANGUAGE_DOMAIN_MAP = {
-    'de': 'bmass.at',  # Немецкий домен
-    'fr': 'bmass.fr',  # Французский домен
+    "de": "bmass.at",  # Немецкий домен
+    "fr": "bmass.fr",  # Французский домен
 }
 
 # Static files (CSS, JavaScript, Images)
@@ -181,11 +204,16 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Static files storage backend
-# В production используем manifest-хэши для защиты от проблем кэша браузера.
-if DEBUG:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+# По умолчанию оставляем обычное хранилище, чтобы статика работала и при DEBUG=False
+# без обязательного collectstatic/manifest. Для strict production можно включить
+# USE_MANIFEST_STATIC=True в окружении.
+USE_MANIFEST_STATIC = config("USE_MANIFEST_STATIC", default=False, cast=bool)
+if USE_MANIFEST_STATIC and not DEBUG:
+    STATICFILES_STORAGE = (
+        "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    )
 else:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # Медиа (изображения загружаемые через ImageField и т.п.)
 MEDIA_URL = "/media/"
@@ -194,4 +222,4 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

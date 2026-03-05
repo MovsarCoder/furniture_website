@@ -6,21 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('admin_service', '0005_aboutpagecontent_remove_work_currency_and_more'),
+        ("admin_service", "0005_aboutpagecontent_remove_work_currency_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='carouselphoto',
-            name='caption',
+            model_name="carouselphoto",
+            name="caption",
         ),
         migrations.RemoveField(
-            model_name='carouselphoto',
-            name='title',
+            model_name="carouselphoto",
+            name="title",
         ),
         migrations.AlterField(
-            model_name='aboutpagecontent',
-            name='language',
-            field=models.CharField(choices=[('de', 'Deutsch'), ('fr', 'Français')], max_length=5, unique=True, verbose_name='Язык страницы'),
+            model_name="aboutpagecontent",
+            name="language",
+            field=models.CharField(
+                choices=[("de", "Deutsch"), ("fr", "Français")],
+                max_length=5,
+                unique=True,
+                verbose_name="Язык страницы",
+            ),
         ),
     ]

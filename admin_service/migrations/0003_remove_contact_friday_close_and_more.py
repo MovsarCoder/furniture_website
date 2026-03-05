@@ -6,64 +6,64 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('admin_service', '0002_contact_friday_close_contact_friday_open_and_more'),
+        ("admin_service", "0002_contact_friday_close_contact_friday_open_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='contact',
-            name='friday_close',
+            model_name="contact",
+            name="friday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='friday_open',
+            model_name="contact",
+            name="friday_open",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='monday_close',
+            model_name="contact",
+            name="monday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='monday_open',
+            model_name="contact",
+            name="monday_open",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='saturday_close',
+            model_name="contact",
+            name="saturday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='saturday_open',
+            model_name="contact",
+            name="saturday_open",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='sunday_close',
+            model_name="contact",
+            name="sunday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='sunday_open',
+            model_name="contact",
+            name="sunday_open",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='thursday_close',
+            model_name="contact",
+            name="thursday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='thursday_open',
+            model_name="contact",
+            name="thursday_open",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='tuesday_close',
+            model_name="contact",
+            name="tuesday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='tuesday_open',
+            model_name="contact",
+            name="tuesday_open",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='wednesday_close',
+            model_name="contact",
+            name="wednesday_close",
         ),
         migrations.RemoveField(
-            model_name='contact',
-            name='wednesday_open',
+            model_name="contact",
+            name="wednesday_open",
         ),
     ]

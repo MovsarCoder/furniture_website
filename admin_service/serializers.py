@@ -26,7 +26,15 @@ class OpeningHourSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OpeningHour
-        fields = ("id", "day", "day_label", "day_full", "is_closed", "open_time", "close_time")
+        fields = (
+            "id",
+            "day",
+            "day_label",
+            "day_full",
+            "is_closed",
+            "open_time",
+            "close_time",
+        )
 
 
 class ContactSerializer(serializers.ModelSerializer):

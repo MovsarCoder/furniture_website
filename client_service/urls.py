@@ -8,6 +8,6 @@ urlpatterns = [
     path("about/", about_page, name="about"),
     path("portfolio/", all_works, name="portfolio"),
     path("portfolio/<int:pk>/", work_detail, name="work_detail"),
-    path('catalog/', catalog_view, name='catalog'),
+    path("catalog/", catalog_view, name="catalog"),
     # path("test-404/", lambda request: custom_page_not_found(request, None)),
 ]

@@ -234,6 +234,7 @@
   let autoplayInterval = null;
   let isHovered = false;
   let isDragging = false;
+  let hasDragged = false;
   let startX = 0;
   let currentX = 0;
   let initialTransform = 0;
@@ -340,6 +341,7 @@
   // Touch/Mouse drag functionality
   function handleStart(e) {
     isDragging = true;
+    hasDragged = false;
     startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
     startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY; // Store initial Y position
     currentX = startX;
@@ -477,11 +479,11 @@
   observer.observe(reviewsTrack);
 })();
 
-// Photo carousel for homepage
 (function(){
   const carousel = document.querySelector('[data-carousel="home"]');
-  if(!carousel) return;
+  if (!carousel) return;
 
+  const viewport = carousel.querySelector('.carousel-viewport');
   const track = carousel.querySelector('.carousel-track');
   const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
   const prevBtn = carousel.querySelector('[data-carousel-prev]');
@@ -490,83 +492,94 @@
   const nextNumEl = carousel.querySelector('[data-carousel-next-num]');
   const dotsContainer = carousel.querySelector('[data-carousel-dots]');
 
-  if(!track || slides.length === 0) return;
+  if (!viewport || !track || slides.length === 0) return;
 
   let index = 0;
   const total = slides.length;
   let autoplayInterval = null;
+  let resizeTimeout = null;
   let isHovered = false;
   let isDragging = false;
+  let hasDragged = false;
   let startX = 0;
   let startY = 0;
   let currentX = 0;
   let startTranslate = 0;
+  let currentTranslate = 0;
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function getMaxTranslate() {
+    return Math.max(0, track.scrollWidth - viewport.clientWidth);
+  }
+
+  function getTranslateFor(i) {
+    const slide = slides[i];
+    if (!slide) return 0;
+    const target = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+    return clamp(target, 0, getMaxTranslate());
+  }
+
+  function applyTranslate(value, animate) {
+    currentTranslate = clamp(value, 0, getMaxTranslate());
+    track.style.transition = animate
+      ? "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)"
+      : "none";
+    track.style.transform = `translateX(-${currentTranslate}px)`;
+  }
 
   function createDots() {
     if (!dotsContainer) return;
-    dotsContainer.innerHTML = '';
+    dotsContainer.innerHTML = "";
     slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
-      dot.addEventListener('click', () => goTo(i));
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = `carousel-dot ${i === 0 ? "active" : ""}`;
+      dot.addEventListener("click", () => goTo(i));
       dotsContainer.appendChild(dot);
     });
   }
 
   function updateDots() {
     if (!dotsContainer) return;
-    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    const dots = dotsContainer.querySelectorAll(".carousel-dot");
     dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
+      dot.classList.toggle("active", i === index);
     });
   }
 
   function updateSlideStates() {
-    // Remove all active classes
-    slides.forEach(slide => {
-      slide.classList.remove('active-slide', 'inactive-slide');
-    });
-    
-    // Mark the current slide as active
-    if (slides[index]) {
-      slides[index].classList.add('active-slide');
-    }
-    
-    // Mark adjacent slides
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const prevIndex = (index - 1 + total) % total;
     const nextIndex = (index + 1) % total;
-    
-    if (slides[prevIndex]) {
-      slides[prevIndex].classList.add('inactive-slide');
-    }
-    if (slides[nextIndex]) {
-      slides[nextIndex].classList.add('inactive-slide');
-    }
+
+    slides.forEach((slide, i) => {
+      slide.classList.remove("active-slide", "inactive-slide");
+      if (i === index) {
+        slide.classList.add("active-slide");
+      } else if (!isMobile && (i === prevIndex || i === nextIndex)) {
+        slide.classList.add("inactive-slide");
+      }
+    });
   }
 
   function update() {
-    // For the new multi-slide view, we shift by one slide at a time but show 3 slides
-    // We'll adjust the transform to show the active slide in the center
-    const offset = Math.max(0, Math.min(index - 1, total - 3)); // Ensure we don't go past the last possible position
-    track.style.transform = `translateX(calc(-${offset * (100/3)}% - ${offset * 20}px))`;
-    
-    // Update slide classes for active states
+    applyTranslate(getTranslateFor(index), true);
     updateSlideStates();
-    
     updateDots();
+
     if (prevNumEl) {
-      const prevIndex = (index - 1 + total) % total;
-      prevNumEl.textContent = String(prevIndex + 1);
+      prevNumEl.textContent = String(((index - 1 + total) % total) + 1);
     }
     if (nextNumEl) {
-      const nextIndex = (index + 1) % total;
-      nextNumEl.textContent = String(nextIndex + 1);
+      nextNumEl.textContent = String(((index + 1) % total) + 1);
     }
   }
 
   function goTo(i) {
-    index = (i + slides.length) % slides.length;
+    index = (i + total) % total;
     update();
     resetAutoplay();
   }
@@ -605,86 +618,92 @@
   }
 
   function handleStart(e) {
+    const point = e.type === "mousedown" ? e : e.touches[0];
     isDragging = true;
-    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-    startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY; // Store initial Y position
+    hasDragged = false;
+    startX = point.clientX;
+    startY = point.clientY;
     currentX = startX;
-    startTranslate = -index * track.offsetWidth;
-    track.style.transition = 'none';
+    startTranslate = currentTranslate;
+    applyTranslate(currentTranslate, false);
     stopAutoplay();
   }
 
   function handleMove(e) {
     if (!isDragging) return;
-    
-    const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-    const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
-    const diffX = Math.abs(clientX - startX);
-    const diffY = Math.abs(clientY - startY);
-    
-    if (diffX > diffY && diffX > 10) {
+    const point = e.type === "mousemove" ? e : e.touches[0];
+    const diffX = point.clientX - startX;
+    const diffY = point.clientY - startY;
+    if (Math.abs(diffX) > 6) {
+      hasDragged = true;
+    }
+
+    if (e.type === "touchmove" && Math.abs(diffX) > Math.abs(diffY)) {
       e.preventDefault();
     }
-    
-    currentX = clientX;
-    const diff = currentX - startX;
-    const translate = startTranslate + diff;
-    track.style.transform = `translateX(${translate}px)`;
+
+    currentX = point.clientX;
+    applyTranslate(startTranslate - diffX, false);
   }
 
   function handleEnd() {
     if (!isDragging) return;
     isDragging = false;
     const diff = currentX - startX;
-    const threshold = Math.min(120, track.offsetWidth * 0.15);
-    track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+    const threshold = Math.min(96, viewport.clientWidth * 0.16);
+
     if (Math.abs(diff) > threshold) {
       diff < 0 ? next() : prev();
     } else {
       update();
     }
+
     startAutoplay();
+    setTimeout(() => {
+      hasDragged = false;
+    }, 0);
   }
 
-  prevBtn?.addEventListener('click', () => prev());
-  nextBtn?.addEventListener('click', () => next());
+  prevBtn?.addEventListener("click", prev);
+  nextBtn?.addEventListener("click", next);
 
-  // Add click functionality to each slide
   slides.forEach((slide, i) => {
-    slide.addEventListener('click', (e) => {
-      // Prevent click if user is dragging
-      if (!isDragging) {
-        goTo(i);
-      }
+    slide.addEventListener("click", () => {
+      if (!isDragging && !hasDragged) goTo(i);
     });
-    
-    // Also add a visual indicator that the slide is clickable
-    slide.style.cursor = 'pointer';
   });
 
-  carousel.addEventListener('mouseenter', () => {
+  carousel.addEventListener("mouseenter", () => {
     isHovered = true;
     stopAutoplay();
   });
 
-  carousel.addEventListener('mouseleave', () => {
+  carousel.addEventListener("mouseleave", () => {
     isHovered = false;
     resetAutoplay();
   });
 
-  track.addEventListener('touchstart', handleStart, { passive: false });
-  track.addEventListener('touchmove', handleMove, { passive: false });
-  track.addEventListener('touchend', handleEnd);
-  track.addEventListener('mousedown', handleStart);
-  document.addEventListener('mousemove', handleMove);
-  document.addEventListener('mouseup', handleEnd);
-  track.addEventListener('contextmenu', e => e.preventDefault());
+  track.addEventListener("touchstart", handleStart, { passive: false });
+  track.addEventListener("touchmove", handleMove, { passive: false });
+  track.addEventListener("touchend", handleEnd);
+  track.addEventListener("touchcancel", handleEnd);
+  track.addEventListener("mousedown", handleStart);
+  document.addEventListener("mousemove", handleMove);
+  document.addEventListener("mouseup", handleEnd);
+  track.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      update();
+    }, 160);
+  });
 
   const gettext = window.gettext || function(key) { return key; };
-  prevBtn?.setAttribute('aria-label', gettext('Previous photo'));
-  nextBtn?.setAttribute('aria-label', gettext('Next photo'));
-  track.setAttribute('role', 'region');
-  track.setAttribute('aria-label', gettext('Photo carousel'));
+  prevBtn?.setAttribute("aria-label", gettext("Previous photo"));
+  nextBtn?.setAttribute("aria-label", gettext("Next photo"));
+  track.setAttribute("role", "region");
+  track.setAttribute("aria-label", gettext("Photo carousel"));
 
   createDots();
   update();
