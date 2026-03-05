@@ -36,9 +36,24 @@
             </div>
             {% endif %}
 
-            <div class="contact-row">📞 {{ contact.phone }}</div>
-            <div class="contact-row">📧 {{ contact.email }}</div>
-            <div class="contact-row">📍 {{ contact.address }}</div>
+            {% if contact.address %}
+            <div class="contact-row contact-row-main contact-row-address">
+                <span class="contact-label">{% trans 'Adresse' %}:</span>
+                <span class="contact-value">{{ contact.address }}</span>
+            </div>
+            {% endif %}
+            {% if contact.email %}
+            <div class="contact-row contact-row-main contact-row-email">
+                <span class="contact-label">{% trans 'Email' %}:</span>
+                <span class="contact-value"><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></span>
+            </div>
+            {% endif %}
+            {% if contact.phone %}
+            <div class="contact-row contact-row-main contact-row-phone">
+                <span class="contact-label">{% trans 'TEL' %}:</span>
+                <span class="contact-value contact-value-phone"><a href="tel:{{ contact.phone|cut:' ' }}">{{ contact.phone }}</a></span>
+            </div>
+            {% endif %}
             <div class="contact-row">
                 <a href="{{ contact.whatsapp }}">💬 {% trans 'WhatsApp' %}</a>
                 <span class="contact-divider">·</span>

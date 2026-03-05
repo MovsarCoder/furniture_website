@@ -17,7 +17,7 @@ SECRET_KEY = config(
     "SECRET_KEY", default="django-insecure-dev-key-change-in-production"
 )
 
-DEBUG = True
+DEBUG = False
 CSRF_TRUSTED_ORIGINS = [
     "https://bmass.at",
     "https://bmass.fr",

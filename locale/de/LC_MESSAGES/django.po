@@ -909,6 +909,18 @@ msgstr "Geschlossen"
 msgid "Map for"
 msgstr "Karte für"
 
+#: client_service/templates/partials/contacts_section.html:39
+msgid "Adresse"
+msgstr "Adresse"
+
+#: client_service/templates/partials/contacts_section.html:51
+msgid "Email"
+msgstr "Email"
+
+#: client_service/templates/partials/contacts_section.html:57
+msgid "TEL"
+msgstr "TEL"
+
 #: client_service/templates/partials/contacts_section.html:60
 msgid "View on Google Maps"
 msgstr "Auf Google Maps anzeigen"

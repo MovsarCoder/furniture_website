@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% if carousel_photos %}
 <section id="home" class="hero-stack">
@@ -17,7 +18,7 @@
                     {% for photo in carousel_photos %}
                     <div class="carousel-slide">
                         <div class="slide-image-container">
-                            <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="carousel-image"
+                            <img src="{{ photo.image.url }}" alt="{% trans 'Furniture interior' %}" class="carousel-image"
                                  {% if forloop.first %}
                                  loading="eager" fetchpriority="high" decoding="sync"
                                  {% else %}
@@ -53,14 +54,21 @@
     <div class="hero-intro hero-intro-overlay">
         <div class="hero-intro-inner">
             <div class="hero-text">
+                {% if LANGUAGE_CODE == 'fr' %}
                 <p class="hero-title">
-                    {% trans 'We create furniture' %} -
-                    {% trans 'dreams' %}
-                    {% trans 'for your home' %}
+                    Du mobilier qui donne du caractère à votre intérieur.
                 </p>
                 <p class="hero-description">
-                    {% trans 'Design and manufacture of unique furniture for your interior. From idea to implementation — 100% quality and attention to detail.' %}
+                    De l’idée aux finitions, on conçoit des meubles élégants, solides et vraiment pensés pour votre quotidien.
                 </p>
+                {% else %}
+                <p class="hero-title">
+                    Möbel, die Ihrem Zuhause spürbar Charakter geben.
+                </p>
+                <p class="hero-description">
+                    Von der Idee bis zur Montage entstehen bei uns stilvolle, langlebige Möbel, die zu Ihrem Alltag passen.
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -69,18 +77,54 @@
 <section id="home" class="hero-intro">
     <div class="hero-intro-inner">
         <div class="hero-text">
+            {% if LANGUAGE_CODE == 'fr' %}
             <p class="hero-title">
-                {% trans 'We create furniture' %}
-                {% trans 'dreams' %}
-                {% trans 'for your home' %}
+                Du mobilier qui donne du caractère à votre intérieur.
             </p>
             <p class="hero-description">
-                {% trans 'Design and manufacture of unique furniture for your interior. From idea to implementation — 100% quality and attention to detail.' %}
+                De l’idée aux finitions, on conçoit des meubles élégants, solides et vraiment pensés pour votre quotidien.
             </p>
+            {% else %}
+            <p class="hero-title">
+                Möbel, die Ihrem Zuhause spürbar Charakter geben.
+            </p>
+            <p class="hero-description">
+                Von der Idee bis zur Montage entstehen bei uns stilvolle, langlebige Möbel, die zu Ihrem Alltag passen.
+            </p>
+            {% endif %}
         </div>
     </div>
 </section>
 {% endif %}
+
+<section class="section container designer-express-section">
+    <div class="designer-express-panel">
+        <div class="designer-express-copy">
+            {% if LANGUAGE_CODE == 'fr' %}
+            <p class="designer-express-kicker">Design express</p>
+            <h2 class="designer-express-title">Un intérieur bien pensé, sans attendre des mois.</h2>
+            <p class="designer-express-text">On affine vos idées avec un regard pro, puis on transforme tout en mobilier élégant et concret.</p>
+            <button class="btn btn-primary designer-express-btn" onclick="openConsultationModal()">Parler du projet</button>
+            {% else %}
+            <p class="designer-express-kicker">Express Design</p>
+            <h2 class="designer-express-title">Ein stimmiges Zuhause, ohne monatelange Planung.</h2>
+            <p class="designer-express-text">Wir schärfen Ihre Ideen mit Profi-Blick und setzen sie in elegante, alltagstaugliche Möbel um.</p>
+            <button class="btn btn-primary designer-express-btn" onclick="openConsultationModal()">Projekt besprechen</button>
+            {% endif %}
+        </div>
+        <figure class="designer-express-visual">
+            {% if express_banner_photo %}
+            <img src="{{ express_banner_photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
+            {% else %}
+                {% with first_photo=carousel_photos|first %}
+                    {% if first_photo %}
+                    <img src="{{ first_photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+        </figure>
+    </div>
+</section>
 
 <section class="section container furniture-identity-section">
     <div class="section-header">
@@ -94,7 +138,7 @@
             {% if visual_photos %}
                 {% for photo in visual_photos %}
                 <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
-                    <img src="{{ photo.image.url }}" alt="{{ photo.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    <img src="{{ photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
                     <div class="identity-shot-overlay">
                         <span class="identity-shot-label">
                             {% if forloop.counter == 1 %}
@@ -191,134 +235,58 @@
     </div>
 </section>
 
-<section id="stats" class="section container">
-    <div class="stats-hero">
-        <div class="section-header">
+<section id="stats" class="section container premium-stats-section">
+    <div class="premium-stats-shell">
+        <div class="section-header premium-stats-header">
             <div>
                 <div class="section-title">{% trans 'About us in numbers' %}</div>
                 <div class="section-sub">{% trans 'Facts that clients trust' %}</div>
             </div>
-            <div class="stats-badge">
-                <span class="badge-icon">📊</span>
-                <span class="badge-text">{% trans 'Verified data' %}</span>
-            </div>
-        </div>
-        {% if stats %}
-        <div class="stats-enhanced">
-            <div class="stat-card stat-clients">
-                <div class="stat-background">
-                    <div class="background-pattern"></div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-data">
-                        <div class="num" data-count="{{ stats.clients_count }}">0</div>
-                        <div class="num-suffix">+</div>
-                    </div>
-                    <div class="label">{% trans 'Satisfied clients' %}</div>
-                    <div class="stat-description">{% trans 'High trust rating' %}</div>
-                    <div class="progress-enhanced">
-                        <div class="progress-bar" data-width="95"></div>
-                        <div class="progress-glow"></div>
-                    </div>
-                </div>
-                <div class="stat-sparkle">
-                    <div class="sparkle sparkle-1"></div>
-                    <div class="sparkle sparkle-2"></div>
-                    <div class="sparkle sparkle-3"></div>
-                </div>
-            </div>
-
-            <div class="stat-card stat-projects">
-                <div class="stat-background">
-                    <div class="background-pattern"></div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-data">
-                        <div class="num" data-count="{{ stats.projects_count }}">0</div>
-                        <div class="num-suffix">+</div>
-                    </div>
-                    <div class="label">{% trans 'Completed projects' %}</div>
-                    <div class="stat-description">{% trans 'Unique furniture' %}</div>
-                    <div class="progress-enhanced">
-                        <div class="progress-bar" data-width="88"></div>
-                        <div class="progress-glow"></div>
-                    </div>
-                </div>
-                <div class="stat-sparkle">
-                    <div class="sparkle sparkle-1"></div>
-                    <div class="sparkle sparkle-2"></div>
-                    <div class="sparkle sparkle-3"></div>
-                </div>
-            </div>
-
-            <div class="stat-card stat-experience">
-                <div class="stat-background">
-                    <div class="background-pattern"></div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-data">
-                        <div class="num" data-count="{{ stats.years_experience }}">0</div>
-                        <div class="num-suffix"></div>
-                    </div>
-                    <div class="label">{% trans 'Years of experience' %}</div>
-                    <div class="stat-description">{% trans 'Professional expertise' %}</div>
-                    <div class="progress-enhanced">
-                        <div class="progress-bar" data-width="92"></div>
-                        <div class="progress-glow"></div>
-                    </div>
-                </div>
-                <div class="stat-sparkle">
-                    <div class="sparkle sparkle-1"></div>
-                    <div class="sparkle sparkle-2"></div>
-                    <div class="sparkle sparkle-3"></div>
-                </div>
-            </div>
-
-            <div class="stat-card stat-delivery">
-                <div class="stat-background">
-                    <div class="background-pattern"></div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-data">
-                        <div class="num" data-count="{{ stats.delivery_weeks }}">0</div>
-                        <div class="num-suffix"></div>
-                    </div>
-                    <div class="label">{% trans 'Weeks to delivery' %}</div>
-                    <div class="stat-description">{% trans 'Fast implementation' %}</div>
-                    <div class="progress-enhanced">
-                        <div class="progress-bar" data-width="85"></div>
-                        <div class="progress-glow"></div>
-                    </div>
-                </div>
-                <div class="stat-sparkle">
-                    <div class="sparkle sparkle-1"></div>
-                    <div class="sparkle sparkle-2"></div>
-                    <div class="sparkle sparkle-3"></div>
-                </div>
+            <div class="premium-stats-badge">
+                <span class="premium-stats-badge-icon">●</span>
+                <span class="premium-stats-badge-text">{% trans 'Verified data' %}</span>
             </div>
         </div>
 
+        <div class="premium-stats-grid">
+            <article class="premium-stat-card">
+                <p class="premium-stat-value">{{ stats_clients }}+</p>
+                <p class="premium-stat-label">{% trans 'Satisfied clients' %}</p>
+                <p class="premium-stat-meta">{% trans 'High trust rating' %}</p>
+            </article>
+            <article class="premium-stat-card">
+                <p class="premium-stat-value">{{ stats_projects }}+</p>
+                <p class="premium-stat-label">{% trans 'Completed projects' %}</p>
+                <p class="premium-stat-meta">{% trans 'Unique furniture' %}</p>
+            </article>
+            <article class="premium-stat-card">
+                <p class="premium-stat-value">{{ stats_years }}</p>
+                <p class="premium-stat-label">{% trans 'Years of experience' %}</p>
+                <p class="premium-stat-meta">{% trans 'Professional expertise' %}</p>
+            </article>
+            <article class="premium-stat-card">
+                <p class="premium-stat-value">{{ stats_delivery_weeks }}</p>
+                <p class="premium-stat-label">{% trans 'Weeks to delivery' %}</p>
+                <p class="premium-stat-meta">{% trans 'Fast implementation' %}</p>
+            </article>
+        </div>
 
-        <div class="stats-footer">
-            <div class="stats-highlight">
-                <div class="highlight-item">
-                    <span class="highlight-icon">🏆</span>
-                    <span class="highlight-text">{% trans 'Leader in custom furniture' %}</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="highlight-icon">💎</span>
-                    <span class="highlight-text">{% trans 'Premium quality materials' %}</span>
-                </div>
-                <div class="highlight-item">
-                    <span class="highlight-icon">🎯</span>
-                    <span class="highlight-text">{% trans 'Precise deadlines' %}</span>
-                </div>
+        <div class="premium-stats-highlights">
+            <div class="premium-highlight-item">
+                <span class="premium-highlight-icon">🏆</span>
+                <span class="premium-highlight-text">{% trans 'Leader in custom furniture' %}</span>
+            </div>
+            <div class="premium-highlight-item">
+                <span class="premium-highlight-icon">◆</span>
+                <span class="premium-highlight-text">{% trans 'Premium quality materials' %}</span>
+            </div>
+            <div class="premium-highlight-item">
+                <span class="premium-highlight-icon">◉</span>
+                <span class="premium-highlight-text">{% trans 'Precise deadlines' %}</span>
             </div>
         </div>
-        {% endif %}
     </div>
 </section>
-
 
 <section id="delivery" class="section container">
     <div class="delivery-hero">
@@ -355,6 +323,45 @@
                     <p>{% trans 'We carefully deliver and install' %}</p>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="store-benefits" class="section container store-benefits-section">
+    <div class="store-benefits-panel">
+        <div class="store-benefits-copy">
+            <div class="store-benefits-head">
+                <span class="store-benefits-kicker">{% trans 'Furniture store' %}</span>
+                <h2 class="section-title store-benefits-title">{% trans 'We deliver furniture that fits your life and interior' %}</h2>
+            </div>
+            <p class="store-benefits-description">
+                {% trans 'From curated catalog models to custom production, we handle materials, quality control, delivery and careful installation.' %}
+            </p>
+            <ul class="store-benefits-list">
+                <li>{% trans 'Catalog with modern sofas, beds, tables and storage systems' %}</li>
+                <li>{% trans 'Reliable delivery schedule with assembly and final checks' %}</li>
+                <li>{% trans 'Durable materials and transparent warranty terms' %}</li>
+            </ul>
+        </div>
+        <div class="store-benefits-gallery">
+            {% with final_photos=carousel_photos|slice:":3" %}
+                {% if final_photos %}
+                    {% for photo in final_photos %}
+                    <figure class="benefit-photo">
+                        <img src="{{ photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
+                    </figure>
+                    {% endfor %}
+                {% elif nav_our_works %}
+                    {% for work in nav_our_works|slice:":3" %}
+                    <figure class="benefit-photo">
+                        {% if work.image %}
+                        <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                        {% endif %}
+                    </figure>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 </section>
@@ -503,42 +510,26 @@
     </div>
 </section>
 
-{% include "partials/contacts_section.html" %}
 
-<section id="store-benefits" class="section container store-benefits-section">
-    <div class="store-benefits-panel">
-        <div class="store-benefits-copy">
-            <span class="store-benefits-kicker">{% trans 'Furniture store' %}</span>
-            <h2 class="section-title">{% trans 'We deliver furniture that fits your life and interior' %}</h2>
-            <p class="store-benefits-description">
-                {% trans 'From curated catalog models to custom production, we handle materials, quality control, delivery and careful installation.' %}
-            </p>
-            <ul class="store-benefits-list">
-                <li>{% trans 'Catalog with modern sofas, beds, tables and storage systems' %}</li>
-                <li>{% trans 'Reliable delivery schedule with assembly and final checks' %}</li>
-                <li>{% trans 'Durable materials and transparent warranty terms' %}</li>
-            </ul>
-        </div>
-        <div class="store-benefits-gallery">
-            {% with final_photos=carousel_photos|slice:":3" %}
-                {% if final_photos %}
-                    {% for photo in final_photos %}
-                    <figure class="benefit-photo">
-                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                    </figure>
-                    {% endfor %}
-                {% elif nav_our_works %}
-                    {% for work in nav_our_works|slice:":3" %}
-                    <figure class="benefit-photo">
-                        {% if work.image %}
-                        <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                        {% endif %}
-                    </figure>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+{% if showcase_photos %}
+<section class="section container immersive-gallery-section">
+        <div class="section-header">
+        <div>
+            <h2 class="section-title">{% trans 'Modern furniture mood' %}</h2>
+            <p class="section-sub">{% trans 'A consistent style of interiors and furniture across the whole catalog' %}</p>
         </div>
     </div>
+    <div class="immersive-gallery-grid">
+        {% for item in showcase_photos %}
+        <figure class="immersive-gallery-item{% if forloop.counter == 1 %} immersive-gallery-item-large{% elif forloop.counter == 4 or forloop.counter == 8 %} immersive-gallery-item-tall{% endif %}">
+             <img src="{{ item.url }}" alt="{{ item.title }}" loading="lazy" decoding="async" fetchpriority="low">
+        </figure>
+        {% endfor %}
+    </div>
 </section>
+{% endif %}
+
+
+{% include "partials/contacts_section.html" %}
 
 {% endblock %}

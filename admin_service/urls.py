@@ -7,7 +7,6 @@ app_name = "admin_service"
 
 router = DefaultRouter()
 router.register("works", WorkViewSet)
-router.register("stats", StatsViewSet)
 router.register("reviews", ReviewViewSet)
 router.register("contacts", ContactViewSet)
 router.register("consultation_requests", ConsultationRequestsViewSet)

@@ -8,12 +8,6 @@ class WorkSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class StatsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Stats
-        fields = "__all__"
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review

@@ -17,11 +17,6 @@ class WorkViewSet(viewsets.ModelViewSet):
     serializer_class = WorkSerializer
 
 
-class StatsViewSet(viewsets.ModelViewSet):
-    queryset = Stats.objects.all()
-    serializer_class = StatsSerializer
-
-
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer

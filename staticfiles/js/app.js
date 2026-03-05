@@ -1,127 +1,3 @@
-// ===== ENHANCED STATISTICS ANIMATION =====
-// Улучшенная анимация статистики с плавными эффектами
-(function(){
-  const nums = document.querySelectorAll('.num[data-count]');
-  const easeOutQuart = t => 1 - (--t) * t * t * t;
-  const formatNum = n => n.toLocaleString('ru-RU');
-
-  function animate(el, to, duration = 3000){
-    let start = null;
-    const progressBar = el.closest('.stat-card').querySelector('.progress-bar');
-    const iconWrapper = el.closest('.stat-card').querySelector('.stat-icon-wrapper');
-    const sparkles = el.closest('.stat-card').querySelectorAll('.sparkle');
-    const icon = el.closest('.stat-card').querySelector('.stat-icon');
-
-    function step(ts){
-      if(!start) start = ts;
-      let progress = (ts - start) / duration;
-      if(progress > 1) progress = 1;
-
-      // Используем более плавную easing функцию
-      const eased = easeOutQuart(progress);
-      const value = Math.floor(to * eased);
-
-      el.textContent = formatNum(value);
-
-      // Анимация прогресс-бара с задержкой
-      if(progressBar && progress > 0.3){
-        const targetWidth = progressBar.getAttribute('data-width') || '100';
-        const barProgress = Math.min((progress - 0.3) / 0.7, 1);
-        progressBar.style.width = (barProgress * parseFloat(targetWidth)) + '%';
-      }
-
-      // Пульсация иконки во время анимации
-      if(icon && progress < 1) {
-        const pulseScale = 1 + Math.sin(progress * Math.PI * 4) * 0.1;
-        icon.style.transform = `scale(${pulseScale})`;
-      }
-
-      // Активация искр в процессе анимации
-      sparkles.forEach((sparkle, index) => {
-        if(progress > (index + 1) * 0.25) {
-          sparkle.style.animationPlayState = 'running';
-        }
-      });
-
-      // Добавляем свечение при завершении
-      if(progress >= 1) {
-        if(icon) {
-          icon.style.transform = 'scale(1)';
-          icon.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.4)';
-        }
-      }
-
-      if(progress < 1){
-        requestAnimationFrame(step);
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach((entry, idx)=>{
-      if(entry.isIntersecting){
-        const el = entry.target;
-        const max = +el.dataset.count;
-        
-        // Увеличенная задержка для лучшего эффекта
-        setTimeout(() => {
-          animate(el, max, 2800);
-        }, idx * 500);
-
-        io.unobserve(el);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  nums.forEach(n=>io.observe(n));
-
-  // Добавляем эффекты при наведении на карточки статистики
-  const statCards = document.querySelectorAll('.stat-card');
-  statCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      const icon = card.querySelector('.stat-icon');
-      const progressGlow = card.querySelector('.progress-glow');
-      const sparkles = card.querySelectorAll('.sparkle');
-      
-      if(icon) {
-        icon.style.transform = 'scale(1.1) rotate(6deg)';
-        icon.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      }
-      
-      if(progressGlow) {
-        progressGlow.style.opacity = '0.6';
-      }
-      
-      sparkles.forEach((sparkle, idx) => {
-        setTimeout(() => {
-          sparkle.style.animation = 'sparkleFloat 2s ease-in-out infinite';
-        }, idx * 120);
-      });
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      const icon = card.querySelector('.stat-icon');
-      const progressGlow = card.querySelector('.progress-glow');
-      const sparkles = card.querySelectorAll('.sparkle');
-      
-      if(icon) {
-        icon.style.transform = 'scale(1) rotate(0deg)';
-        icon.style.transition = 'transform 0.4s ease';
-      }
-      
-      if(progressGlow) {
-        progressGlow.style.opacity = '0';
-      }
-      
-      sparkles.forEach(sparkle => {
-        sparkle.style.animation = 'sparkleFloat 3s ease-in-out infinite';
-      });
-    });
-  });
-})();
-
 // Smooth scroll for navigation links
 (function(){
   const navLinks = document.querySelectorAll('a[href^="#"]');
@@ -151,7 +27,7 @@
 // Enhanced hover effects for cards
 (function(){
   if (!window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
-  const cards = document.querySelectorAll('.card, .feature, .stat, .review, .branch');
+  const cards = document.querySelectorAll('.card, .feature, .review, .branch');
 
   cards.forEach(card => {
     card.addEventListener('mouseenter', () => {
@@ -485,17 +361,21 @@
 
   const viewport = carousel.querySelector('.carousel-viewport');
   const track = carousel.querySelector('.carousel-track');
-  const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+  const originalSlides = Array.from(track.querySelectorAll('.carousel-slide'));
   const prevBtn = carousel.querySelector('[data-carousel-prev]');
   const nextBtn = carousel.querySelector('[data-carousel-next]');
   const prevNumEl = carousel.querySelector('[data-carousel-prev-num]');
   const nextNumEl = carousel.querySelector('[data-carousel-next-num]');
   const dotsContainer = carousel.querySelector('[data-carousel-dots]');
 
-  if (!viewport || !track || slides.length === 0) return;
+  if (!viewport || !track || originalSlides.length === 0) return;
 
-  let index = 0;
-  const total = slides.length;
+  const total = originalSlides.length;
+  const transitionValue = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+  const cloneCopiesEachSide = total > 1 ? 3 : 0;
+  const startRealIndex = total > 1 ? Math.floor((total - 1) / 2) : 0;
+  let allSlides = [];
+  let currentIndex = 0;
   let autoplayInterval = null;
   let resizeTimeout = null;
   let isHovered = false;
@@ -507,6 +387,60 @@
   let startTranslate = 0;
   let currentTranslate = 0;
 
+  originalSlides.forEach((slide, i) => {
+    slide.dataset.realIndex = String(i);
+  });
+
+  function normalizeRealIndex(value) {
+    if (!total) return 0;
+    return ((value % total) + total) % total;
+  }
+
+  function setTrackTransition(animate) {
+    track.style.setProperty(
+      "transition",
+      animate ? transitionValue : "none",
+      "important"
+    );
+  }
+
+  function buildInfiniteTrack() {
+    track.querySelectorAll('[data-clone="true"]').forEach((clone) => clone.remove());
+
+    if (total <= 1) {
+      allSlides = [...originalSlides];
+      currentIndex = 0;
+      return;
+    }
+
+    const before = document.createDocumentFragment();
+    const after = document.createDocumentFragment();
+
+    for (let copy = 0; copy < cloneCopiesEachSide; copy++) {
+      originalSlides.forEach((slide, i) => {
+        const cloneBefore = slide.cloneNode(true);
+        cloneBefore.dataset.clone = "true";
+        cloneBefore.dataset.realIndex = String(i);
+        before.appendChild(cloneBefore);
+      });
+    }
+
+    for (let copy = 0; copy < cloneCopiesEachSide; copy++) {
+      originalSlides.forEach((slide, i) => {
+        const cloneAfter = slide.cloneNode(true);
+        cloneAfter.dataset.clone = "true";
+        cloneAfter.dataset.realIndex = String(i);
+        after.appendChild(cloneAfter);
+      });
+    }
+
+    track.insertBefore(before, track.firstChild);
+    track.appendChild(after);
+
+    allSlides = Array.from(track.querySelectorAll(".carousel-slide"));
+    currentIndex = startRealIndex + total * cloneCopiesEachSide;
+  }
+
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
   }
@@ -516,7 +450,7 @@
   }
 
   function getTranslateFor(i) {
-    const slide = slides[i];
+    const slide = allSlides[i];
     if (!slide) return 0;
     const target = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
     return clamp(target, 0, getMaxTranslate());
@@ -524,72 +458,137 @@
 
   function applyTranslate(value, animate) {
     currentTranslate = clamp(value, 0, getMaxTranslate());
-    track.style.transition = animate
-      ? "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)"
-      : "none";
+    setTrackTransition(animate);
     track.style.transform = `translateX(-${currentTranslate}px)`;
+  }
+
+  function getRealIndex(i) {
+    const slide = allSlides[i];
+    const raw = slide ? Number(slide.dataset.realIndex) : 0;
+    return Number.isFinite(raw) ? normalizeRealIndex(raw) : 0;
   }
 
   function createDots() {
     if (!dotsContainer) return;
     dotsContainer.innerHTML = "";
-    slides.forEach((_, i) => {
+
+    for (let i = 0; i < total; i++) {
       const dot = document.createElement("button");
       dot.type = "button";
-      dot.className = `carousel-dot ${i === 0 ? "active" : ""}`;
-      dot.addEventListener("click", () => goTo(i));
+      dot.className = `carousel-dot ${i === startRealIndex ? "active" : ""}`;
+      dot.addEventListener("click", () => goToReal(i));
       dotsContainer.appendChild(dot);
-    });
+    }
   }
 
   function updateDots() {
     if (!dotsContainer) return;
+    const realIndex = getRealIndex(currentIndex);
     const dots = dotsContainer.querySelectorAll(".carousel-dot");
+
     dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === index);
+      dot.classList.toggle("active", i === realIndex);
     });
   }
 
   function updateSlideStates() {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const prevIndex = (index - 1 + total) % total;
-    const nextIndex = (index + 1) % total;
-
-    slides.forEach((slide, i) => {
+    allSlides.forEach((slide) => {
       slide.classList.remove("active-slide", "inactive-slide");
-      if (i === index) {
-        slide.classList.add("active-slide");
-      } else if (!isMobile && (i === prevIndex || i === nextIndex)) {
-        slide.classList.add("inactive-slide");
-      }
     });
+
+    const activeSlide = allSlides[currentIndex];
+    if (activeSlide) {
+      activeSlide.classList.add("active-slide");
+    }
+
+    if (!isMobile) {
+      const prevSlide = allSlides[currentIndex - 1];
+      const nextSlide = allSlides[currentIndex + 1];
+      prevSlide?.classList.add("inactive-slide");
+      nextSlide?.classList.add("inactive-slide");
+    }
   }
 
-  function update() {
-    applyTranslate(getTranslateFor(index), true);
+  function normalizeInfinitePosition() {
+    if (total <= 1) return;
+
+    const centerStart = total * cloneCopiesEachSide;
+    const centerEnd = centerStart + total - 1;
+    let normalizedIndex = currentIndex;
+
+    while (normalizedIndex > centerEnd) {
+      normalizedIndex -= total;
+    }
+    while (normalizedIndex < centerStart) {
+      normalizedIndex += total;
+    }
+
+    if (normalizedIndex !== currentIndex) {
+      currentIndex = normalizedIndex;
+      applyTranslate(getTranslateFor(currentIndex), false);
+      updateSlideStates();
+    }
+  }
+
+  function keepIndexInRenderedRange() {
+    if (total <= 1) return;
+    const maxRenderedIndex = allSlides.length - 1;
+    while (currentIndex > maxRenderedIndex) {
+      currentIndex -= total;
+    }
+    while (currentIndex < 0) {
+      currentIndex += total;
+    }
+  }
+
+  function update(animate = true) {
+    keepIndexInRenderedRange();
+    applyTranslate(getTranslateFor(currentIndex), animate);
     updateSlideStates();
     updateDots();
 
+    const realIndex = getRealIndex(currentIndex);
     if (prevNumEl) {
-      prevNumEl.textContent = String(((index - 1 + total) % total) + 1);
+      prevNumEl.textContent = String(((realIndex - 1 + total) % total) + 1);
     }
     if (nextNumEl) {
-      nextNumEl.textContent = String(((index + 1) % total) + 1);
+      nextNumEl.textContent = String(((realIndex + 1) % total) + 1);
+    }
+
+    if (!animate) {
+      normalizeInfinitePosition();
     }
   }
 
-  function goTo(i) {
-    index = (i + total) % total;
-    update();
+  function moveBy(delta) {
+    if (total <= 1) return;
+    currentIndex += delta;
+    update(true);
+    resetAutoplay();
+  }
+
+  function goToReal(realTarget) {
+    if (total <= 1) return;
+
+    const target = normalizeRealIndex(realTarget);
+    const currentReal = getRealIndex(currentIndex);
+    let delta = target - currentReal;
+
+    if (delta > total / 2) delta -= total;
+    if (delta < -total / 2) delta += total;
+
+    currentIndex += delta;
+    update(true);
     resetAutoplay();
   }
 
   function next() {
-    goTo(index + 1);
+    moveBy(1);
   }
 
   function prev() {
-    goTo(index - 1);
+    moveBy(-1);
   }
 
   function startAutoplay() {
@@ -597,7 +596,8 @@
       clearInterval(autoplayInterval);
       autoplayInterval = null;
     }
-    if (slides.length <= 1) return;
+    if (total <= 1) return;
+
     autoplayInterval = setInterval(() => {
       if (!isHovered && !isDragging) next();
     }, 4500);
@@ -667,10 +667,13 @@
   prevBtn?.addEventListener("click", prev);
   nextBtn?.addEventListener("click", next);
 
-  slides.forEach((slide, i) => {
-    slide.addEventListener("click", () => {
-      if (!isDragging && !hasDragged) goTo(i);
-    });
+  track.addEventListener("click", (e) => {
+    if (isDragging || hasDragged) return;
+    const slide = e.target.closest(".carousel-slide");
+    if (!slide) return;
+    const realIndex = Number(slide.dataset.realIndex);
+    if (!Number.isFinite(realIndex)) return;
+    goToReal(realIndex);
   });
 
   carousel.addEventListener("mouseenter", () => {
@@ -691,11 +694,15 @@
   document.addEventListener("mousemove", handleMove);
   document.addEventListener("mouseup", handleEnd);
   track.addEventListener("contextmenu", (e) => e.preventDefault());
+  track.addEventListener("transitionend", (e) => {
+    if (e.target !== track || e.propertyName !== "transform") return;
+    normalizeInfinitePosition();
+  });
 
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      update();
+      update(false);
     }, 160);
   });
 
@@ -705,9 +712,21 @@
   track.setAttribute("role", "region");
   track.setAttribute("aria-label", gettext("Photo carousel"));
 
+  buildInfiniteTrack();
+  const slideImages = Array.from(track.querySelectorAll(".carousel-image, img"));
+
   createDots();
-  update();
+  update(false);
   startAutoplay();
+
+  slideImages.forEach((img) => {
+    if (!img.complete) {
+      img.addEventListener("load", () => update(false));
+      img.addEventListener("error", () => update(false));
+    }
+  });
+
+  window.addEventListener("load", () => update(false), { once: true });
 })();
 
 // Mobile burger menu toggle with a11y

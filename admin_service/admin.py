@@ -7,7 +7,6 @@ from .models import (
     Review,
     Contact,
     Work,
-    Stats,
     ConsultationRequest,
     Category,
     CarouselPhoto,
@@ -86,23 +85,6 @@ class WorkAdmin(ModelAdmin):
         "country",
     )
     date_hierarchy = "created_at"
-
-
-@admin.register(Stats)
-class StatAdmin(ModelAdmin):
-    list_display = (
-        "id",
-        "clients_count",
-        "projects_count",
-        "years_experience",
-        "delivery_weeks",
-    )
-    list_editable = (
-        "clients_count",
-        "projects_count",
-        "years_experience",
-        "delivery_weeks",
-    )
 
 
 @admin.register(Review)
