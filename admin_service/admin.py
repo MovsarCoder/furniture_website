@@ -26,7 +26,7 @@ class OpeningHourInline(admin.TabularInline):
         models.TimeField: {"widget": forms.TimeInput(attrs={"type": "time", "step": "300"})},
     }
 
-
+# Movsar
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
     list_display = ('id', 'category', 'title', 'description', "our_work", 'country', 'date', 'language', 'work_type', 'status', 'material', 'width', 'height', 'depth',
