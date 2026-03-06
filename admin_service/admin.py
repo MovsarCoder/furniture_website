@@ -1,26 +1,28 @@
-from unfold.admin import ModelAdmin
 from django import forms
 from django.contrib import admin
 from django.db import models
-from .models import (
+from unfold.admin import ModelAdmin, TabularInline
+
+from admin_service.models import (
     AboutPageContent,
-    Review,
-    Contact,
-    Work,
-    ConsultationRequest,
-    Category,
     CarouselPhoto,
+    Category,
+    ConsultationRequest,
+    Contact,
     OpeningHour,
+    Review,
+    Work,
 )
 
 
-class OpeningHourInline(admin.TabularInline):
+class OpeningHourInline(TabularInline):
     model = OpeningHour
     extra = 0
     max_num = 7
     can_delete = False
     fields = ("day", "is_closed", "open_time", "close_time")
     readonly_fields = ("day",)
+    ordering = ("day",)
     formfield_overrides = {
         models.TimeField: {
             "widget": forms.TimeInput(attrs={"type": "time", "step": "300"})
@@ -28,62 +30,33 @@ class OpeningHourInline(admin.TabularInline):
     }
 
 
-# Movsar
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
     list_display = (
         "id",
-        "category",
         "title",
-        "description",
-        "our_work",
+        "category",
         "country",
-        "date",
         "language",
         "work_type",
         "status",
-        "material",
-        "width",
-        "height",
-        "depth",
+        "our_work",
         "created_at",
     )
-    list_editable = (
-        "description",
-        "our_work",
-        "category",
-        "country",
-        "date",
-        "language",
-        "work_type",
-        "status",
-        "material",
-        "width",
-        "height",
-        "depth",
-    )
+    list_editable = ("status", "our_work")
     list_filter = (
         "our_work",
         "work_type",
         "category",
         "status",
         "country",
-        "date",
-        "created_at",
         "language",
-    )
-    search_fields = (
-        "title",
-        "category",
-        "description",
-        "our_work",
-        "date",
         "created_at",
-        "status",
-        "work_type",
-        "language",
-        "country",
     )
+    search_fields = ("title", "description", "category__title", "material")
+    autocomplete_fields = ("category",)
+    list_select_related = ("category",)
+    ordering = ("-created_at",)
     date_hierarchy = "created_at"
 
 
@@ -92,17 +65,17 @@ class ReviewAdmin(ModelAdmin):
     list_display = (
         "id",
         "author_name",
-        "text",
         "rating",
         "project_name",
         "is_verified",
         "helpful_count",
-        "date",
         "language",
+        "date",
     )
-    list_editable = ("text", "language", "rating", "project_name", "is_verified")
+    list_editable = ("rating", "is_verified")
     list_filter = ("language", "date", "rating", "is_verified")
-    search_fields = ("author_name", "text", "language")
+    search_fields = ("author_name", "text", "project_name")
+    ordering = ("-date",)
     date_hierarchy = "date"
 
 
@@ -113,14 +86,18 @@ class ContactAdmin(ModelAdmin):
         "branch_name",
         "phone",
         "email",
-        "address",
         "country",
         "language",
     )
-    list_editable = ("phone", "email", "address", "country", "language")
+    list_editable = ("phone", "email")
     list_filter = ("country", "language")
-    search_fields = ("branch_name", "address")
+    search_fields = ("branch_name", "phone", "email", "address")
+    ordering = ("branch_name",)
     inlines = [OpeningHourInline]
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.prefetch_related("opening_hours")
 
     def get_inline_instances(self, request, obj=None):
         if obj is None:
@@ -141,8 +118,9 @@ class ConsultationRequestAdmin(ModelAdmin):
     )
     list_editable = ("status",)
     list_filter = ("status", "consultation_type", "created_at")
-    search_fields = ("name", "phone", "email")
+    search_fields = ("name", "phone", "email", "message")
     readonly_fields = ("created_at", "updated_at")
+    ordering = ("-created_at",)
     date_hierarchy = "created_at"
 
     fieldsets = (
@@ -162,8 +140,8 @@ class ConsultationRequestAdmin(ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
     list_display = ("id", "title", "description")
-    list_editable = ("description",)
-    list_filter = ("title", "description")
+    search_fields = ("title", "description")
+    ordering = ("title",)
 
 
 @admin.register(CarouselPhoto)
@@ -178,6 +156,6 @@ class CarouselPhotoAdmin(ModelAdmin):
 @admin.register(AboutPageContent)
 class AboutPageContentAdmin(ModelAdmin):
     list_display = ("language", "title", "updated_at")
-    list_editable = ("title",)
+    search_fields = ("language", "title", "subtitle", "content")
     readonly_fields = ("updated_at",)
-    search_fields = ("title", "subtitle", "content")
+    ordering = ("language",)

@@ -2,6 +2,12 @@
 {% load i18n %}
 
 {% block title %}{% trans 'Page not found' %} — B'Mass{% endblock %}
+
+{% block meta_description %}{% trans 'The requested B&apos;Mass page could not be found. Browse our active portfolio and current furniture collections instead.' %}{% endblock %}
+
+{% block og_title %}{% trans 'Page not found' %} - B'Mass{% endblock %}
+
+{% block og_description %}{% trans 'The requested B&apos;Mass page could not be found. Browse our active portfolio and current furniture collections instead.' %}{% endblock %}
 {% block content %}
 
 <style>
@@ -200,7 +206,7 @@
       </p>
       <div class="bm404-actions">
         <a href="{% url 'client_service:index' %}" class="bm404-btn bm404-btn-primary">{% trans 'Home' %}</a>
-        <a href="{% url 'client_service:portfolio' %}" class="bm404-btn bm404-btn-secondary">{% trans 'Referenzen' %}</a>
+        <a href="{% url 'client_service:portfolio' %}" class="bm404-btn bm404-btn-secondary">{% trans 'Portfolio' %}</a>
       </div>
     </div>
     <div class="bm404-visual" aria-hidden="true">

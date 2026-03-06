@@ -6,6 +6,22 @@
 {% trans 'Home' %} - B'Mass
 {% endblock %}
 
+{% block meta_description %}{% trans 'B&apos;Mass creates custom furniture, curated interior solutions, and handcrafted portfolio pieces for modern homes.' %}{% endblock %}
+
+{% block og_title %}{% trans 'Home' %} - B'Mass{% endblock %}
+
+{% block og_description %}{% trans 'B&apos;Mass creates custom furniture, curated interior solutions, and handcrafted portfolio pieces for modern homes.' %}{% endblock %}
+
+{% block extra_head %}
+    {% if carousel_photos %}
+        {% with hero_photo=carousel_photos|first %}
+            {% if hero_photo %}
+    <link rel="preload" as="image" href="{{ hero_photo.image.url }}">
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 {% if carousel_photos %}
 <section id="home" class="hero-stack">
@@ -52,9 +68,9 @@
     <div class="hero-intro hero-intro-overlay">
         <div class="hero-intro-inner">
             <div class="hero-text">
-                <p class="hero-title">
+                <h1 class="hero-title">
                     {% trans 'Furniture that gives your interior real character.' %}
-                </p>
+                </h1>
                 <p class="hero-description">
                     {% trans 'From first idea to final delivery, we create elegant, durable furniture tailored to daily life.' %}
                 </p>
@@ -66,9 +82,9 @@
 <section id="home" class="hero-intro">
     <div class="hero-intro-inner">
         <div class="hero-text">
-            <p class="hero-title">
+            <h1 class="hero-title">
                 {% trans 'Furniture that gives your interior real character.' %}
-            </p>
+            </h1>
             <p class="hero-description">
                 {% trans 'From first idea to final delivery, we create elegant, durable furniture tailored to daily life.' %}
             </p>
@@ -96,40 +112,6 @@
                 {% endwith %}
             {% endif %}
         </figure>
-    </div>
-</section>
-
-<section class="section container furniture-identity-section">
-    <div class="section-header">
-        <div>
-            <h2 class="section-title">{% trans 'Modern furniture mood' %}</h2>
-            <p class="section-sub">{% trans 'A consistent style of interiors and furniture across the whole catalog' %}</p>
-        </div>
-    </div>
-    <div class="furniture-identity-grid">
-        {% with visual_photos=carousel_photos|slice:":3" %}
-            {% if visual_photos %}
-                {% for photo in visual_photos %}
-                <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
-                    <img src="{{ photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
-                    <div class="identity-shot-overlay">
-                        <span class="identity-shot-label">{{ photo.title }}</span>
-                    </div>
-                </article>
-                {% endfor %}
-            {% elif nav_our_works %}
-                {% for work in nav_our_works|slice:":3" %}
-                <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
-                    {% endif %}
-                    <div class="identity-shot-overlay">
-                        <span class="identity-shot-label">{{ work.category.title }}</span>
-                    </div>
-                </article>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
     </div>
 </section>
 
@@ -288,10 +270,44 @@
     </div>
 </section>
 
+<section class="section container furniture-identity-section">
+    <div class="section-header">
+        <div>
+            <h2 class="section-title">{% trans 'Modern furniture mood' %}</h2>
+            <p class="section-sub">{% trans 'A consistent style of interiors and furniture across the whole catalog' %}</p>
+        </div>
+    </div>
+    <div class="furniture-identity-grid">
+        {% with visual_photos=identity_photos %}
+            {% if visual_photos %}
+                {% for photo in visual_photos %}
+                <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
+                    <img src="{{ photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
+                    <div class="identity-shot-overlay">
+                        <span class="identity-shot-label">{{ photo.title }}</span>
+                    </div>
+                </article>
+                {% endfor %}
+            {% elif nav_our_works %}
+                {% for work in nav_our_works|slice:":3" %}
+                <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
+                    {% if work.image %}
+                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% endif %}
+                    <div class="identity-shot-overlay">
+                        <span class="identity-shot-label">{{ work.category.title }}</span>
+                    </div>
+                </article>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</section>
+
 <section id="delivery" class="section container">
     <div class="delivery-hero">
         <div class="delivery-content">
-            <div class="section-title">{% trans 'Furniture creation process' %}</div>
+            <h2 class="section-title">{% trans 'Furniture creation process' %}</h2>
             <div class="section-sub">{% trans 'From idea to finished product — every stage under control' %}</div>
         </div>
         <div class="process-timeline">
@@ -345,7 +361,7 @@
             </ul>
         </div>
         <div class="store-benefits-gallery">
-            {% with final_photos=carousel_photos|slice:":3" %}
+            {% with final_photos=store_gallery_photos %}
                 {% if final_photos %}
                     {% for photo in final_photos %}
                     <figure class="benefit-photo">
@@ -369,7 +385,7 @@
 <section id="reviews" class="section container reviews">
     <div class="section-header">
         <div>
-            <div class="section-title">{% trans 'Customer reviews' %}</div>
+            <h2 class="section-title">{% trans 'Customer reviews' %}</h2>
             <div class="section-sub">{% trans 'More than 1000 satisfied customers trust us to create dream furniture' %}</div>
         </div>
         <div class="reviews-stats">
@@ -526,7 +542,7 @@
         </div>
     </div>
     <div class="immersive-gallery-grid">
-        {% for item in showcase_photos %}
+        {% for item in showcase_photos|slice:":11" %}
         <figure class="immersive-gallery-item{% if forloop.counter == 1 %} immersive-gallery-item-large{% elif forloop.counter == 4 or forloop.counter == 8 %} immersive-gallery-item-tall{% endif %}">
              <img src="{{ item.url }}" alt="{{ item.title }}" loading="lazy" decoding="async" fetchpriority="low">
         </figure>

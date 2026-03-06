@@ -1,5 +1,13 @@
 from django.urls import path
-from client_service.views import *
+
+from client_service.views import (
+    about_page,
+    all_works,
+    catalog_view,
+    index,
+    robots_txt,
+    work_detail,
+)
 
 app_name = "client_service"
 
@@ -9,5 +17,5 @@ urlpatterns = [
     path("portfolio/", all_works, name="portfolio"),
     path("portfolio/<int:pk>/", work_detail, name="work_detail"),
     path("catalog/", catalog_view, name="catalog"),
-    # path("test-404/", lambda request: custom_page_not_found(request, None)),
+    path("robots.txt", robots_txt, name="robots_txt"),
 ]

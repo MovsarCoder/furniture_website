@@ -919,7 +919,7 @@
   function setActiveNavLink() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav a');
-    const homeLink = document.querySelector('.nav a[href="/"]');
+    const homeLink = document.querySelector('.nav a[href$="#home"], .nav a[href="/"]');
     const scrollPos = window.scrollY + 100;
     
     // Убираем класс active у всех ссылок
@@ -944,7 +944,7 @@
       if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
         const sectionId = section.getAttribute('id');
         // Ищем ссылку, которая ведет к этому разделу
-        const activeLink = document.querySelector(`.nav a[href="#${sectionId}"], .nav a[href="/#${sectionId}"]`);
+        const activeLink = document.querySelector(`.nav a[href$="#${sectionId}"]`);
         if (activeLink) {
           activeLink.classList.add('active');
         }
@@ -993,7 +993,15 @@
 // Add scroll-triggered animations
 (function() {
   const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up');
-  
+  if (!animatedElements.length) return;
+  if (!('IntersectionObserver' in window)) {
+    animatedElements.forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1031,7 +1039,6 @@ window.openConsultationModal = function() {
     setTimeout(() => firstInput.focus(), 100);
   }
   
-  console.log('Модальное окно консультации открыто');
 };
 
 // Функция быстрого просмотра работы
@@ -1314,7 +1321,6 @@ window.quickView = function(workId) {
   const langCurrent = document.getElementById('langCurrent');
   const langDropdown = document.getElementById('langDropdown');
   const langOptions = document.querySelectorAll('.lang-option');
-  const languageForm = document.getElementById('languageForm');
   
   if (!languageSelector || !langCurrent || !langDropdown) return;
   
@@ -1341,65 +1347,46 @@ window.quickView = function(workId) {
   }
   
   function selectLanguage(langCode) {
-    console.log('Selecting language:', langCode);
-    
-    // Получаем домен для выбранного языка из data-атрибута
     const selectedOption = langDropdown.querySelector(`[data-lang="${langCode}"]`);
     if (!selectedOption) {
-      console.error('Language option not found:', langCode);
       return;
     }
     
     const targetDomain = selectedOption.getAttribute('data-domain');
-    if (!targetDomain) {
-      console.error('Domain not found for language:', langCode);
-      return;
-    }
-    
-    // Получаем текущий путь (без домена)
     const currentPath = window.location.pathname + window.location.search + window.location.hash;
-    
-    // Определяем протокол (http или https)
     const protocol = window.location.protocol;
-    
-    // Получаем текущий хост (домен + порт если есть)
     const currentHost = window.location.hostname;
     const currentPort = window.location.port;
-    
-    // Проверяем, работаем ли мы локально (127.0.0.1 или localhost)
     const isLocal = currentHost === '127.0.0.1' || currentHost === 'localhost' || currentHost.startsWith('192.168.');
     
-    if (isLocal) {
-      // Локальное тестирование: используем параметр языка в URL вместо редиректа на домен
-      console.log('Local testing mode: using language parameter');
+    if (isLocal || !targetDomain) {
       const url = new URL(window.location.href);
       url.searchParams.set('lang', langCode);
       window.location.href = url.toString();
       return;
     }
     
-    // Если мы уже на нужном домене, не делаем редирект
     if (currentHost === targetDomain || currentHost === `www.${targetDomain}`) {
-      console.log('Already on correct domain');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('lang');
+      if (url.toString() !== window.location.href) {
+        window.location.href = url.toString();
+      }
       return;
     }
     
-    // Формируем новый URL с сохранением порта (для продакшена)
     let newUrl;
     if (currentPort) {
       newUrl = `${protocol}//${targetDomain}:${currentPort}${currentPath}`;
     } else {
       newUrl = `${protocol}//${targetDomain}${currentPath}`;
     }
-    
-    console.log('Redirecting to:', newUrl);
+
     window.location.href = newUrl;
   }
   
-  // Event listeners
   langCurrent.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('Language selector clicked');
     toggleDropdown();
   });
   
@@ -1407,7 +1394,6 @@ window.quickView = function(workId) {
     option.addEventListener('click', (e) => {
       e.stopPropagation();
       const langCode = option.dataset.lang;
-      console.log('Language option clicked:', langCode);
       selectLanguage(langCode);
     });
     
@@ -1416,7 +1402,6 @@ window.quickView = function(workId) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const langCode = option.dataset.lang;
-        console.log('Language option selected via keyboard:', langCode);
         selectLanguage(langCode);
       } else if (e.key === 'Escape') {
         closeDropdown();
@@ -1455,10 +1440,11 @@ window.quickView = function(workId) {
   langCurrent.setAttribute('role', 'button');
   langCurrent.setAttribute('aria-haspopup', 'listbox');
   langCurrent.setAttribute('aria-expanded', 'false');
-  langCurrent.setAttribute('aria-label', 'Select language');
+  const gettext = window.gettext || function(key) { return key; };
+  langCurrent.setAttribute('aria-label', gettext('Select language'));
   
   langDropdown.setAttribute('role', 'listbox');
-  langDropdown.setAttribute('aria-label', 'Choose language');
+  langDropdown.setAttribute('aria-label', gettext('Choose language'));
   
   langOptions.forEach(option => {
     option.setAttribute('role', 'option');

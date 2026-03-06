@@ -1,373 +1,181 @@
-# Веб-сайт мебельной компании - B'Mass
+# B'Mass Furniture Platform
 
-[![Django](https://img.shields.io/badge/Django-5.2.6-092E20?style=for-the-badge&logo=django)](https://www.djangoproject.com/)
-[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+Production-oriented Django project for a multilingual furniture studio website. The platform combines a polished customer-facing storefront, a refined Django admin for content management, and a lightweight internal API/documentation layer for controlled back-office usage.
 
-Современный многоязычный веб-сайт мебельной компании B'Mass, созданный на Django, который демонстрирует мебель на заказ, портфолио проектов и информацию о компании с акцентом на пользовательский опыт и интернационализацию.
+## Project Description
 
-## 🌐 Демонстрация
+B'Mass presents custom furniture, portfolio work, catalog items, contact branches, and consultation requests across localized experiences. The codebase is structured for long-term maintenance with improved query reuse, safer production defaults, SEO support, and cleaner frontend behavior.
 
-Веб-сайт полностью функционален с:
-- Поддержкой нескольких языков (английский, французский, немецкий)
-- Адаптивным дизайном для всех устройств
-- Интерактивным интерфейсом с плавными анимациями
-- Панелью администратора для управления контентом
+## Technology Stack
 
-## 🏗️ Обзор проекта
+- Python
+- Django
+- PostgreSQL
+- JavaScript
+- HTML
+- CSS
 
-Этот проект был разработан на основе комплексного технического задания для веб-сайта мебельной компании B'Mass. Реализация включает как фронтенд, так и бэкенд компоненты с фокусом на:
+Supporting packages:
 
-- **Современный UI/UX дизайн**: Чистый, минималистичный дизайн с акцентом на фотографии мебели
-- **Поддержка нескольких языков**: Полная интернационализация для английского, французского и немецкого языков
-- **Управление контентом**: Интерфейс администратора для управления портфолио, отзывами и информацией о компании
-- **Интерактивные элементы**: Анимированная статистика, карты контактов и динамический контент
+- Django REST Framework
+- drf-spectacular
+- WhiteNoise
+- Pillow
+- python-decouple
+- django-unfold
 
-## 🛠️ Стек технологий
+## Project Advantages
 
-### Бэкенд
-- **Django 5.2.6**: Высокоуровневый веб-фреймворк на Python
-- **Django REST Framework**: Разработка API и документация
-- **SQLite**: Легковесная база данных для разработки
-- **DRF Spectacular**: Генерация документации API
-- **Django Unfold**: Современная тема интерфейса администратора
-- **Django Admin Interface**: Расширенная настройка панели администратора
+- Production-safe configuration with environment-driven settings, secure cookie/HSTS support, and WhiteNoise-backed static delivery.
+- Cleaner data layer with normalized language codes, safer image validation, and indexes for common portfolio/review queries.
+- Reused service/query helpers that reduce duplicated filtering logic across views and context processors.
+- Better admin ergonomics with clearer filters, targeted search, queryset optimization, and more focused list displays.
+- Improved frontend quality through cleaned templates, duplicate script removal, language switcher activation, and safer empty-state handling.
+- SEO improvements including canonical metadata, OpenGraph tags, `robots.txt`, and `sitemap.xml`.
+- Basic automated coverage for high-risk paths such as consultation requests, country filtering, and sitemap/robots responses.
 
-### Фронтенд
-- **HTML5/CSS3**: Семантическая разметка и современная стилизация
-- **Vanilla JavaScript**: Клиентская интерактивность и анимации
-- **Адаптивный дизайн**: Мобильный подход с медиа-запросами
-- **CSS анимации**: Плавные переходы и интерактивные элементы
-- **Интеграция Google Maps**: Интерактивные карты местоположений
+## Project Architecture
 
-### Интернационализация
-- **Django i18n**: Встроенная поддержка интернационализации
-- **gettext**: Управление переводами
-- **PO файлы**: Файлы переводов для FR/DE
-
-### Инструменты разработки
-- **Python Decouple**: Управление переменными окружения
-- **Pillow**: Обработка изображений
-- **Requests**: HTTP библиотека для API вызовов
-- **Python Slugify**: Преобразование строк в URL-дружественный формат
-
-## 📁 Архитектура проекта
-
-```
-furniture_project/
-├── admin_service/          # Панель администратора и логика бэкенда
-│   ├── models.py          # Модели данных (Work, Review, Contact, Stats)
-│   ├── views.py           # Представления администратора и API endpoints
-│   ├── admin.py           # Конфигурация панели администратора
-│   └── serializers.py     # Сериализаторы DRF
-├── client_service/         # Фронтенд и компоненты для пользователей
-│   ├── views.py           # Клиентские представления и отображение страниц
-│   ├── templates/         # HTML шаблоны
-│   │   ├── base/          # Базовые шаблоны и страница 404
-│   │   ├── home/          # Шаблон главной страницы
-│   │   ├── works/         # Страницы портфолио
-│   │   └── static/        # CSS, JS и статические ресурсы
-│   └── urls.py            # Маршрутизация клиентских URL
-├── furniture/              # Настройки проекта Django
-│   ├── settings.py        # Конфигурация и переменные окружения
-│   ├── urls.py            # Основная маршрутизация URL
-│   └── wsgi.py            # Конфигурация развертывания WSGI
-├── locale/                 # Файлы переводов (FR, DE)
-└── media/                  # Загруженные изображения и медиа файлы
+```text
+.
+├── admin_service/
+│   ├── admin.py
+│   ├── constants.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── templates/
+│   ├── tests.py
+│   ├── urls.py
+│   ├── validators.py
+│   └── views.py
+├── client_service/
+│   ├── context_processors.py
+│   ├── services.py
+│   ├── sitemaps.py
+│   ├── static/
+│   ├── templates/
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── furniture/
+│   ├── middleware.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+├── locale/
+├── media/
+├── Dockerfile
+├── docker-compose.yml
+├── docker-compose2.yml
+├── entrypoint.sh
+├── requirements.txt
+└── manage.py
 ```
 
-## 🎯 Основные функции
+### Folder Responsibilities
 
-### 🌍 Поддержка нескольких языков
-- Полная поддержка переводов для английского, французского и немецкого языков
-- Переключатель языка в навигационной панели
-- Автоматический перевод контента в зависимости от выбранного языка
+- `admin_service/`: business entities, admin configuration, serializers, validation, and consultation handling.
+- `client_service/`: public pages, shared query/service helpers, sitemap generation, and global template context.
+- `furniture/`: project settings, middleware, URL composition, and runtime entrypoints.
+- `locale/`: German and French translation catalogs.
+- `media/`: uploaded portfolio/carousel assets.
 
-### 🏠 Функции главной страницы
-- **Hero секция**: Анимированный баннер с кнопками призыва к действию
-- **Витрина портфолио**: Случайный выбор избранных работ
-- **Анимированная статистика**: "О нас в цифрах" с анимацией подсчета
-- **Отзывы клиентов**: Карусель отзывов с рейтингом в звездах
-- **Функции компании**: Выделение ключевых преимуществ продаж
+## Installation Instructions
 
-### 📁 Управление портфолио
-- **Галерея работ**: Фильтруемое портфолио с категориями работ
-- **Подробные просмотры**: Индивидуальные страницы работ с характеристиками
-- **Галерея изображений**: Высококачественные фотографии мебели
-- **Детали работ**: Размеры, материалы и информация о ценах
+### 1. Clone the project
 
-### 📞 Контакты и местоположение
-- **Информация о филиалах**: Несколько офисов с контактными данными
-- **Интерактивные карты**: Интеграция Google Maps с маркерами местоположений
-- **Часы работы**: Форматирование времени с отображением AM/PM
-- **Социальные ссылки**: Прямые связи с WhatsApp и Instagram
-
-### 👨‍💼 Панель администратора
-- **Управление контентом**: Операции CRUD для всех типов контента
-- **Управление медиа**: Загрузка и организация изображений
-- **Управление отзывами**: Модерация отзывов клиентов
-- **Панель статистики**: Метрики компании и KPI
-- **Многоязычный контент**: Интерфейс управления переводами
-
-### 🎨 Особенности UI/UX
-- **Современный дизайн**: Чистая, минималистичная эстетика с акцентом на контент
-- **Плавные анимации**: Анимации появления и интерактивные элементы
-- **Адаптивная верстка**: Мобильный подход с медиа-запросами
-- **Доступность**: Семантический HTML и правильные коэффициенты контраста
-- **Производительность**: Оптимизированные ресурсы и эффективный код
-
-## 🚀 Начало работы
-
-### Предварительные требования
-- Python 3.11+
-- Менеджер пакетов pip
-
-### Установка
-
-1. **Клонирование репозитория:**
 ```bash
-git clone <url-репозитория>
+git clone <repository-url>
 cd furniture_project_2
 ```
 
-2. **Создание виртуального окружения:**
+### 2. Create and activate a virtual environment
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # В Windows: .venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-3. **Установка зависимостей:**
+### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Настройка переменных окружения:**
+### 4. Configure environment variables
+
+Create a local environment file from the provided example:
+
 ```bash
 cp .env.example .env
-# Отредактируйте файл .env с вашей конфигурацией
 ```
 
-5. **Запуск миграций базы данных:**
+Recommended local defaults:
+
+```env
+SECRET_KEY=replace-this-with-a-random-secret
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
+DB_ENGINE=django.db.backends.sqlite3
+DB_NAME=db.sqlite3
+GOOGLE_MAPS_API_KEY=
+USE_MANIFEST_STATIC=False
+SERVE_MEDIA_FILES=True
+```
+
+### 5. Apply migrations
+
 ```bash
 python manage.py migrate
 ```
 
-6. **Создание суперпользователя (опционально):**
+### 6. Create a superuser
+
 ```bash
 python manage.py createsuperuser
 ```
 
-7. **Запуск сервера разработки:**
+### 7. Run the development server
+
 ```bash
 python manage.py runserver
 ```
 
-### Переменные окружения
-Создайте файл `.env` со следующими переменными:
-```env
-SECRET_KEY=ваш-секретный-ключ
-DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-GOOGLE_MAPS_API_KEY=ваш-api-ключ-google-maps
-```
-
-## 📊 Модели данных
-
-### Модель Work (Работа)
-- Название и описание
-- Галерея изображений
-- Цены и валюта
-- Размеры (ширина, высота, глубина)
-- Тип работы и статус
-- Информация о материалах
-
-### Модель Review (Отзыв)
-- Имя клиента и обратная связь
-- Система рейтинга звезд (1-5 звезд)
-- Ссылка на проект
-- Контент на разных языках
-- Отслеживание полезных голосов
-
-### Модель Contact (Контакт)
-- Информация о филиале
-- Контактные данные (телефон, email)
-- Часы работы с правильным форматированием времени
-- Ссылки на социальные сети
-- Координаты местоположения (широта/долгота)
-
-### Модель Stats (Статистика)
-- Статистика количества клиентов
-- Метрики завершенных проектов
-- Временная шкала опыта компании
-- Сроки доставки
-
-## 🌐 Интернационализация
-
-Веб-сайт поддерживает три языка:
-- **Английский** (по умолчанию)
-- **Французский** 
-- **Немецкий**
-
-Переводы управляются через встроенную систему i18n Django с файлами `.po`, расположенными в директории `locale/`.
-
-Для обновления переводов:
-```bash
-python manage.py makemessages -l fr  # Для французского
-python manage.py makemessages -l de  # Для немецкого
-python manage.py compilemessages     # Компиляция переводов
-```
-
-## 🎨 Архитектура фронтенда
-
-### Структура CSS
-- **base_style.css**: Все стили проекта, включая основные стили, сбросы и пользовательские компоненты
-- **Модульный подход**: Компонентная стилизация с согласованным именованием
-- **Адаптивный дизайн**: Медиа-запросы с мобильным подходом
-- **CSS переменные**: Согласованная темизация и легкая настройка
-
-### Функции JavaScript
-- **Плавная прокрутка**: Улучшенный опыт навигации
-- **Динамический контент**: Интерактивные элементы и анимации
-- **Валидация форм**: Клиентская валидация контактных форм
-- **Ленивая загрузка**: Оптимизированная загрузка изображений
-- **Оптимизация производительности**: Эффективная манипуляция DOM
-
-## 🔧 Функции панели администратора
-
-Панель администратора использует тему Django Unfold для современного интерфейса:
-- **Панель управления**: Обзор контента и статистики
-- **Управление контентом**: Простые операции CRUD для всех моделей
-- **Библиотека медиа**: Загрузка и управление изображениями
-- **Управление пользователями**: Аккаунты сотрудников и разрешения
-- **Интерфейс переводов**: Редактирование многоязычного контента
-
-## 📈 Производительность и SEO
-
-### Оптимизации производительности
-- **Оптимизация изображений**: Правильно подобранные и сжатые изображения
-- **Минификация CSS**: Эффективная доставка стилей
-- **Кэширование**: Оптимизация запросов к базе данных
-- **Ленивая загрузка**: Отложенная загрузка контента
-
-### Health Check
-
-Приложение включает конечную точку проверки состояния по адресу `/health/`, которая возвращает JSON ответ со статусом "healthy". Это полезно для мониторинга состояния приложения в Docker-окружении.
-
-### Функции SEO
-- **Семантический HTML**: Правильная структура заголовков и разметка
-- **Мета-теги**: Динамические мета-описания и заголовки
-- **Генерация карты сайта**: Автоматическое создание sitemap
-- **Структура URL**: Чистые, описательные URL
-- **Мобильная оптимизация**: Адаптивный дизайн для всех устройств
-
-## 🛡️ Функции безопасности
-
-- **Переменные окружения**: Безопасное управление секретами
-- **Защита CSRF**: Встроенные меры безопасности Django
-- **Предотвращение SQL-инъекций**: Запросы к базе данных через ORM
-- **Защита XSS**: Экранирование шаблонов и санитизация
-- **Безопасность админки**: Аутентификация и авторизация
-
-## 📱 Адаптивный дизайн
-
-Веб-сайт полностью адаптивен с точками прерывания для:
-- **Мобильных**: 320px и выше
-- **Планшетов**: 768px и выше
-- **Настольных ПК**: 1024px и выше
-- **Больших экранов**: 1200px и выше
-
-## 🤝 Документация API
-
-Проект включает автоматически сгенерированную документацию API с использованием DRF Spectacular:
-- **Интерактивное API**: Тестирование endpoints прямо в браузере
-- **Генерация схемы**: Совместимость с OpenAPI 3.0
-- **Аутентификация**: Доступ к API на основе токенов
-- **Документация**: Комплексные описания endpoints
-
-## 🚀 Развертывание
-
-### Рекомендации для продакшена
-- **Статические файлы**: Правильное сбор и обслуживание
-- **База данных**: Миграция на PostgreSQL для продакшена
-- **Безопасность**: HTTPS, безопасные заголовки и переменные окружения
-- **Производительность**: Интеграция CDN и стратегии кэширования
-- **Мониторинг**: Отслеживание ошибок и метрики производительности
-
-### Docker развертывание
-
-Проект включает конфигурацию Docker и Docker Compose для упрощенного развертывания:
-
-1. Скопируйте `.env.example` в `.env` и настройте переменные:
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Запустите сервисы:
-   ```bash
-   docker-compose up --build
-   ```
-
-3. Откройте приложение в браузере: `http://localhost:8000`
-
-Для разработки используйте override-конфигурацию, которая монтирует локальный код:
+### 8. Run checks and tests
 
 ```bash
-docker-compose up
+python manage.py check
+python manage.py test
 ```
 
-Для продакшена используйте:
+### Optional: Docker workflow
 
 ```bash
-docker-compose -f docker-compose2.yml up --build
+docker-compose up --build
 ```
 
-В продакшене обязательно:
-1. Измените `SECRET_KEY` в файле `.env`
-2. Установите `DEBUG=False`
-3. Настройте параметры базы данных
+For a production-style validation run:
 
-### Шаги развертывания
-1. Обновить `settings.py` для продакшен окружения
-2. Настроить базу данных для продакшена (рекомендуется PostgreSQL)
-3. Установить `DEBUG=False` и обновить `ALLOWED_HOSTS`
-4. Собрать статические файлы: `python manage.py collectstatic`
-5. Настроить веб-сервер (Nginx/Apache) и WSGI сервер
+```bash
+DEBUG=False SECRET_KEY='replace-me-with-a-long-random-secret' python manage.py check --deploy
+```
 
-## 📊 Статистика проекта
+## Developer
 
-- **Строк кода**: ~15,000+ строк в шаблонах, стилях и бэкенде
-- **Шаблоны**: 10+ HTML шаблонов с повторно используемыми компонентами
-- **CSS**: ~5,000 строк пользовательской стилизации в едином файле base_style.css
-- **JavaScript**: ~500 строк интерактивной функциональности
-- **Модели**: 5 основных моделей данных с отношениями
-- **Языки**: 3 поддерживаемых языка с полным переводом
+**MovCoder**
 
-## 🎯 Бизнес-ценность
+Telegram  
+[https://t.me/movcoder](https://t.me/movcoder)
 
-Эта реализация предоставляет:
-- **Улучшенный пользовательский опыт**: Современный дизайн с плавными взаимодействиями
-- **Глобальный охват**: Поддержка нескольких языков для международных клиентов
-- **Гибкость контента**: Простое управление контентом через панель администратора
-- **Маркетинговые инструменты**: SEO оптимизация и дизайн, ориентированный на конверсии
-- **Масштабируемость**: Модульная архитектура для будущих улучшений
-- **Профессиональный имидж**: Высококачественная презентация для деловой репутации
+Instagram  
+[https://instagram.com/movsarcoder](https://instagram.com/movsarcoder)
 
-## 📞 Поддержка
+Email  
+[blackstar013.bs@gmail.com](mailto:blackstar013.bs@gmail.com)
 
-По вопросам или проблемам с проектом:
-1. Проверьте документацию и комментарии в коде
-2. Ознакомьтесь с техническим заданием в файле `tz_mebel_site (1).md`
-3. Свяжитесь с командой разработчиков для получения помощи
+Phone  
++7 989 915 42 45
 
-## 📄 Лицензия
-
-Этот проект является проприетарным программным обеспечением, разработанным для компании B'Mass. Все права защищены.
-
-## 🙏 Благодарности
-
-- Сообщество Django за отличный фреймворк
-- Google Maps API за сервисы местоположений
-- Все участники open-source библиотек, использованных в проекте
+**For development requests or collaboration, please contact using the information above.**

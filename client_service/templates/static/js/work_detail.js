@@ -85,16 +85,6 @@
         }
     }
 
-    // Smooth scroll to section
-    function scrollToSection(element) {
-        if (!element) return;
-        
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-
     // Initialize on DOM ready
     function init() {
         // Make functions globally available

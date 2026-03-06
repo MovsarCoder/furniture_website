@@ -1,35 +1,26 @@
+from __future__ import annotations
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-import requests
-from django.conf import settings
 
-languages = [("fr", "Français"), ("at", "Deutsch")]
-
-country = [("fr", "Français"), ("at", "Austria")]
-
-WORK_TYPES = [
-    ("custom", "На заказ"),
-    ("template", "По шаблону"),
-    ("restoration", "Реставрация"),
-    ("assembly", "Сборка"),
-    ("design", "Дизайн-проект"),
-]
-
-STATUSES = [
-    ("in_progress", "В производстве"),
-    ("completed", "Готово"),
-    ("delivered", "Доставлено"),
-]
-
-COUNTRIES = [
-    ("fr", "France"),
-    ("at", "Austria"),
-]
+from admin_service.constants import (
+    CONSULTATION_STATUSES,
+    CONSULTATION_TYPES,
+    COUNTRY_CHOICES,
+    DEFAULT_COUNTRY_CODE,
+    DEFAULT_LANGUAGE_CODE,
+    LANGUAGE_CHOICES,
+    WORK_STATUSES,
+    WORK_TYPES,
+)
+from admin_service.validators import IMAGE_EXTENSION_VALIDATOR, validate_image_size
 
 
 class Category(models.Model):
     title = models.CharField(
-        max_length=100, verbose_name="Название категории", unique=True
+        max_length=100,
+        unique=True,
+        verbose_name="Название категории",
     )
     description = models.CharField(
         max_length=500,
@@ -37,8 +28,13 @@ class Category(models.Model):
         verbose_name="Описание категории (не обязательно)",
     )
 
-    def __str__(self):
-        return f"{self.title}"
+    class Meta:
+        ordering = ["title"]
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Work(models.Model):
@@ -51,27 +47,45 @@ class Work(models.Model):
     )
     description = models.TextField(blank=True, verbose_name="Описание мебели")
     image = models.ImageField(
-        upload_to="portfolio/", blank=True, null=True, verbose_name="Фотография мебели"
+        upload_to="portfolio/",
+        blank=True,
+        null=True,
+        verbose_name="Фотография мебели",
+        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_size],
     )
     country = models.CharField(
-        max_length=5, choices=COUNTRIES, default="us", verbose_name="Страна работы"
+        max_length=5,
+        choices=COUNTRY_CHOICES,
+        default=DEFAULT_COUNTRY_CODE,
+        db_index=True,
+        verbose_name="Страна работы",
     )
     date = models.DateField(blank=True, null=True, verbose_name="Дата изготовления")
     language = models.CharField(
-        max_length=5, choices=languages, verbose_name="Выбор языка на работе"
+        max_length=5,
+        choices=LANGUAGE_CHOICES,
+        default=DEFAULT_LANGUAGE_CODE,
+        db_index=True,
+        verbose_name="Язык работы",
     )
     work_type = models.CharField(
-        max_length=20, choices=WORK_TYPES, verbose_name="Тип работы", default="custom"
+        max_length=20,
+        choices=WORK_TYPES,
+        default="custom",
+        verbose_name="Тип работы",
     )
     status = models.CharField(
-        max_length=20, choices=STATUSES, verbose_name="Статус", default="in_progress"
+        max_length=20,
+        choices=WORK_STATUSES,
+        default="in_progress",
+        db_index=True,
+        verbose_name="Статус",
     )
     material = models.CharField(max_length=100, blank=True, verbose_name="Материал")
     our_work = models.BooleanField(
-        verbose_name="Отобразить в разделе наши работы НЕТ/ДА",
-        blank=True,
-        null=True,
         default=False,
+        db_index=True,
+        verbose_name="Показывать в разделе наши работы",
     )
     width = models.DecimalField(
         max_digits=6,
@@ -95,15 +109,27 @@ class Work(models.Model):
         verbose_name="Глубина (см)",
     )
     created_at = models.DateTimeField(
-        auto_now_add=True, blank=True, verbose_name="Дата добавления"
+        auto_now_add=True,
+        db_index=True,
+        verbose_name="Дата добавления",
     )
 
     class Meta:
+        ordering = ["-created_at"]
         verbose_name = "Работа"
         verbose_name_plural = "Работы"
-        ordering = ["-created_at"]
+        indexes = [
+            models.Index(
+                fields=["country", "our_work", "-created_at"],
+                name="work_country_showcase_idx",
+            ),
+            models.Index(
+                fields=["language", "-created_at"],
+                name="work_language_created_idx",
+            ),
+        ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -117,125 +143,111 @@ class Review(models.Model):
     ]
 
     author_name = models.CharField(
-        max_length=100, verbose_name="Автор отзыва", blank=True
+        max_length=100,
+        blank=True,
+        verbose_name="Автор отзыва",
     )
     text = models.TextField(blank=True, verbose_name="Текст отзыва")
     rating = models.IntegerField(
-        choices=RATING_CHOICES, default=5, verbose_name="Рейтинг"
+        choices=RATING_CHOICES,
+        default=5,
+        verbose_name="Рейтинг",
     )
     project_name = models.CharField(
         max_length=200,
-        verbose_name="Название проекта",
         blank=True,
         default="Мебель на заказ",
+        verbose_name="Название проекта",
     )
     is_verified = models.BooleanField(default=True, verbose_name="Проверенный клиент")
     helpful_count = models.IntegerField(
-        default=0, verbose_name="Количество полезных голосов"
+        default=0,
+        verbose_name="Количество полезных голосов",
     )
     date = models.DateField(
-        auto_now_add=True, verbose_name="Дата добавления отзыва", blank=True
+        auto_now_add=True,
+        db_index=True,
+        verbose_name="Дата добавления отзыва",
     )
     language = models.CharField(
-        max_length=5, choices=languages, verbose_name="Выбор языка на отзыве"
+        max_length=5,
+        choices=LANGUAGE_CHOICES,
+        default=DEFAULT_LANGUAGE_CODE,
+        db_index=True,
+        verbose_name="Язык отзыва",
     )
 
     class Meta:
-        verbose_name = "Отзывы"
-        verbose_name_plural = "Отзывы"
         ordering = ["-date"]
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
+        indexes = [
+            models.Index(fields=["language", "-date"], name="review_language_date_idx"),
+        ]
 
-    def __str__(self):
-        return f"{self.author_name} | {self.rating} звезд | {self.text[:50]}..."
-
-    def get_stars_display(self):
-        stars = ""
-        for i in range(1, 6):
-            if i <= self.rating:
-                stars += '<span class="star filled">★</span>'
-            else:
-                stars += '<span class="star">☆</span>'
-        return stars
+    def __str__(self) -> str:
+        preview = self.text[:50] if self.text else ""
+        return f"{self.author_name} | {self.rating} звезд | {preview}..."
 
 
 class Contact(models.Model):
-    branch_name = models.CharField(
-        max_length=100, verbose_name="Название Филлиала"
-    )  # например: "Москва", "Берлин"
-    phone = models.CharField(max_length=20, verbose_name="Номер телефона филлиала")
-    email = models.EmailField(blank=True, verbose_name="Email филлиала")
-    address = models.CharField(
-        max_length=255, blank=True, verbose_name="Адрес филлиала"
-    )
+    branch_name = models.CharField(max_length=100, verbose_name="Название филиала")
+    phone = models.CharField(max_length=20, verbose_name="Номер телефона филиала")
+    email = models.EmailField(blank=True, verbose_name="Email филиала")
+    address = models.CharField(max_length=255, blank=True, verbose_name="Адрес филиала")
     whatsapp = models.URLField(
         blank=True,
         null=True,
-        verbose_name="Контактный номер в Whastapp",
-        help_text="wa.me/+phone_number",
-        default="wa.me/+",
+        default="https://wa.me/",
+        help_text="https://wa.me/<phone_number>",
+        verbose_name="Контактный номер в WhatsApp",
     )
     instagram = models.URLField(
         blank=True,
         null=True,
-        verbose_name="Страница филлиала в Instagram",
-        help_text='https://www.instagram.com/Nickname"',
         default="https://www.instagram.com/",
+        help_text="https://www.instagram.com/<nickname>/",
+        verbose_name="Страница филиала в Instagram",
     )
     country = models.CharField(
-        max_length=15, choices=country, default="am", verbose_name="Страна филлиала"
+        max_length=15,
+        choices=COUNTRY_CHOICES,
+        default=DEFAULT_COUNTRY_CODE,
+        db_index=True,
+        verbose_name="Страна филиала",
     )
     language = models.CharField(
         max_length=5,
-        choices=languages,
-        default="en",
-        verbose_name="Основной язык филлиала",
+        choices=LANGUAGE_CHOICES,
+        default=DEFAULT_LANGUAGE_CODE,
+        db_index=True,
+        verbose_name="Основной язык филиала",
     )
 
     class Meta:
-        verbose_name = "Контакты"
+        ordering = ["branch_name"]
+        verbose_name = "Контакт"
         verbose_name_plural = "Контакты"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.branch_name} | {self.address} | {self.country}"
 
-    def save(self, *args, **kwargs):
-        if self.address:
-            self.get_coordinates_from_address()
+    def save(self, *args, **kwargs) -> None:
         super().save(*args, **kwargs)
         self.ensure_opening_hours()
 
-    def ensure_opening_hours(self):
+    def ensure_opening_hours(self) -> None:
         existing_days = set(self.opening_hours.values_list("day", flat=True))
-        missing = [
+        missing_days = [
             OpeningHour(contact=self, day=day)
             for day in range(7)
             if day not in existing_days
         ]
-        if missing:
-            OpeningHour.objects.bulk_create(missing)
+        if missing_days:
+            OpeningHour.objects.bulk_create(missing_days)
 
     def get_all_opening_hours(self):
         return self.opening_hours.all()
-
-    def get_coordinates_from_address(self):
-        try:
-            api_key = getattr(settings, "GOOGLE_MAPS_API_KEY", None)
-            if not api_key:
-                return
-
-            address = f"{self.address}, {self.get_country_display()}"
-            url = f"https://maps.googleapis.com/maps/api/geocode/json"
-            params = {"address": address, "key": api_key}
-
-            response = requests.get(url, params=params)
-            data = response.json()
-
-            if data["status"] == "OK" and data["results"]:
-                location = data["results"][0]["geometry"]["location"]
-                self.latitude = location["lat"]
-                self.longitude = location["lng"]
-        except Exception as e:
-            pass
 
 
 class OpeningHour(models.Model):
@@ -259,30 +271,40 @@ class OpeningHour(models.Model):
     }
 
     contact = models.ForeignKey(
-        Contact, on_delete=models.CASCADE, related_name="opening_hours"
+        Contact,
+        on_delete=models.CASCADE,
+        related_name="opening_hours",
     )
     day = models.PositiveSmallIntegerField(
-        choices=Day.choices, verbose_name="День недели"
+        choices=Day.choices,
+        verbose_name="День недели",
     )
     is_closed = models.BooleanField(default=False, verbose_name="Выходной")
     open_time = models.TimeField(
-        blank=True, null=True, verbose_name="Открытие", help_text="Формат: ЧЧ:ММ"
+        blank=True,
+        null=True,
+        help_text="Формат: ЧЧ:ММ",
+        verbose_name="Открытие",
     )
     close_time = models.TimeField(
-        blank=True, null=True, verbose_name="Закрытие", help_text="Формат: ЧЧ:ММ"
+        blank=True,
+        null=True,
+        help_text="Формат: ЧЧ:ММ",
+        verbose_name="Закрытие",
     )
 
     class Meta:
+        ordering = ("day",)
         verbose_name = "График работы"
         verbose_name_plural = "График работы"
-        ordering = ("day",)
         constraints = [
             models.UniqueConstraint(
-                fields=["contact", "day"], name="unique_opening_hour_per_day"
-            )
+                fields=["contact", "day"],
+                name="unique_opening_hour_per_day",
+            ),
         ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.contact.branch_name} | {self.get_day_display()}"
 
     @property
@@ -291,20 +313,6 @@ class OpeningHour(models.Model):
 
 
 class ConsultationRequest(models.Model):
-    CONSULTATION_TYPES = [
-        ("design", "Дизайн-проект"),
-        ("custom", "На заказ"),
-        ("repair", "Ремонт/Реставрация"),
-        ("general", "Общая консультация"),
-    ]
-
-    STATUS_CHOICES = [
-        ("new", "Новая"),
-        ("in_progress", "В обработке"),
-        ("completed", "Завершена"),
-        ("cancelled", "Отменена"),
-    ]
-
     name = models.CharField(max_length=100, verbose_name="Имя клиента")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     email = models.EmailField(blank=True, verbose_name="Email")
@@ -316,28 +324,42 @@ class ConsultationRequest(models.Model):
     )
     message = models.TextField(blank=True, verbose_name="Сообщение")
     preferred_time = models.CharField(
-        max_length=50, blank=True, verbose_name="Предпочтительное время"
+        max_length=50,
+        blank=True,
+        verbose_name="Предпочтительное время",
     )
     status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="new", verbose_name="Статус"
+        max_length=20,
+        choices=CONSULTATION_STATUSES,
+        default="new",
+        db_index=True,
+        verbose_name="Статус",
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        db_index=True,
+        verbose_name="Дата создания",
+    )
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     class Meta:
+        ordering = ["-created_at"]
         verbose_name = "Заявка на консультацию"
         verbose_name_plural = "Заявки на консультацию"
-        ordering = ["-created_at"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name} | {self.phone} | {self.get_consultation_type_display()}"
 
 
 class CarouselPhoto(models.Model):
-    title = models.CharField(max_length=120, verbose_name="Title", default="N/A")
-    image = models.ImageField(upload_to="carousel/", verbose_name="Image")
-    is_active = models.BooleanField(default=True, verbose_name="Active")
-    order = models.PositiveIntegerField(default=0, verbose_name="Order")
+    title = models.CharField(max_length=120, default="N/A", verbose_name="Title")
+    image = models.ImageField(
+        upload_to="carousel/",
+        verbose_name="Image",
+        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_size],
+    )
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name="Active")
+    order = models.PositiveIntegerField(default=0, db_index=True, verbose_name="Order")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -345,16 +367,11 @@ class CarouselPhoto(models.Model):
         verbose_name = "Carousel photo"
         verbose_name_plural = "Carousel photos"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
 class AboutPageContent(models.Model):
-    LANGUAGE_CHOICES = [
-        ("de", "Deutsch"),
-        ("fr", "Français"),
-    ]
-
     language = models.CharField(
         max_length=5,
         choices=LANGUAGE_CHOICES,
@@ -371,16 +388,13 @@ class AboutPageContent(models.Model):
         blank=True,
         verbose_name="Подзаголовок",
     )
-    content = models.TextField(
-        default="",
-        verbose_name="Основной текст",
-    )
+    content = models.TextField(default="", verbose_name="Основной текст")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     class Meta:
+        ordering = ["language"]
         verbose_name = "About Us (контент)"
         verbose_name_plural = "About Us (контент)"
-        ordering = ["language"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"About Us [{self.language}]"

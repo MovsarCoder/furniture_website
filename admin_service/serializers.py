@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from admin_service.models import *
+
+from admin_service.models import (
+    ConsultationRequest,
+    Contact,
+    OpeningHour,
+    Review,
+    Work,
+)
 
 
 class WorkSerializer(serializers.ModelSerializer):

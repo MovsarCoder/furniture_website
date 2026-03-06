@@ -1499,6 +1499,18 @@
   transition: var(--transition-slow);
 }
 
+.portfolio-image-placeholder {
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.06), rgba(34, 34, 34, 0.12));
+}
+
+.portfolio-card-empty {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .portfolio-card:hover .portfolio-image {
   transform: scale(1.05);
 }
@@ -2080,6 +2092,22 @@ img {
 }
 
 /* Right side container for language selector and CTA */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  padding: 10px 14px;
+  background: var(--brand-2);
+  color: #fff;
+  border-radius: 10px;
+  z-index: 1100;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -5167,7 +5195,6 @@ img {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(34, 34, 34, 0.12), 0 2px 8px rgba(34, 34, 34, 0.08);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   z-index: 2;
@@ -5181,7 +5208,6 @@ img {
 .image-zoom-btn:hover {
   background: #ffffff;
   transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 6px 24px rgba(34, 34, 34, 0.16), 0 4px 12px rgba(34, 34, 34, 0.12);
 }
 
 .image-zoom-btn svg {
@@ -6000,7 +6026,6 @@ img {
 }
 
 .image-zoom-btn {
-  background: rgba(34, 34, 34, 0.9);
   border: none;
   border-radius: 50%;
   width: 60px;
@@ -6013,7 +6038,6 @@ img {
 
 .image-zoom-btn:hover {
   transform: scale(1.1);
-  background: #222;
 }
 
 .work-info {

@@ -7,12 +7,23 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}B'Mass{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% trans 'Custom furniture, interior solutions, and handcrafted portfolio pieces by B&apos;Mass.' %}{% endblock %}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:site_name" content="B'Mass">
+    <meta property="og:title" content="{% block og_title %}B'Mass{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% trans 'Custom furniture, interior solutions, and handcrafted portfolio pieces by B&apos;Mass.' %}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preload" as="image" href="{% static 'images/logo.png' %}" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
     <link href="https://fonts.cdnfonts.com/css/gilroy" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
+
+<a class="skip-link" href="#main-content">{% trans "Skip to content" %}</a>
 
 <div class="global-furniture-background">
     <div class="global-furniture-item chair-item"></div>
@@ -40,7 +51,7 @@
             </div>
         </a>
         <nav id="primary-nav" class="nav" role="navigation" aria-label="{% trans 'Main navigation' %}">
-            <a href="{% url 'client_service:index' %}#home" class="active">{% trans 'Home' %}</a>
+            <a href="{% url 'client_service:index' %}#home" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">{% trans 'Home' %}</a>
 
             <div class="nav-item">
                 <a href="#" onclick="return false;" class="nav-parent-link" aria-haspopup="true" aria-expanded="false" aria-controls="furniture-submenu">{% trans 'Furniture' %}</a>
@@ -102,18 +113,42 @@
 
 
             <a href="{% url 'client_service:index' %}#portfolio">{% trans 'Our Works' %}</a>
-            <a href="{% url 'client_service:about' %}">{% trans 'About Us' %}</a>
+            <a href="{% url 'client_service:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">{% trans 'About Us' %}</a>
             <a href="{% url 'client_service:index' %}#contacts">{% trans 'Contacts' %}</a>
         </nav>
 
         <div class="nav-right">
+            <div class="language-selector">
+                <button type="button" class="lang-current" id="langCurrent">
+                    <span class="lang-text">
+                        {% for option in language_options %}
+                            {% if option.is_active %}{{ option.short_label }}{% endif %}
+                        {% endfor %}
+                    </span>
+                    <span class="lang-arrow" aria-hidden="true">▾</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    {% for option in language_options %}
+                    <button
+                        type="button"
+                        class="lang-option{% if option.is_active %} active{% endif %}"
+                        data-lang="{{ option.code }}"
+                        data-domain="{{ option.target_domain }}"
+                    >
+                        <span class="lang-name">{{ option.name }}</span>
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
             <button class="nav-cta" id="consultationBtn" aria-label="{% trans 'Order consultation' %}">{% trans 'Order Consultation' %}</button>
         </div>
     </div>
 </header>
 
+<main id="main-content">
 {% block content %}
 {% endblock %}
+</main>
 
 <footer class="footer" role="contentinfo">
     <div class="container foot-grid">
@@ -143,7 +178,7 @@
             <h5>{% trans 'Contact' %}</h5>
             <a href="#contacts">{% trans 'WhatsApp' %}</a>
             <a href="#contacts">{% trans 'Instagram' %}</a>
-            <a href="#contacts">{% trans 'muridovaslambek@bmass.com' %}</a>
+            <a href="#contacts">muridovaslambek@bmass.com</a>
         </div>
     </div>
     <div class="container">
@@ -234,7 +269,6 @@
 </div>
 
 <script src="{% static 'js/app.js' %}" defer></script>
-<script src="{% static 'js/product_detail_enhanced.js' %}" defer></script>
 <script>
     var y=document.getElementById('year');
     if(y){ y.textContent=new Date().getFullYear(); }
@@ -254,7 +288,9 @@
         'Consultation modal not found': '{% trans "Consultation modal not found" %}',
         'Previous photo': '{% trans "Previous photo" %}',
         'Next photo': '{% trans "Next photo" %}',
-        'Photo carousel': '{% trans "Photo carousel" %}'
+        'Photo carousel': '{% trans "Photo carousel" %}',
+        'Select language': '{% trans "Select language" %}',
+        'Choose language': '{% trans "Choose language" %}'
     };
     
     window.gettext = function(key) {

@@ -1,7 +1,14 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from admin_service.views import *
+from admin_service.views import (
+    ConsultationRequestsViewSet,
+    ContactViewSet,
+    ReviewViewSet,
+    WorkViewSet,
+    consultation_request,
+    update_consultation_status,
+)
 
 app_name = "admin_service"
 

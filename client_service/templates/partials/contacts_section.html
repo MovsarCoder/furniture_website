@@ -11,6 +11,7 @@
         {% if contacts %}
         {% for contact in contacts %}
         <div class="branch">
+            <h3 class="branch-title">{{ contact.branch_name }}</h3>
             {% if contact.get_all_opening_hours %}
             <div class="opening-hours">
                 <div class="opening-hours-title">
@@ -79,7 +80,7 @@
             </div>
             {% endif %}
             <div class="contact-row">
-                <a href="{{ contact.whatsapp }}" class="contact-social-link" aria-label="{% trans 'WhatsApp' %}">
+                <a href="{{ contact.whatsapp }}" class="contact-social-link" aria-label="{% trans 'WhatsApp' %}" target="_blank" rel="noopener noreferrer">
                     <span class="contact-social-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none">
                             <path d="M3 21l1.65-4.95A9 9 0 1 1 8.05 19.45L3 21Z"></path>
@@ -89,7 +90,7 @@
                     <span>{% trans 'WhatsApp' %}</span>
                 </a>
                 <span class="contact-divider">·</span>
-                <a href="{{ contact.instagram }}" class="contact-social-link" aria-label="{% trans 'Instagram' %}">
+                <a href="{{ contact.instagram }}" class="contact-social-link" aria-label="{% trans 'Instagram' %}" target="_blank" rel="noopener noreferrer">
                     <span class="contact-social-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none">
                             <rect x="4" y="4" width="16" height="16" rx="4"></rect>

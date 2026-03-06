@@ -4,6 +4,12 @@
 
 {% block title %}{{ work.title }} - B'Mass{% endblock %}
 
+{% block meta_description %}{{ work.description|default:work.title|truncatewords:24 }}{% endblock %}
+
+{% block og_title %}{{ work.title }} - B'Mass{% endblock %}
+
+{% block og_description %}{{ work.description|default:work.title|truncatewords:24 }}{% endblock %}
+
 {% block content %}
 
 <section class="product-detail-section">
@@ -195,6 +201,6 @@
     </div>
 </section>
 
-<script src="{% static 'js/work_detail.js' %}"></script>
+<script src="{% static 'js/work_detail.js' %}" defer></script>
 
 {% endblock %}
