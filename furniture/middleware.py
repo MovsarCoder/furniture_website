@@ -16,7 +16,7 @@ class LocalhostAwareSecurityMiddleware(SecurityMiddleware):
     @staticmethod
     def _is_local_host(host: str) -> bool:
         normalized_host = host.strip().lower()
-        if normalized_host == "localhost":
+        if normalized_host == "localhost" or normalized_host.endswith(".localhost"):
             return True
 
         try:
@@ -26,17 +26,22 @@ class LocalhostAwareSecurityMiddleware(SecurityMiddleware):
 
         return address.is_loopback or address.is_private
 
-    def process_request(self, request):
+    def _skip_https_enforcement(self, request) -> bool:
+        if getattr(settings, "RUNNING_DEV_SERVER", False):
+            return True
+
         host = request.get_host().split(":", 1)[0]
-        if self._is_local_host(host):
+        return self._is_local_host(host)
+
+    def process_request(self, request):
+        if self._skip_https_enforcement(request):
             return None
         return super().process_request(request)
 
     def process_response(self, request, response):
         response = super().process_response(request, response)
 
-        host = request.get_host().split(":", 1)[0]
-        if not self._is_local_host(host):
+        if not self._skip_https_enforcement(request):
             return response
 
         response.headers.pop("Strict-Transport-Security", None)
@@ -65,13 +70,14 @@ class DomainLanguageMiddleware:
         else:
             language = self.domain_language_map.get(host, settings.LANGUAGE_CODE)
 
+        request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = language
         translation.activate(language)
         request.LANGUAGE_CODE = language
 
         response = self.get_response(request)
 
         cookie_domain = None
-        if host and host not in {"localhost", "127.0.0.1"}:
+        if host and not LocalhostAwareSecurityMiddleware._is_local_host(host):
             cookie_domain = host
 
         if request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME) != language:

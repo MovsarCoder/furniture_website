@@ -9,6 +9,12 @@ from admin_service.constants import COUNTRY_CODES
 from admin_service.models import AboutPageContent, CarouselPhoto, Contact, Review, Work
 
 LOCAL_HOSTS = {"localhost", "127.0.0.1", "0.0.0.0"}
+LOCAL_DOMAIN_COUNTRY_MAP = {
+    "at.localhost": "at",
+    "www.at.localhost": "at",
+    "fr.localhost": "fr",
+    "www.fr.localhost": "fr",
+}
 
 
 def resolve_country_code(host: str | None) -> str | None:
@@ -23,6 +29,8 @@ def resolve_country_code(host: str | None) -> str | None:
 
     if normalized_host in LOCAL_HOSTS:
         return None
+    if normalized_host in LOCAL_DOMAIN_COUNTRY_MAP:
+        return LOCAL_DOMAIN_COUNTRY_MAP[normalized_host]
 
     return normalized_host if normalized_host in COUNTRY_CODES else None
 
@@ -35,10 +43,10 @@ def get_contact_queryset(country_code: str | None = None) -> QuerySet[Contact]:
 
 
 def get_work_queryset(
-        country_code: str | None = None,
-        *,
-        our_work: bool | None = None,
-        with_images: bool = False,
+    country_code: str | None = None,
+    *,
+    our_work: bool | None = None,
+    with_images: bool = False,
 ) -> QuerySet[Work]:
     queryset = Work.objects.select_related("category")
 
@@ -52,8 +60,12 @@ def get_work_queryset(
     return queryset
 
 
-def get_navigation_works(country_code: str | None = None, limit: int = 12) -> QuerySet[Work]:
-    return get_work_queryset(country_code, our_work=True).order_by("-created_at")[:limit]
+def get_navigation_works(
+    country_code: str | None = None, limit: int = 12
+) -> QuerySet[Work]:
+    return get_work_queryset(country_code, our_work=True).order_by("-created_at")[
+        :limit
+    ]
 
 
 def get_review_queryset(language_code: str | None = None) -> QuerySet[Review]:
@@ -99,8 +111,8 @@ def sample_photo_list(photos: list[CarouselPhoto], limit: int) -> list[CarouselP
 
 
 def build_homepage_stats(
-        country_code: str | None,
-        review_queryset: QuerySet[Review],
+    country_code: str | None,
+    review_queryset: QuerySet[Review],
 ) -> dict[str, float | int]:
     total_projects = get_work_queryset(country_code).count()
     avg_rating = review_queryset.aggregate(avg_rating=Avg("rating"))["avg_rating"] or 0

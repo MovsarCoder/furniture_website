@@ -9,29 +9,68 @@ from decouple import Csv, config
 from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+RUNNING_DEV_SERVER = any(arg.startswith("runserver") for arg in sys.argv)
+RUNNING_TESTS = any(arg == "test" for arg in sys.argv)
+RUNNING_LOCAL_ENV = RUNNING_DEV_SERVER or RUNNING_TESTS
+LOCAL_DOMAIN_LANGUAGE_MAP = {
+    "at.localhost": "de",
+    "www.at.localhost": "de",
+    "fr.localhost": "fr",
+    "www.fr.localhost": "fr",
+}
+DEFAULT_ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "testserver",
+    "at.localhost",
+    "www.at.localhost",
+    "fr.localhost",
+    "www.fr.localhost",
+    "bmass.at",
+    "www.bmass.at",
+    "bmass.fr",
+    "www.bmass.fr",
+]
+DEFAULT_CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://0.0.0.0:8000",
+    "http://at.localhost:8000",
+    "http://www.at.localhost:8000",
+    "http://fr.localhost:8000",
+    "http://www.fr.localhost:8000",
+    "https://bmass.at",
+    "https://www.bmass.at",
+    "https://bmass.fr",
+    "https://www.bmass.fr",
+]
 
 SECRET_KEY = config(
     "SECRET_KEY",
     default="django-insecure-local-development-key",
 )
-DEBUG = config("DEBUG", default=True, cast=bool)
+DEBUG = config("DEBUG", default=RUNNING_LOCAL_ENV, cast=bool)
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr",
-    cast=Csv(),
+ALLOWED_HOSTS = list(
+    dict.fromkeys(
+        DEFAULT_ALLOWED_HOSTS
+        + config(
+            "ALLOWED_HOSTS",
+            default="",
+            cast=Csv(),
+        )
+    )
 )
-CSRF_TRUSTED_ORIGINS = config(
-    "CSRF_TRUSTED_ORIGINS",
-    default=(
-        "http://localhost:8000,"
-        "http://127.0.0.1:8000,"
-        "https://bmass.at,"
-        "https://www.bmass.at,"
-        "https://bmass.fr,"
-        "https://www.bmass.fr"
-    ),
-    cast=Csv(),
+CSRF_TRUSTED_ORIGINS = list(
+    dict.fromkeys(
+        DEFAULT_CSRF_TRUSTED_ORIGINS
+        + config(
+            "CSRF_TRUSTED_ORIGINS",
+            default="",
+            cast=Csv(),
+        )
+    )
 )
 
 INSTALLED_APPS = [
@@ -145,8 +184,10 @@ DOMAIN_LANGUAGE_MAP = {
     "www.bmass.at": "de",
     "bmass.fr": "fr",
     "www.bmass.fr": "fr",
+    **LOCAL_DOMAIN_LANGUAGE_MAP,
     "localhost": "en",
     "127.0.0.1": "en",
+    "0.0.0.0": "en",
 }
 
 STATIC_URL = "/static/"
@@ -178,18 +219,26 @@ WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-RUNNING_DEV_SERVER = any(arg.startswith("runserver") for arg in sys.argv)
 SERVE_MEDIA_FILES = config(
     "SERVE_MEDIA_FILES",
-    default=DEBUG or RUNNING_DEV_SERVER,
+    default=RUNNING_LOCAL_ENV or not DEBUG,
     cast=bool,
 )
 
+ENABLE_SSL_SECURITY = config(
+    "ENABLE_SSL_SECURITY",
+    default=not DEBUG and not RUNNING_LOCAL_ENV,
+    cast=bool,
+)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=not DEBUG, cast=bool)
-SESSION_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SECURE = not DEBUG
-LANGUAGE_COOKIE_SECURE = not DEBUG
+SECURE_SSL_REDIRECT = config(
+    "SECURE_SSL_REDIRECT",
+    default=ENABLE_SSL_SECURITY,
+    cast=bool,
+)
+SESSION_COOKIE_SECURE = ENABLE_SSL_SECURITY
+CSRF_COOKIE_SECURE = ENABLE_SSL_SECURITY
+LANGUAGE_COOKIE_SECURE = ENABLE_SSL_SECURITY
 LANGUAGE_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
@@ -198,16 +247,20 @@ SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 X_FRAME_OPTIONS = "DENY"
 SECURE_HSTS_SECONDS = config(
     "SECURE_HSTS_SECONDS",
-    default=2592000 if not DEBUG else 0,
+    default=2592000 if ENABLE_SSL_SECURITY else 0,
     cast=int,
 )
-SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
-SECURE_HSTS_PRELOAD = not DEBUG
+SECURE_HSTS_INCLUDE_SUBDOMAINS = ENABLE_SSL_SECURITY
+SECURE_HSTS_PRELOAD = ENABLE_SSL_SECURITY
 
-if DEBUG:
-    # Keep local runserver strictly HTTP even if a production-like env var leaks
-    # into the developer environment.
+if RUNNING_LOCAL_ENV:
+    # Keep the local development server strictly HTTP even when testing with
+    # production-like settings, automated tests, or real domains mapped
+    # through /etc/hosts.
     SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    LANGUAGE_COOKIE_SECURE = False
     SECURE_HSTS_SECONDS = 0
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_HSTS_PRELOAD = False

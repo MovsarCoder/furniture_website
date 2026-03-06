@@ -27,156 +27,304 @@ def normalize_language_and_country_codes(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('admin_service', '0008_carouselphoto_title_alter_openinghour_day'),
+        ("admin_service", "0008_carouselphoto_title_alter_openinghour_day"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='category',
-            options={'ordering': ['title'], 'verbose_name': 'Категория', 'verbose_name_plural': 'Категории'},
+            name="category",
+            options={
+                "ordering": ["title"],
+                "verbose_name": "Категория",
+                "verbose_name_plural": "Категории",
+            },
         ),
         migrations.AlterModelOptions(
-            name='contact',
-            options={'ordering': ['branch_name'], 'verbose_name': 'Контакт', 'verbose_name_plural': 'Контакты'},
+            name="contact",
+            options={
+                "ordering": ["branch_name"],
+                "verbose_name": "Контакт",
+                "verbose_name_plural": "Контакты",
+            },
         ),
         migrations.AlterModelOptions(
-            name='review',
-            options={'ordering': ['-date'], 'verbose_name': 'Отзыв', 'verbose_name_plural': 'Отзывы'},
+            name="review",
+            options={
+                "ordering": ["-date"],
+                "verbose_name": "Отзыв",
+                "verbose_name_plural": "Отзывы",
+            },
         ),
         migrations.RunPython(
             normalize_language_and_country_codes,
             migrations.RunPython.noop,
         ),
         migrations.AlterField(
-            model_name='aboutpagecontent',
-            name='language',
-            field=models.CharField(choices=[('en', 'English'), ('de', 'Deutsch'), ('fr', 'Français')], max_length=5, unique=True, verbose_name='Язык страницы'),
+            model_name="aboutpagecontent",
+            name="language",
+            field=models.CharField(
+                choices=[("en", "English"), ("de", "Deutsch"), ("fr", "Français")],
+                max_length=5,
+                unique=True,
+                verbose_name="Язык страницы",
+            ),
         ),
         migrations.AlterField(
-            model_name='carouselphoto',
-            name='image',
-            field=models.ImageField(upload_to='carousel/', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp']), admin_service.validators.validate_image_size], verbose_name='Image'),
+            model_name="carouselphoto",
+            name="image",
+            field=models.ImageField(
+                upload_to="carousel/",
+                validators=[
+                    django.core.validators.FileExtensionValidator(
+                        allowed_extensions=["jpg", "jpeg", "png", "webp"]
+                    ),
+                    admin_service.validators.validate_image_size,
+                ],
+                verbose_name="Image",
+            ),
         ),
         migrations.AlterField(
-            model_name='carouselphoto',
-            name='is_active',
-            field=models.BooleanField(db_index=True, default=True, verbose_name='Active'),
+            model_name="carouselphoto",
+            name="is_active",
+            field=models.BooleanField(
+                db_index=True, default=True, verbose_name="Active"
+            ),
         ),
         migrations.AlterField(
-            model_name='carouselphoto',
-            name='order',
-            field=models.PositiveIntegerField(db_index=True, default=0, verbose_name='Order'),
+            model_name="carouselphoto",
+            name="order",
+            field=models.PositiveIntegerField(
+                db_index=True, default=0, verbose_name="Order"
+            ),
         ),
         migrations.AlterField(
-            model_name='consultationrequest',
-            name='consultation_type',
-            field=models.CharField(choices=[('design', 'Design project'), ('custom', 'Custom order'), ('repair', 'Repair / Restoration'), ('general', 'General consultation')], default='general', max_length=20, verbose_name='Тип консультации'),
+            model_name="consultationrequest",
+            name="consultation_type",
+            field=models.CharField(
+                choices=[
+                    ("design", "Design project"),
+                    ("custom", "Custom order"),
+                    ("repair", "Repair / Restoration"),
+                    ("general", "General consultation"),
+                ],
+                default="general",
+                max_length=20,
+                verbose_name="Тип консультации",
+            ),
         ),
         migrations.AlterField(
-            model_name='consultationrequest',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания'),
+            model_name="consultationrequest",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, db_index=True, verbose_name="Дата создания"
+            ),
         ),
         migrations.AlterField(
-            model_name='consultationrequest',
-            name='status',
-            field=models.CharField(choices=[('new', 'New'), ('in_progress', 'In progress'), ('completed', 'Completed'), ('cancelled', 'Cancelled')], db_index=True, default='new', max_length=20, verbose_name='Статус'),
+            model_name="consultationrequest",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("new", "New"),
+                    ("in_progress", "In progress"),
+                    ("completed", "Completed"),
+                    ("cancelled", "Cancelled"),
+                ],
+                db_index=True,
+                default="new",
+                max_length=20,
+                verbose_name="Статус",
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='address',
-            field=models.CharField(blank=True, max_length=255, verbose_name='Адрес филиала'),
+            model_name="contact",
+            name="address",
+            field=models.CharField(
+                blank=True, max_length=255, verbose_name="Адрес филиала"
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='branch_name',
-            field=models.CharField(max_length=100, verbose_name='Название филиала'),
+            model_name="contact",
+            name="branch_name",
+            field=models.CharField(max_length=100, verbose_name="Название филиала"),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='country',
-            field=models.CharField(choices=[('at', 'Austria'), ('fr', 'France')], db_index=True, default='at', max_length=15, verbose_name='Страна филиала'),
+            model_name="contact",
+            name="country",
+            field=models.CharField(
+                choices=[("at", "Austria"), ("fr", "France")],
+                db_index=True,
+                default="at",
+                max_length=15,
+                verbose_name="Страна филиала",
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='email',
-            field=models.EmailField(blank=True, max_length=254, verbose_name='Email филиала'),
+            model_name="contact",
+            name="email",
+            field=models.EmailField(
+                blank=True, max_length=254, verbose_name="Email филиала"
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='instagram',
-            field=models.URLField(blank=True, default='https://www.instagram.com/', help_text='https://www.instagram.com/<nickname>/', null=True, verbose_name='Страница филиала в Instagram'),
+            model_name="contact",
+            name="instagram",
+            field=models.URLField(
+                blank=True,
+                default="https://www.instagram.com/",
+                help_text="https://www.instagram.com/<nickname>/",
+                null=True,
+                verbose_name="Страница филиала в Instagram",
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='language',
-            field=models.CharField(choices=[('en', 'English'), ('de', 'Deutsch'), ('fr', 'Français')], db_index=True, default='en', max_length=5, verbose_name='Основной язык филиала'),
+            model_name="contact",
+            name="language",
+            field=models.CharField(
+                choices=[("en", "English"), ("de", "Deutsch"), ("fr", "Français")],
+                db_index=True,
+                default="en",
+                max_length=5,
+                verbose_name="Основной язык филиала",
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='phone',
-            field=models.CharField(max_length=20, verbose_name='Номер телефона филиала'),
+            model_name="contact",
+            name="phone",
+            field=models.CharField(
+                max_length=20, verbose_name="Номер телефона филиала"
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='whatsapp',
-            field=models.URLField(blank=True, default='https://wa.me/', help_text='https://wa.me/<phone_number>', null=True, verbose_name='Контактный номер в WhatsApp'),
+            model_name="contact",
+            name="whatsapp",
+            field=models.URLField(
+                blank=True,
+                default="https://wa.me/",
+                help_text="https://wa.me/<phone_number>",
+                null=True,
+                verbose_name="Контактный номер в WhatsApp",
+            ),
         ),
         migrations.AlterField(
-            model_name='review',
-            name='date',
-            field=models.DateField(auto_now_add=True, db_index=True, verbose_name='Дата добавления отзыва'),
+            model_name="review",
+            name="date",
+            field=models.DateField(
+                auto_now_add=True, db_index=True, verbose_name="Дата добавления отзыва"
+            ),
         ),
         migrations.AlterField(
-            model_name='review',
-            name='language',
-            field=models.CharField(choices=[('en', 'English'), ('de', 'Deutsch'), ('fr', 'Français')], db_index=True, default='en', max_length=5, verbose_name='Язык отзыва'),
+            model_name="review",
+            name="language",
+            field=models.CharField(
+                choices=[("en", "English"), ("de", "Deutsch"), ("fr", "Français")],
+                db_index=True,
+                default="en",
+                max_length=5,
+                verbose_name="Язык отзыва",
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='country',
-            field=models.CharField(choices=[('at', 'Austria'), ('fr', 'France')], db_index=True, default='at', max_length=5, verbose_name='Страна работы'),
+            model_name="work",
+            name="country",
+            field=models.CharField(
+                choices=[("at", "Austria"), ("fr", "France")],
+                db_index=True,
+                default="at",
+                max_length=5,
+                verbose_name="Страна работы",
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата добавления'),
+            model_name="work",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, db_index=True, verbose_name="Дата добавления"
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='portfolio/', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp']), admin_service.validators.validate_image_size], verbose_name='Фотография мебели'),
+            model_name="work",
+            name="image",
+            field=models.ImageField(
+                blank=True,
+                null=True,
+                upload_to="portfolio/",
+                validators=[
+                    django.core.validators.FileExtensionValidator(
+                        allowed_extensions=["jpg", "jpeg", "png", "webp"]
+                    ),
+                    admin_service.validators.validate_image_size,
+                ],
+                verbose_name="Фотография мебели",
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='language',
-            field=models.CharField(choices=[('en', 'English'), ('de', 'Deutsch'), ('fr', 'Français')], db_index=True, default='en', max_length=5, verbose_name='Язык работы'),
+            model_name="work",
+            name="language",
+            field=models.CharField(
+                choices=[("en", "English"), ("de", "Deutsch"), ("fr", "Français")],
+                db_index=True,
+                default="en",
+                max_length=5,
+                verbose_name="Язык работы",
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='our_work',
-            field=models.BooleanField(db_index=True, default=False, verbose_name='Показывать в разделе наши работы'),
+            model_name="work",
+            name="our_work",
+            field=models.BooleanField(
+                db_index=True,
+                default=False,
+                verbose_name="Показывать в разделе наши работы",
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='status',
-            field=models.CharField(choices=[('in_progress', 'In production'), ('completed', 'Completed'), ('delivered', 'Delivered')], db_index=True, default='in_progress', max_length=20, verbose_name='Статус'),
+            model_name="work",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("in_progress", "In production"),
+                    ("completed", "Completed"),
+                    ("delivered", "Delivered"),
+                ],
+                db_index=True,
+                default="in_progress",
+                max_length=20,
+                verbose_name="Статус",
+            ),
         ),
         migrations.AlterField(
-            model_name='work',
-            name='work_type',
-            field=models.CharField(choices=[('custom', 'Custom'), ('template', 'Template'), ('restoration', 'Restoration'), ('assembly', 'Assembly'), ('design', 'Design project')], default='custom', max_length=20, verbose_name='Тип работы'),
+            model_name="work",
+            name="work_type",
+            field=models.CharField(
+                choices=[
+                    ("custom", "Custom"),
+                    ("template", "Template"),
+                    ("restoration", "Restoration"),
+                    ("assembly", "Assembly"),
+                    ("design", "Design project"),
+                ],
+                default="custom",
+                max_length=20,
+                verbose_name="Тип работы",
+            ),
         ),
         migrations.AddIndex(
-            model_name='review',
-            index=models.Index(fields=['language', '-date'], name='review_language_date_idx'),
+            model_name="review",
+            index=models.Index(
+                fields=["language", "-date"], name="review_language_date_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='work',
-            index=models.Index(fields=['country', 'our_work', '-created_at'], name='work_country_showcase_idx'),
+            model_name="work",
+            index=models.Index(
+                fields=["country", "our_work", "-created_at"],
+                name="work_country_showcase_idx",
+            ),
         ),
         migrations.AddIndex(
-            model_name='work',
-            index=models.Index(fields=['language', '-created_at'], name='work_language_created_idx'),
+            model_name="work",
+            index=models.Index(
+                fields=["language", "-created_at"], name="work_language_created_idx"
+            ),
         ),
     ]

@@ -116,14 +116,22 @@ Recommended local defaults:
 ```env
 SECRET_KEY=replace-this-with-a-random-secret
 DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-CSRF_TRUSTED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,at.localhost,www.at.localhost,fr.localhost,www.fr.localhost
+CSRF_TRUSTED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,http://0.0.0.0:8000,http://at.localhost:8000,http://www.at.localhost:8000,http://fr.localhost:8000,http://www.fr.localhost:8000
 DB_ENGINE=django.db.backends.sqlite3
 DB_NAME=db.sqlite3
 GOOGLE_MAPS_API_KEY=
 USE_MANIFEST_STATIC=False
 SERVE_MEDIA_FILES=True
 ```
+
+Local domain testing without HTTPS/HSTS conflicts:
+
+- `http://localhost:8000/` for the default English experience
+- `http://at.localhost:8000/` for the Austrian/German experience
+- `http://fr.localhost:8000/` for the French experience
+
+Avoid using the real production domains with `runserver`: browsers can cache HSTS for `bmass.at` and `bmass.fr`, which forces HTTPS before Django receives the request.
 
 ### 5. Apply migrations
 

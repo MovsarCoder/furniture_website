@@ -96,7 +96,10 @@ def consultation_request(request: HttpRequest) -> HttpResponse:
         )
 
     allowed_consultation_types = {
-        choice for choice, _ in ConsultationRequest._meta.get_field("consultation_type").choices
+        choice
+        for choice, _ in ConsultationRequest._meta.get_field(
+            "consultation_type"
+        ).choices
     }
     if consultation_type not in allowed_consultation_types:
         consultation_type = "general"
@@ -161,7 +164,10 @@ def update_consultation_status(request: HttpRequest, request_id: int) -> JsonRes
         consultation.status = new_status
         consultation.save(update_fields=["status", "updated_at"])
     except Exception:
-        logger.exception("Failed to update consultation request status", extra={"request_id": request_id})
+        logger.exception(
+            "Failed to update consultation request status",
+            extra={"request_id": request_id},
+        )
         return JsonResponse(
             {
                 "success": False,

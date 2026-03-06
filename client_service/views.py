@@ -28,7 +28,9 @@ def _safe_image_url(instance) -> str | None:
         return None
 
 
-def _build_showcase_photos(carousel_photos, works, limit: int = 12) -> list[dict[str, str]]:
+def _build_showcase_photos(
+    carousel_photos, works, limit: int = 12
+) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
 
     for photo in carousel_photos:

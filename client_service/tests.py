@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from admin_service.models import AboutPageContent, Category, Contact, Review, Work
@@ -57,6 +57,17 @@ class ClientPagesTests(TestCase):
         works = list(response.context["works"])
         self.assertEqual([work.pk for work in works], [self.at_work.pk])
 
+    def test_portfolio_filters_by_local_domain_alias_country(self):
+        response = self.client.get(
+            reverse("client_service:portfolio"),
+            HTTP_HOST="at.localhost",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.wsgi_request.LANGUAGE_CODE, "de")
+        works = list(response.context["works"])
+        self.assertEqual([work.pk for work in works], [self.at_work.pk])
+
     def test_catalog_view_excludes_portfolio_items(self):
         response = self.client.get(
             reverse("client_service:catalog"),
@@ -69,13 +80,17 @@ class ClientPagesTests(TestCase):
         self.assertEqual([work.pk for work in works], [self.catalog_item.pk])
 
     def test_about_page_falls_back_when_english_content_is_missing(self):
-        response = self.client.get(reverse("client_service:about"), HTTP_HOST="localhost")
+        response = self.client.get(
+            reverse("client_service:about"), HTTP_HOST="localhost"
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["about_content"].language, "de")
 
     def test_robots_txt_exposes_sitemap_location(self):
-        response = self.client.get(reverse("client_service:robots_txt"), HTTP_HOST="localhost")
+        response = self.client.get(
+            reverse("client_service:robots_txt"), HTTP_HOST="localhost"
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "text/plain")
@@ -89,3 +104,13 @@ class ClientPagesTests(TestCase):
             response,
             reverse("client_service:work_detail", args=[self.at_work.pk]),
         )
+
+    @override_settings(RUNNING_DEV_SERVER=True, SECURE_SSL_REDIRECT=True)
+    def test_runserver_keeps_public_domains_on_http(self):
+        response = self.client.get(
+            reverse("client_service:index"),
+            HTTP_HOST="bmass.at",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn("Strict-Transport-Security", response.headers)

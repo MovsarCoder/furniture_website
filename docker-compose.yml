@@ -12,6 +12,7 @@ services:
       DEBUG: "${DEBUG:-True}"
       SECRET_KEY: "${SECRET_KEY:-django-dev-secret-key-change-in-production}"
       ALLOWED_HOSTS: "${ALLOWED_HOSTS:-localhost,127.0.0.1,0.0.0.0,bmass.at,www.bmass.at,bmass.fr,www.bmass.fr}"
+      SERVE_MEDIA_FILES: "${SERVE_MEDIA_FILES:-True}"
       GOOGLE_MAPS_API_KEY: "${GOOGLE_MAPS_API_KEY:-your-google-maps-api-key}"
       DB_ENGINE: "${DB_ENGINE:-django.db.backends.postgresql}"
       DB_NAME: "${DB_NAME:-furniture_db}"
