@@ -334,6 +334,7 @@ class ConsultationRequest(models.Model):
 
 
 class CarouselPhoto(models.Model):
+    title = models.CharField(max_length=120, verbose_name="Title", default="N/A")
     image = models.ImageField(upload_to="carousel/", verbose_name="Image")
     is_active = models.BooleanField(default=True, verbose_name="Active")
     order = models.PositiveIntegerField(default=0, verbose_name="Order")
@@ -343,6 +344,9 @@ class CarouselPhoto(models.Model):
         ordering = ["order", "-created_at"]
         verbose_name = "Carousel photo"
         verbose_name_plural = "Carousel photos"
+
+    def __str__(self):
+        return self.title
 
 
 class AboutPageContent(models.Model):

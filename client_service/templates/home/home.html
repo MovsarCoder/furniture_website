@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block content %}
-{% get_current_language as LANGUAGE_CODE %}
-
 {% if carousel_photos %}
 <section id="home" class="hero-stack">
     <div class="photo-carousel full-bleed animate-fade-in">
@@ -54,21 +52,12 @@
     <div class="hero-intro hero-intro-overlay">
         <div class="hero-intro-inner">
             <div class="hero-text">
-                {% if LANGUAGE_CODE == 'fr' %}
                 <p class="hero-title">
-                    Du mobilier qui donne du caractère à votre intérieur.
+                    {% trans 'Furniture that gives your interior real character.' %}
                 </p>
                 <p class="hero-description">
-                    De l’idée aux finitions, on conçoit des meubles élégants, solides et vraiment pensés pour votre quotidien.
+                    {% trans 'From first idea to final delivery, we create elegant, durable furniture tailored to daily life.' %}
                 </p>
-                {% else %}
-                <p class="hero-title">
-                    Möbel, die Ihrem Zuhause spürbar Charakter geben.
-                </p>
-                <p class="hero-description">
-                    Von der Idee bis zur Montage entstehen bei uns stilvolle, langlebige Möbel, die zu Ihrem Alltag passen.
-                </p>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -77,21 +66,12 @@
 <section id="home" class="hero-intro">
     <div class="hero-intro-inner">
         <div class="hero-text">
-            {% if LANGUAGE_CODE == 'fr' %}
             <p class="hero-title">
-                Du mobilier qui donne du caractère à votre intérieur.
+                {% trans 'Furniture that gives your interior real character.' %}
             </p>
             <p class="hero-description">
-                De l’idée aux finitions, on conçoit des meubles élégants, solides et vraiment pensés pour votre quotidien.
+                {% trans 'From first idea to final delivery, we create elegant, durable furniture tailored to daily life.' %}
             </p>
-            {% else %}
-            <p class="hero-title">
-                Möbel, die Ihrem Zuhause spürbar Charakter geben.
-            </p>
-            <p class="hero-description">
-                Von der Idee bis zur Montage entstehen bei uns stilvolle, langlebige Möbel, die zu Ihrem Alltag passen.
-            </p>
-            {% endif %}
         </div>
     </div>
 </section>
@@ -100,17 +80,10 @@
 <section class="section container designer-express-section">
     <div class="designer-express-panel">
         <div class="designer-express-copy">
-            {% if LANGUAGE_CODE == 'fr' %}
-            <p class="designer-express-kicker">Design express</p>
-            <h2 class="designer-express-title">Un intérieur bien pensé, sans attendre des mois.</h2>
-            <p class="designer-express-text">On affine vos idées avec un regard pro, puis on transforme tout en mobilier élégant et concret.</p>
-            <button class="btn btn-primary designer-express-btn" onclick="openConsultationModal()">Parler du projet</button>
-            {% else %}
-            <p class="designer-express-kicker">Express Design</p>
-            <h2 class="designer-express-title">Ein stimmiges Zuhause, ohne monatelange Planung.</h2>
-            <p class="designer-express-text">Wir schärfen Ihre Ideen mit Profi-Blick und setzen sie in elegante, alltagstaugliche Möbel um.</p>
-            <button class="btn btn-primary designer-express-btn" onclick="openConsultationModal()">Projekt besprechen</button>
-            {% endif %}
+            <p class="designer-express-kicker">{% trans 'Express Design' %}</p>
+            <h2 class="designer-express-title">{% trans 'A coherent interior, without months of planning.' %}</h2>
+            <p class="designer-express-text">{% trans 'We refine your ideas with a professional eye and turn them into elegant, practical furniture.' %}</p>
+            <button class="btn btn-primary designer-express-btn" onclick="openConsultationModal()">{% trans 'Discuss your project' %}</button>
         </div>
         <figure class="designer-express-visual">
             {% if express_banner_photo %}
@@ -140,15 +113,7 @@
                 <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
                     <img src="{{ photo.image.url }}" alt="{% trans 'Furniture interior' %}" loading="lazy" decoding="async" fetchpriority="low">
                     <div class="identity-shot-overlay">
-                        <span class="identity-shot-label">
-                            {% if forloop.counter == 1 %}
-                                {% trans 'Living room compositions' %}
-                            {% elif forloop.counter == 2 %}
-                                {% trans 'Bedroom balance' %}
-                            {% else %}
-                                {% trans 'Dining accents' %}
-                            {% endif %}
-                        </span>
+                        <span class="identity-shot-label">{{ photo.title }}</span>
                     </div>
                 </article>
                 {% endfor %}
@@ -226,7 +191,7 @@
 
 
         <div class="portfolio-cta">
-            <p class="cta-text">{% trans 'Didn\'t find what you were looking for?' %}</p>
+            <p class="cta-text">{% trans "Didn't find what you were looking for?" %}</p>
             <button class="btn btn-primary" onclick="openConsultationModal()">
                 <span class="btn-icon">💬</span>
                 <span>{% trans 'Discuss individual project' %}</span>
@@ -235,55 +200,90 @@
     </div>
 </section>
 
-<section id="stats" class="section container premium-stats-section">
+<section id="stats" class="section container premium-stats-section" aria-labelledby="stats-heading">
     <div class="premium-stats-shell">
-        <div class="section-header premium-stats-header">
-            <div>
-                <div class="section-title">{% trans 'About us in numbers' %}</div>
-                <div class="section-sub">{% trans 'Facts that clients trust' %}</div>
+        <header class="section-header premium-stats-header">
+            <div class="premium-stats-title-wrap">
+                <h2 id="stats-heading" class="section-title">{% trans 'Crafted excellence in numbers' %}</h2>
+                <p class="section-sub premium-stats-sub">{% trans 'Design-led furniture shaped by experience and trust.' %}</p>
             </div>
-            <div class="premium-stats-badge">
-                <span class="premium-stats-badge-icon">●</span>
-                <span class="premium-stats-badge-text">{% trans 'Verified data' %}</span>
-            </div>
-        </div>
+            <p class="premium-stats-kicker">{% trans 'Studio metrics' %}</p>
+        </header>
 
-        <div class="premium-stats-grid">
-            <article class="premium-stat-card">
-                <p class="premium-stat-value">{{ stats_clients }}+</p>
-                <p class="premium-stat-label">{% trans 'Satisfied clients' %}</p>
-                <p class="premium-stat-meta">{% trans 'High trust rating' %}</p>
+        <div class="premium-stats-grid" role="list">
+            <article class="premium-stat-card" role="listitem">
+                <div class="premium-stat-top">
+                    <span class="premium-stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="4" y="5" width="16" height="15" rx="2"></rect>
+                            <path d="M8 3V7"></path>
+                            <path d="M16 3V7"></path>
+                            <path d="M4 10H20"></path>
+                        </svg>
+                    </span>
+                    <p class="premium-stat-label">{% trans 'Years of Experience' %}</p>
+                </div>
+                <p class="premium-stat-value">
+                    <span class="premium-stat-number" data-count-up data-count-to="{{ stats_years }}">0</span>
+                </p>
+                <p class="premium-stat-meta">{% trans 'Deep expertise in bespoke production.' %}</p>
             </article>
-            <article class="premium-stat-card">
-                <p class="premium-stat-value">{{ stats_projects }}+</p>
-                <p class="premium-stat-label">{% trans 'Completed projects' %}</p>
-                <p class="premium-stat-meta">{% trans 'Unique furniture' %}</p>
-            </article>
-            <article class="premium-stat-card">
-                <p class="premium-stat-value">{{ stats_years }}</p>
-                <p class="premium-stat-label">{% trans 'Years of experience' %}</p>
-                <p class="premium-stat-meta">{% trans 'Professional expertise' %}</p>
-            </article>
-            <article class="premium-stat-card">
-                <p class="premium-stat-value">{{ stats_delivery_weeks }}</p>
-                <p class="premium-stat-label">{% trans 'Weeks to delivery' %}</p>
-                <p class="premium-stat-meta">{% trans 'Fast implementation' %}</p>
-            </article>
-        </div>
 
-        <div class="premium-stats-highlights">
-            <div class="premium-highlight-item">
-                <span class="premium-highlight-icon">🏆</span>
-                <span class="premium-highlight-text">{% trans 'Leader in custom furniture' %}</span>
-            </div>
-            <div class="premium-highlight-item">
-                <span class="premium-highlight-icon">◆</span>
-                <span class="premium-highlight-text">{% trans 'Premium quality materials' %}</span>
-            </div>
-            <div class="premium-highlight-item">
-                <span class="premium-highlight-icon">◉</span>
-                <span class="premium-highlight-text">{% trans 'Precise deadlines' %}</span>
-            </div>
+            <article class="premium-stat-card" role="listitem">
+                <div class="premium-stat-top">
+                    <span class="premium-stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M4 19H20"></path>
+                            <path d="M7 16V9"></path>
+                            <path d="M12 16V5"></path>
+                            <path d="M17 16V11"></path>
+                        </svg>
+                    </span>
+                    <p class="premium-stat-label">{% trans 'Completed Projects' %}</p>
+                </div>
+                <p class="premium-stat-value">
+                    <span class="premium-stat-number" data-count-up data-count-to="{{ stats_projects }}" data-count-suffix="+">0</span>
+                </p>
+                <p class="premium-stat-meta">{% trans 'Finished interiors with custom detailing.' %}</p>
+            </article>
+
+            <article class="premium-stat-card" role="listitem">
+                <div class="premium-stat-top">
+                    <span class="premium-stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M7.5 14A4.5 4.5 0 1 1 12 9.5"></path>
+                            <path d="M16.5 14A3.5 3.5 0 1 0 13 10.5"></path>
+                            <path d="M3.5 20C4.5 17.5 6.8 16 9.5 16H10.5"></path>
+                            <path d="M13.5 20C14.3 18.2 16 17 18 17C20 17 21.7 18.2 22.5 20"></path>
+                        </svg>
+                    </span>
+                    <p class="premium-stat-label">{% trans 'Happy Clients' %}</p>
+                </div>
+                <p class="premium-stat-value">
+                    <span class="premium-stat-number" data-count-up data-count-to="{{ stats_clients }}" data-count-suffix="+">0</span>
+                </p>
+                <p class="premium-stat-meta">{% trans 'Long-term trust and recurring orders.' %}</p>
+            </article>
+
+            <article class="premium-stat-card" role="listitem">
+                <div class="premium-stat-top">
+                    <span class="premium-stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12V19"></path>
+                            <path d="M19 12V19"></path>
+                            <path d="M5 12H19"></path>
+                            <path d="M7 9.5C7 8.12 8.12 7 9.5 7H14.5C15.88 7 17 8.12 17 9.5V12H7V9.5Z"></path>
+                            <path d="M9 19V16"></path>
+                            <path d="M15 19V16"></path>
+                        </svg>
+                    </span>
+                    <p class="premium-stat-label">{% trans 'Custom Furniture Pieces' %}</p>
+                </div>
+                <p class="premium-stat-value">
+                    <span class="premium-stat-number" data-count-up data-count-to="{{ stats_custom_pieces }}" data-count-suffix="+">0</span>
+                </p>
+                <p class="premium-stat-meta">{% trans 'Hand-finished items crafted to order.' %}</p>
+            </article>
         </div>
     </div>
 </section>
@@ -320,7 +320,7 @@
                 <div class="step-number">4</div>
                 <div class="step-content">
                     <h4>{% trans 'Delivery' %}</h4>
-                    <p>{% trans 'We carefully deliver and install' %}</p>
+                    <p>{% trans 'We carefully deliver on schedule' %}</p>
                 </div>
             </div>
         </div>
@@ -336,11 +336,11 @@
                 <h2 class="section-title store-benefits-title">{% trans 'We deliver furniture that fits your life and interior' %}</h2>
             </div>
             <p class="store-benefits-description">
-                {% trans 'From curated catalog models to custom production, we handle materials, quality control, delivery and careful installation.' %}
+                {% trans 'From curated catalog models to custom production, we handle materials, quality control and delivery.' %}
             </p>
             <ul class="store-benefits-list">
                 <li>{% trans 'Catalog with modern sofas, beds, tables and storage systems' %}</li>
-                <li>{% trans 'Reliable delivery schedule with assembly and final checks' %}</li>
+                <li>{% trans 'Reliable delivery schedule with final checks' %}</li>
                 <li>{% trans 'Durable materials and transparent warranty terms' %}</li>
             </ul>
         </div>
@@ -431,7 +431,13 @@
                         <blockquote class="review-text">"{{ review.text }}"</blockquote>
                         <div class="review-project">
                             <span class="project-label">{% trans 'Project:' %}</span>
-                            <span class="project-name">{{ review.project_name|default:"{% trans 'Custom furniture' %}" }}</span>
+                            <span class="project-name">
+                                {% if review.project_name %}
+                                    {{ review.project_name }}
+                                {% else %}
+                                    {% trans 'Custom furniture' %}
+                                {% endif %}
+                            </span>
                         </div>
                     </div>
 
@@ -445,7 +451,7 @@
                         </div>
                         <div class="review-source">
                             <span class="source-icon">🏢</span>
-                            <span class="source-text">{% trans 'B\'Mass' %}</span>
+                            <span class="source-text">{% trans "B'Mass" %}</span>
                         </div>
                     </div>
                 </div>

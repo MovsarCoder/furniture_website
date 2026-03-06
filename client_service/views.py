@@ -115,7 +115,7 @@ def index(request):
     stats_clients = max(1000, total_projects * 2)
     stats_projects = max(500, total_projects)
     stats_years = 14
-    stats_delivery_weeks = 2
+    stats_custom_pieces = max(1200, total_projects * 3)
 
     return render(
         request,
@@ -135,7 +135,7 @@ def index(request):
             "stats_clients": stats_clients,
             "stats_projects": stats_projects,
             "stats_years": stats_years,
-            "stats_delivery_weeks": stats_delivery_weeks,
+            "stats_custom_pieces": stats_custom_pieces,
         },
     )
 

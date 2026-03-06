@@ -69,6 +69,81 @@
   });
 })();
 
+// Premium stats count-up animation
+(function(){
+  const counters = document.querySelectorAll('#stats [data-count-up]');
+  if (!counters.length) return;
+
+  const prefersReducedMotion =
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const locale = document.documentElement.lang || undefined;
+  const formatter = new Intl.NumberFormat(locale);
+
+  const renderValue = (el, value) => {
+    const prefix = el.dataset.countPrefix || '';
+    const suffix = el.dataset.countSuffix || '';
+    el.textContent = `${prefix}${formatter.format(value)}${suffix}`;
+  };
+
+  const animateCounter = (el) => {
+    const target = Number(el.dataset.countTo || 0);
+    const startValue = Number(el.dataset.countFrom || 0);
+    const duration = Number(el.dataset.countDuration || 1400);
+
+    if (!Number.isFinite(target)) {
+      renderValue(el, 0);
+      return;
+    }
+
+    if (prefersReducedMotion || duration <= 0) {
+      renderValue(el, Math.round(target));
+      return;
+    }
+
+    const startTs = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTs) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.round(startValue + (target - startValue) * eased);
+      renderValue(el, value);
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  const revealCounter = (el) => {
+    if (el.dataset.counted === 'true') return;
+    el.dataset.counted = 'true';
+    animateCounter(el);
+  };
+
+  counters.forEach((counter) => {
+    renderValue(counter, Number(counter.dataset.countFrom || 0));
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    counters.forEach(revealCounter);
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      revealCounter(entry.target);
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.45 });
+
+  counters.forEach((counter) => observer.observe(counter));
+})();
+
 // Navbar scroll effect for sticky navbar — REFACTORED
 (function(){
   const navbar = document.querySelector('.navbar');

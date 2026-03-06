@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<section id="contacts" class="section container">
-    <div class="section-header">
-        <div>
-            <div class="section-title">{% trans 'Contacts' %}</div>
-            <div class="section-sub">{% trans 'Choose a convenient branch for you' %}</div>
+<section id="contacts" class="section container contacts-section">
+    <header class="section-header contacts-hero">
+        <div class="contacts-hero-copy">
+            <h2 class="section-title">{% trans 'Contacts' %}</h2>
+            <p class="section-sub contacts-description">{% trans 'Choose a convenient branch for you' %}</p>
         </div>
-    </div>
+    </header>
     <div class="branches">
         {% if contacts %}
         {% for contact in contacts %}
@@ -36,28 +36,69 @@
             </div>
             {% endif %}
 
-            {% if contact.address %}
-            <div class="contact-row contact-row-main contact-row-address">
-                <span class="contact-label">{% trans 'Adresse' %}:</span>
-                <span class="contact-value">{{ contact.address }}</span>
-            </div>
-            {% endif %}
-            {% if contact.email %}
-            <div class="contact-row contact-row-main contact-row-email">
-                <span class="contact-label">{% trans 'Email' %}:</span>
-                <span class="contact-value"><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></span>
-            </div>
-            {% endif %}
-            {% if contact.phone %}
-            <div class="contact-row contact-row-main contact-row-phone">
-                <span class="contact-label">{% trans 'TEL' %}:</span>
-                <span class="contact-value contact-value-phone"><a href="tel:{{ contact.phone|cut:' ' }}">{{ contact.phone }}</a></span>
+            {% if contact.phone or contact.email or contact.address %}
+            <div class="contact-details-list">
+                {% if contact.phone %}
+                <div class="contact-detail-item contact-row-phone">
+                    <span class="contact-detail-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M22 16.92V20A2 2 0 0 1 19.82 22C9.86 22 2 14.14 2 4.18A2 2 0 0 1 4 2h3.09a2 2 0 0 1 2 1.72c.12.86.32 1.7.61 2.5a2 2 0 0 1-.45 2.11L8 9.59a16 16 0 0 0 6.41 6.41l1.26-1.25a2 2 0 0 1 2.11-.45c.8.29 1.64.49 2.5.61A2 2 0 0 1 22 16.92Z"></path>
+                        </svg>
+                    </span>
+                    <span class="contact-detail-text contact-value-phone">
+                        <a href="tel:{{ contact.phone|cut:' ' }}" aria-label="{% trans 'Phone' %}">{{ contact.phone }}</a>
+                    </span>
+                </div>
+                {% endif %}
+
+                {% if contact.email %}
+                <div class="contact-detail-item contact-row-email">
+                    <span class="contact-detail-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <path d="M22 7L13.03 12.7a2 2 0 0 1-2.06 0L2 7"></path>
+                        </svg>
+                    </span>
+                    <span class="contact-detail-text">
+                        <a href="mailto:{{ contact.email }}" aria-label="{% trans 'Email' %}">{{ contact.email }}</a>
+                    </span>
+                </div>
+                {% endif %}
+
+                {% if contact.address %}
+                <div class="contact-detail-item contact-row-address">
+                    <span class="contact-detail-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 22s7-4.35 7-11a7 7 0 1 0-14 0c0 6.65 7 11 7 11Z"></path>
+                            <circle cx="12" cy="11" r="2.5"></circle>
+                        </svg>
+                    </span>
+                    <span class="contact-detail-text">{{ contact.address }}</span>
+                </div>
+                {% endif %}
             </div>
             {% endif %}
             <div class="contact-row">
-                <a href="{{ contact.whatsapp }}">💬 {% trans 'WhatsApp' %}</a>
+                <a href="{{ contact.whatsapp }}" class="contact-social-link" aria-label="{% trans 'WhatsApp' %}">
+                    <span class="contact-social-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M20.52 3.48A11.9 11.9 0 0 0 12.04 0C5.52 0 .2 5.31.2 11.84c0 2.08.54 4.11 1.57 5.9L0 24l6.43-1.69a11.8 11.8 0 0 0 5.61 1.43h.01c6.52 0 11.84-5.31 11.84-11.84 0-3.16-1.23-6.13-3.37-8.42ZM12.05 21.7h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.82 1 1.02-3.72-.23-.38a9.82 9.82 0 0 1-1.5-5.18c0-5.44 4.43-9.86 9.88-9.86a9.8 9.8 0 0 1 6.99 2.9 9.8 9.8 0 0 1 2.89 6.96c0 5.44-4.44 9.87-9.88 9.87Z"></path>
+                            <path d="M17.68 14.66c-.29-.14-1.74-.86-2.01-.95-.27-.1-.47-.14-.67.15-.2.29-.76.94-.93 1.13-.17.19-.34.22-.63.07-.29-.14-1.22-.45-2.33-1.45-.86-.77-1.45-1.73-1.62-2.02-.17-.29-.02-.45.12-.59.13-.13.29-.34.43-.51.14-.17.19-.29.29-.48.09-.19.04-.36-.03-.5-.07-.14-.66-1.59-.9-2.18-.24-.57-.48-.49-.67-.5-.17 0-.37-.01-.57-.01s-.5.08-.76.36c-.26.29-1 1-.99 2.44 0 1.44 1.05 2.83 1.2 3.03.14.19 2.07 3.19 5.01 4.46.7.3 1.25.48 1.67.62.71.22 1.36.19 1.87.11.57-.09 1.74-.71 1.99-1.4.24-.69.24-1.28.17-1.4-.07-.12-.26-.19-.55-.34Z"></path>
+                        </svg>
+                    </span>
+                    <span>{% trans 'WhatsApp' %}</span>
+                </a>
                 <span class="contact-divider">·</span>
-                <a href="{{ contact.instagram }}">📷 {% trans 'Instagram' %}</a>
+                <a href="{{ contact.instagram }}" class="contact-social-link" aria-label="{% trans 'Instagram' %}">
+                    <span class="contact-social-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <circle cx="17.5" cy="6.5" r="1"></circle>
+                        </svg>
+                    </span>
+                    <span>{% trans 'Instagram' %}</span>
+                </a>
             </div>
             {% if contact.address %}
             <div class="contact-map">

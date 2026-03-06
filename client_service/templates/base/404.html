@@ -14,7 +14,7 @@
     background:
       radial-gradient(760px 260px at 96% 0%, rgba(34, 34, 34, 0.08), transparent 62%),
       radial-gradient(620px 220px at 0% 100%, rgba(34, 34, 34, 0.05), transparent 65%),
-      linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%);
+      var(--bg-gradient);
   }
 
   .bm404-shell {
@@ -27,7 +27,7 @@
 
   .bm404-copy {
     background: #ffffff;
-    border: 1px solid rgba(34, 34, 34, 0.14);
+    border: 1px solid rgba(34, 34, 34, 0.12);
     border-radius: 24px;
     padding: clamp(22px, 4vw, 40px);
     box-shadow: 0 20px 40px rgba(34, 34, 34, 0.12);
@@ -35,7 +35,7 @@
 
   .bm404-kicker {
     margin: 0 0 10px;
-    color: rgba(34, 34, 34, 0.66);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-size: 12px;
@@ -46,14 +46,14 @@
     margin: 0;
     font-size: clamp(74px, 10vw, 132px);
     line-height: 0.95;
-    color: #222;
+    color: var(--text);
     letter-spacing: -0.02em;
     font-weight: 900;
   }
 
   .bm404-title {
     margin: 18px 0 10px;
-    color: #222;
+    color: var(--text);
     font-size: clamp(28px, 3.2vw, 42px);
     line-height: 1.1;
     font-weight: 800;
@@ -61,7 +61,7 @@
 
   .bm404-subtitle {
     margin: 0;
-    color: rgba(34, 34, 34, 0.78);
+    color: var(--text-muted);
     line-height: 1.6;
     font-size: clamp(15px, 1.4vw, 17px);
     max-width: 560px;
@@ -82,7 +82,8 @@
     padding: 12px 20px;
     font-size: 14px;
     font-weight: 700;
-    border: 1px solid #222;
+    border: 1px solid var(--brand-2);
+    color: var(--text);
     transition: transform 220ms ease, background-color 220ms ease, color 220ms ease;
   }
 
@@ -91,22 +92,22 @@
   }
 
   .bm404-btn-primary {
-    background: #222;
+    background: var(--brand-2);
     color: #fff;
   }
 
   .bm404-btn-primary:hover {
     background: #fff;
-    color: #222;
+    color: var(--text);
   }
 
   .bm404-btn-secondary {
     background: #fff;
-    color: #222;
+    color: var(--text);
   }
 
   .bm404-btn-secondary:hover {
-    background: #222;
+    background: var(--brand-2);
     color: #fff;
   }
 
@@ -114,8 +115,8 @@
     position: relative;
     min-height: 360px;
     border-radius: 24px;
-    border: 1px solid rgba(34, 34, 34, 0.14);
-    background: linear-gradient(155deg, #ffffff 0%, #f4f4f4 100%);
+    border: 1px solid rgba(34, 34, 34, 0.12);
+    background: linear-gradient(155deg, #ffffff 0%, var(--panel) 100%);
     box-shadow: 0 18px 38px rgba(34, 34, 34, 0.1);
     overflow: hidden;
   }
@@ -125,7 +126,7 @@
     position: absolute;
     inset: 22px;
     border-radius: 18px;
-    border: 1px dashed rgba(34, 34, 34, 0.28);
+    border: 1px dashed rgba(34, 34, 34, 0.24);
   }
 
   .bm404-room {
@@ -139,7 +140,7 @@
     width: min(280px, 80%);
     height: 120px;
     border-radius: 24px 24px 18px 18px;
-    background: #222;
+    background: var(--brand-2);
     position: relative;
     box-shadow: 0 14px 26px rgba(34, 34, 34, 0.28);
   }
@@ -152,7 +153,7 @@
     width: 22px;
     height: 14px;
     border-radius: 8px;
-    background: #222;
+    background: var(--brand-2);
   }
 
   .bm404-sofa::before {
@@ -167,7 +168,7 @@
     position: absolute;
     top: 28px;
     right: 28px;
-    background: #222;
+    background: var(--brand-2);
     color: #fff;
     font-size: 12px;
     font-weight: 700;
