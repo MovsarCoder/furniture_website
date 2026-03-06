@@ -13,7 +13,7 @@ SECRET_KEY = config(
     "SECRET_KEY",
     default="django-insecure-local-development-key",
 )
-DEBUG = False
+DEBUG = config("DEBUG", default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
@@ -58,7 +58,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
+    "furniture.middleware.LocalhostAwareSecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "furniture.middleware.DomainLanguageMiddleware",
@@ -203,5 +203,13 @@ SECURE_HSTS_SECONDS = config(
 )
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
 SECURE_HSTS_PRELOAD = not DEBUG
+
+if DEBUG:
+    # Keep local runserver strictly HTTP even if a production-like env var leaks
+    # into the developer environment.
+    SECURE_SSL_REDIRECT = False
+    SECURE_HSTS_SECONDS = 0
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_HSTS_PRELOAD = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

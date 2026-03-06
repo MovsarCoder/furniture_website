@@ -1,7 +1,49 @@
 from __future__ import annotations
 
+import ipaddress
+
 from django.conf import settings
+from django.middleware.security import SecurityMiddleware
 from django.utils import translation
+
+
+class LocalhostAwareSecurityMiddleware(SecurityMiddleware):
+    """
+    Preserves HTTPS enforcement for public domains while keeping local runserver
+    accessible over plain HTTP.
+    """
+
+    @staticmethod
+    def _is_local_host(host: str) -> bool:
+        normalized_host = host.strip().lower()
+        if normalized_host == "localhost":
+            return True
+
+        try:
+            address = ipaddress.ip_address(normalized_host)
+        except ValueError:
+            return normalized_host.endswith(".local")
+
+        return address.is_loopback or address.is_private
+
+    def process_request(self, request):
+        host = request.get_host().split(":", 1)[0]
+        if self._is_local_host(host):
+            return None
+        return super().process_request(request)
+
+    def process_response(self, request, response):
+        response = super().process_response(request, response)
+
+        host = request.get_host().split(":", 1)[0]
+        if not self._is_local_host(host):
+            return response
+
+        response.headers.pop("Strict-Transport-Security", None)
+        for cookie in response.cookies.values():
+            cookie["secure"] = ""
+
+        return response
 
 
 class DomainLanguageMiddleware:
