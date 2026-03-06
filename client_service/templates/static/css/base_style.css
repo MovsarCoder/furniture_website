@@ -8464,6 +8464,11 @@ body.theme-dark .mega-nav-link:focus-visible {
     gap: 20px;
   }
 
+  .designer-express-btn {
+    align-self: center;
+    margin-inline: auto;
+  }
+
   .designer-express-title {
     max-width: 100%;
     font-size: clamp(1.4rem, 4.2vw, 2rem);
@@ -8531,9 +8536,11 @@ body.theme-dark .mega-nav-link:focus-visible {
   }
 
   .designer-express-btn {
-    align-self: stretch;
-    width: 100%;
+    align-self: center;
+    width: auto;
     margin-top: 0;
+    margin-inline: auto;
+    min-width: min(100%, 240px);
     justify-content: center;
   }
 
