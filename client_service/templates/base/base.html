@@ -120,28 +120,6 @@
         </nav>
 
         <div class="nav-right">
-            <div class="language-selector">
-                <button type="button" class="lang-current" id="langCurrent">
-                    <span class="lang-text">
-                        {% for option in language_options %}
-                            {% if option.is_active %}{{ option.short_label }}{% endif %}
-                        {% endfor %}
-                    </span>
-                    <span class="lang-arrow" aria-hidden="true">▾</span>
-                </button>
-                <div class="lang-dropdown" id="langDropdown">
-                    {% for option in language_options %}
-                    <button
-                        type="button"
-                        class="lang-option{% if option.is_active %} active{% endif %}"
-                        data-lang="{{ option.code }}"
-                        data-domain="{{ option.target_domain }}"
-                    >
-                        <span class="lang-name">{{ option.name }}</span>
-                    </button>
-                    {% endfor %}
-                </div>
-            </div>
             <button class="nav-cta" id="consultationBtn" aria-label="{% trans 'Order consultation' %}">{% trans 'Order Consultation' %}</button>
         </div>
     </div>
@@ -290,9 +268,7 @@
         'Consultation modal not found': '{% trans "Consultation modal not found" %}',
         'Previous photo': '{% trans "Previous photo" %}',
         'Next photo': '{% trans "Next photo" %}',
-        'Photo carousel': '{% trans "Photo carousel" %}',
-        'Select language': '{% trans "Select language" %}',
-        'Choose language': '{% trans "Choose language" %}'
+        'Photo carousel': '{% trans "Photo carousel" %}'
     };
     
     window.gettext = function(key) {

@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.urls import include, path
-from django.views.i18n import set_language
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
+from django.views.static import serve
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from client_service.sitemaps import StaticViewSitemap, WorkSitemap
@@ -19,7 +18,6 @@ sitemaps = {
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("i18n/setlang/", set_language, name="set_language"),
     path(
         "favicon.ico",
         RedirectView.as_view(
@@ -35,4 +33,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG or settings.SERVE_MEDIA_FILES:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [
+        re_path(
+            r"^media/(?P<path>.*)$",
+            serve,
+            {"document_root": settings.MEDIA_ROOT},
+        )
+    ]

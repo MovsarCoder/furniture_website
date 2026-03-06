@@ -2,6 +2,7 @@
 Django settings for furniture project.
 """
 
+import sys
 from pathlib import Path
 
 from decouple import Csv, config
@@ -148,12 +149,6 @@ DOMAIN_LANGUAGE_MAP = {
     "127.0.0.1": "en",
 }
 
-LANGUAGE_DOMAIN_MAP = {
-    "en": "",
-    "de": "bmass.at",
-    "fr": "bmass.fr",
-}
-
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "client_service" / "static",
@@ -183,7 +178,12 @@ WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-SERVE_MEDIA_FILES = config("SERVE_MEDIA_FILES", default=DEBUG, cast=bool)
+RUNNING_DEV_SERVER = any(arg.startswith("runserver") for arg in sys.argv)
+SERVE_MEDIA_FILES = config(
+    "SERVE_MEDIA_FILES",
+    default=DEBUG or RUNNING_DEV_SERVER,
+    cast=bool,
+)
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=not DEBUG, cast=bool)
