@@ -95,11 +95,19 @@ def get_about_page_content(language_code: str | None) -> AboutPageContent | None
 
 
 def sample_queryset(queryset: QuerySet[Work], limit: int) -> list[Work]:
-    items = list(queryset)
-    if len(items) <= limit:
-        random.shuffle(items)
-        return items
-    return random.sample(items, limit)
+    item_ids = list(queryset.values_list("id", flat=True))
+    if not item_ids:
+        return []
+
+    if len(item_ids) <= limit:
+        selected_ids = item_ids
+        random.shuffle(selected_ids)
+    else:
+        selected_ids = random.sample(item_ids, limit)
+
+    sampled_items = queryset.filter(id__in=selected_ids)
+    items_by_id = {item.id: item for item in sampled_items}
+    return [items_by_id[item_id] for item_id in selected_ids if item_id in items_by_id]
 
 
 def sample_photo_list(photos: list[CarouselPhoto], limit: int) -> list[CarouselPhoto]:

@@ -32,7 +32,7 @@ urlpatterns = [
     path("", include("client_service.urls")),
 ]
 
-if settings.DEBUG or settings.SERVE_MEDIA_FILES:
+if settings.SERVE_MEDIA_FILES:
     urlpatterns += [
         re_path(
             r"^media/(?P<path>.*)$",

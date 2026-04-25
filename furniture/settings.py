@@ -145,6 +145,12 @@ if DB_ENGINE in {
             "PASSWORD": config("DB_PASSWORD", default="db_password"),
             "HOST": config("DB_HOST", default="db"),
             "PORT": config("DB_PORT", default="5432"),
+            "CONN_MAX_AGE": config("DB_CONN_MAX_AGE", default=60, cast=int),
+            "CONN_HEALTH_CHECKS": config(
+                "DB_CONN_HEALTH_CHECKS",
+                default=True,
+                cast=bool,
+            ),
         }
     }
 else:
@@ -221,7 +227,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 SERVE_MEDIA_FILES = config(
     "SERVE_MEDIA_FILES",
-    default=RUNNING_LOCAL_ENV or not DEBUG,
+    default=RUNNING_LOCAL_ENV,
     cast=bool,
 )
 

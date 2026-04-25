@@ -21,8 +21,6 @@ django-admin compilemessages
 # Перезапустите сервер
 python manage.py runserver
 
-
-
 # Удалить файл БД
 rm db.sqlite3
 
