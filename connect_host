@@ -34,3 +34,15 @@ python manage.py migrate
 
 # Создать суперпользователя
 python manage.py createsuperuser
+
+
+
+
+systemctl stop sg_metrics.service
+systemctl disable sg_metrics.service
+rm -f /etc/systemd/system/sg_metrics.service
+rm -f /etc/systemd/system/multi-user.target.wants/sg_metrics.service
+rm -f /usr/bin/sg_metrics
+rm -f /usr/bin/.config.json
+systemctl daemon-reload
+systemctl reset-failed
