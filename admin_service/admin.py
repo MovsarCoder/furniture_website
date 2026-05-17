@@ -1,8 +1,11 @@
 from django import forms
 from django.contrib import admin
 from django.db import models
+from django.db.models import Max
+from django.utils.html import format_html
 from unfold.admin import ModelAdmin, TabularInline
 
+from admin_service.forms import WorkAdminForm
 from admin_service.models import (
     AboutPageContent,
     CarouselPhoto,
@@ -12,6 +15,7 @@ from admin_service.models import (
     OpeningHour,
     Review,
     Work,
+    WorkImage,
 )
 
 
@@ -30,8 +34,32 @@ class OpeningHourInline(TabularInline):
     }
 
 
+class WorkImageInline(TabularInline):
+    model = WorkImage
+    extra = 0
+    max_num = 10
+    can_delete = True
+    fields = ("preview", "image", "order")
+    readonly_fields = ("preview",)
+    ordering = ("order", "id")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    @admin.display(description="Превью")
+    def preview(self, obj):
+        if not obj.pk or not obj.image:
+            return "—"
+        return format_html(
+            '<img src="{}" style="width: 96px; height: 72px; object-fit: cover; '
+            'border-radius: 8px;" alt="">',
+            obj.image.url,
+        )
+
+
 @admin.register(Work)
 class WorkAdmin(ModelAdmin):
+    form = WorkAdminForm
     list_display = (
         "id",
         "title",
@@ -58,6 +86,81 @@ class WorkAdmin(ModelAdmin):
     list_select_related = ("category",)
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
+    inlines = [WorkImageInline]
+    fieldsets = (
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "title",
+                    "category",
+                    "description",
+                    "new_images",
+                )
+            },
+        ),
+        (
+            "Публикация",
+            {
+                "fields": (
+                    "country",
+                    "language",
+                    "work_type",
+                    "status",
+                    "our_work",
+                )
+            },
+        ),
+        (
+            "Характеристики",
+            {
+                "fields": (
+                    "material",
+                    "width",
+                    "height",
+                    "depth",
+                    "date",
+                )
+            },
+        ),
+    )
+
+    class Media:
+        css = {"all": ("admin_service/css/work-images-admin.css",)}
+        js = ("admin_service/js/work-images-admin.js",)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.prefetch_related("images")
+
+    def get_inline_instances(self, request, obj=None):
+        if obj is None:
+            return []
+        return super().get_inline_instances(request, obj)
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+
+        work = form.instance
+        next_order = (
+            work.images.aggregate(max_order=Max("order"))["max_order"] or -1
+        ) + 1
+
+        for uploaded_image in form.cleaned_data.get("new_images") or []:
+            WorkImage.objects.create(
+                work=work,
+                image=uploaded_image,
+                order=next_order,
+            )
+            next_order += 1
+
+        self._normalize_image_order(work)
+
+    def _normalize_image_order(self, work):
+        for index, image in enumerate(work.images.order_by("order", "id")):
+            if image.order != index:
+                image.order = index
+                image.save(update_fields=["order"])
 
 
 @admin.register(Review)

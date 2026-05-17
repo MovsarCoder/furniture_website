@@ -18,7 +18,7 @@ from client_service.services import (
 
 
 def _safe_image_url(instance) -> str | None:
-    image = getattr(instance, "image", None)
+    image = getattr(instance, "primary_image", None) or getattr(instance, "image", None)
     if not image:
         return None
 
@@ -26,6 +26,36 @@ def _safe_image_url(instance) -> str | None:
         return image.url
     except (AttributeError, ValueError):
         return None
+
+
+def _safe_file_url(image) -> str | None:
+    if not image:
+        return None
+
+    try:
+        return image.url
+    except (AttributeError, ValueError):
+        return None
+
+
+def _build_work_gallery(work) -> list[dict[str, str]]:
+    gallery_items = []
+    seen_urls: set[str] = set()
+
+    for image in work.gallery_files:
+        image_url = _safe_file_url(image)
+        if not image_url or image_url in seen_urls:
+            continue
+
+        seen_urls.add(image_url)
+        gallery_items.append(
+            {
+                "url": image_url,
+                "alt": work.title,
+            }
+        )
+
+    return gallery_items
 
 
 def _build_showcase_photos(
@@ -121,7 +151,14 @@ def work_detail(request: HttpRequest, pk: int) -> HttpResponse:
     country_code = resolve_country_code(request.get_host())
     queryset = get_work_queryset(country_code)
     work = get_object_or_404(queryset, pk=pk)
-    return render(request, "works/work_detail.html", {"work": work})
+    return render(
+        request,
+        "works/work_detail.html",
+        {
+            "work": work,
+            "gallery_images": _build_work_gallery(work),
+        },
+    )
 
 
 def custom_page_not_found(request: HttpRequest, exception=None) -> HttpResponse:
@@ -151,12 +188,18 @@ def catalog_view(request: HttpRequest) -> HttpResponse:
 
 def about_page(request: HttpRequest) -> HttpResponse:
     country_code = resolve_country_code(request.get_host())
+    about_photos = list(
+        CarouselPhoto.objects.filter(is_active=True).order_by("order", "-created_at")[
+            :4
+        ]
+    )
     return render(
         request,
         "home/about.html",
         {
             "contacts": get_contact_queryset(country_code),
             "about_content": get_about_page_content(request.LANGUAGE_CODE),
+            "about_photos": about_photos,
         },
     )
 

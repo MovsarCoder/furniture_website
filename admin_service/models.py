@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import uuid
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -13,7 +15,12 @@ from admin_service.constants import (
     WORK_STATUSES,
     WORK_TYPES,
 )
-from admin_service.validators import IMAGE_EXTENSION_VALIDATOR, validate_image_size
+from admin_service.validators import IMAGE_EXTENSION_VALIDATOR, validate_image_upload
+
+
+def work_image_upload_to(instance, filename: str) -> str:
+    extension = filename.rsplit(".", 1)[-1].lower()
+    return f"portfolio/{instance.work_id}/images/{uuid.uuid4().hex}.{extension}"
 
 
 class Category(models.Model):
@@ -51,7 +58,7 @@ class Work(models.Model):
         blank=True,
         null=True,
         verbose_name="Фотография мебели",
-        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_size],
+        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_upload],
     )
     country = models.CharField(
         max_length=5,
@@ -131,6 +138,66 @@ class Work(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    @property
+    def primary_image(self):
+        gallery_files = self.gallery_files
+        return gallery_files[0] if gallery_files else None
+
+    @property
+    def gallery_files(self) -> list:
+        if self.pk:
+            prefetched_cache = getattr(self, "_prefetched_objects_cache", {})
+            if "images" in prefetched_cache:
+                files = [
+                    work_image.image
+                    for work_image in prefetched_cache["images"]
+                    if work_image.image
+                ]
+            else:
+                files = [
+                    work_image.image
+                    for work_image in self.images.all()
+                    if work_image.image
+                ]
+        else:
+            files = []
+
+        if files:
+            return files
+
+        return [self.image] if self.image else []
+
+
+class WorkImage(models.Model):
+    work = models.ForeignKey(
+        Work,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="Работа",
+    )
+    image = models.ImageField(
+        upload_to=work_image_upload_to,
+        verbose_name="Изображение",
+        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_upload],
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        db_index=True,
+        verbose_name="Порядок",
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Изображение работы"
+        verbose_name_plural = "Изображения работы"
+        indexes = [
+            models.Index(fields=["work", "order"], name="work_image_order_idx"),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.work.title} | image #{self.order + 1}"
 
 
 class Review(models.Model):
@@ -356,7 +423,7 @@ class CarouselPhoto(models.Model):
     image = models.ImageField(
         upload_to="carousel/",
         verbose_name="Image",
-        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_size],
+        validators=[IMAGE_EXTENSION_VALIDATOR, validate_image_upload],
     )
     is_active = models.BooleanField(default=True, db_index=True, verbose_name="Active")
     order = models.PositiveIntegerField(default=0, db_index=True, verbose_name="Order")

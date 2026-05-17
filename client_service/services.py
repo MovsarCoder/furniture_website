@@ -3,7 +3,7 @@ from __future__ import annotations
 import random
 
 from django.conf import settings
-from django.db.models import Avg, QuerySet
+from django.db.models import Avg, Q, QuerySet
 
 from admin_service.constants import COUNTRY_CODES
 from admin_service.models import AboutPageContent, CarouselPhoto, Contact, Review, Work
@@ -48,14 +48,17 @@ def get_work_queryset(
     our_work: bool | None = None,
     with_images: bool = False,
 ) -> QuerySet[Work]:
-    queryset = Work.objects.select_related("category")
+    queryset = Work.objects.select_related("category").prefetch_related("images")
 
     if country_code:
         queryset = queryset.filter(country=country_code)
     if our_work is not None:
         queryset = queryset.filter(our_work=our_work)
     if with_images:
-        queryset = queryset.filter(image__isnull=False).exclude(image="")
+        queryset = queryset.filter(
+            (Q(image__isnull=False) & ~Q(image=""))
+            | (Q(images__image__isnull=False) & ~Q(images__image=""))
+        ).distinct()
 
     return queryset
 

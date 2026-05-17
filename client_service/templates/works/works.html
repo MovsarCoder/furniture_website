@@ -41,26 +41,22 @@
         <div class="portfolio-enhanced-grid" id="portfolioGrid">
             {% for work in works %}
             <article class="portfolio-card">
-                <div class="card-image-container">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" class="portfolio-image"
-                         {% if forloop.first %}
-                         loading="eager" fetchpriority="high" decoding="sync"
-                         {% else %}
-                         loading="lazy" fetchpriority="low" decoding="async"
-                         {% endif %}>
-                    {% else %}
-                    <div class="portfolio-image portfolio-image-placeholder" aria-hidden="true"></div>
-                    {% endif %}
-                    <div class="image-overlay">
-                        <button class="quick-view-btn" onclick="quickView('{{ work.id }}')">
-                            <span class="btn-icon">👁️</span>
-                            <span>{% trans 'Quick View' %}</span>
-                        </button>
-                    </div>
-                </div>
-
+                {% include "partials/portfolio_card_gallery.html" %}
                 <div class="card-content">
+                    <div class="card-main-content">
+                        <div class="portfolio-card-meta">
+                            {% if work.category %}
+                            <span>{{ work.category.title }}</span>
+                            {% endif %}
+                            {% if work.material %}
+                            <span>{{ work.material }}</span>
+                            {% endif %}
+                        </div>
+                        <h2 class="card-title">{{ work.title }}</h2>
+                        {% if work.description %}
+                        <p class="card-description">{{ work.description }}</p>
+                        {% endif %}
+                    </div>
                     <div class="card-footer">
                         <a href="{% url 'client_service:work_detail' work.id %}" class="view-btn">
                             <span>{% trans 'More details' %}</span>

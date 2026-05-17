@@ -135,11 +135,13 @@
             {% for work in works %}
             <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
                 <a href="{% url 'client_service:work_detail' work.id %}">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% with primary_image=work.primary_image %}
+                    {% if primary_image %}
+                    <img src="{{ primary_image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
                     {% elif fallback_photo %}
                     <img src="{{ fallback_photo.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
                     {% endif %}
+                    {% endwith %}
                     <div class="showcase-tile-caption">
                         <span>{{ work.title }}</span>
                     </div>
@@ -150,11 +152,13 @@
             {% for work in nav_our_works|slice:":3" %}
             <article class="showcase-tile{% if forloop.first %} showcase-tile-large{% endif %}">
                 <a href="{% url 'client_service:work_detail' work.id %}">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% with primary_image=work.primary_image %}
+                    {% if primary_image %}
+                    <img src="{{ primary_image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
                     {% elif fallback_photo %}
                     <img src="{{ fallback_photo.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
                     {% endif %}
+                    {% endwith %}
                     <div class="showcase-tile-caption">
                         <span>{{ work.title }}</span>
                     </div>
@@ -291,9 +295,11 @@
             {% elif nav_our_works %}
                 {% for work in nav_our_works|slice:":3" %}
                 <article class="identity-shot {% if forloop.first %}identity-shot-large{% endif %}">
-                    {% if work.image %}
-                    <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                    {% with primary_image=work.primary_image %}
+                    {% if primary_image %}
+                    <img src="{{ primary_image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
                     {% endif %}
+                    {% endwith %}
                     <div class="identity-shot-overlay">
                         <span class="identity-shot-label">{{ work.category.title }}</span>
                     </div>
@@ -371,9 +377,11 @@
                 {% elif nav_our_works %}
                     {% for work in nav_our_works|slice:":3" %}
                     <figure class="benefit-photo">
-                        {% if work.image %}
-                        <img src="{{ work.image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
+                        {% with primary_image=work.primary_image %}
+                        {% if primary_image %}
+                        <img src="{{ primary_image.url }}" alt="{{ work.title }}" loading="lazy" decoding="async" fetchpriority="low">
                         {% endif %}
+                        {% endwith %}
                     </figure>
                     {% endfor %}
                 {% endif %}

@@ -1,0 +1,38 @@
+{% load i18n %}
+{% with gallery_files=work.gallery_files %}
+<div class="card-image-container portfolio-card-gallery">
+    <div class="portfolio-gallery-slider" data-portfolio-gallery>
+        {% for image in gallery_files %}
+        <img src="{{ image.url }}"
+             alt="{{ work.title }}"
+             class="portfolio-gallery-image{% if forloop.first %} is-active{% endif %}"
+             {% if forloop.first and forloop.parentloop.first %}
+             loading="eager" fetchpriority="high" decoding="sync"
+             {% else %}
+             loading="lazy" fetchpriority="low" decoding="async"
+             {% endif %}>
+        {% empty %}
+        <div class="portfolio-image portfolio-image-placeholder" aria-hidden="true"></div>
+        {% endfor %}
+
+        {% if gallery_files|length > 1 %}
+        <button type="button"
+                class="portfolio-gallery-arrow portfolio-gallery-arrow--prev"
+                data-portfolio-prev
+                aria-label="{% trans 'Previous photo' %}">‹</button>
+        <button type="button"
+                class="portfolio-gallery-arrow portfolio-gallery-arrow--next"
+                data-portfolio-next
+                aria-label="{% trans 'Next photo' %}">›</button>
+        <div class="portfolio-gallery-counter">{{ gallery_files|length }} {% trans 'photos' %}</div>
+        {% endif %}
+    </div>
+
+    <div class="image-overlay">
+        <button type="button" class="quick-view-btn" onclick="quickView('{{ work.id }}')">
+            <span class="btn-icon">👁️</span>
+            <span>{% trans 'Quick View' %}</span>
+        </button>
+    </div>
+</div>
+{% endwith %}

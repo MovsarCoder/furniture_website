@@ -11,9 +11,9 @@
 
 {% block content %}
 <section class="section container">
-    <div class="works-hero">
-        <div class="section-header">
-            <div>
+    <div class="about-studio-hero">
+        <div class="about-studio-copy">
+            <div class="about-studio-heading">
                 <h1 class="section-title">
                     {% if about_content and about_content.title %}
                     {{ about_content.title }}
@@ -25,15 +25,25 @@
                 <p class="section-subtitle">{{ about_content.subtitle }}</p>
                 {% endif %}
             </div>
-        </div>
 
-        <div class="work-description">
+            <div class="work-description about-studio-text">
             {% if about_content and about_content.content %}
             {{ about_content.content|linebreaks }}
             {% else %}
             <p>{% trans "Add About Us content in admin panel." %}</p>
             {% endif %}
+            </div>
         </div>
+
+        {% if about_photos %}
+        <div class="about-studio-gallery" aria-label="{% trans 'Studio photos' %}">
+            {% for photo in about_photos %}
+            <figure class="about-studio-photo{% if forloop.first %} about-studio-photo-large{% endif %}">
+                <img src="{{ photo.image.url }}" alt="{{ photo.title|default:'BMass furniture interior' }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" decoding="async">
+            </figure>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 </section>
 
