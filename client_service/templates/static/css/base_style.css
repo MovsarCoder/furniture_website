@@ -1531,6 +1531,17 @@
   opacity: 1;
 }
 
+.portfolio-card-gallery .image-overlay,
+.portfolio-card .image-overlay {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.product-image-wrapper .image-zoom-btn {
+  display: none !important;
+}
+
 .quick-view-btn {
   display: flex;
   align-items: center;
@@ -7265,85 +7276,7 @@ body.menu-open {
   display: none !important;
 }
 
-/* 7) Hero slider readability and in-image indicators */
-.carousel-shell {
-  position: relative;
-}
-
-.carousel-track {
-  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.carousel-slide::after {
-  background: transparent !important;
-}
-
-.carousel-overlay {
-  justify-content: flex-end !important;
-  align-items: flex-start !important;
-  gap: 12px;
-  padding: clamp(24px, 4vw, 56px) !important;
-}
-
-.carousel-title {
-  font-size: clamp(34px, 4.4vw, 64px) !important;
-  font-weight: 800 !important;
-  line-height: 1.03 !important;
-  text-transform: none !important;
-  text-shadow: 0 8px 24px rgba(34, 34, 34, 0.55) !important;
-}
-
-.carousel-caption {
-  max-width: 760px !important;
-  font-size: clamp(16px, 1.5vw, 22px) !important;
-  line-height: 1.45 !important;
-  color: rgba(255, 255, 255, 0.95) !important;
-  background: rgba(34, 34, 34, 0.38) !important;
-  border-radius: 10px !important;
-  padding: 10px 14px !important;
-  backdrop-filter: none !important;
-}
-
-.carousel-controls {
-  position: absolute !important;
-  left: 0;
-  right: 0;
-  bottom: 18px;
-  z-index: 5;
-  padding: 0 !important;
-  background: transparent !important;
-}
-
-.carousel-dots {
-  gap: 8px !important;
-}
-
-.carousel-dot {
-  width: 28px !important;
-  height: 3px !important;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-
-.carousel-dot.active {
-  width: 44px !important;
-  background: #fff !important;
-  box-shadow: none !important;
-}
-
-@media (max-width: 768px) {
-  .carousel-controls {
-    bottom: 12px;
-  }
-
-  .carousel-title {
-    font-size: clamp(28px, 7.5vw, 40px) !important;
-  }
-
-  .carousel-caption {
-    font-size: 15px !important;
-  }
-}
+/* 7) Hero slider — use base carousel colors and controls */
 
 /* 8) Additional furniture-like visual block */
 .furniture-showcase {
@@ -8579,10 +8512,13 @@ main {
   margin-bottom: clamp(22px, 3.2vw, 44px) !important;
 }
 
-.section-title {
-  font-size: clamp(1.75rem, 3.2vw, 2.65rem) !important;
-  line-height: 1.1 !important;
-  letter-spacing: 0 !important;
+.section-header > .section-title,
+.works-hero .section-title,
+.portfolio-hero .section-title,
+.delivery-hero .section-title {
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.2px !important;
 }
 
 .section-sub,
@@ -8616,24 +8552,15 @@ img {
   margin-top: calc(var(--site-nav-height) * -1);
   padding-top: 0;
   overflow: hidden;
-  background: #111315;
 }
 
 .hero-stack .photo-carousel {
   padding-top: 0 !important;
 }
 
-.hero-stack .carousel-viewport {
-  min-height: clamp(420px, 62vw, 680px);
-  background: #111315 !important;
-}
 
 .hero-stack .slide-image-container {
-  height: clamp(420px, 62vw, 680px) !important;
-}
-
-.hero-stack .carousel-slide::after {
-  background: linear-gradient(180deg, rgba(17, 19, 21, 0.1) 0%, rgba(17, 19, 21, 0.24) 45%, rgba(17, 19, 21, 0.48) 100%) !important;
+  height: 550px;
 }
 
 .hero-intro-overlay {
@@ -8650,19 +8577,22 @@ img {
 .hero-intro-overlay .hero-title,
 .hero-intro-overlay .hero-description {
   color: #fff !important;
-  text-shadow: 0 10px 32px rgba(0, 0, 0, 0.42);
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .hero-intro-overlay .hero-title {
   max-width: 900px;
   margin-inline: auto;
-  font-size: clamp(2.1rem, 5.2vw, 5.3rem) !important;
+  font-size: clamp(32px, 6vw, 38px) !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
 }
 
 .hero-intro-overlay .hero-description {
   max-width: 760px;
-  margin-top: 18px;
-  font-size: clamp(1rem, 1.45vw, 1.3rem) !important;
+  margin-top: 16px;
+  font-size: 18px !important;
+  line-height: 1.6 !important;
 }
 
 .carousel-arrows {
@@ -8689,8 +8619,21 @@ img {
 }
 
 .portfolio-enhanced-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)) !important;
-  gap: clamp(18px, 2.2vw, 30px) !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: clamp(18px, 2.2vw, 28px) !important;
+  margin-top: 40px !important;
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  .portfolio-enhanced-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 899px) {
+  .portfolio-enhanced-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
 }
 
 .portfolio-card {
@@ -8706,8 +8649,9 @@ img {
   box-shadow: 0 18px 36px rgba(34, 34, 34, 0.13) !important;
 }
 
+.portfolio-card-gallery .portfolio-gallery-slider,
 .card-image-container {
-  aspect-ratio: 16 / 11 !important;
+  aspect-ratio: 4 / 3 !important;
   background: #eef2f7;
 }
 
@@ -8759,8 +8703,8 @@ img {
 
 .portfolio-card .card-title {
   margin-bottom: 8px !important;
-  font-size: clamp(1.12rem, 1.35vw, 1.32rem) !important;
-  line-height: 1.2 !important;
+  font-size: 1.05rem !important;
+  line-height: 1.25 !important;
 }
 
 .portfolio-card .card-description {
@@ -9045,10 +8989,8 @@ img {
     margin-top: calc(var(--site-nav-height) * -1);
   }
 
-  .hero-stack .carousel-viewport,
   .hero-stack .slide-image-container {
-    min-height: clamp(360px, 96vw, 540px);
-    height: clamp(360px, 96vw, 540px) !important;
+    height: clamp(360px, 72vw, 480px) !important;
   }
 
   .hero-intro-overlay {
@@ -9056,11 +8998,11 @@ img {
   }
 
   .hero-intro-overlay .hero-title {
-    font-size: clamp(2rem, 11vw, 3.4rem) !important;
+    font-size: clamp(28px, 7vw, 34px) !important;
   }
 
   .hero-intro-overlay .hero-description {
-    font-size: 1rem !important;
+    font-size: 16px !important;
     max-width: 34ch;
   }
 
@@ -9157,11 +9099,14 @@ img {
     padding: 9px 10px !important;
   }
 
-  .portfolio-enhanced-grid,
   .premium-stats-grid,
   .immersive-gallery-grid,
   .store-benefits-gallery,
   .about-studio-gallery {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portfolio-enhanced-grid {
     grid-template-columns: 1fr !important;
   }
 

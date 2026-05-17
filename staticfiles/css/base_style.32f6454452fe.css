@@ -8558,6 +8558,9 @@ img {
   padding-top: 0 !important;
 }
 
+.hero-stack .carousel-viewport {
+  background: #0f0f10;
+}
 
 .hero-stack .slide-image-container {
   height: 550px;

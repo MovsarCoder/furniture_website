@@ -1531,17 +1531,6 @@
   opacity: 1;
 }
 
-.portfolio-card-gallery .image-overlay,
-.portfolio-card .image-overlay {
-  display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-.product-image-wrapper .image-zoom-btn {
-  display: none !important;
-}
-
 .quick-view-btn {
   display: flex;
   align-items: center;
@@ -8558,6 +8547,9 @@ img {
   padding-top: 0 !important;
 }
 
+.hero-stack .carousel-viewport {
+  background: #0f0f10;
+}
 
 .hero-stack .slide-image-container {
   height: 550px;

@@ -54,12 +54,14 @@
                             <button class="product-gallery-arrow product-gallery-arrow--next" type="button" data-gallery-main-next aria-label="{% trans 'Next photo' %}">›</button>
                             <div class="product-gallery-counter-badge" data-gallery-main-counter>1 / {{ gallery_images|length }}</div>
                             {% endif %}
+                            {# Zoom button temporarily hidden
                             <button class="image-zoom-btn" type="button" aria-label="{% trans 'Zoom image' %}" data-gallery-open-current>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <path d="m21 21-4.35-4.35"></path>
                                 </svg>
                             </button>
+                            #}
                             {% else %}
                             <div class="product-main-image product-main-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
