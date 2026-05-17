@@ -2027,79 +2027,25 @@ img {
   transform: translateY(-2px);
 }
 
-/* Индикатор активной страницы */
+/* Active page indicator — clean underline inside the nav item */
 .nav a.active {
-  color: var(--text);
+  color: var(--brand);
+  font-weight: 700;
 }
 
 .nav a.active::after {
   content: '';
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
-  height: 3px;
-  background: var(--gradient-brand);
-  border-radius: 3px;
-  box-shadow: 0 0 10px rgba(52, 58, 64, 0.3);
-  animation: indicator-pulse 2s infinite;
-}
-
-@keyframes indicator-pulse {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(52, 58, 64, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(52, 58, 64, 0.5);
-  }
-}
-
-.nav a:hover::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
-  height: 3px;
-  background: var(--gradient-brand);
-  border-radius: 3px;
-  box-shadow: 0 0 10px rgba(52, 58, 64, 0.3);
-  animation: indicator-grow 0.3s ease-out;
-}
-
-@keyframes indicator-grow {
-  from {
-    width: 0;
-  }
-  to {
-    width: 40%;
-  }
-}
-
-/* Улучшенный эффект при наведении */
-.nav a {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.nav a::before {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 3px;
-  background: var(--gradient-brand);
-  border-radius: 3px;
-  transition: width 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nav a:hover::before {
-  width: 40%;
-  box-shadow: 0 0 10px rgba(52, 58, 64, 0.3);
+  left: 20px;
+  right: 20px;
+  bottom: 8px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--brand);
+  transform: none;
+  width: auto;
+  animation: none;
+  box-shadow: none;
 }
 
 /* Right side container for navigation actions */
@@ -7124,7 +7070,6 @@ body.menu-open {
 }
 
 .nav a::before,
-.nav a::after,
 .nav a:hover::before,
 .nav a:hover::after {
   display: none !important;
@@ -7133,7 +7078,24 @@ body.menu-open {
 
 .nav a.active {
   color: var(--brand) !important;
-  box-shadow: inset 0 -2px 0 var(--brand) !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+.nav a.active::after {
+  display: block !important;
+  content: '' !important;
+  position: absolute !important;
+  left: 20px !important;
+  right: 20px !important;
+  bottom: 8px !important;
+  height: 2px !important;
+  width: auto !important;
+  border-radius: 999px !important;
+  background: var(--brand) !important;
+  transform: none !important;
+  animation: none !important;
+  box-shadow: none !important;
 }
 
 .mega-column a:hover,
